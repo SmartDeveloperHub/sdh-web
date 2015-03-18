@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: SdhWeb
+        psr4_prefix: SdhWeb
+        src_path: app

@@ -320,7 +320,7 @@ body {
   .navbar.horizontal-menu .navbar-inner .navbar-nav > li {
     position: relative;
     z-index: 1;
-    line-height: 85px;
+    line-height: 67px;
     border: 1px solid transparent;
     border-top: 0;
     border-bottom: 0;
@@ -341,7 +341,6 @@ body {
   }
   .navbar.horizontal-menu .navbar-inner .navbar-nav > li > a {
     padding: 0 15px;
-    line-height: 85px;
   }
   .navbar.horizontal-menu .navbar-inner .navbar-nav > li > ul {
     position: absolute;
@@ -503,7 +502,7 @@ body {
   display: none;
 }
 .navbar.horizontal-menu .navbar-inner > .nav > li {
-  line-height: 85px;
+  line-height: 67px;
   display: inline-block;
 }
 .navbar.horizontal-menu .navbar-inner > .nav > li i {
@@ -614,7 +613,7 @@ body {
   .navbar.horizontal-menu .navbar-inner .navbar-brand {
   }
   .navbar.horizontal-menu .navbar-inner .navbar-nav > li {
-    line-height: 84px;
+    line-height: 67px;
   }
   .navbar.horizontal-menu .navbar-inner .navbar-nav > li > a {
     padding: 0 10px;
@@ -695,7 +694,7 @@ body {
   }
   .navbar.horizontal-menu .navbar-inner .navbar-nav {
     position: absolute;
-    top: 13px;
+    top: 7px;
     left: 72px;
     font-size: 18px;
   }
@@ -763,7 +762,7 @@ body {
     display: block;
     float: right;
     padding-right: 13px;
-    padding-top: 33px;
+    padding-top: 27px;
   }
   .navbar.horizontal-menu .navbar-inner > .nav.navbar-mobile a {
     position: relative;

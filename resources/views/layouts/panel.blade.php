@@ -2,12 +2,18 @@
 
 @section('scripts')
     @parent
-    {{-- Here should be added the global scripts --}}
+    <script src="assets/js/d3/d3.min.js"></script>
+    <script src="assets/js/nvd3/nv.d3.min.js"></script>
+    <script src="assets/js/joinable/joinable.js"></script>
 @stop
 
 @section('css')
     @parent
-    {{-- Here should be added the global css --}}
+    <link rel="stylesheet" href="assets/css/nv.d3.min.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/linecons/css/linecons.css">
+    <link rel="stylesheet" href="assets/fonts/octicons/css/octicons.css">
 @stop
 
 @section('body')

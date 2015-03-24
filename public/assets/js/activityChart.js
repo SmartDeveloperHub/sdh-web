@@ -16,7 +16,7 @@ function make_y_axis() {
         .scale(y)
         .orient("left");
 }
-var activityChart = function activityChart() {
+var activityChart = function activityChart(currentData, divID, changeHandler) {
     var downLimit, upLimit;
     var drag = d3.behavior.drag()
     .on("drag", function() {
@@ -158,7 +158,7 @@ var activityChart = function activityChart() {
              })
             .y0(function(d) { return y(d.lines); });
 
-        svg = d3.select("#activity-chart").append("svg")
+        svg = d3.select('#' + divID).append("svg")
             .attr('height', height)
             .attr('width', width)
             .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
@@ -264,7 +264,7 @@ var activityChart = function activityChart() {
         //svg.call(myTooltip);
     };
 
-    setData(generalActivitySources);
+    setData(currentData);
 
     function brushed() {
         x.domain(brush.empty() ? x2.domain() : brush.extent());
@@ -278,9 +278,9 @@ var activityChart = function activityChart() {
 
     function brushend(d) {
         var d=brush.empty() ? x2.domain() : brush.extent();
-        randomData4Test(d[0], d[1]);
-        updateAll(d[1]);
-
+        if (changeHandler) {
+            changeHandler(d[0], d[1]);
+        }
         var dif = d[1].getTime() - d[0].getTime();
         dragFactor = dif/3252203414 * dragTime4Pixel;
     }

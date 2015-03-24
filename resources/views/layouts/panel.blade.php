@@ -138,8 +138,7 @@
         <!-- Navbar Brand -->
         <div class="navbar-brand">
             <a href="dashboard-1.html" class="logo">
-                <img src="assets/images/logo-white-bg@2x.png" width="80" alt="" class="hidden-xs" />
-                <img src="assets/images/logo@2x.png" width="80" alt="" class="visible-xs" />
+                <img src="assets/images/logo.gif" width="80" alt=""/>
             </a>
             <a href="#" data-toggle="settings-pane" data-animate="true">
                 <i class="linecons-cog"></i>

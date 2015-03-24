@@ -158,7 +158,9 @@ var activityChart = function activityChart(currentData, divID, changeHandler) {
              })
             .y0(function(d) { return y(d.lines); });
 
-        svg = d3.select('#' + divID).append("svg")
+        svg = d3.select('#' + divID)
+            .attr('class', "activityRangeChart")
+          .append("svg")
             .attr('height', height)
             .attr('width', width)
             .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))

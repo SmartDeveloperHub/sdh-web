@@ -1,5 +1,5 @@
 
-#activity-chart {
+.activityRangeChart {
     display: inline-block;
     position: relative;
     width: 100%;
@@ -29,32 +29,32 @@ path.areaRem {
     stroke-width: 2px;
 }
 
-#activity-chart .areaAdd2 {
+.activityRangeChart .areaAdd2 {
         fill: rgba(0, 165, 0, 0.5);
     stroke: #0C9D02;
     stroke-width: 2px;
     clip-path: url(#clip);
 }
 
-#activity-chart .areaRem2 {
+.activityRangeChart .areaRem2 {
     fill: rgba(213, 63, 63, 0.68);
     stroke: #BE1F1F;
     stroke-width: 2px;
     clip-path: url(#clip);
 }
 
-#activity-chart .axis text {
+.activityRangeChart .axis text {
     fill: #2C2C2C;
 }
 
-#activity-chart .axis path,
-#activity-chart .axis line {
+.activityRangeChart .axis path,
+.activityRangeChart .axis line {
     fill: none;
     stroke: #2C2C2C;
     shape-rendering: crispEdges;
 }
 
-#activity-chart .brush .extent {
+.activityRangeChart .brush .extent {
     fill: rgba(126, 126, 126, 0.29);
     stroke: rgba(0, 0, 0, 0.41);
     stroke-width: 1px;

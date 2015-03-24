@@ -196,6 +196,7 @@ body {
   margin: 0;
   padding: 0;
   border: none;
+  overflow: hidden;
 }
 .page-container .main-content:hover {
   z-index: 15;

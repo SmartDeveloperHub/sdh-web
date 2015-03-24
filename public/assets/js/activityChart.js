@@ -55,7 +55,7 @@ var activityChart = function activityChart(currentData, divID, changeHandler) {
     });
 
     var setSize = function() {
-        var currentWidth = parseInt($(".navbar-inner").width());
+        var currentWidth = parseInt($("#"+divID).parent().width());
         
         margin = {top: 10, right: 10, bottom: 100, left: 40};
         width = currentWidth - margin.left - margin.right;
@@ -297,7 +297,7 @@ var activityChart = function activityChart(currentData, divID, changeHandler) {
         setSize();
         setAxis();
         setGs();
-        setData(generalActivitySources);
+        setData(currentData);
         brush.extent(oldDomain);
         brushed();
     };

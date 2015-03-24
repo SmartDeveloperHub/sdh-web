@@ -1,0 +1,28 @@
+.panel .panel-heading {
+    font-size: 28px;
+    font-weight: normal;
+    color: #3e3f3f;
+}
+
+.panel-body-heatchart {
+	max-height: 280px;
+	text-align: top;
+}
+
+.heatmap {
+	vertical-align: top;
+	display: block;
+}
+#issues-chart, #languages-chart{
+	height: 350px;
+}
+#cont-proj-id{
+    height: 330px;
+}
+
+ .nvd3.nv-pie.nv-chart-donut1 .nv-pie-title {
+	font-size: 45px;
+	opacity: 0.4;
+	fill: rgba(224, 116, 76, 0.91);
+}
+

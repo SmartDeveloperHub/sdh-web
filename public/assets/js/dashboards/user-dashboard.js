@@ -363,9 +363,9 @@ jQuery(document).ready(function($)
                 {date: dashboardData.linesAddedHistorical[i].time, lines: dashboardData.linesAddedHistorical[i].lines}
             );
         });
-        $.map(dashboardData.linesAddedHistorical, function(arg, i) {
+        $.map(dashboardData.linesDeletedHistorical, function(arg, i) {
             generalActivitySources[1].values.push(
-                {date: dashboardData.linesAddedHistorical[i].time, lines: -dashboardData.linesAddedHistorical[i].lines}
+                {date: dashboardData.linesDeletedHistorical[i].time, lines: -dashboardData.linesDeletedHistorical[i].lines}
             );
         });
 

@@ -114,7 +114,9 @@ jQuery(document).ready(function($)
 	}
 
     var userSkills = {
-        labels: ["Experience", "Coding speed", "Work quality", "Social appreciation", "Cooperation"],
+        labels: [],
+        longLabels: ["Experience", "Coding speed", "Work quality", "Social appreciation", "Cooperation"],
+        shortLabels: ["Experience", "Speed", "Quality", "Appreciation", "Cooperation"],
         datasets: [{
             fillColor: "rgba(22,22,220,0.2)",
             strokeColor: "rgba(22,22,220,0.5)",
@@ -285,6 +287,25 @@ jQuery(document).ready(function($)
 		updateWidget("#contributed-projects-counter", dashboardData.contributedProjects, 0);
 		
 	};
+
+    var resizeRadarChartLabels = function resizeRadarChartLabels(){
+        //Clear the array
+        radarChart.scale.labels.length = 0;
+
+        var labels = null;
+        if($("#radar-chart").width() < 200){
+            labels = dashboardData.userSkills.shortLabels;
+        } else {
+            labels = dashboardData.userSkills.longLabels;
+        }
+
+        for(var i in labels){
+            radarChart.scale.labels[i] = labels[i];
+            //radarChart.labels.push(labels);
+        }
+
+        radarChart.update();
+    };
 	
 	var createCharts = function createCharts() {
 
@@ -321,28 +342,7 @@ jQuery(document).ready(function($)
 				linesDeleted: 			-dashboardData.linesDeletedHistorical[i].lines
 			});
 		});
-		
-		
-		// Range Filter
-		/*$("#range-chart").dxRangeSelector({
-			dataSource: all_data_sources,
-			size: {
-				height: 140
-			},
-			chart: {
-				series: [
-					{ argumentField: "timeOfCommit", valueField: "linesAdded", color: '#22FF22', opacity: .85 },
-					{ argumentField: "timeOfCommit", valueField: "linesDeleted", color: '#FF2222', opacity: .85 }
-				]
-			},
-			selectedRangeChanged: function(e) {
-				
-				//TODO: make http request
-				
-				onDataReady();
-				
-			}
-		});*/
+
 
         var generalActivitySources = [
         {
@@ -363,9 +363,9 @@ jQuery(document).ready(function($)
                 {date: dashboardData.linesAddedHistorical[i].time, lines: dashboardData.linesAddedHistorical[i].lines}
             );
         });
-        $.map(dashboardData.linesAddedHistorical, function(arg, i) {
+        $.map(dashboardData.linesDeletedHistorical, function(arg, i) {
             generalActivitySources[1].values.push(
-                {date: dashboardData.linesAddedHistorical[i].time, lines: -dashboardData.linesAddedHistorical[i].lines}
+                {date: dashboardData.linesDeletedHistorical[i].time, lines: -dashboardData.linesDeletedHistorical[i].lines}
             );
         });
 
@@ -494,8 +494,9 @@ jQuery(document).ready(function($)
 
 
         //User skills radar chart
-        var ctx = $("#radar-chart").get(0).getContext("2d");
-        $("#radar-chart").attr('width',  $("#radar-chart").parent().width());
+        var radar = $("#radar-chart");
+        var ctx = radar.get(0).getContext("2d");
+        radar.attr('width', radar.parent().width());
         Chart.defaults.global.responsive = true;
 
         radarChart = new Chart(ctx).Radar(dashboardData.userSkills, {
@@ -504,6 +505,16 @@ jQuery(document).ready(function($)
             scaleStepWidth : 25,
             scaleStartValue : 0
         });
+
+        //Set the radar chart labels given the size of the chart
+        resizeRadarChartLabels();
+
+        $(window).resize(function(){
+            console.log("resize");
+            resizeRadarChartLabels();
+        });
+
+
 
         chartsCreated = true;
 		

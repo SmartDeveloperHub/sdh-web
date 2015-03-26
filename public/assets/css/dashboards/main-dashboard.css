@@ -1,0 +1,65 @@
+body {
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+#averageHealth-widget .com-progress-fill {
+    -webkit-transition: width 3s ease-in-out;
+    -moz-transition: width 3s ease-in-out;
+    -o-transition: width 3s ease-in-out;
+    transition: width 3s ease-in-out;
+}
+
+#averageHealth-widget {
+    -webkit-transition: background-color 1000ms linear;
+    -moz-transition: background-color 1000ms linear;
+    -o-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+    white-space: nowrap;
+}
+
+#averageHealth-widget .leftBox {
+	display: inline-block;
+	width: 60%;
+	vertical-align: top;
+}
+
+#healthy-chart {
+    display: inline-block;
+    width: 37%;
+    vertical-align: bottom;
+}
+
+#activeIssues-widget .ntotal, #projects-widget .ntotal {
+	display: inline-block;
+	padding-bottom: 2px;
+}
+
+
+/*Commits icon*/
+.octicon.octicon-git-commit {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+#commits-widget .com-icon i {
+    background-color: #F75F10;
+}
+
+
+/* Health line graph */
+#healthy-chart g.nvd3.nv-wrap.nv-axis {
+    fill: #FFF;
+}
+
+#healthy-chart path.domain {
+    stroke: #FFF;
+}
+/*
+#healthy-chart .nv-axis .tick line {
+    display:none;
+}*/

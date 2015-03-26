@@ -2,7 +2,7 @@ var activityChartObject, setData, chageUpDownIcon, timeChartVisible;
 var margin, width, margin2, height, height2, width2;
 var x, x2, y, y2, xAxis, xAxis2;
 
-var dragTime4Pixel = 3000000;
+var dragTime4Pixel = 4500000;
 var dragFactor = 3000000;
 
 function make_x_axis() {
@@ -16,10 +16,18 @@ function make_y_axis() {
         .scale(y)
         .orient("left");
 }
-var activityChart = function activityChart(currentData, divID, changeHandler) {
+var activityChart = function activityChart(currentData, divID, changeHandler, brushedHandler) {
     var downLimit, upLimit;
     var drag = d3.behavior.drag()
+    .on("dragstart", function() {
+            if (brush.empty()) {
+                return;
+            }
+    })
     .on("drag", function() {
+            if (brush.empty()) {
+                return;
+            }
             var mov = d3.event.dx * dragFactor;
             var dateFrom = brush.extent()[0].getTime() - (mov);
             var dateTo = brush.extent()[1].getTime() - (mov);
@@ -47,11 +55,12 @@ var activityChart = function activityChart(currentData, divID, changeHandler) {
                 dateTo = upLimit;
                 var newRange = [new Date(dateFrom), new Date(dateTo)];
             } else {
-                return;
+                //return;
             }
             x.domain(brush.empty() ? x2.domain() : [new Date(dateFrom), new Date(dateTo)]);
             brush.extent(newRange);
             repaintChart();
+            brushend();
     });
 
     var setSize = function() {
@@ -276,10 +285,29 @@ var activityChart = function activityChart(currentData, divID, changeHandler) {
             .tickSize(-height, 0, 0)
             .tickFormat(""));
         focus.select(".x.axis").call(xAxis);
+        if (brushedHandler) {
+            brushedHandler(brush.extent()[0], brush.extent()[1]);
+        }
     }
 
-    function brushend(d) {
-        var d=brush.empty() ? x2.domain() : brush.extent();
+    var repositioningDates = function repositioningDates() {
+        // Discrete Time positions. Day by day by the moment. TODO using data frecuency
+        // Take the current range
+        var theInitial = brush.extent();
+        theFinal= theInitial[1];
+        theInitial = theInitial[0];
+        return [theInitial, theFinal];
+    }
+
+    function brushend() {
+        var d;
+
+        if (brush.empty()) {
+            d = x2.domain();
+        } else {
+            // Adjust to the closer position
+            d = repositioningDates();
+        }
         if (changeHandler) {
             changeHandler(d[0], d[1]);
         }

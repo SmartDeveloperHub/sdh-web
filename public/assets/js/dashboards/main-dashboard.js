@@ -1,4 +1,4 @@
-var updateAll, randomData4Test, generalActivitySources, actChart, healthyChart;
+var updateAll, randomData4Test, generalActivitySources, actChart, healthyChart, speedGraph, multilineChart;
 
 jQuery(document).ready(function($)
 {
@@ -215,6 +215,111 @@ jQuery(document).ready(function($)
 		{ time: new Date("November 18, 2014"), health: 0.95 },
 	];
 
+	var total_commits_serie = [
+		{ time: new Date("October 01, 2014"), commits: 100 },
+		{ time: new Date("October 02, 2014"), commits: 200 },
+		{ time: new Date("October 03, 2014"), commits: 250 },
+		{ time: new Date("October 04, 2014"), commits: 300 },
+		{ time: new Date("October 05, 2014"), commits: 500 },
+		{ time: new Date("October 06, 2014"), commits: 600 },
+		{ time: new Date("October 07, 2014"), commits: 750 },
+		{ time: new Date("October 08, 2014"), commits: 760 },
+		{ time: new Date("October 09, 2014"), commits: 800 },
+		{ time: new Date("October 10, 2014"), commits: 850 },
+		{ time: new Date("October 11, 2014"), commits: 900 },
+		{ time: new Date("October 12, 2014"), commits: 950 },
+		{ time: new Date("October 13, 2014"), commits: 1000 },
+		{ time: new Date("October 14, 2014"), commits: 1100 },
+		{ time: new Date("October 15, 2014"), commits: 1150 },
+		{ time: new Date("October 16, 2014"), commits: 1200 },
+		{ time: new Date("October 17, 2014"), commits: 1300 },
+		{ time: new Date("October 18, 2014"), commits: 1400 },
+		{ time: new Date("October 19, 2014"), commits: 1500 },
+		{ time: new Date("October 20, 2014"), commits: 1600 },
+		{ time: new Date("October 21, 2014"), commits: 1700 },
+		{ time: new Date("October 22, 2014"), commits: 1800 },
+		{ time: new Date("October 23, 2014"), commits: 1900 },
+		{ time: new Date("October 24, 2014"), commits: 2000 },
+		{ time: new Date("October 25, 2014"), commits: 2100 },
+		{ time: new Date("October 26, 2014"), commits: 2300 },
+		{ time: new Date("October 27, 2014"), commits: 2500 },
+		{ time: new Date("October 28, 2014"), commits: 3000 },
+		{ time: new Date("October 29, 2014"), commits: 4000 },
+		{ time: new Date("October 30, 2014"), commits: 5000 },
+		{ time: new Date("October 31, 2014"), commits: 5200 },
+		{ time: new Date("November 01, 2014"), commits: 5500 },
+		{ time: new Date("November 02, 2014"), commits: 5600 },
+		{ time: new Date("November 03, 2014"), commits: 5700 },
+		{ time: new Date("November 04, 2014"), commits: 6000 },
+		{ time: new Date("November 05, 2014"), commits: 6200 },
+		{ time: new Date("November 06, 2014"), commits: 7000 },
+		{ time: new Date("November 07, 2014"), commits: 7300 },
+		{ time: new Date("November 08, 2014"), commits: 7900 },
+		{ time: new Date("November 09, 2014"), commits: 8100 },
+		{ time: new Date("November 10, 2014"), commits: 8360 },
+		{ time: new Date("November 11, 2014"), commits: 8500 },
+		{ time: new Date("November 12, 2014"), commits: 8700 },
+		{ time: new Date("November 13, 2014"), commits: 9060 },
+		{ time: new Date("November 14, 2014"), commits: 9400 },
+		{ time: new Date("November 15, 2014"), commits: 9600 },
+		{ time: new Date("November 16, 2014"), commits: 9700 },
+		{ time: new Date("November 17, 2014"), commits: 9750 },
+		{ time: new Date("November 18, 2014"), commits: 10000 },
+	];
+
+	// Data Sources for all charts
+	var total_lines_serie = [
+		{ time: new Date("October 01, 2014"), lines: 1000 },
+		{ time: new Date("October 02, 2014"), lines: 1500 },
+		{ time: new Date("October 03, 2014"), lines: 2200 },
+		{ time: new Date("October 04, 2014"), lines: 4000 },
+		{ time: new Date("October 05, 2014"), lines: 5000 },
+		{ time: new Date("October 06, 2014"), lines: 6000 },
+		{ time: new Date("October 07, 2014"), lines: 7000 },
+		{ time: new Date("October 08, 2014"), lines: 8700 },
+		{ time: new Date("October 09, 2014"), lines: 9020 },
+		{ time: new Date("October 10, 2014"), lines: 10000 },
+		{ time: new Date("October 11, 2014"), lines: 12000 },
+		{ time: new Date("October 12, 2014"), lines: 13500},
+		{ time: new Date("October 13, 2014"), lines: 13600 },
+		{ time: new Date("October 14, 2014"), lines: 13800 },
+		{ time: new Date("October 15, 2014"), lines: 14000 },
+		{ time: new Date("October 16, 2014"), lines: 14200 },
+		{ time: new Date("October 17, 2014"), lines: 14600 },
+		{ time: new Date("October 18, 2014"), lines: 14900 },
+		{ time: new Date("October 19, 2014"), lines: 15200 },
+		{ time: new Date("October 20, 2014"), lines: 15300 },
+		{ time: new Date("October 21, 2014"), lines: 15400 },
+		{ time: new Date("October 22, 2014"), lines: 15600 },
+		{ time: new Date("October 23, 2014"), lines: 16000 },
+		{ time: new Date("October 24, 2014"), lines: 17000 },
+		{ time: new Date("October 25, 2014"), lines: 17300 },
+		{ time: new Date("October 26, 2014"), lines: 17400 },
+		{ time: new Date("October 27, 2014"), lines: 17400 },
+		{ time: new Date("October 28, 2014"), lines: 17400 },
+		{ time: new Date("October 29, 2014"), lines: 17900 },
+		{ time: new Date("October 30, 2014"), lines: 18400 },
+		{ time: new Date("October 31, 2014"), lines: 19400 },
+		{ time: new Date("November 01, 2014"), lines: 20400 },
+		{ time: new Date("November 02, 2014"), lines: 21300 },
+		{ time: new Date("November 03, 2014"), lines: 22000 },
+		{ time: new Date("November 04, 2014"), lines: 23400 },
+		{ time: new Date("November 05, 2014"), lines: 23400 },
+		{ time: new Date("November 06, 2014"), lines: 24000 },
+		{ time: new Date("November 07, 2014"), lines: 25000 },
+		{ time: new Date("November 08, 2014"), lines: 25500 },
+		{ time: new Date("November 09, 2014"), lines: 25600 },
+		{ time: new Date("November 10, 2014"), lines: 26500 },
+		{ time: new Date("November 11, 2014"), lines: 27900 },
+		{ time: new Date("November 12, 2014"), lines: 28900 },
+		{ time: new Date("November 13, 2014"), lines: 30000 },
+		{ time: new Date("November 14, 2014"), lines: 31400 },
+		{ time: new Date("November 15, 2014"), lines: 32400 },
+		{ time: new Date("November 16, 2014"), lines: 33400 },
+		{ time: new Date("November 17, 2014"), lines: 34400 },
+		{ time: new Date("November 18, 2014"), lines: 35400 },
+	];
+
 	// Combine charts for filtering, grouped by time
 
 	var rangedData = {
@@ -295,7 +400,7 @@ jQuery(document).ready(function($)
 			/* Done setting the chart up? Time to render it!*/
 			var myData = [{
 				values: rangedData.healthSerie.map(function(d) {
-					return {'x':d.time, 'y': d.health} //values - represents the array of {x,y} data points
+					return {'x': d.time, 'y': d.health} //values - represents the array of {x,y} data points
 				}),
 				key: 'Health', //key  - the name of the series.
 				color: '#FFF'  //color - optional: choose your own line color.
@@ -308,8 +413,125 @@ jQuery(document).ready(function($)
 			//Update the chart when window resizes.
 			nv.utils.windowResize(function() { healthyChart.update() });
 
-			updateAll();
+			// Create the event
+			var event = new CustomEvent("chart-loaded",{detail:"healthy-chart"});
+
+			// Dispatch/Trigger/Fire the event
+			document.dispatchEvent(event);
+
 			return healthyChart;
+		});
+
+		// Healthy line graph
+		nv.addGraph(function() {
+			speedGraph = nv.models.lineChart()
+		        .margin(({"left":60,"right":20,"top":10,"bottom":27}))  //Adjust chart margins to give the x-axis some breathing room.
+		        .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+		        .showLegend(true)      //Show the legend, allowing users to turn on/off line series.
+		        .showYAxis(true)       //Show the y-axis
+		        .showXAxis(true)       //Show the x-axis
+		        .forceY([0,25,50,100])
+			;
+			speedGraph.yAxis     //Chart y-axis settings
+				.axisLabel('')
+				.tickFormat(function(d){return d + "l/m"});
+
+			speedGraph.xAxis     //Chart y-axis settings
+				.axisLabel('')
+				.tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
+
+			/* Done setting the chart up? Time to render it!*/
+			var myData = [{
+				values: rangedData.speedSerie.map(function(d) {
+					return {'x': new Date(d.time), 'y': d.speed} //values - represents the array of {x,y} data points
+				}),
+				key: 'Development Speed', //key  - the name of the series.
+				color: '#010FA5'  //color - optional: choose your own line color.
+			}];
+
+			d3.select('#speed-chart svg')
+				.datum(myData)
+				.call(speedGraph);
+
+			//Update the chart when window resizes.
+			nv.utils.windowResize(function() { speedGraph.update() });
+
+			// Create the event
+			var event = new CustomEvent("chart-loaded",{detail:"speed-chart"});
+
+			// Dispatch/Trigger/Fire the event
+			document.dispatchEvent(event);
+
+			return speedGraph;
+		});
+
+		// Commits_lines graph
+		nv.addGraph(function() {
+			multilineChart = nv.models.lineChart()
+		        .margin(({"left":60,"right":20,"top":10,"bottom":27}))  //Adjust chart margins to give the x-axis some breathing room.
+		        .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+		        .showLegend(true)      //Show the legend, allowing users to turn on/off line series.
+		        .showYAxis(true)       //Show the y-axis
+		        .showXAxis(true)       //Show the x-axis
+			;
+			multilineChart.xAxis     //Chart y-axis settings
+				.axisLabel('')
+				.tickFormat(function(d) { return d3.time.format('%b %d')(new Date(d)); });
+
+			multilineChart.yAxis     //Chart y-axis settings
+				.axisLabel('')
+				.tickFormat(function(d){
+					if (d < 1000) {
+						return parseInt(d);
+					} else {
+						return parseInt(d/1000) + 'K';
+					}
+				});
+
+			/*multilineChart.y2Axis
+			.tickFormat(d3.format(',f'));*/
+
+			var devAux = 15;
+			var myData = [{
+				values: rangedData.commitSerie.map(function(d) {
+					return {'x':d.time, 'y': d.commits} //values - represents the array of {x,y} data points
+				}),
+				key: 'Commits', //key  - the name of the series.
+				color: 'blue',  //color - optional: choose your own line color.
+				area: true,
+			},
+			{
+				values: rangedData.linesSerie.map(function(d) {
+					return {'x':d.time, 'y': d.lines} //values - represents the array of {x,y} data points
+				}),
+				key: 'Code lines', //key  - the name of the series.
+				color: 'red',  //color - optional: choose your own line color.
+				area: true,
+			},
+			{
+				values: rangedData.linesSerie.map(function(d) {
+					devAux = devAux + parseInt(Math.random() * 100) + 19;
+					return {'x':d.time, 'y': devAux} //values - represents the array of {x,y} data points
+				}),
+				key: 'Developers', //key  - the name of the series.
+				color: 'yellow',  //color - optional: choose your own line color.
+				area:true
+			}];
+
+			d3.select('#multiline-chart svg')
+				.datum(myData)
+				.call(multilineChart);
+
+			//Update the chart when window resizes.
+			nv.utils.windowResize(function() { multilineChart.update() });
+
+			// Create the event
+			var event = new CustomEvent("chart-loaded",{detail:"multiline-chart"});
+
+			// Dispatch/Trigger/Fire the event
+			document.dispatchEvent(event);
+
+			return multilineChart;
 		});
 	};
 
@@ -411,7 +633,7 @@ jQuery(document).ready(function($)
 			key: 'Health', //key  - the name of the series.
 			color: '#FFF'  //color - optional: choose your own line color.
 		}];
-		d3.select('#healthy-chart svg')  
+		d3.select('#healthy-chart svg')
 			.datum(myData);
 		healthyChart.update();
 	}
@@ -422,8 +644,50 @@ jQuery(document).ready(function($)
 		nr_gauge.value(value);
 	}
 
-	var updateSpeedGraph = function updateSpeedGraph(valueSeries) {
-		$('#speed-chart').dxChart('instance').option('dataSource', rangedData.speedSerie);
+	var updateSpeedGraph = function updateSpeedGraph(values) {
+		var myData = [{
+			values: values.map(function(d) {
+				return {'x':d.time, 'y': d.speed} //values - represents the array of {x,y} data points
+			}),
+			key: 'Development Speed', //key  - the name of the series.
+			color: '#010FA5'  //color - optional: choose your own line color.
+		}];
+		d3.select('#speed-chart svg')
+			.datum(myData);
+		speedGraph.update();
+	};
+
+	var updateMultilineGraph = function updateMultilineGraph(commits, lines) {
+		var devAux = 15;
+		var myData = [{
+			values: rangedData.commitSerie.map(function(d) {
+				return {'x':d.time, 'y': d.commits} //values - represents the array of {x,y} data points
+			}),
+			key: 'Commits', //key  - the name of the series.
+			color: 'blue',  //color - optional: choose your own line color.
+			area: true,
+		},
+		{
+			values: rangedData.linesSerie.map(function(d) {
+				return {'x':d.time, 'y': d.lines} //values - represents the array of {x,y} data points
+			}),
+			key: 'Code lines', //key  - the name of the series.
+			color: 'red',  //color - optional: choose your own line color.
+			area: true,
+		},
+		{
+			values: rangedData.linesSerie.map(function(d) {
+				devAux = devAux + (Math.random() * 100) + 10;
+				return {'x':d.time, 'y': devAux} //values - represents the array of {x,y} data points
+			}),
+			key: 'Developers', //key  - the name of the series.
+			color: 'yellow',  //color - optional: choose your own line color.
+			area: true
+		}];
+
+		d3.select('#multiline-chart svg')
+			.datum(myData);
+		multilineChart.update();
 	};
 
 	var updateSimpleWidget = function updateSimpleWidget(element, newValue, decimals){
@@ -498,8 +762,9 @@ jQuery(document).ready(function($)
 		updateSimpleWidget($('#rmlines-widget'), rangedData.linesrm, 0);
 		speedLabelUpdate(rangedData.speed);
 		//updateSpeedGauge(rangedData.speed);
-		//updateSpeedGraph(rangedData.speedSerie);
+		updateSpeedGraph(rangedData.speedSerie);
 		updateSimpleWidget($('#devAverage-widget'), rangedData.averageDevelopers, 0);
+		updateMultilineGraph(rangedData.commitSerie, rangedData.linesSerie);
 
 		// TODO create all charts and info boxes
 		/*$('#commits-widget').dxChart('instance').option('dataSource', rangedData.commits);
@@ -536,6 +801,8 @@ jQuery(document).ready(function($)
 
 		var speedSerie = [];
 		var healthSerie = [];
+		var commitSerie = [];
+		var linesSerie = [];
 		var averageHealth = 0;
 		$.map(lines_added_data, function(arg, i) {
 			totaladdlines += lines_added_data[i].lines;
@@ -546,9 +813,16 @@ jQuery(document).ready(function($)
 				if (aux < 0) {
 					aux = 0;
 				}
+				// speed serie
 				speedSerie.push({ time: arg.time, speed: aux});
 				// Lo mismo para los datios demo del healthSeries
 				healthSerie.push({ time: arg.time, health: healthy_data[i].health * 100});
+
+				// Lo mismo para los datios demo del multiline chart. commits y lines
+				commitSerie.push({ time: arg.time, commits: total_commits_serie[i].commits});
+				linesSerie.push({ time: arg.time, lines: total_lines_serie[i].lines});
+
+				// Health Average
 				averageHealth += healthy_data[i].health * 100;
 			}
 		});
@@ -569,6 +843,8 @@ jQuery(document).ready(function($)
 			developers: daysLapse * randomInt2 * (5 + randomInt1),
 			averageDevelopers: 5 + randomInt1,
 			speed: parseInt((totaladdlines - totalrmlines) / daysLapse),
+			commitSerie: commitSerie,
+			linesSerie: linesSerie
 		};
 		 i += 3;
 		//console.log("rangedData: " + JSON.stringify(rangedData));
@@ -626,6 +902,27 @@ jQuery(document).ready(function($)
 	var mainContainerHeigth = $("body")[0].getBoundingClientRect().height;
 	mainContainerHeigth = mainContainerHeigth - 280 - 85;
 	$(".page-container")[0].style.height = mainContainerHeigth + 'px';
+
+	var healthyChartLoaded = false;
+	var speedChartLoaded = false;
+	var multilineChartLoaded = false;
+
+	document.addEventListener("chart-loaded", function(e) {
+		console.log('chart-loaded: ' + e.detail);
+		if (e.detail == "speed-chart") {
+			speedChartLoaded = true;
+		} else if (e.detail == "healthy-chart") {
+			healthyChartLoaded = true;
+		} else if (e.detail == "multiline-chart") {
+			multilineChartLoaded = true;
+		} 
+		if(healthyChartLoaded && speedChartLoaded && multilineChartLoaded) {
+			healthyChartLoaded = true;
+			speedChartLoaded = true;
+			multilineChartLoaded = true;
+			updateAll();
+		}
+	});
 
 	// Initial data TODO
 	randomData4Test();

@@ -52,6 +52,14 @@
     width: inherit;
 }
 
+span.badge.badge-green {
+  background: #68B828;
+}
+
+span.badge.badge-purple {
+  background: #7C38BC;
+}
+
 .navbar.horizontal-menu .navbar-inner .navbar-brand a.logo img {
     margin: 0;
     width: 64px;

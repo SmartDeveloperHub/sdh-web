@@ -51,7 +51,7 @@ body {
 }
 
 
-/* Health line graph */
+/* Health-chart */
 #healthy-chart g.nvd3.nv-wrap.nv-axis {
     fill: #FFF;
 }
@@ -59,7 +59,33 @@ body {
 #healthy-chart path.domain {
     stroke: #FFF;
 }
-/*
-#healthy-chart .nv-axis .tick line {
-    display:none;
-}*/
+
+/* speed-chart */
+
+.chart-item-bg {
+    background: #FFF;
+    padding: 28px;
+    line-height: 1;
+    display: table;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.chart-label {
+    color: #666;
+    margin-left: 31px;
+    margin-top: 23px;
+}
+}
+
+span.text-small.text-muted.text-upper {
+    color: #743C3C;
+}
+
+#speed-chart g.nvd3.nv-wrap.nv-axis {
+    fill: #010FA5;
+}
+
+#speed-chart path.domain {
+    stroke: #010FA5;
+}

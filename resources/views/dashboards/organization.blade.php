@@ -156,10 +156,12 @@
 				<div id="devSpeed-label" class="h1 text-purple text-bold" data-count="this" data-from="0" data-to="0" data-suffix=" lines/m" data-duration="3">0 lines/m</div>
 				<span class="text-small text-muted text-upper">Development Speed Average</span>
 			</div>
-			<div class="chart-right-legend">
+			<!--div class="chart-right-legend">
 				<div id="speed-gauge" style="width: 170px; height: 140px"></div>
+			</div-->
+			<div id="speed-chart" style="height: 213px; top: 100px;">
+				<svg style="height: 213px"></svg>
 			</div>
-			<div id="speed-chart" style="height: 300px; top: 100px;"></div>
 		</div>
 
 	</div>
@@ -218,6 +220,19 @@
 			</div>
 		</div>
 
+	</div>
+</div>
+
+<div class="row"> <!-- WIDGETS 3 -->
+	<div class="col-sm-12">
+	    <div class="panel panel-default">
+	        <div class="panel-heading">
+	            <span>Commits and code lines</span>
+	        </div>
+	        <div id="multiline-chart" class="panel-body">
+	            <svg style="height: 300px"></svg>
+	        </div>
+	    </div>
 	</div>
 </div>
 @stop

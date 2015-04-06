@@ -58,19 +58,19 @@
 
         <ul class="navbar-nav">
             <li>
-                <a href="organization-dashboard.html">
+                <a href="organization-dashboard">
                     <i class="fa-globe"></i>
                     <span class="title">Organization</span>
                 </a>
             </li>
             <li>
-                <a href="project-dashboard.html">
+                <a href="project-dashboard">
                     <i class="fa-cubes"></i>
                     <span class="title">Projects</span>
                 </a>
             </li>
             <li>
-                <a href="user-dashboard.html">
+                <a href="user-dashboard">
                     <i class="fa-users"></i>
                     <span class="title">Users</span>
                 </a>

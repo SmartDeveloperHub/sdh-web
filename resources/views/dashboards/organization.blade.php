@@ -9,14 +9,14 @@
 	<script src="assets/js/moment/moment.js"></script>
 
 	<!-- dashboards src -->
-	<script src="assets/js/dashboards/main-dashboard.js"></script>
+	<script src="assets/js/dashboards/organization-dashboard.js"></script>
 	<script src="assets/js/activityChart.js"></script>
 @stop
 
 @section('css')
     @parent
 	<!-- custom style -->
-	<link rel="stylesheet" href="assets/css/dashboards/main-dashboard.css">
+	<link rel="stylesheet" href="assets/css/dashboards/organization-dashboard.css">
 	<link rel="stylesheet" href="assets/css/activityChart.css">
 @stop
 

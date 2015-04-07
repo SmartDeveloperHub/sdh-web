@@ -2,48 +2,19 @@
 
 @section('scripts')
     @parent
-	<!-- jquery -->
-	<script src="assets/js/jquery/jquery-2.1.3.min.js"></script>
-
-	<!-- d3 src -->
-	<script src="assets/js/d3/d3.js"></script>
-
 	<!-- d3 tip -->
 	<script src="assets/js/d3-tip/d3-tip.js"></script>
-
-	<!-- nvd3 src -->
-	<script src="assets/js/nvd3/nv.d3.js"></script>
-
+    
 	<!-- moment src -->
 	<script src="assets/js/moment/moment.js"></script>
 
 	<!-- dashboards src -->
 	<script src="assets/js/dashboards/main-dashboard.js"></script>
 	<script src="assets/js/activityChart.js"></script>
-	<!-- Bootstrap script -->
-	<script src="assets/js/bootstrap/bootstrap.min.js"></script>
-	<!-- Joinable (c) 2014 Jack Moore. MIT license: http://opensource.org/licenses/mit-license.php -->
-	<script src="assets/js/joinable/joinable.js"></script>
 @stop
 
 @section('css')
     @parent
-	<!-- Fonts -->
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic">
-	<link rel="stylesheet" href="assets/fonts/linecons/css/linecons.css">
-	<link rel="stylesheet" href="assets/fonts/fontawesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/fonts/octicons/css/octicons.css">
-
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="assets/css/bootstrap.css">
-
-	<!-- nvd3 style -->
-	<link rel="stylesheet" href="assets/css/nv.d3.min.css">
-
-	<!-- Theme CSS -->
-	<link rel="stylesheet" href="assets/css/core.css">
-	<link rel="stylesheet" href="assets/css/components.css">
-
 	<!-- custom style -->
 	<link rel="stylesheet" href="assets/css/dashboards/main-dashboard.css">
 	<link rel="stylesheet" href="assets/css/activityChart.css">

@@ -1,0 +1,2 @@
+docker run --name sdh-web-data --entrypoint /bin/echo sdhub/sdh-web Data-only container for sdh-web
+docker run -d -p 80:80 -p 443:443 -v /vagrant:/var/www/html -v /var/lib/mysql --volumes-from sdh-web-data sdhub/sdh-web

@@ -9,6 +9,10 @@ RUN apt-get update \
 		php5-mcrypt \
 		php5-json
 
+RUN php5enmod mcrypt
+RUN php5enmod json
+
+
 #Configure apache	
 RUN /usr/sbin/a2enmod rewrite
 RUN /usr/sbin/a2enmod ssl

@@ -1,7 +1,7 @@
 (function() {
 
     //Variable where public methods and variables will be stored
-    var _self;
+    var _self = { metrics: {}, widgets: {} };
 
     //Path to the SDH-API server with the trailing slash
     var _serverUrl;
@@ -17,6 +17,8 @@
     // This is a variable to make the events invisible outside the framework
     var _eventHandler = {};
 
+    var _isReady = false;
+
     var FRAMEWORK_NAME = "frameworkname";
 
 
@@ -30,9 +32,21 @@
     };
 
 
-    var requestJSON = function requestJSON(path, queryParams, callback) {
+    var requestJSON = function requestJSON(path, queryParams, callback, maxRetries) {
 
-        $.getJSON( _serverUrl + path, queryParams, callback);
+        if(typeof maxRetries === 'undefined'){
+            maxRetries = 2; //So up to 3 times will be requested
+        }
+
+        $.getJSON( _serverUrl + path, queryParams, callback).fail( function(d, textStatus, e) {
+            error("getJSON failed, status: " + textStatus + ", error: "+e);
+
+            //Retry the request
+            if (maxRetries > 0) {
+                requestJSON(path, queryParams, callback, --maxRetries);
+            }
+
+        });
 
     };
 
@@ -167,7 +181,7 @@
             }
 
             /* Make the request */
-            requestJSON(path, queryParams, callback)
+            requestJSON(path, queryParams, callback);
 
         } else {
             error("Metric '"+ metricId + "' does not exist.");
@@ -183,26 +197,42 @@
     var multipleMetricsRequest = function multipleMetricsRequest(metrics, callback) {
 
         var completedRequests = 0;
-        var allData = [];
+        var allData = {};
 
-        var onMetricReady = function(data) {
-            allData.push(data); //TODO: handle errors
-            //TODO: data format?
+        var onMetricReady = function(metricId, data) {
+            allData[metricId] = data;
+
             if(++completedRequests === metrics.length) {
                 callback(allData);
             }
         };
 
         for(var i in metrics) {
-            makeMetricRequest(metricId, params, queryParams, onMetricReady)
+
+            var metricId = metrics[i].id;
+            var params = metrics[i]; //Can use the metric itself because only the needed elements will be used as params.
+            var queryParams = {};
+
+            //All the range elements are queryParams
+            for(var name in queryParams.range) {
+                queryParams[name] = queryParams.range[name];
+            }
+
+            //Series is also a queryParam
+            queryParams.series = metrics[i].series;
+
+            makeMetricRequest(metricId, params, queryParams, onMetricReady.bind(undefined, metricId))
         }
 
     };
 
+
     /**
      * Converts the array of metrics containing a mixture of strings (for simple metrics) and objects (for complex metrics)
      * into an array of objects with at least an id.
-     * @param metrics Array of metrics containing a mixture of strings (for simple metrics) and objects (for complex metrics)
+     * @param metrics Array of metrics containing a mixture of strings (for simple metrics) and objects (for complex metrics).
+     * It can be modified, so consider cloning it if necessary.
+     * @returns {Array}
      */
     var normalizeMetrics = function normalizeMetrics(metrics) {
 
@@ -212,11 +242,43 @@
             if('string' === typeof metrics[i]) {
                 newMetricsParam.push({id: metrics[i]});
             } else if('object' === typeof metrics[i]) {
+
+                //Series boolean can not be given by the user
+                if(metrics[i].series != null) {
+                    delete metrics[i].series;
+                }
+
                 newMetricsParam.push(metrics[i]);
             } else {
                 error("One of the metric given was not string nor object");
             }
         }
+
+        return newMetricsParam;
+
+    };
+
+    /**
+     * Converts the filter to a normalized form to use it internally
+     * @param filter Filter object. It can be modified, so consider cloning it if necessary.
+     * @returns {Object}
+     */
+    var normalizeFilter = function normalizeFilter(filter) {
+
+        //Series parameter can not be set by a filter. Neither range.step parameter.
+        if(filter.series != null || (filter.range != null && filter.range.step != null)) {
+
+            if(filter.series != null){
+                delete filter.series;
+            }
+
+            if(filter.range != null && filter.range.step != null) {
+                delete filter.range.step;
+            }
+
+        }
+
+        return filter;
 
     };
 
@@ -287,19 +349,7 @@
 
         var newMetrics = [];
 
-        //Series parameter can not be set by a filter. Neither range.step parameter.
-        if(filter.series != null || (filter.range != null && filter.range.step != null)) {
-            filter = clone(filter);
-
-            if(filter.series != null){
-                delete filter.series;
-            }
-
-            if(filter.range != null && filter.range.step != null) {
-                delete filter.range.step;
-            }
-
-        }
+        normalizeFilter(filter);
 
         for(var i in metrics) {
             newMetrics.push(mergeObjects(clone(metrics[i]), filter));
@@ -398,22 +448,56 @@
 
     /**
      *
-     * @param metrics
+     * @param metrics Array with metrics. Each metric can be an string or an object. The object must have the following
+     * format: {
+     *              id: String,
+     *              <param1Id>: String,
+     *              <paramxId>: String,
+     *              range: {
+     *                  from: Date,
+     *                  to: Date
+     *              }
+     *          }
+     *  For example: {
+     *                  id: user-commits,
+     *                  userId: 123,
+     *                  range: {
+     *                      from: new Date(2000, 0, 14)
+     *                  }
+     *               }
      * @param callback
      * @param filterId (Optional)
      */
-    _self.observeData = function observeData(metrics, callback, filterId) {
+    _self.metrics.observeData = function observeData(metrics, callback, filterId) {
         observeMetrics(metrics, callback, filterId, false);
     };
 
     /**
      *
-     * @param metrics
+     * @param metrics Array with metrics. Each metric can be an string or an object. The object must have the following
+     * format (id is the only compulsory element of the object): {
+     *              id: String,
+     *              {param1Id}: String,
+     *              {paramxId}: String,
+     *              range: {
+     *                  from: Date,
+     *                  to: Date,
+     *                  step: Number of days
+     *              }
+     *          }
+     *  For example: {
+     *                  id: user-commits,
+     *                  userId: 123,
+     *                  range: {
+     *                      from: new Date(2000, 0, 14),
+     *                      step: 7
+     *                  }
+     *               }
      * @param callback
      * @param filterId (Optional)
      * @param step (Optional)
      */
-    _self.observeSeries = function observeSeries(metrics, callback, filterId, step) {
+    _self.metrics.observeSeries = function observeSeries(metrics, callback, filterId, step) {
         observeMetrics(metrics, callback, filterId, true, step);
     };
 
@@ -422,12 +506,15 @@
      * @param filterId
      * @param range
      */
-    _self.updateFilter = function(filterId, filterData) {
+    _self.metrics.updateFilter = function(filterId, filterData) {
 
         if('string' !== typeof filterId) {
             error("Method 'updateRange' requires a string for filterId param.");
             return;
         }
+
+        //Convert filter to a common format
+        normalizeFilter(filterData);
 
         if(_metricFilters[filterId] == null) {
             _metricFilters[filterId] = { updateCounter: 0, data: [] };
@@ -469,15 +556,15 @@
     var frameworkPreCheck = function frameworkPreCheck(){
 
         /* CHECK SHD-API SERVER URL */
-        if('undefined' !== typeof SDH-API-URL){
-            error("SDH-API-URL global variable must be set with the url to the SDH-API server.");
+        if(typeof SDH_API_URL === 'undefined'){
+            error("SDH_API_URL global variable must be set with the url to the SDH-API server.");
             return false;
         }
 
-        _serverUrl = SDH-API-URL.trim();
+        _serverUrl = SDH_API_URL.trim();
 
         if(_serverUrl.length === 0) {
-            error("SDH-API-URL global variable must be set with a valid url to the SDH-API server.");
+            error("SDH_API_URL global variable must be set with a valid url to the SDH-API server.");
             return false;
         }
         if(_serverUrl.substr(-1) !== '/') {
@@ -486,20 +573,51 @@
 
         /* CHECK JQUERY */
         if (typeof jQuery == 'undefined') {
-            error("SDH-API-URL global variable must be set with a valid url to the SDH-API server.");
+            error("SDH_API_URL global variable must be set with a valid url to the SDH-API server.");
             return false;
         }
 
         return true;
     };
 
+    /**
+     * Add a callback that will be executed when the framework is ready
+     * @param callback
+     */
+    var frameworkReady = function frameworkReady(callback) {
+        if('undefined' === typeof _metricsInfo && typeof callback === 'function') {
+            $(_eventHandler).on("FRAMEWORK_READY", function() {
+                $(_eventHandler).off("FRAMEWORK_READY");
+                callback();
+            });
+        } else if(typeof callback === 'function') {
+            callback();
+        }
+    };
+
+    var isFrameworkReady = function isFrameworkReady() {
+        return _isReady;
+    };
+
     var frameworkInit = function frameworkInit() {
 
         if(frameworkPreCheck()) {
 
-            loadMetricsInfo();
+            loadMetricsInfo(function(){
 
-            window.frameworkname = _self;
+                window.framework.metrics = _self.metrics;
+
+                _isReady = true;
+                $(_eventHandler).trigger("FRAMEWORK_READY");
+            });
+
+            window.framework = {
+                metrics: {},
+                widgets: {},
+                ready: frameworkReady, /* Method to add a callback that will be executed when the framework is ready */
+                isReady: isFrameworkReady
+            };
+
         }
 
     };

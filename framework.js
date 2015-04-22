@@ -10,12 +10,16 @@
     var _metricsInfo;
 
     // Storage of the metrics data
-    var _metricsStorage = {};
+    var _metricsStorage = {}; //TODO: multi-level cache
 
     var _metricContexts = {};
 
+    // Contains a list that links user callbacks (given as parameter at the observe methods) with the internal
+    // callbacks. It is need to remove handlers when not used and free memory.
+    var _event_handlers = [];
+
     // This is a variable to make the events invisible outside the framework
-    var _eventHandler = {};
+    var _eventBox = {};
 
     var _isReady = false;
 
@@ -410,8 +414,8 @@
                 multipleMetricsRequest(metricsWithContext, callback);
             }
 
-            // Create the CONTEXT event listener
-            $(_eventHandler).on("CONTEXT" + contextId, function(event, contextCounter) {
+            //Create the CONTEXT event handler
+            var contextEventHandler = function(event, contextCounter) {
 
                 //If it is not the last context event launched, ignore the data because there is another more recent
                 // event being executed
@@ -425,7 +429,19 @@
                 if(allMetricsCanBeRequested(metricsWithContext)) {
                     multipleMetricsRequest(metricsWithContext, callback);
                 }
+            };
+
+            //Link user callbacks with event handlers
+            _event_handlers.push({
+                userCallback: callback,
+                context: {
+                    id: contextId,
+                    handler: contextEventHandler
+                }
             });
+
+            // Create the CONTEXT event listener
+            $(_eventBox).on("CONTEXT" + contextId, contextEventHandler);
 
         } else { //No context is set
 
@@ -502,6 +518,35 @@
     };
 
     /**
+     * Cancels observing for an specific callback
+     * @param callback The callback that was given to the observe methods
+     */
+    _self.metrics.stopObserve = function stopObserve(callback) {
+        for (var i in _event_handlers) {
+            if(_event_handlers[i].userCallback === callback) {
+                $(_eventBox).off("CONTEXT" + _event_handlers[i].context.id, _event_handlers[i].context.handler);
+                _event_handlers.splice(i, 1);
+                break;
+            }
+        }
+    };
+
+    /**
+     * Cancels observing for everything.
+     */
+    _self.metrics.stopAllObserves = function stopAllObserves() {
+
+        //Remove all the event handlers
+        for (var i in _event_handlers) {
+            $(_eventBox).off("CONTEXT" + _event_handlers[i].context.id, _event_handlers[i].context.handler);
+        }
+
+        //Empty the array
+        _event_handlers.splice(0, _event_handlers.length);
+
+    };
+
+    /**
      *
      * @param contextId
      * @param range
@@ -538,7 +583,7 @@
         //Trigger an event to indicate that the context has changed
         if(hasChanged) {
             _metricContexts[contextId].updateCounter++;
-            $(_eventHandler).trigger("CONTEXT" + contextId, [_metricContexts[contextId].updateCounter]);
+            $(_eventBox).trigger("CONTEXT" + contextId, [_metricContexts[contextId].updateCounter]);
         }
 
 
@@ -586,8 +631,8 @@
      */
     var frameworkReady = function frameworkReady(callback) {
         if('undefined' === typeof _metricsInfo && typeof callback === 'function') {
-            $(_eventHandler).on("FRAMEWORK_READY", function() {
-                $(_eventHandler).off("FRAMEWORK_READY");
+            $(_eventBox).on("FRAMEWORK_READY", function() {
+                $(_eventBox).off("FRAMEWORK_READY");
                 callback();
             });
         } else if(typeof callback === 'function') {
@@ -608,7 +653,7 @@
                 window.framework.metrics = _self.metrics;
 
                 _isReady = true;
-                $(_eventHandler).trigger("FRAMEWORK_READY");
+                $(_eventBox).trigger("FRAMEWORK_READY");
             });
 
             window.framework = {

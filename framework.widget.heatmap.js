@@ -24,9 +24,11 @@
         this.svg = document.createElement("svg");
         this.element.append(this.svg);
 
-        framework.metrics.observeSeries(metrics, function(data){
+        this.observeCallback = function(data){
             this.updateData(data);
-        }.bind(this), contextId, 1);
+        }.bind(this);
+
+        framework.metrics.observeSeries(metrics, this.observeCallback , contextId, 1);
 
     };
 
@@ -41,7 +43,13 @@
         if(this.resizeEventHandler == null)
             return;
 
+        //Stop listening to window resize events
         $(window).off("resize", this.resizeEventHandler);
+
+        //Stop observing for data changes
+        framework.metrics.stopObserve(this.observeCallback);
+
+        //Clear DOM
         $(this.svg).empty();
         this.element.empty();
 

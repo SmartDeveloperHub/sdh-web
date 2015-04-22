@@ -12,7 +12,7 @@
     // Storage of the metrics data
     var _metricsStorage = {};
 
-    var _metricFilters = {};
+    var _metricContexts = {};
 
     // This is a variable to make the events invisible outside the framework
     var _eventHandler = {};
@@ -259,26 +259,26 @@
     };
 
     /**
-     * Converts the filter to a normalized form to use it internally
-     * @param filter Filter object. It can be modified, so consider cloning it if necessary.
+     * Converts the context to a normalized form to use it internally
+     * @param context Context object. It can be modified, so consider cloning it if necessary.
      * @returns {Object}
      */
-    var normalizeFilter = function normalizeFilter(filter) {
+    var normalizeContext = function normalizeContext(context) {
 
-        //Series parameter can not be set by a filter. Neither range.step parameter.
-        if(filter.series != null || (filter.range != null && filter.range.step != null)) {
+        //Series parameter can not be set by a context. Neither range.step parameter.
+        if(context.series != null || (context.range != null && context.range.step != null)) {
 
-            if(filter.series != null){
-                delete filter.series;
+            if(context.series != null){
+                delete context.series;
             }
 
-            if(filter.range != null && filter.range.step != null) {
-                delete filter.range.step;
+            if(context.range != null && context.range.step != null) {
+                delete context.range.step;
             }
 
         }
 
-        return filter;
+        return context;
 
     };
 
@@ -341,18 +341,18 @@
     };
 
     /**
-     * Combines an incomplete metric with a filter in order to create a complete metric to make a request with.
+     * Combines an incomplete metric with a context in order to create a complete metric to make a request with.
      * @param metrics
-     * @param filter Filter data
+     * @param context Context data
      */
-    var combineMetricsWithFilter = function combineMetricsWithFilter(metrics, filter) {
+    var combineMetricsWithContext = function combineMetricsWithContext(metrics, context) {
 
         var newMetrics = [];
 
-        normalizeFilter(filter);
+        normalizeContext(context);
 
         for(var i in metrics) {
-            newMetrics.push(mergeObjects(clone(metrics[i]), filter));
+            newMetrics.push(mergeObjects(clone(metrics[i]), context));
         }
     };
 
@@ -360,11 +360,11 @@
      *
      * @param metrics
      * @param callback
-     * @param filterId
+     * @param contextId
      * @param series
      * @param step
      */
-    var observeMetrics = function observeMetrics(metrics, callback, filterId, series, step) {
+    var observeMetrics = function observeMetrics(metrics, callback, contextId, series, step) {
 
         if('function' !== typeof callback){
             error("Method 'observeData' requires a valid callback function.");
@@ -376,8 +376,8 @@
             return;
         }
 
-        if('string' !== typeof filterId || _metricFilters[filterId] == null) {
-            filterId = null;
+        if('string' !== typeof contextId || _metricContexts[contextId] == null) {
+            contextId = null;
         }
 
         //Normalize the array of metrics
@@ -398,42 +398,42 @@
             }
         }
 
-        //If filter is defined, combine the metrics with the filter in order to create more complete metrics that could
+        //If context is defined, combine the metrics with the context in order to create more complete metrics that could
         // be requested.
-        if(filterId != null) {
+        if(contextId != null) {
 
-            //Combine the metrics with the filter in order to create more complete metrics that could be requested.
-            var metricsWithFilter = combineMetricsWithFilter(metrics, _metricFilters[filterId].data);
+            //Combine the metrics with the context in order to create more complete metrics that could be requested.
+            var metricsWithContext = combineMetricsWithContext(metrics, _metricContexts[contextId].data);
 
             //Request all the metrics if possible
-            if(allMetricsCanBeRequested(metricsWithFilter)) {
-                multipleMetricsRequest(metricsWithFilter, callback);
+            if(allMetricsCanBeRequested(metricsWithContext)) {
+                multipleMetricsRequest(metricsWithContext, callback);
             }
 
-            // Create the FILTER event listener
-            $(_eventHandler).on("FILTER" + filterId, function(event, filterCounter) {
+            // Create the CONTEXT event listener
+            $(_eventHandler).on("CONTEXT" + contextId, function(event, contextCounter) {
 
-                //If it is not the last filter event launched, ignore the data because there is another more recent
+                //If it is not the last context event launched, ignore the data because there is another more recent
                 // event being executed
-                if(filterCounter != _metricFilters[filterId].updateCounter){
+                if(contextCounter != _metricContexts[contextId].updateCounter){
                     return;
                 }
 
-                //Update the metrics with the filter data
-                var metricsWithFilter = combineMetricsWithFilter(metrics, _metricFilters[filterId].data);
+                //Update the metrics with the context data
+                var metricsWithContext = combineMetricsWithContext(metrics, _metricContexts[contextId].data);
 
-                if(allMetricsCanBeRequested(metricsWithFilter)) {
-                    multipleMetricsRequest(metricsWithFilter, callback);
+                if(allMetricsCanBeRequested(metricsWithContext)) {
+                    multipleMetricsRequest(metricsWithContext, callback);
                 }
             });
 
-        } else { //No filter is set
+        } else { //No context is set
 
             //Request all the metrics
-            if(allMetricsCanBeRequested(metricsWithFilter)) {
-                multipleMetricsRequest(metricsWithFilter, callback);
+            if(allMetricsCanBeRequested(metricsWithContext)) {
+                multipleMetricsRequest(metricsWithContext, callback);
             } else {
-                error("Some of the metrics have not information enough for an 'observeData' without filter");
+                error("Some of the metrics have not information enough for an 'observeData' without context");
             }
         }
 
@@ -466,10 +466,10 @@
      *                  }
      *               }
      * @param callback
-     * @param filterId (Optional)
+     * @param contextId (Optional)
      */
-    _self.metrics.observeData = function observeData(metrics, callback, filterId) {
-        observeMetrics(metrics, callback, filterId, false);
+    _self.metrics.observeData = function observeData(metrics, callback, contextId) {
+        observeMetrics(metrics, callback, contextId, false);
     };
 
     /**
@@ -494,51 +494,51 @@
      *                  }
      *               }
      * @param callback
-     * @param filterId (Optional)
+     * @param contextId (Optional)
      * @param step (Optional)
      */
-    _self.metrics.observeSeries = function observeSeries(metrics, callback, filterId, step) {
-        observeMetrics(metrics, callback, filterId, true, step);
+    _self.metrics.observeSeries = function observeSeries(metrics, callback, contextId, step) {
+        observeMetrics(metrics, callback, contextId, true, step);
     };
 
     /**
      *
-     * @param filterId
+     * @param contextId
      * @param range
      */
-    _self.metrics.updateFilter = function(filterId, filterData) {
+    _self.metrics.updateContext = function(contextId, contextData) {
 
-        if('string' !== typeof filterId) {
-            error("Method 'updateRange' requires a string for filterId param.");
+        if('string' !== typeof contextId) {
+            error("Method 'updateRange' requires a string for contextId param.");
             return;
         }
 
-        //Convert filter to a common format
-        normalizeFilter(filterData);
+        //Convert context to a common format
+        normalizeContext(contextData);
 
-        if(_metricFilters[filterId] == null) {
-            _metricFilters[filterId] = { updateCounter: 0, data: [] };
+        if(_metricContexts[contextId] == null) {
+            _metricContexts[contextId] = { updateCounter: 0, data: [] };
         }
 
-        //Update values of the filter (if null, remove it)
+        //Update values of the context (if null, remove it)
         var hasChanged = false;
-        for(var name in filterData) {
+        for(var name in contextData) {
 
-            var newValue = filterData[name];
-            var oldValue = _metricFilters[filterId].data[name];
+            var newValue = contextData[name];
+            var oldValue = _metricContexts[contextId].data[name];
 
             if(newValue != null && newValue != oldValue) {
-                _metricFilters[filterId][name] = newValue;
+                _metricContexts[contextId][name] = newValue;
                 hasChanged = true;
             } else if(oldValue != null) {
-                delete _metricFilters[filterId][name];
+                delete _metricContexts[contextId][name];
             }
         }
 
-        //Trigger an event to indicate that the filter has changed
+        //Trigger an event to indicate that the context has changed
         if(hasChanged) {
-            _metricFilters[filterId].updateCounter++;
-            $(_eventHandler).trigger("FILTER" + filterId, [_metricFilters[filterId].updateCounter]);
+            _metricContexts[contextId].updateCounter++;
+            $(_eventHandler).trigger("CONTEXT" + contextId, [_metricContexts[contextId].updateCounter]);
         }
 
 

@@ -8,7 +8,7 @@
 
     // BASIC METHODS - - - - - - - - - - - - - - - - - - - - - -
 
-    var Heatmap = function (element, metrics, filterId, configuration) {
+    var Heatmap = function (element, metrics, contextId, configuration) {
 
         if(!framework.isReady()) {
             console.error("Heatmap object could not be created because framework is not loaded.");
@@ -26,17 +26,17 @@
 
         framework.metrics.observeSeries(metrics, function(data){
             this.updateData(data);
-        }.bind(this), filterId, 1);
+        }.bind(this), contextId, 1);
 
     };
 
     Heatmap.prototype.updateData = function(data) {
-        this.erase();
+        this.delete();
         this.data = data;
         this.paint();
     };
 
-    Heatmap.prototype.erase = function() {
+    Heatmap.prototype.delete = function() {
 
         if(this.resizeEventHandler == null)
             return;

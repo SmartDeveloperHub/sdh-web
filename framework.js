@@ -1,9 +1,15 @@
 (function() {
 
+    /*
+     -------------------------------
+     ------ FRAMEWORK GLOBALS ------
+     -------------------------------
+     */
+
     //Variable where public methods and variables will be stored
     var _self = { metrics: {}, widgets: {} };
 
-    //Path to the SDH-API server with the trailing slash
+    //Path to the SDH-API server without the trailing slash
     var _serverUrl;
 
     // Array with the information about metrics
@@ -23,14 +29,20 @@
 
     var _isReady = false;
 
-    var FRAMEWORK_NAME = "frameworkname";
+    var FRAMEWORK_NAME = "SDHWebFramework";
 
 
 
     /*
-     FRAMEWORK PRIVATE METHODS
+     -------------------------------
+     -- FRAMEWORK PRIVATE METHODS --
+     -------------------------------
      */
 
+    /**
+     * Prints a framework error
+     * @param message Message to display.
+     */
     var error = function error(message) {
         console.error("[" + FRAMEWORK_NAME +  "] " + message);
     };
@@ -59,7 +71,8 @@
      * {
      *       "{metric-id}": {
      *           path:"yourpath/../sdfsdf",
-     *           params: ['param1', 'param2']
+     *           params: ['param1', 'param2'],
+     *           queryParams: ['queryParam1']
      *       },
      *       ...
      *   }
@@ -67,48 +80,122 @@
      */
     var loadMetricsInfo = function loadMetricsInfo(onReady) {
 
-        requestJSON("metrics", null, function(data){
+        requestJSON("/api/", null, function(data) {
 
-            /* Receives a hashmap with the following structure:
-            {
-                <metric-id>: {
-                    path:"yourpath/../sdfsdf",
-                    description: "metric description",
-                    params: {
-                         <paramId>: { // id = "projectid" without ":"
-                             description:"param description",
-                             name:"param beauty name"
-                         },
-                         ...
-                    },
-                    queryparams:{
-                        'from': "date in ms",
-                        'to': "date in ms",
-                        'series': "Bool [true/false]",
-                        'step': "for average series, this parameter establish the distance in days between points. 1day default."
-                    }
-                },
-                ...
-            }
-            */
+            var paths = data['swaggerjson']['paths'];
 
+            //Count number of elements in paths
+            var pathsLength = 0;
+            for(var i in paths) pathsLength++;
+
+            //Function to check if it has finished and call the callback
+            var pathsProcessed = 0;
+            var pathProcessed = function() {
+                if(++pathsProcessed === pathsLength && 'function' === typeof onReady) {
+                    onReady();
+                }
+            };
+
+            //Initialize the _metricInfo object
             _metricsInfo = {};
 
-            for(var metricId in data) {
-                _metricsInfo[metricId] = {
-                    path: _metricsInfo[metricId].path,
-                    params: []
-                };
+            var isMetricList = /\/metrics\/$/;
+            var isMetricListWithoutParams = /^((?!\{).)*\/metrics\/$/;
+            var isSpecificMetric = /\/\{mid\}$/;
 
-                for(var paramId in _metricsInfo[metricId].params) {
-                    _metricsInfo[metricId].params.push(paramId);
+
+            //Iterate over the path of the api
+            for(var path in paths) {
+
+                var pathInfo = paths[path];
+
+                if(isSpecificMetric.test(path)) { //Ignore specific metrics path (like /metrics/{mid}, /project/metrics/{mid}, etc)
+                    pathProcessed(); //Finished processing this path
+                    continue;
+
+                } else if(isMetricListWithoutParams.test(path)) { // List of metrics (like /metrics/, /project/metrics/, etc)
+
+                    // Make an api request to retrieve all the metrics
+                    requestJSON(path, null, function(data) {
+
+                        //Iterate over the metrics
+                        for(var i = 0, len = data.length; i < len; ++i) {
+
+                            var metricInfo = data[i];
+                            var metricId = metricInfo['metricid'];
+                            var metricPath = metricInfo['path'];
+
+                            // Fill the _metricInfo array
+                            _metricsInfo[metricId] = {
+                                path: metricPath,
+                                params: [], //list of url param names
+                                queryParams: [] //list of query params
+                            };
+
+                            //Get the general metric path info (like /metrics/{mid})
+                            var generalMetricPath = metricPath.substring(0, metricPath.lastIndexOf('/')) + '/{mid}';
+                            var generalMetricPathInfo = paths[generalMetricPath];
+
+                            if(generalMetricPathInfo == null) {
+                                error("General metric path ("+generalMetricPathInfo+") does not exist in API path list.");
+                                continue;
+                            }
+
+                            //Add the url params and query paramsto the list
+                            if(generalMetricPathInfo['get']['parameters'] != null) {
+                                var parameters = generalMetricPathInfo['get']['parameters'];
+
+                                //Add all path parameters (not query params) and avoid 'mid'
+                                for(var i = 0, len = parameters.length; i < len; i++) {
+                                    if (parameters[i]['in'] === 'path' && parameters[i]['name'] !== 'mid') {
+                                        _metricsInfo[metricId].params.push(parameters[i]['name']);
+                                    } else if(parameters[i]['in'] === 'query') {
+                                        _metricsInfo[metricId].queryParams.push(parameters[i]['name']);
+                                    }
+                                }
+                            }
+                        }
+
+                        pathProcessed(); //Finished processing this path
+                    });
+
+                } else if(isMetricList.test(path)) { // Ignore list of metrics with params (like /project/{pid}/metrics/)
+                    pathProcessed(); //Finished processing this path
+                    continue;
+
+                } else if(path === '/api/') { //Ignore api description path
+                    pathProcessed(); //Finished processing this path
+                    continue;
+
+                } else { // Is a general list (like /, /projects/, etc)
+
+                    var metricId = pathInfo['get']['operationId'];
+
+                    _metricsInfo[metricId] = {
+                        path: path,
+                        params: [], //list of url param names
+                        queryParams: [] //list of query params
+                    };
+
+                    //Add the url params and query params to the list
+                    if(pathInfo['get']['parameters'] != null) {
+                        var parameters = pathInfo['get']['parameters'];
+
+                        for(var i = 0, len = parameters.length; i < len; i++) {
+                            if (parameters[i]['in'] === 'path') {
+                                _metricsInfo[metricId].params.push(parameters[i]['name']);
+                            } else if(parameters[i]['in'] === 'query') {
+                                _metricsInfo[metricId].queryParams.push(parameters[i]['name']);
+                            }
+                        }
+                    }
+
+                    pathProcessed(); //Finished processing this path
+
                 }
 
             }
 
-            if('function' === typeof onReady) {
-                onReady();
-            }
         });
     };
 
@@ -177,7 +264,7 @@
                 var paramValue = params[paramId];
 
                 if(paramValue != null) {
-                    path.replace(':'+paramId,  paramValue);
+                    path = path.replace('{'+paramId+'}',  paramValue);
                 } else {
                     error("Metric '"+ metricId + "' needs parameter '"+ paramId +"'.");
                 }
@@ -217,13 +304,12 @@
             var params = metrics[i]; //Can use the metric itself because only the needed elements will be used as params.
             var queryParams = {};
 
-            //All the range elements are queryParams
-            for(var name in queryParams.range) {
-                queryParams[name] = queryParams.range[name];
+            //Everything that is not defined as metric param, is considered as queryparam
+            for(var name in params) {
+                if(_metricsInfo[metricId]['queryParams'].indexOf(name) !== -1) {
+                    queryParams[name] =  params[name];
+                }
             }
-
-            //Series is also a queryParam
-            queryParams.series = metrics[i].series;
 
             makeMetricRequest(metricId, params, queryParams, onMetricReady.bind(undefined, metricId))
         }
@@ -246,12 +332,6 @@
             if('string' === typeof metrics[i]) {
                 newMetricsParam.push({id: metrics[i]});
             } else if('object' === typeof metrics[i]) {
-
-                //Series boolean can not be given by the user
-                if(metrics[i].series != null) {
-                    delete metrics[i].series;
-                }
-
                 newMetricsParam.push(metrics[i]);
             } else {
                 error("One of the metric given was not string nor object");
@@ -259,30 +339,6 @@
         }
 
         return newMetricsParam;
-
-    };
-
-    /**
-     * Converts the context to a normalized form to use it internally
-     * @param context Context object. It can be modified, so consider cloning it if necessary.
-     * @returns {Object}
-     */
-    var normalizeContext = function normalizeContext(context) {
-
-        //Series parameter can not be set by a context. Neither range.step parameter.
-        if(context.series != null || (context.range != null && context.range.step != null)) {
-
-            if(context.series != null){
-                delete context.series;
-            }
-
-            if(context.range != null && context.range.step != null) {
-                delete context.range.step;
-            }
-
-        }
-
-        return context;
 
     };
 
@@ -353,22 +409,103 @@
 
         var newMetrics = [];
 
-        normalizeContext(context);
-
         for(var i in metrics) {
-            newMetrics.push(mergeObjects(clone(metrics[i]), context));
+
+            //Clone the metric object to avoid modification
+            var metric = clone(metrics[i]);
+
+            //Clean the context
+            var mergeContext = getCleanContextByMetric(context, metric);
+
+            newMetrics.push(mergeObjects(metric, mergeContext));
         }
+
+        return newMetrics;
     };
 
     /**
+     * Initializes the context container for the given contextId
+     * @param contextId
+     */
+    var initializeContext = function initializeContext(contextId) {
+        _metricContexts[contextId] = { updateCounter: 0, data: {} };
+    };
+
+    /**
+     * Gets a new context with only the params and query params accepted by the metric (taking into account the static
+     * params).
+     * @param context Object
+     * @param metricId A metric object (only id and static are used).
+     */
+    var getCleanContextByMetric = function getCleanContextByMetric(context, metric) {
+        var newContext = {};
+        var metricInfo = _metricsInfo[metric['id']];
+
+        var statics;
+        if(metric['static'] != null){
+            statics = metric['static'];
+        } else {
+            statics = [];
+        }
+
+        //Add all the params this metric accepts
+        for(var i = 0, len = metricInfo.params.length; i < len; ++i) {
+            var name =  metricInfo.params[i];
+            if(context[name] !== undefined && statics.indexOf(name) === -1){
+                newContext[name] = context[name];
+            }
+        }
+
+        //Add all the query params this metric accepts
+        for(var i = 0, len = metricInfo.queryParams.length; i < len; ++i) {
+            var name =  metricInfo.queryParams[i];
+            if(context[name] !== undefined && statics.indexOf(name) === -1){
+                newContext[name] = context[name];
+            }
+        }
+
+        return newContext;
+
+    };
+
+    /**
+     * Checks if the given object is empty
+     * @param o
+     * @returns {boolean} True if empty; false otherwise.
+     */
+    var isObjectEmpty = function isObjectEmpty(o) {
+        for(var i in o)
+            return false;
+        return true;
+    }
+
+
+
+    /*
+       -------------------------------
+       -- FRAMEWORK PUBLIC METHODS ---
+       -------------------------------
+     */
+
+    /**
      *
-     * @param metrics
+     * @param metrics Array with metrics. Each metric can be an string or an object. The object must have the following
+     * format: {
+     *              id: String,
+     *              <param1Id>: String,
+     *              <paramxId>: String,
+     *          }
+     *  For example: {
+     *                   id: "usercommits",
+     *                   uid: "pepito",
+     *                   from :  new Date(),
+     *                   max: 0,
+     *                   static: ["from"] //Static makes this parameter unalterable by the context changes.
+     *               }
      * @param callback
      * @param contextId
-     * @param series
-     * @param step
      */
-    var observeMetrics = function observeMetrics(metrics, callback, contextId, series, step) {
+    _self.metrics.observe = function observe(metrics, callback, contextId) {
 
         if('function' !== typeof callback){
             error("Method 'observeData' requires a valid callback function.");
@@ -380,34 +517,21 @@
             return;
         }
 
-        if('string' !== typeof contextId || _metricContexts[contextId] == null) {
+        if('string' !== typeof contextId) {
             contextId = null;
+        } else if(_metricContexts[contextId] == null) {
+            initializeContext(contextId);
         }
 
         //Normalize the array of metrics
         metrics = normalizeMetrics(metrics);
-
-        //Set all metrics type (series = false) and if it is a series set the step if defined
-        for(var i in metrics) {
-
-            //Set the type
-            metrics[i].series = series;
-
-            //Set the step
-            if(series && step != null) {
-                if(metrics[i].range == null) {
-                    metrics[i].range = {};
-                }
-                metrics[i].range.step = step;
-            }
-        }
 
         //If context is defined, combine the metrics with the context in order to create more complete metrics that could
         // be requested.
         if(contextId != null) {
 
             //Combine the metrics with the context in order to create more complete metrics that could be requested.
-            var metricsWithContext = combineMetricsWithContext(metrics, _metricContexts[contextId].data);
+            var metricsWithContext = combineMetricsWithContext(metrics, _metricContexts[contextId]['data']);
 
             //Request all the metrics if possible
             if(allMetricsCanBeRequested(metricsWithContext)) {
@@ -415,16 +539,32 @@
             }
 
             //Create the CONTEXT event handler
-            var contextEventHandler = function(event, contextCounter) {
+            var contextEventHandler = function(event, contextCounter, contextChanges) {
 
                 //If it is not the last context event launched, ignore the data because there is another more recent
                 // event being executed
-                if(contextCounter != _metricContexts[contextId].updateCounter){
+                if(contextCounter != _metricContexts[contextId]['updateCounter']){
                     return;
                 }
 
+                //Check if the changes affect to the metrics
+                var affectedMetrics = [];
+                for(var i in metrics) {
+                    var cleanContextChanges = getCleanContextByMetric(contextChanges, metrics[i]);
+                    if(!isObjectEmpty(cleanContextChanges)){
+                        affectedMetrics.push(metrics[i]);
+                    }
+                }
+
+                if(affectedMetrics.length === 0) {
+                    return; //The context change did not affect to none the metrics
+                }
+
+                //TODO: when implementing the cache, affectedMetrics should be used to only request the changed metrics.
+                //Currently, as there is no cache, all the data must be requested because it is not stored anywhere.
+
                 //Update the metrics with the context data
-                var metricsWithContext = combineMetricsWithContext(metrics, _metricContexts[contextId].data);
+                var metricsWithContext = combineMetricsWithContext(metrics, _metricContexts[contextId]['data']);
 
                 if(allMetricsCanBeRequested(metricsWithContext)) {
                     multipleMetricsRequest(metricsWithContext, callback);
@@ -446,75 +586,13 @@
         } else { //No context is set
 
             //Request all the metrics
-            if(allMetricsCanBeRequested(metricsWithContext)) {
-                multipleMetricsRequest(metricsWithContext, callback);
+            if(allMetricsCanBeRequested(metrics)) {
+                multipleMetricsRequest(metrics, callback);
             } else {
-                error("Some of the metrics have not information enough for an 'observeData' without context");
+                error("Some of the metrics have not information enough for an 'observe' without context or does not exist.");
             }
         }
 
-    };
-
-
-
-
-    /*
-     FRAMEWORK PUBLIC METHODS
-     */
-
-    /**
-     *
-     * @param metrics Array with metrics. Each metric can be an string or an object. The object must have the following
-     * format: {
-     *              id: String,
-     *              <param1Id>: String,
-     *              <paramxId>: String,
-     *              range: {
-     *                  from: Date,
-     *                  to: Date
-     *              }
-     *          }
-     *  For example: {
-     *                  id: user-commits,
-     *                  userId: 123,
-     *                  range: {
-     *                      from: new Date(2000, 0, 14)
-     *                  }
-     *               }
-     * @param callback
-     * @param contextId (Optional)
-     */
-    _self.metrics.observeData = function observeData(metrics, callback, contextId) {
-        observeMetrics(metrics, callback, contextId, false);
-    };
-
-    /**
-     *
-     * @param metrics Array with metrics. Each metric can be an string or an object. The object must have the following
-     * format (id is the only compulsory element of the object): {
-     *              id: String,
-     *              {param1Id}: String,
-     *              {paramxId}: String,
-     *              range: {
-     *                  from: Date,
-     *                  to: Date,
-     *                  step: Number of days
-     *              }
-     *          }
-     *  For example: {
-     *                  id: user-commits,
-     *                  userId: 123,
-     *                  range: {
-     *                      from: new Date(2000, 0, 14),
-     *                      step: 7
-     *                  }
-     *               }
-     * @param callback
-     * @param contextId (Optional)
-     * @param step (Optional)
-     */
-    _self.metrics.observeSeries = function observeSeries(metrics, callback, contextId, step) {
-        observeMetrics(metrics, callback, contextId, true, step);
     };
 
     /**
@@ -547,43 +625,49 @@
     };
 
     /**
-     *
-     * @param contextId
-     * @param range
+     * Updates the context with the given data.
+     * @param contextId String
+     * @param contextData An object with the params to update. A param value of null means to delete the param from the
+     * context, i.e the following sequence os updateContext with data {uid: 1, max:5, pid: 2} and {pid: 3, max:null}
+     * will result in the following context: {uid: 1, pid:3}
      */
-    _self.metrics.updateContext = function(contextId, contextData) {
+    _self.metrics.updateContext = function updateContext(contextId, contextData) {
 
         if('string' !== typeof contextId) {
             error("Method 'updateRange' requires a string for contextId param.");
             return;
         }
 
-        //Convert context to a common format
-        normalizeContext(contextData);
-
         if(_metricContexts[contextId] == null) {
-            _metricContexts[contextId] = { updateCounter: 0, data: [] };
+            initializeContext(contextId);
         }
 
         //Update values of the context (if null, remove it)
         var hasChanged = false;
+        var changes = {};
         for(var name in contextData) {
 
             var newValue = contextData[name];
-            var oldValue = _metricContexts[contextId].data[name];
+            var oldValue = _metricContexts[contextId]['data'][name];
 
-            if(newValue != null && newValue != oldValue) {
-                _metricContexts[contextId][name] = newValue;
+            //Save the changes
+            if(newValue != oldValue) {
                 hasChanged = true;
-            } else if(oldValue != null) {
-                delete _metricContexts[contextId][name];
+                changes[name] = newValue;
+            }
+
+            //Change the context
+            if(newValue != null && newValue != oldValue) {
+                _metricContexts[contextId]['data'][name] = newValue;
+            } else if(newValue == null && oldValue != null) {
+                delete _metricContexts[contextId]['data'][name];
             }
         }
 
         //Trigger an event to indicate that the context has changed
         if(hasChanged) {
             _metricContexts[contextId].updateCounter++;
-            $(_eventBox).trigger("CONTEXT" + contextId, [_metricContexts[contextId].updateCounter]);
+            $(_eventBox).trigger("CONTEXT" + contextId, [_metricContexts[contextId].updateCounter, changes]);
         }
 
 
@@ -591,7 +675,9 @@
 
 
     /*
-     FRAMEWORK INITIALIZATION
+     --------------------------------
+     --- FRAMEWORK INITIALIZATION ---
+     --------------------------------
      */
 
     /**
@@ -612,8 +698,8 @@
             error("SDH_API_URL global variable must be set with a valid url to the SDH-API server.");
             return false;
         }
-        if(_serverUrl.substr(-1) !== '/') {
-            _serverUrl += '/';
+        if(_serverUrl.substr(-1) === '/') {
+            _serverUrl = _serverUrl.substr(0, _serverUrl.length - 1);
         }
 
         /* CHECK JQUERY */

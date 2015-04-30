@@ -20,9 +20,7 @@
         this.data = null;
         this.aspect = null;
         this.resizeEventHandler = null;
-
-        this.svg = document.createElement("svg");
-        this.element.append(this.svg);
+        this.painted = false;
 
         this.observeCallback = function(data){
             this.updateData(data);
@@ -40,11 +38,12 @@
 
     Heatmap.prototype.delete = function() {
 
-        if(this.resizeEventHandler == null)
+        if(!this.painted)
             return;
 
         //Stop listening to window resize events
         $(window).off("resize", this.resizeEventHandler);
+        this.resizeEventHandler = null;
 
         //Stop observing for data changes
         framework.metrics.stopObserve(this.observeCallback);
@@ -52,6 +51,8 @@
         //Clear DOM
         $(this.svg).empty();
         this.element.empty();
+
+        this.painted = false;
 
     };
 
@@ -64,10 +65,14 @@
             return; // Nothing to paint
         }
 
-        if(this.resizeEvenHandler != null) {
+        if(this.painted) {
             this.updateSize();
             return;
         }
+
+        // Add an svg element to draw in it
+        this.svg = document.createElement("svg");
+        this.element.append(this.svg);
 
         //UI configuration
         var itemSize = 18,
@@ -193,7 +198,7 @@
         d3svg.attr('viewBox', '0 0 '+chartWidth+' '+chartHeight);
         this.aspect = chartWidth / chartHeight;
 
-        this.resizeEventHandler = this.updateSize.bind(this);
+        this.resizeEventHandler = this.updateSize;
         $(window).resize(this.resizeEventHandler);
 
         this.updateSize();

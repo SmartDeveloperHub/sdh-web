@@ -7,16 +7,16 @@
     }
     // BASIC METHODS - - - - - - - - - - - - - - - - - - - - - -
     function normalizeConfig(configuration) {
-        if (!configuration) {
+        if (typeof configuration !== 'object') {
             configuration = {};
         }
-        if (!configuration.ownContext || typeof configuration.ownContext != "string") {
+        if (typeof configuration.ownContext != "string") {
             configuration.ownContext = "dafault_rangeChartD3_Context_id";
         }
-        if (!configuration.maxData || typeof configuration.ownContext != "string") {
+        if (typeof configuration.ownContext != "number") {
             configuration.maxData = 100;
         }
-        if (!configuration.brushedHandler || typeof configuration.brushedHandler != "function") {
+        if (typeof configuration.brushedHandler != "function") {
             configuration.brushedHandler = null;
         }
         return configuration;
@@ -35,6 +35,8 @@
     *                   maxData: max serie data numbers
     *               }
     */
+    var brush;
+
     var RangeChart = function RangeChart(element, metrics, contextId, configuration) {
 
         if(!framework.isReady()) {
@@ -51,6 +53,11 @@
         this.svg = null;
         this.data = null;
         this.maxData = 100;
+
+        brush = d3.svg.brush()
+            .on("brush", brushed.bind(this))
+            .on("brushstart", brushstart.bind(this))
+            .on("brushend", brushend.bind(this));
 
         initChart.call(this);
 
@@ -168,8 +175,8 @@
             }
             x.domain(brush.empty() ? x2.domain() : [new Date(dateFrom), new Date(dateTo)]);
             brush.extent(newRange);
-            repaintChart();
-            brushend();
+            repaintChart.call(this);
+            brushend.call(this);
     });
 
     var setSize = function() {
@@ -206,12 +213,6 @@
             }
         });
     };
-
-    // Using always the same brust instance
-    var brush = d3.svg.brush()
-        .on("brush", brushed.bind(this))
-        .on("brushstart", brushstart.bind(this))
-        .on("brushend", brushend.bind(this));
 
     var coverArea, areaAdd, areaAdd2, svg, focus, context, myTooltip, addPoints, remPoints;
 
@@ -399,7 +400,7 @@
         /*if (changeHandler) {
             changeHandler(d[0], d[1]);
         }*/
-        // TODO _self.metrics.updateContext(myownContextID, changesObjectTodefine)
+        framework.metrics.updateContext(this.ownContext, {from: moment(d[0]).format("YYYY-MM-DD"), to: moment(d[1]).format("YYYY-MM-DD")});
         var dif = d[1].getTime() - d[0].getTime();
         dragFactor = dif/3252203414 * dragTime4Pixel;
     }

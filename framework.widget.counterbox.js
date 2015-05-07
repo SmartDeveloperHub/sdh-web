@@ -134,7 +134,7 @@
             suffix : ''
         };
 
-        var cntr = new countUp('targetNumber', null, this.data.values[0], this.configuration.decimal, this.configuration.changetime, options);
+        var cntr = new countUp('targetNumber', this.currentValue, this.data.values[0], this.configuration.decimal, this.configuration.changetime, options);
         this.currentValue = this.data.values[0];
         cntr.start();
 

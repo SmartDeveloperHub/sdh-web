@@ -6,7 +6,21 @@
         return;
     }
     // BASIC METHODS - - - - - - - - - - - - - - - - - - - - - -
-
+    function normalizeConfig(configuration) {
+        if (!configuration) {
+            configuration = {};
+        }
+        if (!configuration.ownContext || typeof configuration.ownContext != "string") {
+            configuration.ownContext = "dafault_rangeChartD3_Context_id";
+        }
+        if (!configuration.maxData || typeof configuration.ownContext != "string") {
+            configuration.maxData = 100;
+        }
+        if (!configuration.brushedHandler || typeof configuration.brushedHandler != "function") {
+            configuration.brushedHandler = null;
+        }
+        return configuration;
+    };
     // TODO TEST THIS WIDGET!!!
 
     /* RangeChart constructor
@@ -27,39 +41,50 @@
             console.error("RangeChart object could not be created because framework is not loaded.");
             return;
         }
-        if (configuration && configuration.ownContext) {
-            this.ownContext = configuration.ownContext;
-        } else {
-            this.ownContext = "dafault_rangeChartD3_Context_id";
-        }
-        if (configuration && configuration.maxData) {
-            this.maxData = configuration.maxData;
-        } else {
-            this.maxData = 100;
-        }
+        configuration = normalizeConfig(configuration);
 
-        this.element = $(element);
+        this.ownContext = configuration.ownContext;
+        this.maxData = configuration.maxData;
+        this.brushedHandler = configuration.brushedHandler;
+
+        this.element = element;
         this.svg = null;
         this.data = null;
         this.maxData = 100;
 
-        initChart().bind(this);
+        initChart.call(this);
 
-        this.observeCallback = function(data) {
+        this.observeMetric = function(data) {
             // TODO two series in the same graph
-            this.updateData(data);
+            var metric = data[Object.keys(data)[0]];
+            var timePoint = metric.interval.from - metric.step;
+            this.data = {
+                "key": metric.metricinfo.description,
+                "color": "#2ca02c",
+                "area": true,
+                "values": metric.values.map(function(dat, index) {
+                    timePoint += metric.step;
+                    return {'date': new Date(new Date(timePoint).getTime()), 'lines': dat};
+                })
+            };
+
+            this.updateData(this.data);
         }.bind(this);
 
-        framework.metrics.observeSeries(metrics, this.observeCallback , contextId, this.maxData);
+        framework.metrics.observe(metrics, this.observeMetric , contextId, this.maxData);
         this.resizeHandler = function() {
-            repaintChart(true);
+            repaintChart.call(this, true);
         }.bind(this);
         $(window).resize(this.resizeHandler);
     };
+    //RangeChart.prototype = new widget();
 
     RangeChart.prototype.updateData = function(data) {
-        this.data = data;
-        repaintChart(true);
+        repaintChart.call(this);
+        // Incomprehensible graph bug. brush.extend() returns:
+        // [Thu Jan 01 1970 01:00:00 GMT+0100 (Hora estándar romance), Thu Jan 01 1970 01:00:00 GMT+0100 (Hora estándar romance)]
+        // if not repaint re-seting svg element :\
+        repaintChart.call(this, true);
     };
 
     RangeChart.prototype.delete = function() {
@@ -115,7 +140,7 @@
             var mov = d3.event.dx * dragFactor;
             var dateFrom = brush.extent()[0].getTime() - (mov);
             var dateTo = brush.extent()[1].getTime() - (mov);
-            var newRange = [new Date(dateFrom), new Date(dateTo)];
+            var newRange = [new Date(dateFrom).toString(), new Date(dateTo)];
             x.domain(brush.empty() ? x2.domain() : [new Date(dateFrom), new Date(dateTo)]);
             brush.extent(newRange);
             repaintChart();
@@ -148,7 +173,7 @@
     });
 
     var setSize = function() {
-        var currentWidth = parseInt(this.element.parent().width());
+        var currentWidth = parseInt($(this.element).parent().width());
         
         margin = {top: 10, right: 10, bottom: 100, left: 40};
         width = currentWidth - margin.left - margin.right;
@@ -184,11 +209,11 @@
 
     // Using always the same brust instance
     var brush = d3.svg.brush()
-    .on("brush", brushed.bind(this))
-    //.on("brushstart", brushstart)
-    .on("brushend", brushend.bind(this));
+        .on("brush", brushed.bind(this))
+        .on("brushstart", brushstart.bind(this))
+        .on("brushend", brushend.bind(this));
 
-    var coverArea, areaAdd, areaRem, areaAdd2, areaRem2, svg, focus, context, myTooltip, addPoints, remPoints;
+    var coverArea, areaAdd, areaAdd2, svg, focus, context, myTooltip, addPoints, remPoints;
 
     var setSvg = function setSvg() {
         brush.x(x2);
@@ -202,14 +227,6 @@
                 return y2(d.lines);
             });
 
-        areaRem2 = d3.svg.area()
-            .interpolate("monotone")
-            .x(function(d) { return x2(d.date); })
-            .y1(function() {
-               return y2(0);
-             })
-            .y0(function(d) { return y2(d.lines); });
-
         coverArea = d3.svg.area()
             .interpolate("monotone")
             .x(function(d) { return x(d.date); })
@@ -222,21 +239,15 @@
 
         areaAdd = d3.svg.area()
             .interpolate("monotone")
-            .x(function(d) { return x(d.date); })
+            .x(function(d) {
+                return x(d.date);
+            })
             .y0(function() {
                 return y(0);
-             })
+            })
             .y1(function(d) {
                 return y(d.lines);
             });
-
-        areaRem = d3.svg.area()
-            .interpolate("monotone")
-            .x(function(d) { return x(d.date); })
-            .y1(function() {
-                return y(0);
-             })
-            .y0(function(d) { return y(d.lines); });
 
         svg = d3.select(this.element)
             .attr('class', "activityRangeChart")
@@ -265,16 +276,24 @@
 
     setData = function setData() {
         data = this.data;
-        downLimit = new Date(data[0].values[0].date).getTime();
-        upLimit = new Date(data[data.length-1].values[data[data.length-1].values.length-1].date).getTime();
-        x.domain(d3.extent(data[0].values.map(function(d) { return d.date; })));
-        y.domain([d3.min(data[1].values.map(function(d) { return d.lines; })) -100, d3.max(data[0].values.map(function(d) { return d.lines; })) + 100]);
+        downLimit = new Date(data.values[0].date).getTime();
+        upLimit = new Date(data.values[data.values.length-1].date).getTime();
+        x.domain(d3.extent(data.values.map(function(d) {
+                return d.date;
+            }
+        )));
+        y.domain([d3.min(data.values.map(function(d) {
+                                                return d.lines;
+                                            }
+        )), d3.max(data.values.map(function(d) {
+                return d.lines;
+            }
+        ))]);
         x2.domain(x.domain());
         y2.domain(y.domain());
 
         // Lines added
-        var addData = data[0].values.map(function(d) { return {'date': d.date, 'lines': d.lines}; });
-        var remData = data[1].values.map(function(d) { return {'date': d.date, 'lines': d.lines}; });
+        var addData = data.values.map(function(d) { return {'date': d.date, 'lines': d.lines}; });
 
         /*TODO
         myTooltip = d3.tip()
@@ -305,12 +324,6 @@
             .attr("d", areaAdd)
             .attr("clip-path", "url(#clip)");
 
-        focus.append("path")
-            .datum(remData)
-            .attr("class", "areaRem")
-            .attr("d", areaRem)
-            .attr("clip-path", "url(#clip)");
-
         focus.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
@@ -334,11 +347,6 @@
             .attr("class", "areaAdd2")
             .attr("d", areaAdd2);
 
-        context.append("path")
-            .datum(remData)
-            .attr("class", "areaRem2")
-            .attr("d", areaRem2);
-
         context.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height2 + ")")
@@ -354,19 +362,6 @@
         //svg.call(myTooltip);
     };
 
-    function brushed() {
-        x.domain(brush.empty() ? x2.domain() : brush.extent());
-        focus.select(".areaAdd").attr("d", areaAdd);
-        focus.select(".areaRem").attr("d", areaRem);
-        focus.select(".gridY").call(make_x_axis()
-            .tickSize(-height, 0, 0)
-            .tickFormat(""));
-        focus.select(".x.axis").call(xAxis);
-        if (brushedHandler) {
-            brushedHandler(brush.extent()[0], brush.extent()[1]);
-        }
-    }
-
     var repositioningDates = function repositioningDates() {
         // Discrete Time positions. Day by day by the moment. TODO using data frecuency
         // Take the current range
@@ -376,6 +371,22 @@
         return [theInitial, theFinal];
     }
 
+    function brushstart() {
+        console.log(brush.extent());
+    };
+
+    function brushed() {
+        x.domain(brush.empty() ? x2.domain() : brush.extent());
+        focus.select(".areaAdd").attr("d", areaAdd);
+        focus.select(".gridY").call(make_x_axis()
+            .tickSize(-height, 0, 0)
+            .tickFormat(""));
+        focus.select(".x.axis").call(xAxis);
+        if (this.brushedHandler) {
+            this.brushedHandler(brush.extent()[0], brush.extent()[1]);
+        }
+    }
+
     function brushend() {
         var d;
 
@@ -383,12 +394,12 @@
             d = x2.domain();
         } else {
             // Adjust to the closer position
-            d = repositioningDates().bind(this);
+            d = repositioningDates.call(this);
         }
-        if (changeHandler) {
+        /*if (changeHandler) {
             changeHandler(d[0], d[1]);
-        }
-        // TODO _self.metrics.updateContext(myownContextID, changesObjectTodefine in future)
+        }*/
+        // TODO _self.metrics.updateContext(myownContextID, changesObjectTodefine)
         var dif = d[1].getTime() - d[0].getTime();
         dragFactor = dif/3252203414 * dragTime4Pixel;
     }
@@ -396,24 +407,24 @@
     var repaintChart = function repaintChart(isResize) {
         var oldDomain = brush.extent();
         if (isResize) {
-            svg.remove();
-            setSvg().bind(this);
+            this.svg.remove();
+            setSvg.call(this);
         } else {
             focus.remove();
             context.remove();
         }
-        setSize().bind(this);
-        setAxis().bind(this);
-        setGs().bind(this);
-        setData().bind(this);
-        brush.extent(oldDomain).bind(this);
-        brushed().bind(this);
+        setSize.call(this);
+        setAxis.call(this);
+        setGs.call(this);
+        setData.call(this);
+        brush.extent.call(this, oldDomain);
+        brushed.call(this);
     };
 
     var initChart = function initChart() {
-        setSize().bind(this);
-        setAxis().bind(this);
-        setSvg().bind(this);
-        setGs().bind(this);
+        setSize.call(this);
+        setAxis.call(this);
+        setSvg.call(this);
+        setGs.call(this);
     };
 })();

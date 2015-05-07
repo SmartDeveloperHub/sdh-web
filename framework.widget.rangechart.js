@@ -35,7 +35,7 @@
     *                   maxData: max serie data numbers
     *               }
     */
-    var brush;
+    var brush, drag;
 
     var RangeChart = function RangeChart(element, metrics, contextId, configuration) {
 
@@ -60,7 +60,50 @@
             .on("brushend", brushend.bind(this));
 
         initChart.call(this);
-
+        drag = d3.behavior.drag()
+        .on("dragstart", function() {
+                if (brush.empty()) {
+                    return;
+                }
+        }.bind(this))
+        .on("drag", function() {
+                if (brush.empty()) {
+                    return;
+                }
+                var mov = d3.event.dx * dragFactor;
+                var dateFrom = new Date(brush.extent()[0]).getTime() - (mov);
+                var dateTo = new Date(brush.extent()[1]).getTime() - (mov);
+                var newRange = [new Date(dateFrom), new Date(dateTo)];
+                x.domain(brush.empty() ? x2.domain() : [new Date(dateFrom), new Date(dateTo)]);
+                brush.extent(newRange);
+                repaintChart.call(this);
+        }.bind(this))
+        .on("dragend", function() {
+                if (brush.empty()) {
+                    return;
+                }
+                var mov = d3.event.dx * dragFactor;
+                var dateFrom = new Date(brush.extent()[0]).getTime();
+                var dateTo = new Date(brush.extent()[1]).getTime();
+                var newRange = [new Date(dateFrom), new Date(dateTo)];
+                if (dateFrom < downLimit) {
+                    var dif = dateTo - dateFrom;
+                    dateFrom = downLimit;
+                    dateTo = downLimit + dif;
+                    var newRange = [new Date(dateFrom), new Date(dateTo)];
+                } else if(dateTo > upLimit) {
+                    var dif = dateTo - dateFrom;
+                    dateFrom = upLimit - dif;
+                    dateTo = upLimit;
+                    var newRange = [new Date(dateFrom), new Date(dateTo)];
+                } else {
+                    //return;
+                }
+                x.domain(brush.empty() ? x2.domain() : [new Date(dateFrom), new Date(dateTo)]);
+                brush.extent(newRange);
+                repaintChart.call(this);
+                brushend.call(this);
+        }.bind(this));
         this.observeMetric = function(data) {
             // TODO two series in the same graph
             var metric = data[Object.keys(data)[0]];
@@ -108,6 +151,11 @@
         return this.ownContext;
     };
 
+    RangeChart.prototype.updateContext = function(d) {
+        framework.metrics.updateContext(this.ownContext, {from: moment(d[0]).format("YYYY-MM-DD"), to: moment(d[1]).format("YYYY-MM-DD")});
+
+    };
+
     window.framework.widgets.RangeChart = RangeChart;
 
 
@@ -133,51 +181,6 @@
     }
 
     var downLimit, upLimit;
-
-    var drag = d3.behavior.drag()
-    .on("dragstart", function() {
-            if (brush.empty()) {
-                return;
-            }
-    })
-    .on("drag", function() {
-            if (brush.empty()) {
-                return;
-            }
-            var mov = d3.event.dx * dragFactor;
-            var dateFrom = brush.extent()[0].getTime() - (mov);
-            var dateTo = brush.extent()[1].getTime() - (mov);
-            var newRange = [new Date(dateFrom).toString(), new Date(dateTo)];
-            x.domain(brush.empty() ? x2.domain() : [new Date(dateFrom), new Date(dateTo)]);
-            brush.extent(newRange);
-            repaintChart();
-    })
-    .on("dragend", function() {
-            if (brush.empty()) {
-                return;
-            }
-            var mov = d3.event.dx * dragFactor;
-            var dateFrom = brush.extent()[0].getTime();
-            var dateTo = brush.extent()[1].getTime();
-            var newRange = [new Date(dateFrom), new Date(dateTo)];
-            if (dateFrom < downLimit) {
-                var dif = dateTo - dateFrom;
-                dateFrom = downLimit;
-                dateTo = downLimit + dif;
-                var newRange = [new Date(dateFrom), new Date(dateTo)];
-            } else if(dateTo > upLimit) {
-                var dif = dateTo - dateFrom;
-                dateFrom = upLimit - dif;
-                dateTo = upLimit;
-                var newRange = [new Date(dateFrom), new Date(dateTo)];
-            } else {
-                //return;
-            }
-            x.domain(brush.empty() ? x2.domain() : [new Date(dateFrom), new Date(dateTo)]);
-            brush.extent(newRange);
-            repaintChart.call(this);
-            brushend.call(this);
-    });
 
     var setSize = function() {
         var currentWidth = parseInt($(this.element).parent().width());
@@ -400,7 +403,7 @@
         /*if (changeHandler) {
             changeHandler(d[0], d[1]);
         }*/
-        framework.metrics.updateContext(this.ownContext, {from: moment(d[0]).format("YYYY-MM-DD"), to: moment(d[1]).format("YYYY-MM-DD")});
+        this.updateContext(d);
         var dif = d[1].getTime() - d[0].getTime();
         dragFactor = dif/3252203414 * dragTime4Pixel;
     }

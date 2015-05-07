@@ -1,5 +1,8 @@
 (function() {
 
+    //Constants
+    var ONE_DAY_MS = 86400000;
+
     // CHECK D3
     if(typeof d3 === 'undefined') {
         console.error("Heatmap could not be loaded because d3 did not exist.");
@@ -15,24 +18,30 @@
             return;
         }
 
+        if(metrics.length > 1) {
+            metrics = metrics.splice(1, metrics.length-1);
+            console.warn("This widget only allows one metric. The other metrics will be ignored.");
+        }
+
         this.element = $(element); //Store as jquery object
         this.svg = null;
         this.data = null;
         this.aspect = null;
         this.resizeEventHandler = null;
         this.painted = false;
+        this.metricId = metrics[0]['id'];
 
         this.observeCallback = function(data){
             this.updateData(data);
         }.bind(this);
 
-        framework.metrics.observeSeries(metrics, this.observeCallback , contextId, 1);
+        framework.metrics.observe(metrics, this.observeCallback , contextId);
 
     };
 
     Heatmap.prototype.updateData = function(data) {
         this.delete();
-        this.data = data;
+        this.data = data[this.metricId];
         this.paint();
     };
 
@@ -49,7 +58,7 @@
         framework.metrics.stopObserve(this.observeCallback);
 
         //Clear DOM
-        $(this.svg).empty();
+        this.svg.empty();
         this.element.empty();
 
         this.painted = false;
@@ -61,6 +70,8 @@
 
     Heatmap.prototype.paint = function() {
 
+        console.log("paint");
+
         if(this.data == null) {
             return; // Nothing to paint
         }
@@ -71,14 +82,19 @@
         }
 
         // Add an svg element to draw in it
-        this.svg = document.createElement("svg");
+        this.element.append('<svg role="heatmap" class="heatmap" preserveAspectRatio="xMidYMid"></svg>');
+        this.svg = this.element.children("svg");
         this.element.append(this.svg);
+
+        // Metric values
+        var dataValues = this.data['values'];
+        var timeStep = this.data['step'];
 
         //UI configuration
         var itemSize = 18,
             cellSize = itemSize-1,
-            width = $(this.svg).width(),
-            height = $(this.svg).height(),
+            width = this.element.width(),
+            height = this.element.height(),
             margin = {top:20,right:20,bottom:20,left:40};
 
         //formats
@@ -87,8 +103,7 @@
             weekDayFormat = d3.time.format("%w");
 
         //data vars for rendering
-        var dateExtent = null,
-            colorCalibration = ['#f6faaa','#FEE08B','#FDAE61','#F46D43','#D53E4F','#9E0142'];
+        var colorCalibration = ['#f6faaa','#FEE08B','#FDAE61','#F46D43','#D53E4F','#9E0142'];
 
         //axises and scales
         var axisWidth = 0 ,
@@ -100,14 +115,14 @@
                 .ticks(d3.time.months,1)
                 .tickFormat(monthNameFormat),
             weekDayNames = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-        yAxis = d3.svg.axis()
-            .orient('left')
-            .ticks(7)
-            .tickFormat(function(d, i){
-                return weekDayNames[d];
-            });
+            yAxis = d3.svg.axis()
+                .orient('left')
+                .ticks(7)
+                .tickFormat(function(d, i){
+                    return weekDayNames[d];
+                });
 
-        var d3svg = d3.select(this.svg);
+        var d3svg = d3.select(this.svg.get(0));
         var heatmap = d3svg
             .attr('width',width)
             .attr('height',height)
@@ -119,42 +134,64 @@
             .attr('transform','translate('+margin.left+','+margin.top+')');
 
         var rect = null;
-        var maxValue = -1;
-        var minValue = Infinity;
         var paintDelay = 1000;
 
-        this.data.forEach(function(d){
-            minValue = d3.min([minValue, d.value]);
-            maxValue = d3.max([maxValue, d.value]);
+        var maxValue = -1;
+        var minValue = Infinity;
+        var dailyValues = [];
+
+        //Create a date extent object with the from and to dates
+        var dateExtent = [new Date(this.data['interval']['from']), new Date(this.data['interval']['to'])];
+
+        //Clean the from date to start from midnight
+        var firstDay = new Date(dateExtent[0]);
+        firstDay.setHours(0);
+        firstDay.setMinutes(0);
+        firstDay.setMilliseconds(0);
+
+        dataValues.forEach(function(value,index){
+
+            //Given the data index and the from date, calculate the current date
+            var curDate = dateExtent[0].getTime() + index * timeStep;
+
+            //How many days has been since the from date
+            var day = Math.floor((curDate - firstDay) / ONE_DAY_MS);
+
+            //Increment the value for that day
+            dailyValues[day] = (dailyValues[day] != null ? dailyValues[day] + value : value);
+
         });
+
+        //Get the min and max values (to create later the color scale)
+        dailyValues.forEach(function(value){
+            minValue = d3.min([minValue, value]);
+            maxValue = d3.max([maxValue, value]);
+        });
+
 
         function renderColor(){
             rect
-                .filter(function(d){
-                    return (d.value>=0);
+                .filter(function(value){
+                    return value >= 0;
                 })
                 .transition()
-                .delay(function(d){
+                .delay(function(d, index){
                     var max = dateExtent[1].getTime();
                     var min = dateExtent[0].getTime();
-                    var current = d.date.getTime();
+                    var current = dateExtent[0].getTime() + index * timeStep;
                     return paintDelay * (current - min)/(max - min);
                 })
                 .duration(500)
-                .attrTween('fill',function(d,i,a){
+                .attrTween('fill',function(value,i,a){
                     //choose color dynamicly
                     var colorIndex = d3.scale.quantize()
                         .range([0,1,2,3,4,5])
                         .domain([minValue,maxValue]);
-                    return d3.interpolate(a,colorCalibration[colorIndex(d.value)]);
+                    return d3.interpolate(a,colorCalibration[colorIndex(value)]);
                 });
         }
 
-        dateExtent = d3.extent(this.data,function(d){
-            return d.date;
-        });
-
-        var numWeeks = Math.ceil((dateExtent[1] - dateExtent[0] + weekDayFormat(dateExtent[0]) * 86400000) / 604800000);
+        var numWeeks = Math.ceil((dateExtent[1] - dateExtent[0] + weekDayFormat(dateExtent[0]) * ONE_DAY_MS) / 604800000);
 
         axisWidth = itemSize * numWeeks; //53 weeks in a year
 
@@ -173,22 +210,25 @@
 
         //render heatmap rects
         rect = heatmap.selectAll('rect')
-            .data(this.data)
+            .data(dailyValues)
             .enter().append('rect')
             .attr('width',cellSize)
             .attr('height',cellSize)
-            .attr('x',function(d){
-                return itemSize * Math.floor((d.date - dateExtent[0] + weekDayFormat(dateExtent[0]) * 86400000) / 604800000);
+            .attr('x',function(d,index){
+                var curDate = dateExtent[0].getTime() + index * ONE_DAY_MS;
+                return itemSize * Math.floor((curDate - firstDay + weekDayFormat(firstDay) * ONE_DAY_MS) / 604800000);
             })
-            .attr('y',function(d){
-                return weekDayFormat(d.date)*itemSize;
+            .attr('y',function(d,index){
+                var curDate = dateExtent[0].getTime() + index * ONE_DAY_MS;
+                return weekDayFormat(new Date(curDate))*itemSize;
             })
             .attr('fill','#ffffff');
 
-        rect.filter(function(d){ return d.value>0;})
+        rect.filter(function(value){ return value>0;})
             .append('title')
-            .text(function(d){
-                return dateFormat(d.date)+': '+d.value;
+            .text(function(value, index){
+                var curDate = dateExtent[0].getTime() + index * ONE_DAY_MS;
+                return dateFormat(new Date(curDate))+': '+value;
             });
 
         renderColor();
@@ -198,7 +238,7 @@
         d3svg.attr('viewBox', '0 0 '+chartWidth+' '+chartHeight);
         this.aspect = chartWidth / chartHeight;
 
-        this.resizeEventHandler = this.updateSize;
+        this.resizeEventHandler = this.updateSize.bind(this);
         $(window).resize(this.resizeEventHandler);
 
         this.updateSize();
@@ -206,15 +246,17 @@
     };
 
     Heatmap.prototype.updateSize = function() {
-        var parentWidth = this.svg.parentElement.getBoundingClientRect().width;
-        var parentHeight = this.svg.parentElement.getBoundingClientRect().height;
+
+        console.log("updateSize");
+        var parentWidth = this.svg.parent().get(0).getBoundingClientRect().width;
+        var parentHeight = this.svg.parent().get(0).getBoundingClientRect().height;
         var parentAspect = parentWidth / parentHeight;
         if(parentAspect <= this.aspect){
-            this.svg.setAttribute('width', parentWidth);
-            this.svg.setAttribute('height', parentWidth / this.aspect);
+            this.svg.attr('width', parentWidth);
+            this.svg.attr('height', parentWidth / this.aspect);
         } else {
-            this.svg.setAttribute('width', parentHeight * this.aspect);
-            this.svg.setAttribute('height', parentHeight);
+            this.svg.attr('width', parentHeight * this.aspect);
+            this.svg.attr('height', parentHeight);
         }
     };
 

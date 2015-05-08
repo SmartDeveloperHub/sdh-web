@@ -47,6 +47,18 @@
             configuration.icon = "octicon octicon-octoface";
         }
 
+        if (typeof configuration.iconcolor !== "string") {
+            configuration.iconcolor = "#FFF";
+        }
+
+        if (typeof configuration.labelcolor !== "string") {
+            configuration.testcolor = "rgba(0, 0, 0, 0.7)";
+        }
+
+        if (typeof configuration.countercolor !== "string") {
+            configuration.testcolor = "#000";
+        }
+
         if (typeof configuration.decimal !== "number") {
             configuration.decimal = 2;
         }
@@ -61,13 +73,16 @@
     *  configuration: you can use his optional parameter to assing a custom
     *       contextID for this context provider chart. Ej:
     *      {
-    *         label: label text
+    *         label: label text,
+    *         labelcolor: label text color,
+    *         countercolor: color of the number,
     *         background: optional color in any css compatible format ej: "#0C0C0C" (default #FFF),
     *         initfrom: optional initial animation value (default 0),
     *         initto: optional final animation value (default 0),
     *         changetime: this time in seconds set the change data animation duration (default 3),
     *         changeeasing: optional animation effect data-easing fast-slow (default true),
     *         icon: optional icon css class (default "octicon octicon-octoface"),
+    *         iconcolor: widget icon color,
     *         iconbackground: optional color in any css compatible format ej: "#0C0C0C" (default #68B828),
     *         decimal: number of decimals in metric value
     *      }
@@ -87,28 +102,29 @@
         // container
         this.container = document.createElement('div');
         this.container.className = "com-widget com-counter";
-        this.container.setAttribute("data-count", ".num");
         this.container.setAttribute("data-easing", this.configuration.changeeasing);
-        this.container.background = this.configuration.background;
+        this.container.style.background = this.configuration.background;
         // icon
         this.icon = document.createElement('div');
         this.icon.className = "com-icon";
         var ico = document.createElement('i');
         ico.className = this.configuration.icon;
-        ico.background = this.configuration.iconbackground;
+        ico.style.background = this.configuration.iconbackground;
+        ico.style.color = this.configuration.iconcolor;
         this.icon.appendChild(ico);
         this.container.appendChild(this.icon);
         // value
         this.label = document.createElement('div');
         this.label.className = "com-label";
-        var labn = document.createElement('strong')
-        labn.className = "num";
-        labn.id = "targetNumber";
-        labn.innerHTML = this.configuration.initfrom;
-        this.label.appendChild(labn);
+        this.labn = document.createElement('strong');
+        this.labn.className = "num";
+        this.labn.style.color = this.configuration.countercolor;
+        this.labn.innerHTML = this.configuration.initfrom;
+        this.label.appendChild(this.labn);
         // label
         var labt = document.createElement('span');
         labt.innerHTML = this.configuration.label;
+        labt.style.color = this.configuration.labelcolor;
         this.label.appendChild(labt);
         this.container.appendChild(this.label);
 
@@ -126,15 +142,15 @@
         this.data = data[Object.keys(data)[0]];
 
         var options = {
-            useEasing : this.configuration.changeeasing, 
-            useGrouping : true, 
-            separator : ',', 
+            useEasing : this.configuration.changeeasing,
+            useGrouping : true,
+            separator : '.',
             decimal : this.decimal,
             prefix : '' ,
             suffix : ''
         };
 
-        var cntr = new countUp('targetNumber', this.currentValue, this.data.values[0], this.configuration.decimal, this.configuration.changetime, options);
+        var cntr = new countUp(this.labn, this.currentValue, this.data.values[0], this.configuration.decimal, this.configuration.changetime, options);
         this.currentValue = this.data.values[0];
         cntr.start();
 

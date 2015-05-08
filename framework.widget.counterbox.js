@@ -12,7 +12,7 @@
         }
 
         if (typeof configuration.label !== 'string') {
-            configuration.label = "";
+            configuration.label = "---";
         }
 
         if (typeof configuration.background !== 'string') {

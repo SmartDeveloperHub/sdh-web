@@ -170,7 +170,7 @@
     var dragFactor = 3000000;
 
     var activityChartObject, setData, chageUpDownIcon, timeChartVisible;
-    var margin, width, margin2, height, height2, width2;
+    var margin, width, margin2, totHeight, height, height2, width2;
 
     var x, x2, y, y2, xAxis, xAxis2;
 
@@ -190,14 +190,14 @@
 
     var setSize = function() {
         var currentWidth = parseInt($(this.element).parent().width());
-        
+        totHeight = 230;
         margin = {top: 10, right: 10, bottom: 100, left: 40};
         width = currentWidth - margin.left - margin.right;
         margin2 = {top: 170, right: width*0.2, bottom: 20, left: width*0.2};
 
-        height = 230 - margin.top - margin.bottom;
+        height = totHeight - margin.top - margin.bottom;
 
-        height2 = 230 - margin2.top - margin2.bottom;
+        height2 = totHeight - margin2.top - margin2.bottom;
 
         width2 = width * 0.6;
     }
@@ -262,9 +262,9 @@
         svg = d3.select(this.element)
             .attr('class', "activityRangeChart")
           .append("svg")
-            .attr('height', height)
+            .attr('height', totHeight)
             .attr('width', width)
-            .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
+            //.attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
         this.svg = svg;
 
         clipPath = svg.append("defs").append("clipPath")

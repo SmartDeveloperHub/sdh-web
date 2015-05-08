@@ -71,8 +71,14 @@
                     return;
                 }
                 var mov = d3.event.dx * dragFactor;
-                var dateFrom = new Date(brush.extent()[0]).getTime() - (mov);
-                var dateTo = new Date(brush.extent()[1]).getTime() - (mov);
+                var dateFrom = new Date(brush.extent()[0]).getTime();
+                var dateTo = new Date(brush.extent()[1]).getTime();
+                if (dateFrom < dateTo) {
+                    mov = -mov;
+                }
+                dateFrom = dateFrom + mov;
+                dateTo = dateTo + mov;
+
                 var newRange = [new Date(dateFrom), new Date(dateTo)];
                 x.domain(brush.empty() ? x2.domain() : [new Date(dateFrom), new Date(dateTo)]);
                 brush.extent(newRange);

@@ -87,15 +87,16 @@
     *         decimal: number of decimals in metric value
     *      }
     */
-    var CounterBox = function (element, metrics, contextId, configuration) {
+    var CounterBox = function CounterBox(element, metrics, contextId, configuration) {
 
         if(!framework.isReady()) {
             console.error("CounterBox object could not be created because framework is not loaded.");
             return;
         }
+        this.element = $(element);
+
         this.configuration = normalizeConfig(configuration);
 
-        this.element = $(element);
         this.data = null;
         this.decimal = this.configuration.decimal;
         this.currentValue = 0;
@@ -130,13 +131,24 @@
 
         element.appendChild(this.container);
 
+        // extending widget
+        framework.widgets.CommonWidget.call(this, false);
+
         this.observeCallback = function(data){
-            this.updateData(data);
+            // loading test TODO
+            this.startLoading();
+            setTimeout(function() {
+                this.endLoading();
+                this.updateData(data);
+            }.bind(this)
+            , 1300);
         }.bind(this);
 
         framework.metrics.observe(metrics, this.observeCallback , contextId, 1);
 
     };
+
+    CounterBox.prototype = new framework.widgets.CommonWidget(true);
 
     CounterBox.prototype.updateData = function(data) {
         this.data = data[Object.keys(data)[0]];
@@ -167,6 +179,6 @@
 
     };
 
-    window.framework.widgets.counterBox = CounterBox;
+    window.framework.widgets.CounterBox = CounterBox;
 
 })();

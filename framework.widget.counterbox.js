@@ -107,7 +107,7 @@
         this.container.style.background = this.configuration.background;
         // icon
         this.icon = document.createElement('div');
-        this.icon.className = "com-icon";
+        this.icon.className = "com-icon blurable";
         var ico = document.createElement('i');
         ico.className = this.configuration.icon;
         ico.style.background = this.configuration.iconbackground;
@@ -116,7 +116,7 @@
         this.container.appendChild(this.icon);
         // value
         this.label = document.createElement('div');
-        this.label.className = "com-label";
+        this.label.className = "com-label blurable";
         this.labn = document.createElement('strong');
         this.labn.className = "num";
         this.labn.style.color = this.configuration.countercolor;
@@ -132,7 +132,7 @@
         element.appendChild(this.container);
 
         // extending widget
-        framework.widgets.CommonWidget.call(this, false);
+        framework.widgets.CommonWidget.call(this, false, element);
 
         this.observeCallback = function(data){
             // loading test TODO

@@ -143,7 +143,7 @@
         }
 
         // Add an svg element to draw in it
-        this.element.append('<svg role="heatmap" class="heatmap" preserveAspectRatio="xMidYMid"></svg>');
+        this.element.append('<svg role="heatmap" class="heatmap blurable" preserveAspectRatio="xMidYMid"></svg>');
         this.svg = this.element.children("svg");
         this.element.append(this.svg);
 

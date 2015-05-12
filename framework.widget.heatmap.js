@@ -55,8 +55,15 @@
         // Configuration
         this.configuration = normalizeConfig(configuration);
 
-        this.observeCallback = function(data){
-            this.updateData(data);
+        this.observeCallback = function(event){
+
+            if(event.event === 'loading') {
+                this.startLoading();
+            } else if(event.event === 'data') {
+                this.updateData(event.data);
+                this.endLoading();
+            }
+
         }.bind(this);
 
         framework.metrics.observe(metrics, this.observeCallback , contextId);

@@ -54,6 +54,9 @@
         this.data = null;
         this.maxData = 100;
 
+        // extending widget
+        framework.widgets.CommonWidget.call(this, false, element);
+
         brush = d3.svg.brush()
             .on("brush", brushed.bind(this))
             .on("brushstart", brushstart.bind(this))
@@ -110,21 +113,31 @@
                 repaintChart.call(this);
                 brushend.call(this);
         }.bind(this));
-        this.observeMetric = function(data) {
-            // TODO two series in the same graph
-            var metric = data[Object.keys(data)[0]];
-            var timePoint = metric.interval.from - metric.step;
-            this.data = {
-                "key": metric.metricinfo.description,
-                "color": "#2ca02c",
-                "area": true,
-                "values": metric.values.map(function(dat, index) {
-                    timePoint += metric.step;
-                    return {'date': new Date(new Date(timePoint).getTime()), 'lines': dat};
-                })
-            };
 
-            this.updateData(this.data);
+        this.observeMetric = function(event) {
+
+            if(event.event === 'loading') {
+                this.startLoading();
+            } else if(event.event === 'data') {
+                var data = event.data;
+
+                // TODO two series in the same graph
+                var metric = data[Object.keys(data)[0]];
+                var timePoint = metric.interval.from - metric.step;
+                this.data = {
+                    "key": metric.metricinfo.description,
+                    "color": "#2ca02c",
+                    "area": true,
+                    "values": metric.values.map(function(dat, index) {
+                        timePoint += metric.step;
+                        return {'date': new Date(new Date(timePoint).getTime()), 'lines': dat};
+                    })
+                };
+
+                this.updateData(this.data);
+                this.endLoading();
+            }
+
         }.bind(this);
 
         framework.metrics.observe(metrics, this.observeMetric , contextId, this.maxData);
@@ -133,7 +146,8 @@
         }.bind(this);
         $(window).resize(this.resizeHandler);
     };
-    //RangeChart.prototype = new widget();
+
+    RangeChart.prototype = new framework.widgets.CommonWidget(true);
 
     RangeChart.prototype.updateData = function(data) {
         repaintChart.call(this);

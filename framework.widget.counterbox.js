@@ -134,14 +134,15 @@
         // extending widget
         framework.widgets.CommonWidget.call(this, false, element);
 
-        this.observeCallback = function(data){
-            // loading test TODO
-            this.startLoading();
-            setTimeout(function() {
+        this.observeCallback = function(event){
+
+            if(event.event === 'loading') {
+                this.startLoading();
+            } else if(event.event === 'data') {
                 this.endLoading();
-                this.updateData(data);
-            }.bind(this)
-            , 1300);
+                this.updateData(event.data);
+            }
+
         }.bind(this);
 
         framework.metrics.observe(metrics, this.observeCallback , contextId, 1);

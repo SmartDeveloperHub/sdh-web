@@ -2,12 +2,28 @@
 
     //Constants
     var ONE_DAY_MS = 86400000;
+    var ONE_WEEK_MS = 604800000;
+    var PAINT_DELAY_MS = 1000;
 
     // CHECK D3
     if(typeof d3 === 'undefined') {
         console.error("Heatmap could not be loaded because d3 did not exist.");
         return;
     }
+
+    // Configuration checker
+    var normalizeConfig = function normalizeConfig(configuration) {
+
+        if (configuration == null) {
+            configuration = {};
+        }
+
+        if(!(configuration['colors'] instanceof Array)) {
+            configuration['colors'] = ['#F6FAAA','#FEE08B','#FDAE61','#F46D43','#D53E4F','#9E0142'];
+        }
+
+        return configuration;
+    };
 
     // BASIC METHODS - - - - - - - - - - - - - - - - - - - - - -
 
@@ -30,6 +46,11 @@
         this.resizeEventHandler = null;
         this.painted = false;
         this.metricId = metrics[0]['id'];
+        this.maxValue = -1;
+        this.minValue = Infinity;
+
+        //Configuration
+        this.configuration = normalizeConfig(configuration);
 
         this.observeCallback = function(data){
             this.updateData(data);
@@ -42,7 +63,7 @@
     Heatmap.prototype.updateData = function(data) {
         this.delete();
         this.data = data[this.metricId];
-        this.paint();
+        paint.call(this);
     };
 
     Heatmap.prototype.delete = function() {
@@ -66,11 +87,46 @@
     };
 
 
-    // EXTRA METHODS - - - - - - - - - - - - - - - - - - - - - -
+    // PRIVATE METHODS - - - - - - - - - - - - - - - - - - - - - -
 
-    Heatmap.prototype.paint = function() {
+    var updateSize = function updateSize() {
 
-        console.log("paint");
+        var parentWidth = this.svg.parent().get(0).getBoundingClientRect().width;
+        var parentHeight = this.svg.parent().get(0).getBoundingClientRect().height;
+        var parentAspect = parentWidth / parentHeight;
+        if(parentAspect <= this.aspect){
+            this.svg.attr('width', parentWidth);
+            this.svg.attr('height', parentWidth / this.aspect);
+        } else {
+            this.svg.attr('width', parentHeight * this.aspect);
+            this.svg.attr('height', parentHeight);
+        }
+    };
+
+    var renderColor = function renderColor(rect, dateExtent){
+
+        rect
+            .filter(function(value){
+                return value >= 0;
+            })
+            .transition()
+            .delay(function(d, index){
+                var max = dateExtent[1].getTime();
+                var min = dateExtent[0].getTime();
+                var current = dateExtent[0].getTime() + index * this.data['step'];
+                return PAINT_DELAY_MS * (current - min)/(max - min);
+            }.bind(this))
+            .duration(500)
+            .attrTween('fill',function(value,i,a){
+                //choose color dynamically
+                var colorIndex = d3.scale.quantize()
+                    .range(d3.range(0, this.configuration['colors'].length, 1))
+                    .domain([this.minValue, this.maxValue]);
+                return d3.interpolate(a, this.configuration['colors'][colorIndex(value)]);
+            }.bind(this));
+    };
+
+    var paint = function paint() {
 
         if(this.data == null) {
             return; // Nothing to paint
@@ -88,7 +144,6 @@
 
         // Metric values
         var dataValues = this.data['values'];
-        var timeStep = this.data['step'];
 
         //UI configuration
         var itemSize = 18,
@@ -102,9 +157,6 @@
             monthNameFormat = d3.time.format('%b'),
             weekDayFormat = d3.time.format("%w");
 
-        //data vars for rendering
-        var colorCalibration = ['#f6faaa','#FEE08B','#FDAE61','#F46D43','#D53E4F','#9E0142'];
-
         //axises and scales
         var axisWidth = 0 ,
             axisHeight = itemSize*7,
@@ -115,12 +167,12 @@
                 .ticks(d3.time.months,1)
                 .tickFormat(monthNameFormat),
             weekDayNames = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-            yAxis = d3.svg.axis()
-                .orient('left')
-                .ticks(7)
-                .tickFormat(function(d, i){
-                    return weekDayNames[d];
-                });
+        yAxis = d3.svg.axis()
+            .orient('left')
+            .ticks(7)
+            .tickFormat(function(d, i){
+                return weekDayNames[d];
+            });
 
         var d3svg = d3.select(this.svg.get(0));
         var heatmap = d3svg
@@ -134,10 +186,6 @@
             .attr('transform','translate('+margin.left+','+margin.top+')');
 
         var rect = null;
-        var paintDelay = 1000;
-
-        var maxValue = -1;
-        var minValue = Infinity;
         var dailyValues = [];
 
         //Create a date extent object with the from and to dates
@@ -152,7 +200,7 @@
         dataValues.forEach(function(value,index){
 
             //Given the data index and the from date, calculate the current date
-            var curDate = dateExtent[0].getTime() + index * timeStep;
+            var curDate = dateExtent[0].getTime() + index * this.data['step'];
 
             //How many days has been since the from date
             var day = Math.floor((curDate - firstDay) / ONE_DAY_MS);
@@ -160,38 +208,19 @@
             //Increment the value for that day
             dailyValues[day] = (dailyValues[day] != null ? dailyValues[day] + value : value);
 
-        });
+        }.bind(this));
+
+        this.maxValue = -1;
+        this.minValue = Infinity;
 
         //Get the min and max values (to create later the color scale)
         dailyValues.forEach(function(value){
-            minValue = d3.min([minValue, value]);
-            maxValue = d3.max([maxValue, value]);
-        });
+            this.minValue = d3.min([this.minValue, value]);
+            this.maxValue = d3.max([this.maxValue, value]);
+        }.bind(this));
 
-
-        function renderColor(){
-            rect
-                .filter(function(value){
-                    return value >= 0;
-                })
-                .transition()
-                .delay(function(d, index){
-                    var max = dateExtent[1].getTime();
-                    var min = dateExtent[0].getTime();
-                    var current = dateExtent[0].getTime() + index * timeStep;
-                    return paintDelay * (current - min)/(max - min);
-                })
-                .duration(500)
-                .attrTween('fill',function(value,i,a){
-                    //choose color dynamicly
-                    var colorIndex = d3.scale.quantize()
-                        .range([0,1,2,3,4,5])
-                        .domain([minValue,maxValue]);
-                    return d3.interpolate(a,colorCalibration[colorIndex(value)]);
-                });
-        }
-
-        var numWeeks = Math.ceil((dateExtent[1] - dateExtent[0] + weekDayFormat(dateExtent[0]) * ONE_DAY_MS) / 604800000);
+        //Number of weeks to be displayed in the chart
+        var numWeeks = Math.ceil((dateExtent[1] - dateExtent[0] + weekDayFormat(dateExtent[0]) * ONE_DAY_MS) / ONE_WEEK_MS);
 
         axisWidth = itemSize * numWeeks; //53 weeks in a year
 
@@ -216,7 +245,7 @@
             .attr('height',cellSize)
             .attr('x',function(d,index){
                 var curDate = dateExtent[0].getTime() + index * ONE_DAY_MS;
-                return itemSize * Math.floor((curDate - firstDay + weekDayFormat(firstDay) * ONE_DAY_MS) / 604800000);
+                return itemSize * Math.floor((curDate - firstDay + weekDayFormat(firstDay) * ONE_DAY_MS) / ONE_WEEK_MS);
             })
             .attr('y',function(d,index){
                 var curDate = dateExtent[0].getTime() + index * ONE_DAY_MS;
@@ -231,33 +260,18 @@
                 return dateFormat(new Date(curDate))+': '+value;
             });
 
-        renderColor();
+        renderColor.call(this, rect, dateExtent);
 
         var chartWidth = numWeeks * itemSize + margin.left + margin.right;
         var chartHeight = 7 * itemSize + margin.top + margin.bottom;
         d3svg.attr('viewBox', '0 0 '+chartWidth+' '+chartHeight);
         this.aspect = chartWidth / chartHeight;
 
-        this.resizeEventHandler = this.updateSize.bind(this);
+        this.resizeEventHandler = updateSize.bind(this);
         $(window).resize(this.resizeEventHandler);
 
-        this.updateSize();
+        updateSize.call(this);
 
-    };
-
-    Heatmap.prototype.updateSize = function() {
-
-        console.log("updateSize");
-        var parentWidth = this.svg.parent().get(0).getBoundingClientRect().width;
-        var parentHeight = this.svg.parent().get(0).getBoundingClientRect().height;
-        var parentAspect = parentWidth / parentHeight;
-        if(parentAspect <= this.aspect){
-            this.svg.attr('width', parentWidth);
-            this.svg.attr('height', parentWidth / this.aspect);
-        } else {
-            this.svg.attr('width', parentHeight * this.aspect);
-            this.svg.attr('height', parentHeight);
-        }
     };
 
     window.framework.widgets.Heatmap = Heatmap;

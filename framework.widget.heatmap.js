@@ -27,7 +27,7 @@
 
     // BASIC METHODS - - - - - - - - - - - - - - - - - - - - - -
 
-    var Heatmap = function (element, metrics, contextId, configuration) {
+    var Heatmap = function Heatmap(element, metrics, contextId, configuration) {
 
         if(!framework.isReady()) {
             console.error("Heatmap object could not be created because framework is not loaded.");
@@ -49,7 +49,10 @@
         this.maxValue = -1;
         this.minValue = Infinity;
 
-        //Configuration
+        // Extending widget
+        framework.widgets.CommonWidget.call(this, false, this.element.get(0));
+
+        // Configuration
         this.configuration = normalizeConfig(configuration);
 
         this.observeCallback = function(data){
@@ -59,6 +62,8 @@
         framework.metrics.observe(metrics, this.observeCallback , contextId);
 
     };
+
+    Heatmap.prototype = new framework.widgets.CommonWidget(true);
 
     Heatmap.prototype.updateData = function(data) {
         this.delete();

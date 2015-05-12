@@ -119,9 +119,9 @@
                     requestJSON(path, null, function(data) {
 
                         //Iterate over the metrics
-                        for(var i = 0, len = data.length; i < len; ++i) {
+                        for(var j = 0, len = data.length; j < len; ++j) {
 
-                            var metricInfo = data[i];
+                            var metricInfo = data[j];
                             var metricId = metricInfo['metricid'];
                             var metricPath = metricInfo['path'];
 
@@ -146,7 +146,7 @@
                                 var parameters = generalMetricPathInfo['get']['parameters'];
 
                                 //Add all path parameters (not query params) and avoid 'mid'
-                                for(var i = 0, len = parameters.length; i < len; i++) {
+                                for(var i = 0, len_i = parameters.length; i < len_i; i++) {
                                     if (parameters[i]['in'] === 'path' && parameters[i]['name'] !== 'mid') {
                                         _metricsInfo[metricId].params.push(parameters[i]['name']);
                                     } else if(parameters[i]['in'] === 'query') {

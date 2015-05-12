@@ -294,9 +294,12 @@
             allData[metricId] = data;
 
             if(++completedRequests === metrics.length) {
-                callback(allData);
+                sendDataEventToCallback(allData, callback);
             }
         };
+
+        //Send a loading data event to the listener
+        sendLoadingEventToCallback(callback);
 
         for(var i in metrics) {
 
@@ -477,7 +480,31 @@
         for(var i in o)
             return false;
         return true;
-    }
+    };
+
+    /**
+     * Send a data event to the given observer. This means that the data the framework was loading is now ready.
+     * @param data New data.
+     * @param callback
+     */
+    var sendDataEventToCallback = function sendDataEventToCallback(data, callback) {
+        if(typeof callback === "function") {
+            callback({
+                event: "data",
+                data: data
+            });
+        }
+    };
+
+    /**
+     * Send a loading event to the given observer. That means that the framework is loading new data for that observer.
+     * @param callback
+     */
+    var sendLoadingEventToCallback = function sendLoadingEventToCallback(callback) {
+        callback({
+            event: "loading"
+        });
+    };
 
 
 
@@ -502,7 +529,10 @@
      *                   max: 0,
      *                   static: ["from"] //Static makes this parameter unalterable by the context changes.
      *               }
-     * @param callback
+     * @param callback Callback that receives an object containing at least an "event" that can be "data" or "loading".
+     *  - loading means that the framework is retrieving new data for the observer.
+     *  - data means that the new data is ready and can be accessed through the "data" element of the object returned to
+     *  the callback.
      * @param contextId
      */
     _self.metrics.observe = function observe(metrics, callback, contextId) {

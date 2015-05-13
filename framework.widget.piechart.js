@@ -16,7 +16,30 @@
         if (configuration == null) {
             configuration = {};
         }
-
+        if (typeof configuration.donut != "boolean") {
+            configuration.donut = false;
+        }
+        if (typeof configuration.growOnHover != "boolean") {
+            configuration.growOnHover = false;
+        }
+        if (typeof configuration.cornerRadius != "number") {
+            configuration.cornerRadius = 4;
+        }
+        if (typeof configuration.padAngle != "number") {
+            configuration.padAngle = 0.05;
+        }
+        if (typeof configuration.showLegend != "boolean") {
+            configuration.showLegend = true;
+        }
+        if (typeof configuration.showLabels != "boolean") {
+            configuration.showLabels = true;
+        }
+        if (typeof configuration.donutRatio != "number") {
+            configuration.donutRatio = 0.5;
+        }
+        if (typeof configuration.duration != "number") {
+            configuration.duration = 250;
+        }
 
         return configuration;
     };
@@ -25,9 +48,18 @@
      *   element: the DOM element that will contain the PieChart
      *   metrics: the metrics id array
      *   contextId: optional.
-     *   configuration: additional chart configuration. Ej:
+     *   configuration: additional chart configuration:
      *      {
-     *
+     *       ~ donut: boolean - Whether to make a pie graph a donut graph or not.
+     *       ~ growOnHover: boolean - For pie/donut charts, whether to increase slice radius on hover or not.
+     *       ~ cornerRadius: number - For donut charts only, the corner radius (in pixels) of the slices.
+     *       ~ padAngle: number - The percent of the chart that should be spacing between slices.
+     *       ~ showLegend: boolean - Whether to display the legend or not.
+     *       ~ showLabels: boolean - Show pie/donut chart labels for each slice.
+     *       ~ donutRatio: number - Percent of pie radius to cut out of the middle to make the donut. It is multiplied
+     *         by the outer radius to calculate the inner radius, thus it should be between 0 and 1.
+     *       ~ duration: number - Duration in ms to take when updating chart. For things like bar charts, each bar can
+     *         animate by itself but the total time taken should be this value.
      *      }
      */
     var PieChart = function PieChart(element, metrics, contextId, configuration) {
@@ -140,14 +172,17 @@
                     .y(function(d) {
                         return d.value; //TODO:value
                     })
-                    .donut(true)//TODO: configurable
+                    .donut(this.configuration.donut)//TODO: configurable
                     .width(width)
                     .height(height)
-                    .padAngle(.08)
-                    .cornerRadius(5)
-                    .growOnHover(false);
-
-                this.chart.pie.donutLabelsOutside(true).donut(true);
+                    .padAngle(this.configuration.padAngle)
+                    .cornerRadius(this.configuration.cornerRadius)
+                    .growOnHover(this.configuration.growOnHover)
+                    .showLegend(this.configuration.showLegend)
+                    .showLabels(this.configuration.showLabels)
+                    .donutRatio(this.configuration.donutRatio)
+                    .duration(this.configuration.duration)
+                    .donutLabelsOutside(true);
 
                 d3.select(this.svg.get(0))
                     .datum(data) //TODO

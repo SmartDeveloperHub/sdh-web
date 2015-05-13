@@ -291,7 +291,11 @@
         var allData = {};
 
         var onMetricReady = function(metricId, data) {
-            allData[metricId] = data;
+
+            if(allData[metricId] == null) {
+                allData[metricId] = [];
+            }
+            allData[metricId].push(data);
 
             if(++completedRequests === metrics.length) {
                 sendDataEventToCallback(allData, callback);
@@ -532,7 +536,8 @@
      * @param callback Callback that receives an object containing at least an "event" that can be "data" or "loading".
      *  - loading means that the framework is retrieving new data for the observer.
      *  - data means that the new data is ready and can be accessed through the "data" element of the object returned to
-     *  the callback.
+     *  the callback. The "data" element of the object is a hashmap using as key the metricId of the requested metrics
+     *  and as value an array with data for each of the request done for that metricId.
      * @param contextId
      */
     _self.metrics.observe = function observe(metrics, callback, contextId) {

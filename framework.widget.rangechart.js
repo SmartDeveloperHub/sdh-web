@@ -122,7 +122,7 @@
                 var data = event.data;
 
                 // TODO two series in the same graph
-                var metric = data[Object.keys(data)[0]];
+                var metric = data[Object.keys(data)[0]][0];
                 var timePoint = metric.interval.from - metric.step;
                 this.data = {
                     "key": metric.metricinfo.description,

@@ -188,7 +188,7 @@
         element.appendChild(this.container);
 
         // extending widget
-        framework.widgets.CommonWidget.call(this, false);
+        framework.widgets.CommonWidget.call(this, false, element);
 
         this.observeCallback = function(event){
 
@@ -207,9 +207,30 @@
 
     BigCounterBox.prototype = new framework.widgets.CommonWidget(true);
 
-    BigCounterBox.prototype.updateData = function(data) {
-        this.data1 = data[Object.keys(data)[0]];
-        this.data2 = data[Object.keys(data)[1]];
+    BigCounterBox.prototype.updateData = function(framework_data) {
+
+        //Get first two values
+        var values = function(framework_data) {
+            var values = [];
+
+            for(var metricId in framework_data) {
+
+                for(var m in framework_data[metricId]) {
+
+                    for(var i in framework_data[metricId][m]['values']) {
+                        values.push(framework_data[metricId][m]['values'][i]);
+
+                        if(values.length == 2) {
+                            return values;
+                        }
+                    }
+                }
+            }
+
+            console.warn("BigCounterBox needs two values. Only " + values.length + " received.");
+            return values;
+        }.call(null, framework_data);
+
         var options = {
             useEasing : this.configuration.changeeasing,
             useGrouping : true,
@@ -219,11 +240,11 @@
             suffix : ''
         };
 
-        var cntr1 = new countUp(this.labn, this.currentValue1, this.data1.values[0], this.configuration.decimal, this.configuration.changetime, options);
-        this.currentValue1 = this.data1.values[0];
+        var cntr1 = new countUp(this.labn, this.currentValue1, values[0], this.configuration.decimal, this.configuration.changetime, options);
+        this.currentValue1 = values[0];
         cntr1.start();
-        var cntr2 = new countUp(this.labn2, this.currentValue2, this.data2.values[0], this.configuration.decimal2, this.configuration.changetime, options);
-        this.currentValue2 = this.data2.values[0];
+        var cntr2 = new countUp(this.labn2, this.currentValue2, values[1], this.configuration.decimal2, this.configuration.changetime, options);
+        this.currentValue2 = values[1];
         cntr2.start();
     };
 

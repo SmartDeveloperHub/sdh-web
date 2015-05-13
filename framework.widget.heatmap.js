@@ -74,7 +74,7 @@
 
     Heatmap.prototype.updateData = function(data) {
         this.delete();
-        this.data = data[this.metricId];
+        this.data = data[this.metricId][0];
         paint.call(this);
     };
 
@@ -93,6 +93,7 @@
         //Clear DOM
         this.svg.empty();
         this.element.empty();
+        this.svg = null;
 
         this.painted = false;
 
@@ -152,7 +153,6 @@
         // Add an svg element to draw in it
         this.element.append('<svg role="heatmap" class="heatmap blurable" preserveAspectRatio="xMidYMid"></svg>');
         this.svg = this.element.children("svg");
-        this.element.append(this.svg);
 
         // Metric values
         var dataValues = this.data['values'];

@@ -290,11 +290,17 @@
         var completedRequests = 0;
         var allData = {};
 
-        var onMetricReady = function(metricId, data) {
+        var onMetricReady = function(metricId, params, queryParams, data) {
 
             if(allData[metricId] == null) {
                 allData[metricId] = [];
             }
+
+            //Add the request info to the data received from the api
+            data['request'] = {
+                params: params,
+                queryParams: queryParams
+            };
             allData[metricId].push(data);
 
             if(++completedRequests === metrics.length) {
@@ -308,17 +314,20 @@
         for(var i in metrics) {
 
             var metricId = metrics[i].id;
-            var params = metrics[i]; //Can use the metric itself because only the needed elements will be used as params.
+            var params = {};
             var queryParams = {};
 
-            //Everything that is not defined as metric param, is considered as queryparam
-            for(var name in params) {
-                if(_metricsInfo[metricId]['queryParams'].indexOf(name) !== -1) {
-                    queryParams[name] =  params[name];
+            //Fill the params and queryparams
+            for(var name in metrics[i]) {
+
+                if(_metricsInfo[metricId]['queryParams'].indexOf(name) !== -1) { //Is a queryparam
+                    queryParams[name] =  metrics[i][name];
+                } else if(_metricsInfo[metricId]['params'].indexOf(name) !== -1) { //Is a param
+                    params[name] =  metrics[i][name];
                 }
             }
 
-            makeMetricRequest(metricId, params, queryParams, onMetricReady.bind(undefined, metricId))
+            makeMetricRequest(metricId, params, queryParams, onMetricReady.bind(undefined, metricId, params, queryParams))
         }
 
     };

@@ -1,0 +1,3 @@
+[submodule "public/sdh-framework"]
+	path = public/sdh-framework
+	url = https://AlejandroVera@bitbucket.org/smartdeveloperhub/sdh-framework.git

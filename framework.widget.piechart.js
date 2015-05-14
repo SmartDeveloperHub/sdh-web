@@ -40,6 +40,9 @@
         if (typeof configuration.duration != "number") {
             configuration.duration = 250;
         }
+        if (typeof configuration.labelFormat != "string") {
+            configuration.labelFormat = "%mid%";
+        }
 
         return configuration;
     };
@@ -60,6 +63,9 @@
      *         by the outer radius to calculate the inner radius, thus it should be between 0 and 1.
      *       ~ duration: number - Duration in ms to take when updating chart. For things like bar charts, each bar can
      *         animate by itself but the total time taken should be this value.
+     *       ~ labelFormat: string - Format string for the labels. Metric parameters can be used as variables by
+     *         surrounding their names with percentages. The metric name can also be accessed with %mid%. For example,
+     *         the following is a valid labelFormat: "User: %uid%".
      *      }
      */
     var PieChart = function PieChart(element, metrics, contextId, configuration) {
@@ -99,13 +105,15 @@
 
     PieChart.prototype.updateData = function(framework_data) {
 
+        var normalizedData = getNormalizedData.call(this,framework_data);
+
         //Update data
         if(this.svg != null) {
-            d3.select(this.svg.get(0)).datum(getNormalizedValues(framework_data));
+            d3.select(this.svg.get(0)).datum(normalizedData);
             this.chart.update();
 
         } else { // Paint it for first time
-            paint.call(this, getNormalizedValues(framework_data));
+            paint.call(this, normalizedData);
         }
 
     };
@@ -133,18 +141,46 @@
      * @param framework_data
      * @returns {Array} Contains objects with 'label' and 'value'.
      */
-    var getNormalizedValues = function normalizeData(framework_data) {
+    var getNormalizedData = function getNormalizedData(framework_data) {
 
         var values = [];
+        var labelVariable = /%\w+%/; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
+
+        //Function that returns the value to replace with the label variables
+        var replacer = function(metricId, metricData, str) {
+
+            //Remove the initial an trailing '%' of the string
+            str = str.substring(1, str.length-1);
+
+            //Check if it is a parameter an return its value
+            if(str === "mid") {
+                return metricId;
+            } else if(metricData['request']['params'][str] != null) {
+                return metricData['request']['params'][str];
+            } else if(metricData['request']['queryParams'][str] != null) {
+                return metricData['request']['queryParams'][str];
+            }
+
+            return "";
+        };
 
         for(var metricId in framework_data) {
 
             for(var m in framework_data[metricId]){
 
-                for(var i in framework_data[metricId][m]['values']) {
+                var metricData = framework_data[metricId][m];
+
+                //Create a replacer for this metric
+                var metricReplacer = replacer.bind(null, metricId, metricData);
+
+                //Generate the label by replacing the variables
+                var label = this.configuration.labelFormat.replace(labelVariable,metricReplacer);
+
+                for(var i in metricData['values']) {
+
                     values.push({
-                        label: metricId, //TODO
-                        value: framework_data[metricId][m]['values'][i]
+                        label: label,
+                        value: metricData['values'][i]
                     });
                 }
             }

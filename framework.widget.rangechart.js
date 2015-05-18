@@ -164,7 +164,7 @@
 
         //Clear DOM
         $(this.svg).empty();
-        this.element.empty();
+        this.element.find('svg').remove();
     };
 
     RangeChart.prototype.getContext = function() {

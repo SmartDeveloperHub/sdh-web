@@ -73,7 +73,15 @@
     Heatmap.prototype = new framework.widgets.CommonWidget(true);
 
     Heatmap.prototype.updateData = function(data) {
-        this.delete();
+
+        if(this.painted) {
+            //Clear DOM
+            this.svg.empty();
+            this.element.empty();
+            this.svg = null;
+            this.painted = false;
+        }
+
         this.data = data[this.metricId][0];
         paint.call(this);
     };
@@ -283,6 +291,8 @@
         $(window).resize(this.resizeEventHandler);
 
         updateSize.call(this);
+
+        this.painted = true;
 
     };
 

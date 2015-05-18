@@ -103,25 +103,7 @@
     *      }
     */
     var BigCounterBox = function BigCounterBox(element, metrics, contextId, configuration) {
-/*
-        <div id="projects-widget" class="com-widget com-counter-block com-counter-block-turquoise" data-count=".num" data-extracount=".num .ntotal">
-            <div class="com-upper">
-                <div class="com-icon">
-                    <i class="octicon octicon-repo"></i>
-                </div>
-                <div class="com-label">
-                    <strong class="num" data-from="0" data-to="0" data-duration="3">0</strong>
-                    <span>Active <strong>Projects</strong></span>
-                </div>
-            </div>
-            <div class="com-lower">
-                <div class="border"></div>
-                <span>Total Projects:
-                    <strong class="ntotal" data-from="0" data-to="0" data-duration="3">0</strong>
-                </span>
-            </div>
-        </div>
-*/
+
         if(!framework.isReady()) {
             console.error("BigCounterBox object could not be created because framework is not loaded.");
             return;
@@ -141,7 +123,7 @@
 
         // upper container
         this.upperCont = document.createElement('div');
-        this.upperCont.className = "com-upper";
+        this.upperCont.className = "com-upper blurable";
         this.container.appendChild(this.upperCont);
         // icon
         this.icon = document.createElement('div');
@@ -169,7 +151,7 @@
 
         // lower container
         this.lowerCont = document.createElement('div');
-        this.lowerCont.className = "com-lower";
+        this.lowerCont.className = "com-lower blurable";
         this.container.appendChild(this.lowerCont);
         // border
         var border = document.createElement('div');
@@ -191,12 +173,10 @@
         framework.widgets.CommonWidget.call(this, false, element);
 
         this.observeCallback = function(event){
-
             if(event.event === 'loading') {
                 this.startLoading();
             } else if(event.event === 'data') {
-                this.endLoading();
-                this.updateData(event.data);
+                this.endLoading(this.updateData.bind(this, event.data));
             }
 
         }.bind(this);
@@ -208,7 +188,6 @@
     BigCounterBox.prototype = new framework.widgets.CommonWidget(true);
 
     BigCounterBox.prototype.updateData = function(framework_data) {
-
         //Get first two values
         var values = function(framework_data) {
             var values = [];
@@ -227,7 +206,7 @@
                 }
             }
 
-            console.warn("BigCounterBox needs two values. Only " + values.length + " received.");
+            console.warn("BigCounterBox needs two values. " + values.length + " values received.");
             return values;
         }.call(null, framework_data);
 

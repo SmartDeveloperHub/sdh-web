@@ -60,8 +60,7 @@
             if(event.event === 'loading') {
                 this.startLoading();
             } else if(event.event === 'data') {
-                this.updateData(event.data);
-                this.endLoading();
+                this.endLoading(this.updateData.bind(this, event.data));
             }
 
         }.bind(this);

@@ -115,7 +115,6 @@
         }.bind(this));
 
         this.observeMetric = function(event) {
-
             if(event.event === 'loading') {
                 this.startLoading();
             } else if(event.event === 'data') {
@@ -136,9 +135,7 @@
                         return {'date': new Date(new Date(timePoint).getTime()), 'lines': dat};
                     })
                 };
-
-                this.updateData(this.data);
-                this.endLoading();
+                this.endLoading(this.updateData.bind(this, this.data));
             }
 
         }.bind(this);

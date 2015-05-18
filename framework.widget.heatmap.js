@@ -76,7 +76,7 @@
         if(this.painted) {
             //Clear DOM
             this.svg.empty();
-            this.element.empty();
+            this.element.find('svg').remove();
             this.svg = null;
             this.painted = false;
         }
@@ -99,7 +99,7 @@
 
         //Clear DOM
         this.svg.empty();
-        this.element.empty();
+        this.element.find('svg').remove();
         this.svg = null;
 
         this.painted = false;

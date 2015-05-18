@@ -124,6 +124,9 @@
                 // TODO two series in the same graph
                 var metric = data[Object.keys(data)[0]][0];
                 var timePoint = metric.interval.from - metric.step;
+                if (this.data == null) {
+                    this.updateContext([metric.interval.from, metric.interval.to]);
+                }
                 this.data = {
                     "key": metric.metricinfo.description,
                     "color": "#2ca02c",

@@ -12,6 +12,7 @@
     pointer-events: none;
     filter: none;
     -webkit-filter: none;
+    z-index: 9999;
 }
 
 .loadingContainer .loadingLayer {

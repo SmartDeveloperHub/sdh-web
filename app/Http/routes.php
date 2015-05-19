@@ -22,6 +22,9 @@ Route::get('user-dashboard', function(){
 Route::get('organization-dashboard', function(){
     return View::make('dashboards.organization');
 });
+Route::get('demo', function(){
+    return View::make('dashboards.demo');
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

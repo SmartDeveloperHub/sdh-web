@@ -45,6 +45,9 @@ RUN apt-get -qq -y install \
 		mysql-server-5.6 \
 		php5-mysqlnd
 
+# Listen address
+RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+
 #Initialize the database (create and fill with laravel migrations)
 RUN source /var/www/html/.env && \
     service mysql start && \

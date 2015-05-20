@@ -160,6 +160,7 @@
         // value
         var label = document.createElement('span');
         label.innerHTML = this.configuration.label2;
+        label.style.color = this.configuration.label2color;
         this.labn2 = document.createElement('strong');
         this.labn2.className = "num";
         this.labn2.style.color = this.configuration.counter2color;
@@ -176,7 +177,8 @@
             if(event.event === 'loading') {
                 this.startLoading();
             } else if(event.event === 'data') {
-                this.endLoading(this.updateData.bind(this, event.data));
+                this.eventData = event.data;
+                this.endLoading(this.updateData);
             }
 
         }.bind(this);
@@ -187,7 +189,7 @@
 
     BigCounterBox.prototype = new framework.widgets.CommonWidget(true);
 
-    BigCounterBox.prototype.updateData = function(framework_data) {
+    BigCounterBox.prototype.updateData = function() {
         //Get first two values
         var values = function(framework_data) {
             var values = [];
@@ -208,7 +210,7 @@
 
             console.warn("BigCounterBox needs two values. " + values.length + " values received.");
             return values;
-        }.call(null, framework_data);
+        }.call(null, this.eventData);
 
         var options = {
             useEasing : this.configuration.changeeasing,

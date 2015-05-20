@@ -11,7 +11,9 @@
 		if (extending === true) {
             return;
         }
+        this.isloading = 0;
         this.callback = null;
+        this.callbackList = [];
         this._common = {};
         this._common.container = container;
         this._common.loadingContainer = document.createElement('div');
@@ -38,6 +40,10 @@
     var oldContainerClass;
 
     CommonWidget.prototype.startLoading = function startLoading() {
+        this.isloading += 1;
+        if (this.isloading > 1) {
+            return;
+        }
         var wsize = this._common.container.getBoundingClientRect();
         // center the spinner vertically because a responsive 
         // widget can change it height dynamically
@@ -50,11 +56,21 @@
         $(this._common.loadingLayer).addClass('on');
     };
 
+    /*
+    The transitionend event doesn't fire if the transition is aborted before
+    the transition is completed because either the element is made display: none
+    or the animating property's value is changed.
+    */
     CommonWidget.prototype.endLoading = function endLoading(callback) {
-        this.callback = callback;
-        if($(this._common.loadingLayer).hasClass('on')) {
+        this.isloading -= 1;
+        if(this.isloading == 0) {
+            this.callback = callback;
             this._common.loadingLayer.addEventListener('transitionend', this.restoreContainerHandler);
-            $(this._common.loadingLayer).removeClass('on');
+            setTimeout(function() {
+                $(this._common.loadingLayer).removeClass('on')
+            }.bind(this), 50);
+        } else {
+            console.log('discarding data...');
         }
     };
 

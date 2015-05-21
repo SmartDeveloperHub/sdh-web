@@ -419,21 +419,35 @@
     /**
      * Combines an incomplete metric with a context in order to create a complete metric to make a request with.
      * @param metrics
-     * @param context Context data
+     * @param contexts Context ids
      */
-    var combineMetricsWithContext = function combineMetricsWithContext(metrics, context) {
+    var combineMetricsWithContext = function combineMetricsWithContext(metrics, contexts) {
 
         var newMetrics = [];
+        var contextsData = [];
 
+        //Fill the array with data for each context
+        for(var i in contexts) {
+            contextsData.push(_metricContexts[contexts[i]]['data']);
+        }
+
+        //Iterate through the metrics and combine them with the contexts
         for(var i in metrics) {
 
             //Clone the metric object to avoid modification
             var metric = clone(metrics[i]);
 
-            //Clean the context
-            var mergeContext = getCleanContextByMetric(context, metric);
+            //Modify the metric with all the contexts
+            for(var c in contextsData) {
 
-            newMetrics.push(mergeObjects(metric, mergeContext));
+                //Clean the context
+                var mergeContext = getCleanContextByMetric(contextsData[c], metric);
+
+                metric = mergeObjects(metric, mergeContext);
+            }
+
+            //Add the metric to the returned array
+            newMetrics.push(metric);
         }
 
         return newMetrics;
@@ -547,9 +561,9 @@
      *  - data means that the new data is ready and can be accessed through the "data" element of the object returned to
      *  the callback. The "data" element of the object is a hashmap using as key the metricId of the requested metrics
      *  and as value an array with data for each of the request done for that metricId.
-     * @param contextId
+     * @param contextIds Array of context ids.
      */
-    _self.metrics.observe = function observe(metrics, callback, contextId) {
+    _self.metrics.observe = function observe(metrics, callback, contextIds) {
 
         if('function' !== typeof callback){
             error("Method 'observeData' requires a valid callback function.");
@@ -561,21 +575,38 @@
             return;
         }
 
-        if('string' !== typeof contextId) {
-            contextId = null;
-        } else if(_metricContexts[contextId] == null) {
-            initializeContext(contextId);
+        //Is an Array, verify that it only contains strings
+        if(contextIds instanceof Array) {
+
+            //We will use it internally, so we need to clone it to prevent the user changing it
+            contextIds = clone(contextIds);
+
+            //If one of the contexts is not an string, remove it from the array
+            for(var i = 0; i < contextIds.length; ++i) {
+                if(typeof contextIds[i] != 'string') {
+                    contextIds.splice(i,  1);
+                }
+            }
+        } else { //Invalid parameter type (or null)
+            contextIds = []
+        }
+
+        //Initialize contexts it they are not initialized
+        for(var i = 0; i < contextIds.length; ++i) {
+            if (_metricContexts[contextIds[i]] == null) {
+                initializeContext(contextIds[i]);
+            }
         }
 
         //Normalize the array of metrics
         metrics = normalizeMetrics(metrics);
 
-        //If context is defined, combine the metrics with the context in order to create more complete metrics that could
+        //If contexts are defined, combine the metrics with the context in order to create more complete metrics that could
         // be requested.
-        if(contextId != null) {
+        if(contextIds.length > 0) {
 
             //Combine the metrics with the context in order to create more complete metrics that could be requested.
-            var metricsWithContext = combineMetricsWithContext(metrics, _metricContexts[contextId]['data']);
+            var metricsWithContext = combineMetricsWithContext(metrics, contextIds);
 
             //Request all the metrics if possible
             if(allMetricsCanBeRequested(metricsWithContext)) {
@@ -583,7 +614,7 @@
             }
 
             //Create the CONTEXT event handler
-            var contextEventHandler = function(event, contextCounter, contextChanges) {
+            var contextEventHandler = function(event, contextCounter, contextChanges, contextId) {
 
                 //If it is not the last context event launched, ignore the data because there is another more recent
                 // event being executed
@@ -608,7 +639,7 @@
                 //Currently, as there is no cache, all the data must be requested because it is not stored anywhere.
 
                 //Update the metrics with the context data
-                var metricsWithContext = combineMetricsWithContext(metrics, _metricContexts[contextId]['data']);
+                var metricsWithContext = combineMetricsWithContext(metrics, contextIds);
 
                 if(allMetricsCanBeRequested(metricsWithContext)) {
                     multipleMetricsRequest(metricsWithContext, callback);
@@ -618,14 +649,14 @@
             //Link user callbacks with event handlers
             _event_handlers.push({
                 userCallback: callback,
-                context: {
-                    id: contextId,
-                    handler: contextEventHandler
-                }
+                contexts: contextIds,
+                contextHandler: contextEventHandler
             });
 
-            // Create the CONTEXT event listener
-            $(_eventBox).on("CONTEXT" + contextId, contextEventHandler);
+            // Create the CONTEXT event listener for each of the contexts
+            for(var c in contextIds) {
+                $(_eventBox).on("CONTEXT" + contextIds[c], contextEventHandler);
+            }
 
         } else { //No context is set
 
@@ -646,9 +677,11 @@
     _self.metrics.stopObserve = function stopObserve(callback) {
         for (var i in _event_handlers) {
             if(_event_handlers[i].userCallback === callback) {
-                $(_eventBox).off("CONTEXT" + _event_handlers[i].context.id, _event_handlers[i].context.handler);
-                _event_handlers.splice(i, 1);
-                break;
+                for (var c in _event_handlers[i]['contexts']) {
+                    $(_eventBox).off("CONTEXT" + _event_handlers[i]['contexts'][c], _event_handlers[i]['contextHandler']);
+                    _event_handlers.splice(i, 1);
+                    break;
+                }
             }
         }
     };
@@ -660,7 +693,9 @@
 
         //Remove all the event handlers
         for (var i in _event_handlers) {
-            $(_eventBox).off("CONTEXT" + _event_handlers[i].context.id, _event_handlers[i].context.handler);
+            for (var c in _event_handlers[i]['contexts']) {
+                $(_eventBox).off("CONTEXT" + _event_handlers[i]['contexts'][c], _event_handlers[i]['contextHandler']);
+            }
         }
 
         //Empty the array
@@ -711,7 +746,7 @@
         //Trigger an event to indicate that the context has changed
         if(hasChanged) {
             _metricContexts[contextId].updateCounter++;
-            $(_eventBox).trigger("CONTEXT" + contextId, [_metricContexts[contextId].updateCounter, changes]);
+            $(_eventBox).trigger("CONTEXT" + contextId, [_metricContexts[contextId].updateCounter, changes, contextId]);
         }
 
 

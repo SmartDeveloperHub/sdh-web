@@ -3,6 +3,7 @@
 .com-widget {
   position: relative;
 }
+
 .com-widget.com-counter,
 .com-widget.com-counter-block .com-upper,
 .com-widget.com-progress-counter .com-upper {
@@ -13,6 +14,9 @@
   width: 100%;
   margin-bottom: 20px;
 }
+.com-widget.com-counter {
+     display: block;
+ }
 .com-widget.com-counter .com-icon,
 .com-widget.com-counter .com-label,
 .com-widget.com-counter-block .com-upper .com-icon,

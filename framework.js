@@ -571,10 +571,15 @@
         }
 
         if(!Array.isArray(metrics) || metrics.length === 0 ) {
-            error("Method 'observeData' has received an invalid metrics param.");
+            error("Method 'observeData' has received an invalid metrics parameter.");
             return;
         }
 
+        if(contextIds != null && !(contextIds instanceof Array) ) {
+            error("Method 'observeData' expects contextIds parameter to be null or an array.");
+            return;
+        }
+        
         //Is an Array, verify that it only contains strings
         if(contextIds instanceof Array) {
 

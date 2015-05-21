@@ -543,7 +543,7 @@
 
     /**
      *
-     * @param metrics Array with metrics. Each metric can be an string or an object. The object must have the following
+     * @param metrics Array with metrics. Each metric can be an String or an Object. The object must have the following
      * format: {
      *              id: String,
      *              <param1Id>: String,
@@ -555,6 +555,7 @@
      *                   from :  new Date(),
      *                   max: 0,
      *                   static: ["from"] //Static makes this parameter unalterable by the context changes.
+     *                                    //Static parameters must have a value; otherwise, an error will be returned.
      *               }
      * @param callback Callback that receives an object containing at least an "event" that can be "data" or "loading".
      *  - loading means that the framework is retrieving new data for the observer.
@@ -579,7 +580,24 @@
             error("Method 'observeData' expects contextIds parameter to be null or an array.");
             return;
         }
-        
+
+        //Normalize the array of metrics
+        metrics = normalizeMetrics(metrics);
+
+        //Check that static parameters have their value defined in the metric
+        for(var i = 0; i < metrics.length; ++i) {
+            if(metrics[i]['static'] != null && metrics[i]['static'].length > 0) {
+                for(var s = 0; s < metrics[i]['static'].length; ++s) {
+                    var staticParam = metrics[i]['static'][s];
+                    if(metrics[i][staticParam] == null) {
+                        error("Static parameter '"+staticParam+"' must have its value defined.");
+                        return;
+                    }
+                }
+            }
+
+        }
+
         //Is an Array, verify that it only contains strings
         if(contextIds instanceof Array) {
 
@@ -602,9 +620,6 @@
                 initializeContext(contextIds[i]);
             }
         }
-
-        //Normalize the array of metrics
-        metrics = normalizeMetrics(metrics);
 
         //If contexts are defined, combine the metrics with the context in order to create more complete metrics that could
         // be requested.

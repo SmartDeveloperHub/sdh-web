@@ -99,6 +99,7 @@
         this.element = $(element); //Store as jquery object
         this.data = null;
         this.chart = null;
+        this.labels = {};
 
         this.element.append('<svg class="blurable"></svg>');
         this.svg = this.element.children("svg");
@@ -185,7 +186,8 @@
             return "";
         };
         var series = [];
-        var colors = ['#ff7f0e','#2ca02c','#7777ff','#D53E4F','#9E0142'];
+        this.labels = {};
+        //var colors = ['#ff7f0e','#2ca02c','#7777ff','#D53E4F','#9E0142'];
         //Data is represented as an array of {x,y} pairs.
         for (metricid in framework_data) {
             for (i=0; i < framework_data[metricid].length; i++) {
@@ -195,8 +197,20 @@
                 // Create a replacer for this metric
                 var metricReplacer = replacer.bind(null, metricid, framework_data[metricid][i]);
 
+                var genLabel = function genLabel(i) {
+                  var lab = this.configuration.labelFormat.replace(labelVariable,metricReplacer);
+                  if (i > 0) {
+                    lab = lab + '(' + i + ')';
+                  }
+                  if (lab in this.labels) {
+                    lab = genLabel.call(this, ++i);
+                  }
+                  this.labels[lab] = null;
+                  return lab;
+                };
+
                 // Generate the label by replacing the variables
-                var label = this.configuration.labelFormat.replace(labelVariable,metricReplacer);
+                var label = genLabel.call(this, 0);
 
                 // Metric dataset
                 var dat = yserie.map(function(dat, index) {
@@ -206,7 +220,7 @@
                 series.push({
                     values: dat,      //values - represents the array of {x,y} data points
                     key: label, //key  - the name of the series.
-                    color: colors[series.length],  //color - optional: choose your own line color.
+                    //color: colors[series.length],  //color - optional: choose your own line color.
                     area: this.configuration.area
                 });
             }

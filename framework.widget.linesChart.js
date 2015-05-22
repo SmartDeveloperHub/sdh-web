@@ -1,7 +1,7 @@
 /*
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
       This file is part of the Smart Developer Hub Project:
-        https://smartdeveloperhub.github.io
+        http://www.smartdeveloperhub.org/
       Center for Open Middleware
             http://www.centeropenmiddleware.com/
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
@@ -17,7 +17,9 @@
       See the License for the specific language governing permissions and
       limitations under the License.
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-      contributors: Carlos Blanco. (cblanco@conwet.com)
+      contributors: Alejandro Vera (alejandro.vera@centeropenmiddleware.com ),
+                    Carlos Blanco. (carlos.blanco@centeropenmiddleware.com)
+    #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
 (function() {

@@ -39,6 +39,10 @@
     // Array with the information about metrics
     var _metricsInfo;
 
+    // List of all the parameters that can be used with the API.
+    // It is only for performance purposes while checking input.
+    var _existentParametersList = [];
+
     // Storage of the metrics data
     var _metricsStorage = {}; //TODO: multi-level cache
 
@@ -177,12 +181,19 @@
                             if(generalMetricPathInfo['get']['parameters'] != null) {
                                 var parameters = generalMetricPathInfo['get']['parameters'];
 
-                                //Add all path parameters (not query params) and avoid 'mid'
+                                //Add all parameters and avoid 'mid'
                                 for(var i = 0, len_i = parameters.length; i < len_i; i++) {
+
+                                    //Add the parameter in params or queryParams
                                     if (parameters[i]['in'] === 'path' && parameters[i]['name'] !== 'mid') {
                                         _metricsInfo[metricId].params.push(parameters[i]['name']);
                                     } else if(parameters[i]['in'] === 'query') {
                                         _metricsInfo[metricId].queryParams.push(parameters[i]['name']);
+                                    }
+
+                                    //Add it to the list of possible parameters (cache)
+                                    if(_existentParametersList.indexOf(parameters[i]['name']) === -1) {
+                                        _existentParametersList.push(parameters[i]['name']);
                                     }
                                 }
                             }
@@ -814,6 +825,12 @@
         var hasChanged = false;
         var changes = {};
         for(var name in contextData) {
+
+            //Check if that parameter exists. If not, ignore it
+            if(_existentParametersList.indexOf(name) === -1) {
+                warn("Parameter '" + name + "' given in updateContext does not exist.");
+                continue;
+            }
 
             var newValue = contextData[name];
             var oldValue = _metricContexts[contextId]['data'][name];

@@ -71,6 +71,14 @@
         console.error("[" + FRAMEWORK_NAME +  "] " + message);
     };
 
+    /**
+     * Prints a framework warning
+     * @param message Message to display.
+     */
+    var warn = function warn(message) {
+        console.warn("[" + FRAMEWORK_NAME +  "] " + message);
+    };
+
 
     var requestJSON = function requestJSON(path, queryParams, callback, maxRetries) {
 
@@ -371,15 +379,52 @@
 
             if('string' === typeof metrics[i]) {
                 newMetricsParam.push({id: metrics[i]});
-            } else if('object' === typeof metrics[i]) {
+            } else if('object' === typeof metrics[i] && metrics[i]['id']) { //Metrics objects must have an id
                 newMetricsParam.push(metrics[i]);
             } else {
-                error("One of the metric given was not string nor object");
+                warn("One of the metrics given was not string nor object so it has been ignored.");
             }
         }
 
+        //Remove invalid metrics and parameters
+        newMetricsParam = cleanMetrics(newMetricsParam);
+
         return newMetricsParam;
 
+    };
+
+    /**
+     * Cleans an array of metric objects removing the non existent ones and the invalid parameters of them.
+     * @param metrics Array of metric objects to clean.
+     */
+    var cleanMetrics = function cleanMetrics(metrics) {
+
+        var newMetrics = [];
+
+        for(var i = 0; i < metrics.length; ++i) {
+            var metric = metrics[i];
+            var metricId = metric['id'];
+            var metricInfo = _metricsInfo[metricId];
+
+            if(metricInfo == null) {
+                warn("Metric '"+metricId+"' does not exist.");
+            } else { //Check its parameters
+                var cleanParameters = {};
+                for(var paramName in metric) {
+                    if(paramName != 'id' && paramName != 'static' && metricInfo.params.indexOf(paramName) === -1 && metricInfo.queryParams.indexOf(paramName) === -1) {
+                        warn("Parameter '"+paramName+"' is not a valid parameter for metric '"+metricId+"'.");
+                    } else {
+                        cleanParameters[paramName] = metric[paramName];
+                    }
+                }
+            }
+
+            if(Object.keys(cleanParameters).length > 0) {
+                newMetrics.push(cleanParameters);
+            }
+        }
+
+        return newMetrics;
     };
 
     /** Clone the object

@@ -542,7 +542,7 @@
     };
 
     /** Clone the object
-     * @method
+     * @obj1 Object to clone.
      * @return {object} */
     var clone = function clone(obj1) {
         var result;
@@ -691,7 +691,7 @@
 
     /**
      * Checks if the given object is empty
-     * @param o
+     * @param o Object to check.
      * @returns {boolean} True if empty; false otherwise.
      */
     var isObjectEmpty = function isObjectEmpty(o) {

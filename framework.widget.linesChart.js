@@ -96,6 +96,9 @@
             return;
         }
 
+        // We need relative position for the nvd3 tooltips
+        element.style.position = 'inherit';
+
         this.element = $(element); //Store as jquery object
         this.data = null;
         this.chart = null;

@@ -332,6 +332,7 @@
 
         var completedRequests = 0;
         var allData = {};
+        var requests = [];
 
         var onMetricReady = function(metricId, params, queryParams, data) {
 
@@ -346,7 +347,7 @@
             };
             allData[metricId].push(data);
 
-            if(++completedRequests === metrics.length) {
+            if(++completedRequests === requests.length) {
                 sendDataEventToCallback(allData, callback);
             }
         };
@@ -359,20 +360,122 @@
             var metricId = metrics[i].id;
             var params = {};
             var queryParams = {};
+            var multiparams = [];
+            var multiQueryParams = [];
 
             //Fill the params and queryparams
             for(var name in metrics[i]) {
 
                 if(_metricsInfo[metricId]['queryParams'].indexOf(name) !== -1) { //Is a queryparam
+
+                    //Check if is multi parameter and add it to the list of multi parameters
+                    if(metrics[i][name] instanceof Array) {
+                        multiQueryParams.push(name);
+                    }
+
                     queryParams[name] =  metrics[i][name];
+
                 } else if(_metricsInfo[metricId]['params'].indexOf(name) !== -1) { //Is a param
+
+                    //Check if is multi parameter and add it to the list of multi parameters
+                    if(metrics[i][name] instanceof Array) {
+                        multiparams.push(name);
+                    }
+
                     params[name] =  metrics[i][name];
+
                 }
             }
 
-            makeMetricRequest(metricId, params, queryParams, onMetricReady.bind(undefined, metricId, params, queryParams))
+            var requestsCombinations = generateMetricRequestParamsCombinations(metricId, params, queryParams, multiparams, multiQueryParams);
+            requests = requests.concat(requestsCombinations);
+
         }
 
+        for(var i in requests) {
+            var metricId = requests[i]['metricId'];
+            var params = requests[i]['params'];
+            var queryParams = requests[i]['queryParams'];
+
+            makeMetricRequest(metricId, params, queryParams, onMetricReady.bind(undefined, metricId, params, queryParams));
+        }
+
+    };
+
+    /**
+     * Generates an array of requests combining all the values of the multi parameters (param and queryParam).
+     * @param metricId
+     * @param params Hash map of param name and values.
+     * @param queryParams  Hash map of queryParam name and values.
+     * @param multiparam List of parameter names that have multiple values.
+     * @param multiQueryParams List of queryParameter names that have multiple values.
+     * @returns {Array} Array of requests to execute for one metric
+     */
+    var generateMetricRequestParamsCombinations = function (metricId, params, queryParams, multiparam, multiQueryParams) {
+
+        var paramsCombinations = generateParamsCombinations(params, multiparam);
+        var queryParamsCombinations = generateParamsCombinations(queryParams, multiQueryParams);
+        var allCombinations = [];
+
+        //Create the combinations of params and queryParams
+        for(var i = 0, len_i = paramsCombinations.length; i < len_i; ++i) {
+            for(var j = 0, len_j = queryParamsCombinations.length; j < len_j; ++j) {
+                allCombinations.push({
+                    metricId: metricId,
+                    params: paramsCombinations[i],
+                    queryParams: queryParamsCombinations[j]
+                });
+            }
+        }
+
+        return allCombinations;
+
+    };
+
+    /**
+     * Generates all the combinations of multi parameters.
+     * @param params Hash map of param name and values.
+     * @param multiParams List of parameter names that have multiple values.
+     * @returns {Array} Array of parameter combinations.
+     */
+    var generateParamsCombinations = function generateParamsCombinations(params, multiParams) {
+
+        //Clone params before modifying them
+        params = clone(params);
+
+        if(multiParams.length > 0) {
+
+            var result = [];
+
+            //Clone function params before modifying them
+            multiParams = clone(multiParams);
+
+            //Remove the parameter from the list of multi parameters
+            var param = multiParams.pop();
+
+            //Save the values of the parameter because it will be modified
+            var values = params[param];
+
+            //For each value generate the possible combinations
+            for(var i in values) {
+
+                var value = values[i];
+
+                //Overwrite array with only one value
+                params[param] = value;
+
+                //Generate the combinations for that value
+                var combinations = generateParamsCombinations(params, multiParams);
+
+                result = result.concat(combinations);
+
+            }
+
+            return result;
+
+        } else { //End of recursion
+            return [ params ];
+        }
     };
 
 
@@ -461,17 +564,25 @@
         return result;
     };
 
-    /** Deep merge in obj1 object. (Priority obj2)
-     * @method
-     * @return {object}
+
+    /**
+     * Deep merge in obj1 object. (Priority obj2)
+     * @param obj1
+     * @param obj2
+     * @param mergeArrays If true, combines arrays. Oherwirse, if two arrays must be merged,
+     * the obj2's array overwrites the other. Default: true.
+     * @returns {*}
      */
-    var mergeObjects = function mergeObjects(obj1, obj2) {
-        if (Array.isArray(obj2) && Array.isArray(obj1)) {
+    var mergeObjects = function mergeObjects(obj1, obj2, mergeArrays) {
+
+        mergeArrays = mergeArrays || true;
+
+        if (Array.isArray(obj2) && Array.isArray(obj1) && mergeArrays) {
             // Merge Arrays
             var i;
-            for (i = 0; i < obj2.length; i ++) {
+            for (i = 0; i < obj2.length; i++) {
                 if (typeof obj2[i] === 'object' && typeof obj1[i] === 'object') {
-                    obj1[i] = mergeObjects(obj1[i], obj2[i]);
+                    obj1[i] = mergeObjects(obj1[i], obj2[i], mergeArrays);
                 } else {
                     obj1[i] = obj2[i];
                 }
@@ -484,7 +595,7 @@
             for (var p in obj2) {
                 if(obj1.hasOwnProperty(p)){
                     if (typeof obj2[p] === 'object' && typeof obj1[p] === 'object') {
-                        obj1[p] = mergeObjects(obj1[p], obj2[p]);
+                        obj1[p] = mergeObjects(obj1[p], obj2[p], mergeArrays);
                     } else {
                         obj1[p] = obj2[p];
                     }
@@ -523,7 +634,7 @@
                 //Clean the context
                 var mergeContext = getCleanContextByMetric(contextsData[c], metric);
 
-                metric = mergeObjects(metric, mergeContext);
+                metric = mergeObjects(metric, mergeContext, false);
             }
 
             //Add the metric to the returned array

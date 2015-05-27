@@ -531,10 +531,10 @@
                         cleanParameters[paramName] = metric[paramName];
                     }
                 }
-            }
 
-            if(Object.keys(cleanParameters).length > 0) {
-                newMetrics.push(cleanParameters);
+                if(Object.keys(cleanParameters).length > 0) {
+                    newMetrics.push(cleanParameters);
+                }
             }
         }
 
@@ -774,6 +774,11 @@
 
         //Normalize the array of metrics
         metrics = normalizeMetrics(metrics);
+
+        if(metrics.length === 0) {
+            warn("No metrics to observe.");
+            return;
+        }
 
         //Check that static parameters have their value defined in the metric
         for(var i = 0; i < metrics.length; ++i) {

@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="sdh-framework/style/core.css">
         @yield('css')
 
-        <script src="assets/js/jquery/jquery-2.1.3.min.js"></script>
+        <script src="sdh-framework/lib/jquery/jquery-2.1.3.min.js"></script>
         <script src="assets/js/bootstrap/bootstrap.min.js"></script>
     </head>
     <body class="page-body">

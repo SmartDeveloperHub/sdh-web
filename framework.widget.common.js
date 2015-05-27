@@ -70,7 +70,9 @@
         if (this.isloading > 1) {
             return;
         }
-        oldposstyle = this._common.container.style.position;
+        if (!oldposstyle) {
+            oldposstyle = this._common.container.style.position;
+        }
         this._common.container.style.position = 'relative';
         setLoadingSize.call(this);
         window.addEventListener("resize", resizeHandler.bind(this));

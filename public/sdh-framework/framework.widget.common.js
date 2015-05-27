@@ -55,29 +55,48 @@
         this.restoreContainerHandler = function restoreContainerHandler(e) {
             this._common.loadingLayer.removeEventListener('transitionend', this.restoreContainerHandler);
             $(this._common.container).removeClass('blurMode');
+            this._common.container.style.position = oldposstyle;
+            window.removeEventListener("resize", resizeHandler.bind(this));
             if (typeof this.callback == 'function') {
                 this.callback();
             }
         }.bind(this);
 	};
 
-    var oldContainerClass;
+    var oldContainerClass, oldposstyle;
 
     CommonWidget.prototype.startLoading = function startLoading() {
         this.isloading += 1;
         if (this.isloading > 1) {
             return;
         }
+        if (!oldposstyle) {
+            oldposstyle = this._common.container.style.position;
+        }
+        this._common.container.style.position = 'relative';
+        setLoadingSize.call(this);
+        window.addEventListener("resize", resizeHandler.bind(this));
+        $(this._common.container).addClass('blurMode');
+        $(this._common.loadingLayer).addClass('on');
+
+    };
+
+    var setLoadingSize = function setLoadingSize() {
         var wsize = this._common.container.getBoundingClientRect();
         // center the spinner vertically because a responsive 
         // widget can change it height dynamically
         this._common.loadingLayer.style.lineHeight = wsize.height + 'px';
         this._common.loadingContainer.style.height = wsize.height + 'px';
         this._common.loadingContainer.style.width = wsize.width + 'px';
-        //this._common.loadingContainer.style.top = wsize.top + 'px';// Not necesary with bootstrap
+        if(this._common.loadingContainer.getBoundingClientRect().top == 0) {
+            this._common.loadingContainer.style.top = wsize.top + 'px';
+        }
         this._common.loadingContainer.style.left = 'auto';
-        $(this._common.container).addClass('blurMode');
-        $(this._common.loadingLayer).addClass('on');
+    };
+
+    var resizeHandler = function resizeHandler(e) {
+        setLoadingSize.call(this);
+        console.log(e);
     };
 
     /*
@@ -92,7 +111,7 @@
             this._common.loadingLayer.addEventListener('transitionend', this.restoreContainerHandler);
             setTimeout(function() {
                 $(this._common.loadingLayer).removeClass('on')
-            }.bind(this), 50);
+            }.bind(this), 100);
         } else {
             console.log('discarding data...');
         }

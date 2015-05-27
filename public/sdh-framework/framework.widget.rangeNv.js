@@ -26,13 +26,13 @@
 
     // CHECK D3
     if(typeof d3 === 'undefined') {
-        console.error("LinesChart could not be loaded because d3 did not exist.");
+        console.error("rangeNv could not be loaded because d3 did not exist.");
         return;
     }
 
     // CHECK NVD3
     if(typeof nv === 'undefined') {
-        console.error("LinesChart could not be loaded because nvd3 did not exist.");
+        console.error("rangeNv could not be loaded because nvd3 did not exist.");
         return;
     }
 
@@ -40,17 +40,17 @@
         if (configuration == null) {
             configuration = {};
         }
-        if (typeof configuration.xlabel != "string") {
-            configuration.xlabel = 'X';
+        if (typeof configuration.height != "number") {
+            configuration.height = 240;
         }
-        if (typeof configuration.ylabel != "string") {
-            configuration.ylabel = 'Y';
+        if (typeof configuration.focusHeight != "number") {
+            configuration.focusHeight = false;
         }
-        if (typeof configuration.showLegend != "boolean") {
-            configuration.showLegend = true;
+        if (typeof configuration.ownContext != "string") {
+            configuration.ownContext = "dafault_rangeNv_Context_id";
         }
-        if (typeof configuration.showLabels != "boolean") {
-            configuration.showLabels = true;
+        if (typeof configuration.isArea != "boolean") {
+            configuration.isArea = false;
         }
         if (typeof configuration.duration != "number") {
             configuration.duration = 250;
@@ -58,38 +58,35 @@
         if (typeof configuration.labelFormat != "string") {
             configuration.labelFormat = "%mid%";
         }
-        if (typeof configuration.area != "boolean") {
-            configuration.area = false;
-        }
-        if (!(typeof configuration.interpolate == 'string' || typeof configuration.interpolate == 'function')) {
-            configuration.interpolate = 'linear';
-        }
 
+        if (typeof configuration.interpolate != "string") {
+            configuration.interpolate = "linear";
+        }
         return configuration;
     };
 
-    /* LinesChart constructor
-     *   element: the DOM element that will contain the LinesChart
+    /* rangeNv constructor
+     *   element: the DOM element that will contain the rangeNv
      *   metrics: the metrics id array
      *   contextId: optional.
      *   configuration: additional chart configuration:
      *      {
+     *       ~ donut: boolean - Whether to make a pie graph a donut graph or not.
+     *       ~ growOnHover: boolean - For pie/donut charts, whether to increase slice radius on hover or not.
+     *       ~ cornerRadius: number - For donut charts only, the corner radius (in pixels) of the slices.
+     *       ~ padAngle: number - The percent of the chart that should be spacing between slices.
      *       ~ showLegend: boolean - Whether to display the legend or not.
-     *       ~ showLabels: boolean - Show chart labels for each slice.
+     *       ~ showLabels: boolean - Show pie/donut chart labels for each slice.
+     *       ~ donutRatio: number - Percent of pie radius to cut out of the middle to make the donut. It is multiplied
+     *         by the outer radius to calculate the inner radius, thus it should be between 0 and 1.
      *       ~ duration: number - Duration in ms to take when updating chart. For things like bar charts, each bar can
      *         animate by itself but the total time taken should be this value.
      *       ~ labelFormat: string - Format string for the labels. Metric parameters can be used as variables by
      *         surrounding their names with percentages. The metric name can also be accessed with %mid%. For example,
      *         the following is a valid labelFormat: "User: %uid%".
-     *       ~ xlabel: string - The x-axis label.
-     *       ~ ylabel: string - The y-axis label.
-     *       ~ area: boolean - define if a line is a normal line or if it fills in the area.
-     *       ~ interpolate: string/function - sets the interpolation mode to the specified string or function
-     *         e.g: 'monotone' or 'step'. Default: 'linear'
-     *         more information: https://github.com/mbostock/d3/wiki/SVG-Shapes#line_interpolate
      *      }
      */
-    var LinesChart = function LinesChart(element, metrics, contextId, configuration) {
+    var RangeNv = function RangeNv(element, metrics, contextId, configuration) {
 
         if(!framework.isReady()) {
             console.error("LinesChart object could not be created because framework is not loaded.");
@@ -104,15 +101,27 @@
         this.chart = null;
         this.labels = {};
 
-        this.element.append('<svg class="blurable"></svg>');
-        this.svg = this.element.children("svg");
-        this.svg.get(0).style.minHeight = '200px';
 
+
+        /*this.element.append('<div><button>toggle focus</button></div>');
+        this.element.find('button').get(0).addEventListener('click', function() {
+            if(this.chart == null) {
+                return;
+            }
+            this.chart.focusEnable(!this.chart.focusEnable());
+            this.chart.update();
+        }.bind(this))*/
         // Extending widget
         framework.widgets.CommonWidget.call(this, false, this.element.get(0));
 
         // Configuration
         this.configuration = normalizeConfig(configuration);
+
+        this.ownContext = configuration.ownContext;
+
+        this.element.append('<svg class="blurable"></svg>');
+        this.svg = this.element.children("svg");
+        this.svg.get(0).style.minHeight = configuration.height;
 
         this.observeCallback = function(event){
 
@@ -128,9 +137,9 @@
 
     };
 
-    LinesChart.prototype = new framework.widgets.CommonWidget(true);
+    RangeNv.prototype = new framework.widgets.CommonWidget(true);
 
-    LinesChart.prototype.updateData = function(framework_data) {
+    RangeNv.prototype.updateData = function(framework_data) {
 
         var normalizedData = getNormalizedData.call(this,framework_data);
 
@@ -145,7 +154,7 @@
 
     };
 
-    LinesChart.prototype.delete = function() {
+    RangeNv.prototype.delete = function() {
 
         //Stop observing for data changes
         framework.metrics.stopObserve(this.observeCallback);
@@ -159,9 +168,30 @@
 
     };
 
+    RangeNv.prototype.updateContext = function(d) {
+        framework.metrics.updateContext(this.ownContext, {from: moment(d[0]).format("YYYY-MM-DD"), to: moment(d[1]).format("YYYY-MM-DD")});
+
+    };
 
     // PRIVATE METHODS - - - - - - - - - - - - - - - - - - - - - -
 
+    //Function that returns the value to replace with the label variables
+    var replacer = function(metricId, metricData, str) {
+
+        //Remove the initial an trailing '%' of the string
+        str = str.substring(1, str.length-1);
+
+        //Check if it is a parameter an return its value
+        if(str === "mid") {
+            return metricId;
+        } else if(metricData['request']['params'][str] != null) {
+            return metricData['request']['params'][str];
+        } else if(metricData['request']['queryParams'][str] != null) {
+            return metricData['request']['queryParams'][str];
+        }
+
+        return "";
+    };
 
     /**
      * Gets a normalized array of data according to the chart expected input from the data returned by the framework.
@@ -171,23 +201,6 @@
     var getNormalizedData = function getNormalizedData(framework_data) {
         var labelVariable = /%\w+%/; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
 
-        //Function that returns the value to replace with the label variables
-        var replacer = function(metricId, metricData, str) {
-
-            //Remove the initial an trailing '%' of the string
-            str = str.substring(1, str.length-1);
-
-            //Check if it is a parameter an return its value
-            if(str === "mid") {
-                return metricId;
-            } else if(metricData['request']['params'][str] != null) {
-                return metricData['request']['params'][str];
-            } else if(metricData['request']['queryParams'][str] != null) {
-                return metricData['request']['queryParams'][str];
-            }
-
-            return "";
-        };
         var series = [];
         this.labels = {};
         //var colors = ['#ff7f0e','#2ca02c','#7777ff','#D53E4F','#9E0142'];
@@ -222,10 +235,12 @@
                 });
                 series.push({
                     values: dat,      //values - represents the array of {x,y} data points
-                    key: label, //key  - the name of the series.
+                    key: label //key  - the name of the series.
                     //color: colors[series.length],  //color - optional: choose your own line color.
-                    area: this.configuration.area
                 });
+                if (series.length == 1) {
+                    series[0]['bar'] = true
+                }
             }
         }
 
@@ -237,49 +252,62 @@
 
         var width = this.element.get(0).getBoundingClientRect().width;
         var height = this.element.get(0).getBoundingClientRect().height;
-        var xlabel = this.configuration.xlabel;
-        var ylabel = this.configuration.ylabel;
 
         nv.addGraph(function() {
-          var chart = nv.models.lineChart()
-                        .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
-                        .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
-                        .duration(350)  //how fast do you want the lines to transition?
-                        .showLegend(this.configuration.showLegend)       //Show the legend, allowing users to turn on/off line series.
-                        .showYAxis(true)        //Show the y-axis
-                        .showXAxis(true)        //Show the x-axis
-                        .interpolate(this.configuration.interpolate) // https://github.com/mbostock/d3/wiki/SVG-Shapes#line_interpolate
-          ;
-          this.chart = chart;
-          chart.xAxis     //Chart x-axis settings
-                .axisLabel(this.configuration.xlabel)
-                .tickFormat(function(d) {
-                    return d3.time.format('%x')(new Date(d));
-                });
+            var chart = nv.models.lineWithFocusChart()
+                .focusHeight(this.configuration.focusHeight)
+                .isArea(this.configuration.isArea)
+                .interpolate(this.configuration.interpolate)
+                .duration(this.configuration.duration);
+            this.chart = chart;
 
-          chart.yAxis     //Chart y-axis settings
-                .axisLabel(this.configuration.ylabel)
-                .tickFormat(function(tickVal) {
-                    if (tickVal >= 1000 || tickVal <= -1000) {
-                        return tickVal/1000 + " K";
-                    } else {
-                        return tickVal;
-                    }
+            chart.xAxis.tickFormat(function(d) {
+                return d3.time.format('%x')(new Date(d));
                 })
+                .showMaxMin(false);        
+            chart.x2Axis.tickFormat(function(d) {
+                return d3.time.format('%x')(new Date(d))
+                })
+                .showMaxMin(false);
 
+            chart.yAxis.tickFormat(function(d) {
+                if (d >= 1000 || d <= -1000) {
+                    return Math.abs(d/1000) + " K";
+                } else {
+                    return Math.abs(d);
+                }
+            });
 
-          d3.select(this.svg.get(0))   //Select the <svg> element you want to render the chart in.   
-              .datum(data)          //Populate the <svg> elemen
-              .call(chart);         //Finally, render the chart!
+            chart.y2Axis.tickFormat(function(d) {
+                if (d >= 1000 || d <= -1000) {
+                    return Math.abs(d/1000) + " K";
+                } else {
+                    return Math.abs(d);
+                }
+            });
 
-          //Update the chart when window resizes.
-          nv.utils.windowResize(function() { chart.update() });
-          return chart;
+            d3.select(this.svg.get(0))
+                .datum(data)
+                .call(chart);
+
+            var timer = null;
+            chart.dispatch.on('brush', function(extent){
+                if (timer) {
+                    clearTimeout(timer); //cancel the previous timer.
+                    timer = null;
+                }
+                timer = setTimeout(function() {
+                    this.updateContext(extent.extent);
+                }.bind(this), 400);
+            }.bind(this));
+
+            nv.utils.windowResize(chart.update);
+
+            return chart;
         }.bind(this));
-
     };
 
-    window.framework.widgets.LinesChart = LinesChart;
+    window.framework.widgets.RangeNv = RangeNv;
 
 })();
 

@@ -1017,7 +1017,7 @@
      * @param callback
      */
     var frameworkReady = function frameworkReady(callback) {
-        if('undefined' === typeof _metricsInfo && typeof callback === 'function') {
+        if(!_isReady && typeof callback === 'function') {
             $(_eventBox).on("FRAMEWORK_READY", function() {
                 $(_eventBox).off("FRAMEWORK_READY");
                 callback();

@@ -1,4 +1,4 @@
-@extends('layouts.panel')
+@extends('layouts.panel_old')
 
 @section('scripts')
     @parent

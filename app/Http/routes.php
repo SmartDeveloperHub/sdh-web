@@ -24,7 +24,7 @@ Route::get('organization-dashboard', function(){
 });
 
 Route::get('test-web', function(){
-    return View::make('dashboards.test');
+    return View::make('panel');
 });
 Route::get('test-template', function(){
     return View::make('dashboards.test-template');

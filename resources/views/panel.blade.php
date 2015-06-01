@@ -4,6 +4,7 @@
     @parent
     <script type="application/javascript">
         SDH_API_URL = "http://localhost:12345";
+        BASE_DASHBOARD = "test-template";
     </script>
 
 @stop
@@ -15,8 +16,6 @@
     <link rel="stylesheet" href="sdh-framework/fonts/fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="sdh-framework/fonts/linecons/css/linecons.css">
     <link rel="stylesheet" href="sdh-framework/fonts/octicons/css/octicons.css">
-    <link rel="stylesheet" href="sdh-framework/framework.widget.common.css">
-    <link rel="stylesheet" href="sdh-framework/framework.widget.heatmap.css">
 @stop
 
 @section('body')
@@ -195,7 +194,11 @@
 </div>
 <div id="template-exec" style="display: none";></div>
 <div id="loading" class="hidden">
-    <div class="loading-info text-center"></div>
+    <div class="loading-info text-center">
+        <span class="loading-text"></span>
+        <i class="loading-icon fa fa-spinner fa-pulse fa-3x"></i>
+    </div>
+
 </div>
 
 {{-- End of body section --}}

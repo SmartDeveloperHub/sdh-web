@@ -1005,7 +1005,7 @@
 
         /* CHECK JQUERY */
         if (typeof jQuery == 'undefined') {
-            error("SDH_API_URL global variable must be set with a valid url to the SDH-API server.");
+            error("SDH Framework requires JQuery to work properly.");
             return false;
         }
 

@@ -26,13 +26,14 @@ require.config({
     baseUrl: "/",
     //enforceDefine: true,
     paths: {
-        jquery: 'sdh-framework/lib/jquery/jquery-2.1.3.min',
-        bootstrap: "assets/js/bootstrap/bootstrap.min",
-        d3: "sdh-framework/lib/d3/d3.min",
-        nvd3: "sdh-framework/lib/nvd3/nv.d3.min",
-        joinable: "sdh-framework/lib/joinable/joinable",
-        moment: "sdh-framework/lib/moment/moment",
-        framework: "sdh-framework/framework"
+        'css':		'assets/js/requirejs/css.min', // Alias for CSS plugin
+        'bootstrap': "assets/js/bootstrap/bootstrap.min",
+        'jquery': 'sdh-framework/lib/jquery/jquery-2.1.3.min',
+        'd3': "sdh-framework/lib/d3/d3.min",
+        'nvd3': "sdh-framework/lib/nvd3/nv.d3.min",
+        'joinable': "sdh-framework/lib/joinable/joinable",
+        'moment': "sdh-framework/lib/moment/moment",
+        'framework': "sdh-framework/framework"
     },
     shim : {
         bootstrap : {

@@ -3,5 +3,15 @@
 </script>
 <script type="application/javascript">
     $(".main-content").html($('#html-template').html());
-    @yield('script')
+    require( @yield('require', '[]'), function() {
+
+        // Dashboard script
+        @yield('script')
+
+        // Hide the loading animation
+        finishLoading();
+
+    });
+
+
 </script>

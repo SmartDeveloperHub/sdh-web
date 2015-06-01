@@ -61,19 +61,21 @@ require.config({
 define(function(require, exports, module) {
 
     document.getElementById("loading").className = "";
-    document.getElementById("loading").getElementsByClassName("loading-info")[0].textContent = "Initializing SDH Framework...";
+    document.getElementById("loading").getElementsByTagName("span")[0].textContent = "Initializing SDH Framework...";
 
     require(["jquery", "framework", "d3", "nvd3", "moment", "bootstrap", "joinable"], function($, framework,d3, nv, moment) {
 
-        require(
-            [
-                "sdh-framework/framework.widget.common",
-                "sdh-framework/framework.widget.heatmap",
-                "sdh-framework/framework.widget.piechart"
-            ], function(){
-                loadTemplate("test-template");
+        framework.ready(function() {
+            console.log("Framework ready");
+
+            if(BASE_DASHBOARD != null) {
+                loadTemplate(BASE_DASHBOARD);
+            } else {
+                console.error("BASE_DASHBOARD is not defined.");
             }
-        );
+
+        });
+
 
     });
 });
@@ -81,22 +83,29 @@ define(function(require, exports, module) {
 
 var loadTemplate = function loadTemplate(path) {
 
-    framework.ready(function() {
+    //Change loading info
+    $("#loading .loading-info span").text("Downloading template...");
 
-        //Change loading info
-        $("#loading .loading-info").text("Downloading template...");
+    //Display the loading animation
+    $("#loading").show();
 
-        framework.metrics.stopAllObserves();
+    framework.metrics.stopAllObserves();
 
-        $.get(path, function( data ) {
+    $.get(path, function( data ) {
 
-            $("#template-exec").html(data);
-
-            //Remove loading
-            $("#loading").addClass("hidden").find(".loading-info").text("");
-        });
+        $("#template-exec").html(data);
 
     });
+
+
+};
+
+var finishLoading = function() {
+    //Remove loading
+    $( "#loading" ).fadeOut(750, function() {
+        $(this).find(".loading-info span").text("");
+    });
+
 };
 
 

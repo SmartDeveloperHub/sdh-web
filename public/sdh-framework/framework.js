@@ -531,10 +531,10 @@
                         cleanParameters[paramName] = metric[paramName];
                     }
                 }
-            }
 
-            if(Object.keys(cleanParameters).length > 0) {
-                newMetrics.push(cleanParameters);
+                if(Object.keys(cleanParameters).length > 0) {
+                    newMetrics.push(cleanParameters);
+                }
             }
         }
 
@@ -775,6 +775,11 @@
         //Normalize the array of metrics
         metrics = normalizeMetrics(metrics);
 
+        if(metrics.length === 0) {
+            warn("No metrics to observe.");
+            return;
+        }
+
         //Check that static parameters have their value defined in the metric
         for(var i = 0; i < metrics.length; ++i) {
             if(metrics[i]['static'] != null && metrics[i]['static'].length > 0) {
@@ -1000,7 +1005,7 @@
 
         /* CHECK JQUERY */
         if (typeof jQuery == 'undefined') {
-            error("SDH_API_URL global variable must be set with a valid url to the SDH-API server.");
+            error("SDH Framework requires JQuery to work properly.");
             return false;
         }
 
@@ -1012,7 +1017,7 @@
      * @param callback
      */
     var frameworkReady = function frameworkReady(callback) {
-        if('undefined' === typeof _metricsInfo && typeof callback === 'function') {
+        if(!_isReady && typeof callback === 'function') {
             $(_eventBox).on("FRAMEWORK_READY", function() {
                 $(_eventBox).off("FRAMEWORK_READY");
                 callback();

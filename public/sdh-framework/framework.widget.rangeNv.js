@@ -43,8 +43,16 @@
         if (typeof configuration.height != "number") {
             configuration.height = 240;
         }
+        if (typeof configuration.showFocus != "boolean") {
+            configuration.showFocus = true;
+        }
+        // nvd3 focusHeight is contextHeight
         if (typeof configuration.focusHeight != "number") {
-            configuration.focusHeight = false;
+            configuration.focusHeight = configuration.height * 0.5;
+            if (!configuration.showFocus) {
+                // -30 for leyend
+                configuration.focusHeight = configuration.height - 30;
+            }
         }
         if (typeof configuration.ownContext != "string") {
             configuration.ownContext = "dafault_rangeNv_Context_id";
@@ -58,10 +66,10 @@
         if (typeof configuration.labelFormat != "string") {
             configuration.labelFormat = "%mid%";
         }
-
         if (typeof configuration.interpolate != "string") {
             configuration.interpolate = "linear";
         }
+
         return configuration;
     };
 
@@ -302,9 +310,12 @@
             }.bind(this));
 
             nv.utils.windowResize(chart.update);
-
+            if (!this.configuration.showFocus) {
+                $(".nv-focus").attr("class", "nv-focus hidden");
+            }
             return chart;
         }.bind(this));
+
     };
 
     window.framework.widgets.RangeNv = RangeNv;

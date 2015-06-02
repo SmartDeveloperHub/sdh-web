@@ -207,7 +207,7 @@
      * @returns {Array} Contains objects with 'label' and 'value'.
      */
     var getNormalizedData = function getNormalizedData(framework_data) {
-        var labelVariable = /%\w+%/; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
+        var labelVariable = /%\w+%/g; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
 
         var series = [];
         this.labels = {};

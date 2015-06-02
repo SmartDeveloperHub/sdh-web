@@ -158,6 +158,23 @@
 
     // PRIVATE METHODS - - - - - - - - - - - - - - - - - - - - - -
 
+    //Function that returns the value to replace with the label variables
+    var replacer = function(metricId, metricData, str) {
+
+        //Remove the initial an trailing '%' of the string
+        str = str.substring(1, str.length-1);
+
+        //Check if it is a parameter an return its value
+        if(str === "mid") {
+            return metricId;
+        } else if(metricData['request']['params'][str] != null) {
+            return metricData['request']['params'][str];
+        } else if(metricData['request']['queryParams'][str] != null) {
+            return metricData['request']['queryParams'][str];
+        }
+
+        return "";
+    };
 
     /**
      * Gets a normalized array of data according to the chart expected input from the data returned by the framework.
@@ -167,25 +184,7 @@
     var getNormalizedData = function getNormalizedData(framework_data) {
 
         var values = [];
-        var labelVariable = /%\w+%/; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
-
-        //Function that returns the value to replace with the label variables
-        var replacer = function(metricId, metricData, str) {
-
-            //Remove the initial an trailing '%' of the string
-            str = str.substring(1, str.length-1);
-
-            //Check if it is a parameter an return its value
-            if(str === "mid") {
-                return metricId;
-            } else if(metricData['request']['params'][str] != null) {
-                return metricData['request']['params'][str];
-            } else if(metricData['request']['queryParams'][str] != null) {
-                return metricData['request']['queryParams'][str];
-            }
-
-            return "";
-        };
+        var labelVariable = /%\w+%/g; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
 
         for(var metricId in framework_data) {
 
@@ -227,12 +226,12 @@
 
                 this.chart = nv.models.pieChart()
                     .x(function(d) {
-                        return d.label; //TODO:label
+                        return d.label;
                     })
                     .y(function(d) {
-                        return d.value; //TODO:value
+                        return d.value;
                     })
-                    .donut(this.configuration.donut)//TODO: configurable
+                    .donut(this.configuration.donut)
                     .width(width)
                     .height(height)
                     .padAngle(this.configuration.padAngle)

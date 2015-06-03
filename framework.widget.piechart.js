@@ -67,6 +67,9 @@
         if (typeof configuration.labelFormat != "string") {
             configuration.labelFormat = "%mid%";
         }
+        if (typeof configuration.labelsOutside != "boolean") {
+            configuration.labelsOutside = true;
+        }
 
         return configuration;
     };
@@ -90,6 +93,7 @@
      *       ~ labelFormat: string - Format string for the labels. Metric parameters can be used as variables by
      *         surrounding their names with percentages. The metric name can also be accessed with %mid%. For example,
      *         the following is a valid labelFormat: "User: %uid%".
+     *       ~ labelsOutside: boolean - Whether pie/donut chart labels should be outside the slices instead of inside them.
      *      }
      */
     var PieChart = function PieChart(element, metrics, contextId, configuration) {
@@ -241,7 +245,7 @@
                     .showLabels(this.configuration.showLabels)
                     .donutRatio(this.configuration.donutRatio)
                     .duration(this.configuration.duration)
-                    .donutLabelsOutside(true);
+                    .labelsOutside(this.configuration.labelsOutside);
 
                 d3.select(this.svg.get(0))
                     .datum(data) //TODO

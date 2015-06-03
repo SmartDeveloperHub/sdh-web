@@ -86,6 +86,10 @@
             labelFormat: {
                 type: 'string',
                 default: '%mid%'
+            },
+            yAxisTicks: {
+                type: 'number',
+                default: 5
             }
 
         };
@@ -126,6 +130,7 @@
      *       ~ labelFormat: string - Format string for the labels. Metric parameters can be used as variables by
      *         surrounding their names with percentages. The metric name can also be accessed with %mid%. For example,
      *         the following is a valid labelFormat: "User: %uid%".
+     *       ~ yAxisTicks: number - Number of ticks of the Y axis.
      *      }
      */
     var HorizontalBar = function HorizontalBar(element, metrics, contextId, configuration) {
@@ -273,6 +278,8 @@
 
         nv.addGraph(function() {
             var chart = nv.models.multiBarHorizontalChart()
+                .x(function(d) { return d.x; })
+                .y(function(d) { return d.y; })
                 .height(this.configuration.height)
                 .color(this.configuration.color)
                 .stacked(this.configuration.stacked)
@@ -281,7 +288,7 @@
                 .showControls(this.configuration.showControls)
                 .showLegend(this.configuration.showLegend)
                 .showXAxis(this.configuration.showXAxis)
-                .showYAxis(this.configuration.showYAxis) ;
+                .showYAxis(this.configuration.showYAxis);
             this.chart = chart;
 
             chart.xAxis.tickFormat(function(d) {
@@ -295,7 +302,7 @@
                 } else {
                     return Math.abs(d);
                 }
-            });
+            }).showMaxMin(true).ticks(this.configuration.yAxisTicks - 1);
 
             d3.select(this.svg.get(0))
                 .datum(data)

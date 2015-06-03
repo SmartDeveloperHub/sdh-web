@@ -106,6 +106,7 @@
      *   contextId: optional.
      *   configuration: additional chart configuration:
      *      {
+     *       ~ height: number - Height of the widget.
      *       ~ color: array or function - Colors to use for the different data. If an array is given, it is converted to a function automatically.
      *              Example:
      *                  chart.color(["#FF0000","#00FF00","#0000FF"])
@@ -113,6 +114,7 @@
      *                      var colors = d3.scale.category20().range().slice(10);
      *                      return colors[i % colors.length-1];
      *                  })
+     *       ~ stacked: boolean - Whether to display the different metrics stacked or not.
      *       ~ groupSpacing: number - The padding between bar groups.
      *       ~ duration: number - Duration in ms to take when updating chart. For things like bar charts, each bar can
      *         animate by itself but the total time taken should be this value.
@@ -121,8 +123,6 @@
      *       ~ showLegend: boolean - Whether to display the legend or not.
      *       ~ showXAxis: boolean - Display or hide the X axis.
      *       ~ showYAxis: boolean - Display or hide the Y axis.
-     *       ~ duration: number - Duration in ms to take when updating chart. For things like bar charts, each bar can
-     *         animate by itself but the total time taken should be this value.
      *       ~ labelFormat: string - Format string for the labels. Metric parameters can be used as variables by
      *         surrounding their names with percentages. The metric name can also be accessed with %mid%. For example,
      *         the following is a valid labelFormat: "User: %uid%".

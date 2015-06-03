@@ -82,6 +82,10 @@
             showYAxis: {
                 type: 'boolean',
                 default: true
+            },
+            labelFormat: {
+                type: 'string',
+                default: '%mid%'
             }
 
         };

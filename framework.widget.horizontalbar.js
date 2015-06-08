@@ -106,7 +106,7 @@
 
     /* rangeNv constructor
      *   element: the DOM element that will contain the rangeNv
-     *   metrics: the metrics id array
+     *   data: the data id array
      *   contextId: optional.
      *   configuration: additional chart configuration:
      *      {
@@ -118,7 +118,7 @@
      *                      var colors = d3.scale.category20().range().slice(10);
      *                      return colors[i % colors.length-1];
      *                  })
-     *       ~ stacked: boolean - Whether to display the different metrics stacked or not.
+     *       ~ stacked: boolean - Whether to display the different data stacked or not.
      *       ~ groupSpacing: number - The padding between bar groups.
      *       ~ duration: number - Duration in ms to take when updating chart. For things like bar charts, each bar can
      *         animate by itself but the total time taken should be this value.
@@ -167,7 +167,7 @@
 
         }.bind(this);
 
-        framework.metrics.observe(metrics, this.observeCallback , contextId);
+        framework.data.observe(metrics, this.observeCallback , contextId);
 
     };
 
@@ -191,7 +191,7 @@
     HorizontalBar.prototype.delete = function() {
 
         //Stop observing for data changes
-        framework.metrics.stopObserve(this.observeCallback);
+        framework.data.stopObserve(this.observeCallback);
 
         //Clear DOM
         $(this.svg).empty();

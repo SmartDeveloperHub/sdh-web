@@ -49,8 +49,8 @@
 
     /* RangeChart constructor
     *   element: the DOM element that will contains the range chart svg
-    *   metrics: the metrics id array
-    *   contextId: if necesary, the contextId link this chart metrics data
+    *   data: the data id array
+    *   contextId: if necesary, the contextId link this chart data data
     *           with changes in other context provider chart.
     *  configuration: you can use his optional parameter to assing a custom
     *           contextID for this context provider chart. Ej:
@@ -164,7 +164,7 @@
 
         }.bind(this);
 
-        framework.metrics.observe(metrics, this.observeMetric , contextId, this.maxData);
+        framework.data.observe(metrics, this.observeMetric , contextId, this.maxData);
         this.resizeHandler = function() {
             repaintChart.call(this, true);
         }.bind(this);
@@ -184,7 +184,7 @@
     RangeChart.prototype.delete = function() {
 
         //Stop observing for data changes
-        framework.metrics.stopObserve(this.observeCallback);
+        framework.data.stopObserve(this.observeCallback);
 
         //Clear DOM
         $(this.svg).empty();
@@ -196,7 +196,7 @@
     };
 
     RangeChart.prototype.updateContext = function(d) {
-        framework.metrics.updateContext(this.ownContext, {from: moment(d[0]).format("YYYY-MM-DD"), to: moment(d[1]).format("YYYY-MM-DD")});
+        framework.data.updateContext(this.ownContext, {from: moment(d[0]).format("YYYY-MM-DD"), to: moment(d[1]).format("YYYY-MM-DD")});
 
     };
 

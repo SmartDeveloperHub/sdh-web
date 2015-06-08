@@ -70,7 +70,7 @@
 
     /* LinesChart constructor
      *   element: the DOM element that will contain the LinesChart
-     *   metrics: the metrics id array
+     *   data: the data id array
      *   contextId: optional.
      *   configuration: additional chart configuration:
      *      {
@@ -124,7 +124,7 @@
 
         }.bind(this);
 
-        framework.metrics.observe(metrics, this.observeCallback , contextId);
+        framework.data.observe(metrics, this.observeCallback , contextId);
 
     };
 
@@ -148,7 +148,7 @@
     LinesChart.prototype.delete = function() {
 
         //Stop observing for data changes
-        framework.metrics.stopObserve(this.observeCallback);
+        framework.data.stopObserve(this.observeCallback);
 
         //Clear DOM
         $(this.svg).empty();

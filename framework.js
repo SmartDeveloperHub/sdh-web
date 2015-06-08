@@ -31,7 +31,7 @@
      */
 
     //Variable where public methods and variables will be stored
-    var _self = { metrics: {}, widgets: {} };
+    var _self = { data: {}, widgets: {} };
 
     //Path to the SDH-API server without the trailing slash
     var _serverUrl;
@@ -43,10 +43,10 @@
     // It is only for performance purposes while checking input.
     var _existentParametersList = [];
 
-    // Storage of the metrics data
-    var _metricsStorage = {}; //TODO: multi-level cache
+    // Storage of the data data
+    var _resourcesStorage = {}; //TODO: multi-level cache
 
-    var _metricContexts = {};
+    var _resourcesContexts = {};
 
     // Contains a list that links user callbacks (given as parameter at the observe methods) with the internal
     // callbacks. It is need to remove handlers when not used and free memory.
@@ -103,9 +103,9 @@
     };
 
     /**
-     * Fills _resourcesInfo hashmap with the metrics info and the following structure:
+     * Fills _resourcesInfo hashmap with the reources info and the following structure:
      * {
-     *       "{metric-id}": {
+     *       "{resource-id}": {
      *           path:"yourpath/../sdfsdf",
      *           params: ['param1', 'param2'],
      *           queryParams: ['queryParam1']
@@ -114,7 +114,7 @@
      *   }
      * @param onReady
      */
-    var loadMetricsInfo = function loadMetricsInfo(onReady) {
+    var loadResourcesInfo = function loadResourcesInfo(onReady) {
 
         requestJSON("/api/", null, function(data) {
 
@@ -141,11 +141,11 @@
                 }
             };
 
-            //Initialize the _metricInfo object
+            //Initialize the _resourcesInfo object
             _resourcesInfo = {};
 
-            //var isMetricList = /\/metrics\/$/;
-            //var isMetricListWithoutParams = /^((?!\{).)*\/metrics\/$/;
+            //var isMetricList = /\/data\/$/;
+            //var isMetricListWithoutParams = /^((?!\{).)*\/data\/$/;
             //var isSpecificMetric = /\/\{mid\}$/;
 
 
@@ -179,24 +179,24 @@
 
                 var path = paths[x]['path'];
 
-                // Make an api request to retrieve all the metrics
+                // Make an api request to retrieve all the data
                 requestJSON(path, null, function(p, data) {
 
-                    //Iterate over the metrics
+                    //Iterate over the resources
                     for(var j = 0, len = data.length; j < len; ++j) {
 
                         var resourceInfo = data[j];
                         var resourceId = resourceInfo['id'];
                         var resourcePath = resourceInfo['path'];
 
-                        // Fill the _metricInfo array
+                        // Fill the _resourcesInfo array
                         _resourcesInfo[resourceId] = {
                             path: resourcePath,
                             requiredParams: {}, //list of url param names
                             optionalParams: {} //list of query params
                         };
 
-                        //Get the general metric path info (like /metrics/{mid})
+                        //Get the general resource path info (like /data/{mid})
                         var generalResourcePath = resourcePath.substring(0, resourcePath.lastIndexOf('/')) + '/{'+paths[p]['variable']+'}';
                         var generalResourcePathInfo = apiPaths[generalResourcePath];
 
@@ -249,24 +249,24 @@
     };
 
     /**
-     * Checks if the metric object has all the information that is needed to request the metric data
-     * @param metric A metric object. At least must have the id. Can have other parameters, like range, userId...
+     * Checks if the resource object has all the information that is needed to request the resource data
+     * @param resource A resource object. At least must have the id. Can have other parameters, like range, userId...
      * @returns {boolean}
      */
-    var metricCanBeRequested = function metricCanBeRequested(metric) {
+    var resourceCanBeRequested = function resourceCanBeRequested(resource) {
 
-        if(metric.id == null) {
+        if(resource['id'] == null) {
             return false;
         }
 
-        var metricInfo = _resourcesInfo[metric.id];
+        var resourceInfo = _resourcesInfo[resource['id']];
 
-        if(metricInfo == null) {
+        if(resourceInfo == null) {
             return false;
         }
 
-        for(var paramId in metricInfo['requiredParams']) {
-            var paramValue = metric[paramId];
+        for(var paramId in resourceInfo['requiredParams']) {
+            var paramValue = resource[paramId];
 
             if(paramValue == null) {
                 return false;
@@ -278,13 +278,13 @@
     };
 
     /**
-     * Checks if all the given metrics fulfill all the requirements to be requested
-     * @param metrics Array of normalized metrics
+     * Checks if all the given resources fulfill all the requirements to be requested
+     * @param resources Array of normalized resources
      * @returns {boolean}
      */
-    var allMetricsCanBeRequested = function allMetricsCanBeRequested(metrics) {
-        for(var i in metrics) {
-            if(!metricCanBeRequested(metrics[i])) {
+    var allResourcesCanBeRequested = function allResourcesCanBeRequested(resources) {
+        for(var i in resources) {
+            if(!resourceCanBeRequested(resources[i])) {
                 return false;
             }
         }
@@ -293,29 +293,29 @@
     };
 
     /**
-     * Request a given metric
-     * @param metric
+     * Request a given resource
+     * @param resourceId
      */
-    var makeMetricRequest = function makeMetricRequest(metricId, params, callback) {
+    var makeResourceRequest = function makeResourceRequest(resourceId, params, callback) {
 
-        var metricInfo = _resourcesInfo[metricId];
+        var resourceInfo = _resourcesInfo[resourceId];
 
         var queryParams = {};
 
-        if(metricInfo != null) {
+        if(resourceInfo != null) {
 
             /* Generate path */
-            var path = metricInfo.path;
+            var path = resourceInfo.path;
 
             // Replace params in url skeleton
             for(var paramId in params) {
 
-                var paramInfo = metricInfo['requiredParams'][paramId] || metricInfo['optionalParams'][paramId];
+                var paramInfo = resourceInfo['requiredParams'][paramId] || resourceInfo['optionalParams'][paramId];
                 var paramValue = params[paramId];
 
                 if(paramValue == null) { //It has no value (ignore it or throw an error)
                     if(paramInfo['required'] === true) {
-                        error("Resource '"+ metricId + "' needs parameter '"+ paramId +"'.");
+                        error("Resource '"+ resourceId + "' needs parameter '"+ paramId +"'.");
                         return;
                     }
 
@@ -334,33 +334,33 @@
             requestJSON(path, queryParams, callback);
 
         } else {
-            error("Resource '"+ metricId + "' does not exist.");
+            error("Resource '"+ resourceId + "' does not exist.");
         }
 
     };
 
     /**
-     * Requests multiple metrics
-     * @param metrics Normalized metric
+     * Requests multiple resources
+     * @param resources Normalized resource
      * @param callback
      */
-    var multipleMetricsRequest = function multipleMetricsRequest(metrics, callback) {
+    var multipleResourcesRequest = function multipleResourcesRequest(resources, callback) {
 
         var completedRequests = 0;
         var allData = {};
         var requests = [];
 
-        var onMetricReady = function(metricId, params, data) {
+        var onResourceReady = function(resourceId, params, data) {
 
-            if(allData[metricId] == null) {
-                allData[metricId] = [];
+            if(allData[resourceId] == null) {
+                allData[resourceId] = [];
             }
 
             //Add the request info to the data received from the api
             data['request'] = {
                 params: params
             };
-            allData[metricId].push(data);
+            allData[resourceId].push(data);
 
             if(++completedRequests === requests.length) {
                 sendDataEventToCallback(allData, callback);
@@ -370,49 +370,49 @@
         //Send a loading data event to the listener
         sendLoadingEventToCallback(callback);
 
-        for(var i in metrics) {
+        for(var i in resources) {
 
-            var metricId = metrics[i].id;
+            var resourceId = resources[i].id;
             var params = {};
             var multiparams = [];
 
             //Fill the params and multiparams
-            for(var name in metrics[i]) {
+            for(var name in resources[i]) {
 
-                if(_resourcesInfo[metricId]['optionalParams'][name] != null || _resourcesInfo[metricId]['requiredParams'][name] != null) { //Is a param
+                if(_resourcesInfo[resourceId]['optionalParams'][name] != null || _resourcesInfo[resourceId]['requiredParams'][name] != null) { //Is a param
 
                     //Check if is multi parameter and add it to the list of multi parameters
-                    if(metrics[i][name] instanceof Array) {
+                    if(resources[i][name] instanceof Array) {
                         multiparams.push(name);
                     }
 
-                    params[name] =  metrics[i][name];
+                    params[name] =  resources[i][name];
 
                 }
             }
 
-            var requestsCombinations = generateMetricRequestParamsCombinations(metricId, params, multiparams);
+            var requestsCombinations = generateResourceRequestParamsCombinations(resourceId, params, multiparams);
             requests = requests.concat(requestsCombinations);
 
         }
 
         for(var i in requests) {
-            var metricId = requests[i]['metricId'];
+            var resourceId = requests[i]['resourceId'];
             var params = requests[i]['params'];
 
-            makeMetricRequest(metricId, params, onMetricReady.bind(undefined, metricId, params));
+             makeResourceRequest(resourceId, params, onResourceReady.bind(undefined, resourceId, params));
         }
 
     };
 
     /**
      * Generates an array of requests combining all the values of the multi parameters (param and queryParam).
-     * @param metricId
+     * @param resourceId
      * @param params Hash map of param name and values.
      * @param multiparam List of parameter names that have multiple values.
-     * @returns {Array} Array of requests to execute for one metric
+     * @returns {Array} Array of requests to execute for one resource
      */
-    var generateMetricRequestParamsCombinations = function (metricId, params, multiparam) {
+    var generateResourceRequestParamsCombinations = function (resourceId, params, multiparam) {
 
         var paramsCombinations = generateParamsCombinations(params, multiparam);
         var allCombinations = [];
@@ -420,7 +420,7 @@
         //Create the combinations of params and queryParams
         for(var i = 0, len_i = paramsCombinations.length; i < len_i; ++i) {
             allCombinations.push({
-                metricId: metricId,
+                resourceId: resourceId,
                 params: paramsCombinations[i]
             });
         }
@@ -477,65 +477,65 @@
 
 
     /**
-     * Converts the array of metrics containing a mixture of strings (for simple metrics) and objects (for complex metrics)
+     * Converts the array of resources containing a mixture of strings (for simple resources) and objects (for complex resources)
      * into an array of objects with at least an id.
-     * @param metrics Array of metrics containing a mixture of strings (for simple metrics) and objects (for complex metrics).
+     * @param resources Array of resources containing a mixture of strings (for simple resources) and objects (for complex resources).
      * It can be modified, so consider cloning it if necessary.
      * @returns {Array}
      */
-    var normalizeMetrics = function normalizeMetrics(metrics) {
+    var normalizeResources = function normalizeResources(resources) {
 
         var newMetricsParam = [];
-        for(var i in metrics) {
+        for(var i in resources) {
 
-            if('string' === typeof metrics[i]) {
-                newMetricsParam.push({id: metrics[i]});
-            } else if('object' === typeof metrics[i] && metrics[i]['id']) { //Metrics objects must have an id
-                newMetricsParam.push(metrics[i]);
+            if('string' === typeof resources[i]) {
+                newMetricsParam.push({id: resources[i]});
+            } else if('object' === typeof resources[i] && resources[i]['id']) { //Metrics objects must have an id
+                newMetricsParam.push(resources[i]);
             } else {
-                warn("One of the metrics given was not string nor object so it has been ignored.");
+                warn("One of the resources given was not string nor object so it has been ignored.");
             }
         }
 
-        //Remove invalid metrics and parameters
-        newMetricsParam = cleanMetrics(newMetricsParam);
+        //Remove invalid resources and parameters
+        newMetricsParam = cleanResources(newMetricsParam);
 
         return newMetricsParam;
 
     };
 
     /**
-     * Cleans an array of metric objects removing the non existent ones and the invalid parameters of them.
-     * @param metrics Array of metric objects to clean.
+     * Cleans an array of resource objects removing the non existent ones and the invalid parameters of them.
+     * @param resources Array of resource objects to clean.
      */
-    var cleanMetrics = function cleanMetrics(metrics) {
+    var cleanResources = function cleanResources(resources) {
 
-        var newMetrics = [];
+        var newResources = [];
 
-        for(var i = 0; i < metrics.length; ++i) {
-            var metric = metrics[i];
-            var metricId = metric['id'];
-            var metricInfo = _resourcesInfo[metricId];
+        for(var i = 0; i < resources.length; ++i) {
+            var resource = resources[i];
+            var resourceId = resource['id'];
+            var resourceInfo = _resourcesInfo[resourceId];
 
-            if(metricInfo == null) {
-                warn("Metric '"+metricId+"' does not exist.");
+            if(resourceInfo == null) {
+                warn("Resource '"+resourceId+"' does not exist.");
             } else { //Check its parameters
                 var cleanParameters = {};
-                for(var paramName in metric) {
-                    if(paramName != 'id' && paramName != 'static' && metricInfo['requiredParams'][paramName] == null && metricInfo['optionalParams'][paramName] == null) {
-                        warn("Parameter '"+paramName+"' is not a valid parameter for metric '"+metricId+"'.");
+                for(var paramName in resource) {
+                    if(paramName != 'id' && paramName != 'static' && resourceInfo['requiredParams'][paramName] == null && resourceInfo['optionalParams'][paramName] == null) {
+                        warn("Parameter '"+paramName+"' is not a valid parameter for resource '"+resourceId+"'.");
                     } else {
-                        cleanParameters[paramName] = metric[paramName];
+                        cleanParameters[paramName] = resource[paramName];
                     }
                 }
 
                 if(Object.keys(cleanParameters).length > 0) {
-                    newMetrics.push(cleanParameters);
+                    newResources.push(cleanParameters);
                 }
             }
         }
 
-        return newMetrics;
+        return newResources;
     };
 
     /** Clone the object
@@ -566,7 +566,7 @@
      * Deep merge in obj1 object. (Priority obj2)
      * @param obj1
      * @param obj2
-     * @param mergeArrays If true, combines arrays. Oherwirse, if two arrays must be merged,
+     * @param mergeArrays If true, combines arrays. Otherwise, if two arrays must be merged,
      * the obj2's array overwrites the other. Default: true.
      * @returns {*}
      */
@@ -605,40 +605,40 @@
     };
 
     /**
-     * Combines an incomplete metric with a context in order to create a complete metric to make a request with.
-     * @param metrics
+     * Combines an incomplete resource with a context in order to create a complete resource to make a request with.
+     * @param resources
      * @param contexts Context ids
      */
-    var combineMetricsWithContext = function combineMetricsWithContext(metrics, contexts) {
+    var combineResourcesWithContexts = function combineResourcesWithContexts(resources, contexts) {
 
-        var newMetrics = [];
+        var newResources = [];
         var contextsData = [];
 
         //Fill the array with data for each context
         for(var i in contexts) {
-            contextsData.push(_metricContexts[contexts[i]]['data']);
+            contextsData.push(_resourcesContexts[contexts[i]]['data']);
         }
 
-        //Iterate through the metrics and combine them with the contexts
-        for(var i in metrics) {
+        //Iterate through the resources and combine them with the contexts
+        for(var i in resources) {
 
-            //Clone the metric object to avoid modification
-            var metric = clone(metrics[i]);
+            //Clone the resource object to avoid modification
+            var resource = clone(resources[i]);
 
-            //Modify the metric with all the contexts
+            //Modify the resource with all the contexts
             for(var c in contextsData) {
 
                 //Clean the context
-                var mergeContext = getCleanContextByMetric(contextsData[c], metric);
+                var mergeContext = getCleanContextByResource(contextsData[c], resource);
 
-                metric = mergeObjects(metric, mergeContext, false);
+                resource = mergeObjects(resource, mergeContext, false);
             }
 
-            //Add the metric to the returned array
-            newMetrics.push(metric);
+            //Add the resource to the returned array
+            newResources.push(resource);
         }
 
-        return newMetrics;
+        return newResources;
     };
 
     /**
@@ -646,35 +646,35 @@
      * @param contextId
      */
     var initializeContext = function initializeContext(contextId) {
-        _metricContexts[contextId] = { updateCounter: 0, data: {} };
+        _resourcesContexts[contextId] = { updateCounter: 0, data: {} };
     };
 
     /**
-     * Gets a new context with only the params and query params accepted by the metric (taking into account the static
+     * Gets a new context with only the params and query params accepted by the resource (taking into account the static
      * params).
      * @param context Object
-     * @param metricId A metric object (only id and static are used).
+     * @param resource A resource object (only id and static are used).
      */
-    var getCleanContextByMetric = function getCleanContextByMetric(context, metric) {
+    var getCleanContextByResource = function getCleanContextByResource(context, resource) {
         var newContext = {};
-        var metricInfo = _resourcesInfo[metric['id']];
+        var resourceInfo = _resourcesInfo[resource['id']];
 
         var statics;
-        if(metric['static'] != null){
-            statics = metric['static'];
+        if(resource['static'] != null){
+            statics = resource['static'];
         } else {
             statics = [];
         }
 
-        //Add all the params this metric accepts
-        for(var name in metricInfo['requiredParams']) {
+        //Add all the params this resource accepts
+        for(var name in resourceInfo['requiredParams']) {
             if(context[name] !== undefined && statics.indexOf(name) === -1){
                 newContext[name] = context[name];
             }
         }
 
-        //Add all the query params this metric accepts
-        for(var name in metricInfo['optionalParams']) {
+        //Add all the query params this resource accepts
+        for(var name in resourceInfo['optionalParams']) {
             if(context[name] !== undefined && statics.indexOf(name) === -1){
                 newContext[name] = context[name];
             }
@@ -729,7 +729,7 @@
 
     /**
      *
-     * @param metrics Array with metrics. Each metric can be an String or an Object. The object must have the following
+     * @param resources Array with resources. Each resource can be an String or an Object. The object must have the following
      * format: {
      *              id: String,
      *              <param1Id>: String,
@@ -746,19 +746,19 @@
      * @param callback Callback that receives an object containing at least an "event" that can be "data" or "loading".
      *  - loading means that the framework is retrieving new data for the observer.
      *  - data means that the new data is ready and can be accessed through the "data" element of the object returned to
-     *  the callback. The "data" element of the object is a hashmap using as key the metricId of the requested metrics
-     *  and as value an array with data for each of the request done for that metricId.
+     *  the callback. The "data" element of the object is a hashmap using as key the resourceId of the requested resources
+     *  and as value an array with data for each of the request done for that resourceId.
      * @param contextIds Array of context ids.
      */
-    _self.metrics.observe = function observe(metrics, callback, contextIds) {
+    _self.data.observe = function observe(resources, callback, contextIds) {
 
         if('function' !== typeof callback){
             error("Method 'observeData' requires a valid callback function.");
             return;
         }
 
-        if(!Array.isArray(metrics) || metrics.length === 0 ) {
-            error("Method 'observeData' has received an invalid metrics parameter.");
+        if(!Array.isArray(resources) || resources.length === 0 ) {
+            error("Method 'observeData' has received an invalid resources parameter.");
             return;
         }
 
@@ -767,20 +767,20 @@
             return;
         }
 
-        //Normalize the array of metrics
-        metrics = normalizeMetrics(metrics);
+        //Normalize the array of resources
+        resources = normalizeResources(resources);
 
-        if(metrics.length === 0) {
-            warn("No metrics to observe.");
+        if(resources.length === 0) {
+            warn("No resources to observe.");
             return;
         }
 
-        //Check that static parameters have their value defined in the metric
-        for(var i = 0; i < metrics.length; ++i) {
-            if(metrics[i]['static'] != null && metrics[i]['static'].length > 0) {
-                for(var s = 0; s < metrics[i]['static'].length; ++s) {
-                    var staticParam = metrics[i]['static'][s];
-                    if(metrics[i][staticParam] == null) {
+        //Check that static parameters have their value defined in the resource
+        for(var i = 0; i < resources.length; ++i) {
+            if(resources[i]['static'] != null && resources[i]['static'].length > 0) {
+                for(var s = 0; s < resources[i]['static'].length; ++s) {
+                    var staticParam = resources[i]['static'][s];
+                    if(resources[i][staticParam] == null) {
                         error("Static parameter '"+staticParam+"' must have its value defined.");
                         return;
                     }
@@ -807,21 +807,21 @@
 
         //Initialize contexts it they are not initialized
         for(var i = 0; i < contextIds.length; ++i) {
-            if (_metricContexts[contextIds[i]] == null) {
+            if (_resourcesContexts[contextIds[i]] == null) {
                 initializeContext(contextIds[i]);
             }
         }
 
-        //If contexts are defined, combine the metrics with the context in order to create more complete metrics that could
+        //If contexts are defined, combine the resources with the context in order to create more complete resources that could
         // be requested.
         if(contextIds.length > 0) {
 
-            //Combine the metrics with the context in order to create more complete metrics that could be requested.
-            var metricsWithContext = combineMetricsWithContext(metrics, contextIds);
+            //Combine the resources with the context in order to create more complete resources that could be requested.
+            var resourcesWithContext = combineResourcesWithContexts(resources, contextIds);
 
-            //Request all the metrics if possible
-            if(allMetricsCanBeRequested(metricsWithContext)) {
-                multipleMetricsRequest(metricsWithContext, callback);
+            //Request all the resources if possible
+            if(allResourcesCanBeRequested(resourcesWithContext)) {
+                multipleResourcesRequest(resourcesWithContext, callback);
             }
 
             //Create the CONTEXT event handler
@@ -829,31 +829,31 @@
 
                 //If it is not the last context event launched, ignore the data because there is another more recent
                 // event being executed
-                if(contextCounter != _metricContexts[contextId]['updateCounter']){
+                if(contextCounter != _resourcesContexts[contextId]['updateCounter']){
                     return;
                 }
 
-                //Check if the changes affect to the metrics
-                var affectedMetrics = [];
-                for(var i in metrics) {
-                    var cleanContextChanges = getCleanContextByMetric(contextChanges, metrics[i]);
+                //Check if the changes affect to the resources
+                var affectedResources = [];
+                for(var i in resources) {
+                    var cleanContextChanges = getCleanContextByResource(contextChanges, resources[i]);
                     if(!isObjectEmpty(cleanContextChanges)){
-                        affectedMetrics.push(metrics[i]);
+                        affectedResources.push(resources[i]);
                     }
                 }
 
-                if(affectedMetrics.length === 0) {
-                    return; //The context change did not affect to none the metrics
+                if(affectedResources.length === 0) {
+                    return; //The context change did not affect to none the resources
                 }
 
-                //TODO: when implementing the cache, affectedMetrics should be used to only request the changed metrics.
+                //TODO: when implementing the cache, affectedResources should be used to only request the changed resources.
                 //Currently, as there is no cache, all the data must be requested because it is not stored anywhere.
 
-                //Update the metrics with the context data
-                var metricsWithContext = combineMetricsWithContext(metrics, contextIds);
+                //Update the resources with the context data
+                var resourcesWithContext = combineResourcesWithContexts(resources, contextIds);
 
-                if(allMetricsCanBeRequested(metricsWithContext)) {
-                    multipleMetricsRequest(metricsWithContext, callback);
+                if(allResourcesCanBeRequested(resourcesWithContext)) {
+                    multipleResourcesRequest(resourcesWithContext, callback);
                 }
             };
 
@@ -871,11 +871,11 @@
 
         } else { //No context is set
 
-            //Request all the metrics
-            if(allMetricsCanBeRequested(metrics)) {
-                multipleMetricsRequest(metrics, callback);
+            //Request all the resources
+            if(allResourcesCanBeRequested(resources)) {
+                multipleResourcesRequest(resources, callback);
             } else {
-                error("Some of the metrics have not information enough for an 'observe' without context or does not exist.");
+                error("Some of the resources have not information enough for an 'observe' without context or does not exist.");
             }
         }
 
@@ -885,7 +885,7 @@
      * Cancels observing for an specific callback
      * @param callback The callback that was given to the observe methods
      */
-    _self.metrics.stopObserve = function stopObserve(callback) {
+    _self.data.stopObserve = function stopObserve(callback) {
         for (var i in _event_handlers) {
             if(_event_handlers[i].userCallback === callback) {
                 for (var c in _event_handlers[i]['contexts']) {
@@ -900,7 +900,7 @@
     /**
      * Cancels observing for everything.
      */
-    _self.metrics.stopAllObserves = function stopAllObserves() {
+    _self.data.stopAllObserves = function stopAllObserves() {
 
         //Remove all the event handlers
         for (var i in _event_handlers) {
@@ -921,14 +921,14 @@
      * context, i.e the following sequence os updateContext with data {uid: 1, max:5, pid: 2} and {pid: 3, max:null}
      * will result in the following context: {uid: 1, pid:3}
      */
-    _self.metrics.updateContext = function updateContext(contextId, contextData) {
+    _self.data.updateContext = function updateContext(contextId, contextData) {
 
         if('string' !== typeof contextId) {
             error("Method 'updateRange' requires a string for contextId param.");
             return;
         }
 
-        if(_metricContexts[contextId] == null) {
+        if(_resourcesContexts[contextId] == null) {
             initializeContext(contextId);
         }
 
@@ -944,7 +944,7 @@
             }
 
             var newValue = contextData[name];
-            var oldValue = _metricContexts[contextId]['data'][name];
+            var oldValue = _resourcesContexts[contextId]['data'][name];
 
             //Save the changes
             if(newValue != oldValue) {
@@ -954,16 +954,16 @@
 
             //Change the context
             if(newValue != null && newValue != oldValue) {
-                _metricContexts[contextId]['data'][name] = newValue;
+                _resourcesContexts[contextId]['data'][name] = newValue;
             } else if(newValue == null && oldValue != null) {
-                delete _metricContexts[contextId]['data'][name];
+                delete _resourcesContexts[contextId]['data'][name];
             }
         }
 
         //Trigger an event to indicate that the context has changed
         if(hasChanged) {
-            _metricContexts[contextId].updateCounter++;
-            $(_eventBox).trigger("CONTEXT" + contextId, [_metricContexts[contextId].updateCounter, changes, contextId]);
+            _resourcesContexts[contextId].updateCounter++;
+            $(_eventBox).trigger("CONTEXT" + contextId, [_resourcesContexts[contextId].updateCounter, changes, contextId]);
         }
 
 
@@ -1030,16 +1030,16 @@
 
         if(frameworkPreCheck()) {
 
-            loadMetricsInfo(function(){
+            loadResourcesInfo(function(){
 
-                window.framework.metrics = _self.metrics;
+                window.framework.data = _self.data;
 
                 _isReady = true;
                 $(_eventBox).trigger("FRAMEWORK_READY");
             });
 
             window.framework = {
-                metrics: {},
+                data: {},
                 widgets: {},
                 ready: frameworkReady, /* Method to add a callback that will be executed when the framework is ready */
                 isReady: isFrameworkReady

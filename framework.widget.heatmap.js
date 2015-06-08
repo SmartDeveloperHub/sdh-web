@@ -89,7 +89,7 @@
 
         }.bind(this);
 
-        framework.metrics.observe(metrics, this.observeCallback , contextId);
+        framework.data.observe(metrics, this.observeCallback , contextId);
 
     };
 
@@ -119,7 +119,7 @@
         this.resizeEventHandler = null;
 
         //Stop observing for data changes
-        framework.metrics.stopObserve(this.observeCallback);
+        framework.data.stopObserve(this.observeCallback);
 
         //Clear DOM
         this.svg.empty();

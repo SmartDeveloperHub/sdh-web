@@ -36,8 +36,8 @@
     //Path to the SDH-API server without the trailing slash
     var _serverUrl;
 
-    // Array with the information about metrics
-    var _metricsInfo;
+    // Array with the information about the different resources of the API
+    var _resourcesInfo;
 
     // List of all the parameters that can be used with the API.
     // It is only for performance purposes while checking input.
@@ -103,7 +103,7 @@
     };
 
     /**
-     * Fills _metricsInfo hashmap with the metrics info and the following structure:
+     * Fills _resourcesInfo hashmap with the metrics info and the following structure:
      * {
      *       "{metric-id}": {
      *           path:"yourpath/../sdfsdf",
@@ -118,7 +118,16 @@
 
         requestJSON("/api/", null, function(data) {
 
-            var paths = data['swaggerjson']['paths'];
+            //var paths = data['swaggerjson']['paths'];
+            var paths = [{
+                path :"/metrics",
+                variable: "mid"
+            },{
+                path :"/tbdata",
+                variable: "tid"
+            }];
+
+            var apiPaths = data['swaggerjson']['paths'];
 
             //Count number of elements in paths
             var pathsLength = 0;
@@ -133,109 +142,106 @@
             };
 
             //Initialize the _metricInfo object
-            _metricsInfo = {};
+            _resourcesInfo = {};
 
-            var isMetricList = /\/metrics\/$/;
-            var isMetricListWithoutParams = /^((?!\{).)*\/metrics\/$/;
-            var isSpecificMetric = /\/\{mid\}$/;
+            //var isMetricList = /\/metrics\/$/;
+            //var isMetricListWithoutParams = /^((?!\{).)*\/metrics\/$/;
+            //var isSpecificMetric = /\/\{mid\}$/;
+
+
+
+            //TODO: I dont like this, but till now there is not any other way to get static data...
+            var statInfo = [
+                // API static Information description
+                { "id" : "userinfo", "path" : "/users/{uid}", params: {'uid': {name: 'uid',in: 'query',required: true}}, "description" : "User Information" },
+                { "id" : "repoinfo", "path" : "/repository/{rid}", params: {'rid': {name: 'rid',in: 'query',required: true}}, "description" : "Repository Information" },
+                { "id" : "orginfo", "path" : "/", "description" : "Organization Information" },
+                { "id" : "userlist", "path" : "/users/", "description" : "Users List" },
+                { "id" : "repolist", "path" : "/repository/", "description" : "Repository List" },
+                { "id" : "metriclist", "path" : "/metrics/", "description" : "Metrics list" },
+                { "id" : "tbdlist", "path" : "/tbd/", "description" : "Time-based data list" }
+            ];
+
+            for(var i = statInfo.length - 1; i >= 0; --i ) {
+                var info = statInfo[i];
+                _resourcesInfo[info['id']] = {
+                    path: info['path'],
+                    requiredParams: (info.params != null ? info.params :  {}), //list of url param names
+                    optionalParams: {} //list of query params
+                };
+            }
+            //TODO: END TODO ----------------------------
+
 
 
             //Iterate over the path of the api
-            for(var path in paths) {
+            for(var x = paths.length - 1; x >= 0; --x ) {
 
-                var pathInfo = paths[path];
+                var path = paths[x]['path'];
 
-                if(isSpecificMetric.test(path)) { //Ignore specific metrics path (like /metrics/{mid}, /project/metrics/{mid}, etc)
-                    pathProcessed(); //Finished processing this path
-                    continue;
+                // Make an api request to retrieve all the metrics
+                requestJSON(path, null, function(p, data) {
 
-                } else if(isMetricListWithoutParams.test(path)) { // List of metrics (like /metrics/, /project/metrics/, etc)
+                    //Iterate over the metrics
+                    for(var j = 0, len = data.length; j < len; ++j) {
 
-                    // Make an api request to retrieve all the metrics
-                    requestJSON(path, null, function(data) {
+                        var resourceInfo = data[j];
+                        var resourceId = resourceInfo['id'];
+                        var resourcePath = resourceInfo['path'];
 
-                        //Iterate over the metrics
-                        for(var j = 0, len = data.length; j < len; ++j) {
+                        // Fill the _metricInfo array
+                        _resourcesInfo[resourceId] = {
+                            path: resourcePath,
+                            requiredParams: {}, //list of url param names
+                            optionalParams: {} //list of query params
+                        };
 
-                            var metricInfo = data[j];
-                            var metricId = metricInfo['metricid'];
-                            var metricPath = metricInfo['path'];
+                        //Get the general metric path info (like /metrics/{mid})
+                        var generalResourcePath = resourcePath.substring(0, resourcePath.lastIndexOf('/')) + '/{'+paths[p]['variable']+'}';
+                        var generalResourcePathInfo = apiPaths[generalResourcePath];
 
-                            // Fill the _metricInfo array
-                            _metricsInfo[metricId] = {
-                                path: metricPath,
-                                params: [], //list of url param names
-                                queryParams: [] //list of query params
-                            };
-
-                            //Get the general metric path info (like /metrics/{mid})
-                            var generalMetricPath = metricPath.substring(0, metricPath.lastIndexOf('/')) + '/{mid}';
-                            var generalMetricPathInfo = paths[generalMetricPath];
-
-                            if(generalMetricPathInfo == null) {
-                                error("General metric path ("+generalMetricPathInfo+") does not exist in API path list.");
-                                continue;
-                            }
-
-                            //Add the url params and query paramsto the list
-                            if(generalMetricPathInfo['get']['parameters'] != null) {
-                                var parameters = generalMetricPathInfo['get']['parameters'];
-
-                                //Add all parameters and avoid 'mid'
-                                for(var i = 0, len_i = parameters.length; i < len_i; i++) {
-
-                                    //Add the parameter in params or queryParams
-                                    if (parameters[i]['in'] === 'path' && parameters[i]['name'] !== 'mid') {
-                                        _metricsInfo[metricId].params.push(parameters[i]['name']);
-                                    } else if(parameters[i]['in'] === 'query') {
-                                        _metricsInfo[metricId].queryParams.push(parameters[i]['name']);
-                                    }
-
-                                    //Add it to the list of possible parameters (cache)
-                                    if(_existentParametersList.indexOf(parameters[i]['name']) === -1) {
-                                        _existentParametersList.push(parameters[i]['name']);
-                                    }
-                                }
-                            }
+                        if(generalResourcePathInfo == null) {
+                            error("General resource path ("+generalResourcePathInfo+") does not exist in API path list.");
+                            continue;
                         }
 
-                        pathProcessed(); //Finished processing this path
-                    });
+                        //Add the url params and query params to the list
+                        if(generalResourcePathInfo['get']['parameters'] != null) {
+                            var parameters = generalResourcePathInfo['get']['parameters'];
 
-                } else if(isMetricList.test(path)) { // Ignore list of metrics with params (like /project/{pid}/metrics/)
-                    pathProcessed(); //Finished processing this path
-                    continue;
+                            //Add all parameters and avoid 'mid'
+                            for(var i = 0, len_i = parameters.length; i < len_i; i++) {
 
-                } else if(path === '/api/') { //Ignore api description path
-                    pathProcessed(); //Finished processing this path
-                    continue;
+                                var paramName = parameters[i]['name'];
 
-                } else { // Is a general list (like /, /projects/, etc)
+                                //Add the parameter in params or queryParams
+                                if(paramName === paths[p]['variable']) {
+                                    //Ignore it
+                                } else if (parameters[i]['required'] == true || resourceInfo['params'].indexOf(paramName) !== -1) {
+                                    _resourcesInfo[resourceId]['requiredParams'][paramName] = {
+                                        name: paramName,
+                                        in: parameters[i]['in'],
+                                        required: true
+                                    };
+                                } else {
+                                    _resourcesInfo[resourceId]['optionalParams'][paramName] = {
+                                        name: paramName,
+                                        in: parameters[i]['in'],
+                                        required: false
+                                    };
+                                }
 
-                    var metricId = pathInfo['get']['operationId'];
-
-                    _metricsInfo[metricId] = {
-                        path: path,
-                        params: [], //list of url param names
-                        queryParams: [] //list of query params
-                    };
-
-                    //Add the url params and query params to the list
-                    if(pathInfo['get']['parameters'] != null) {
-                        var parameters = pathInfo['get']['parameters'];
-
-                        for(var i = 0, len = parameters.length; i < len; i++) {
-                            if (parameters[i]['in'] === 'path') {
-                                _metricsInfo[metricId].params.push(parameters[i]['name']);
-                            } else if(parameters[i]['in'] === 'query') {
-                                _metricsInfo[metricId].queryParams.push(parameters[i]['name']);
+                                //Add it to the list of possible parameters (cache)
+                                if(_existentParametersList.indexOf(parameters[i]['name']) === -1) {
+                                    _existentParametersList.push(parameters[i]['name']);
+                                }
                             }
                         }
                     }
 
                     pathProcessed(); //Finished processing this path
+                }.bind(null, x));
 
-                }
 
             }
 
@@ -253,14 +259,13 @@
             return false;
         }
 
-        var metricInfo = _metricsInfo[metric.id];
+        var metricInfo = _resourcesInfo[metric.id];
 
         if(metricInfo == null) {
             return false;
         }
 
-        for(var i in metricInfo.params) {
-            var paramId = metricInfo.params[i];
+        for(var paramId in metricInfo['requiredParams']) {
             var paramValue = metric[paramId];
 
             if(paramValue == null) {
@@ -291,9 +296,11 @@
      * Request a given metric
      * @param metric
      */
-    var makeMetricRequest = function makeMetricRequest(metricId, params, queryParams, callback) {
+    var makeMetricRequest = function makeMetricRequest(metricId, params, callback) {
 
-        var metricInfo = _metricsInfo[metricId];
+        var metricInfo = _resourcesInfo[metricId];
+
+        var queryParams = {};
 
         if(metricInfo != null) {
 
@@ -301,24 +308,33 @@
             var path = metricInfo.path;
 
             // Replace params in url skeleton
-            for(var i in metricInfo.params) {
+            for(var paramId in params) {
 
-                var paramId = metricInfo.params[i];
+                var paramInfo = metricInfo['requiredParams'][paramId] || metricInfo['optionalParams'][paramId];
                 var paramValue = params[paramId];
 
-                if(paramValue != null) {
+                if(paramValue == null) { //It has no value (ignore it or throw an error)
+                    if(paramInfo['required'] === true) {
+                        error("Resource '"+ metricId + "' needs parameter '"+ paramId +"'.");
+                        return;
+                    }
+
+                } else if(paramInfo['in'] === 'query') {
+                    queryParams[paramId] = paramValue;
+
+                } else if(paramInfo['in'] === 'path') {
                     path = path.replace('{'+paramId+'}',  paramValue);
-                } else {
-                    error("Metric '"+ metricId + "' needs parameter '"+ paramId +"'.");
                 }
 
             }
+
+
 
             /* Make the request */
             requestJSON(path, queryParams, callback);
 
         } else {
-            error("Metric '"+ metricId + "' does not exist.");
+            error("Resource '"+ metricId + "' does not exist.");
         }
 
     };
@@ -334,7 +350,7 @@
         var allData = {};
         var requests = [];
 
-        var onMetricReady = function(metricId, params, queryParams, data) {
+        var onMetricReady = function(metricId, params, data) {
 
             if(allData[metricId] == null) {
                 allData[metricId] = [];
@@ -342,8 +358,7 @@
 
             //Add the request info to the data received from the api
             data['request'] = {
-                params: params,
-                queryParams: queryParams
+                params: params
             };
             allData[metricId].push(data);
 
@@ -359,23 +374,12 @@
 
             var metricId = metrics[i].id;
             var params = {};
-            var queryParams = {};
             var multiparams = [];
-            var multiQueryParams = [];
 
-            //Fill the params and queryparams
+            //Fill the params and multiparams
             for(var name in metrics[i]) {
 
-                if(_metricsInfo[metricId]['queryParams'].indexOf(name) !== -1) { //Is a queryparam
-
-                    //Check if is multi parameter and add it to the list of multi parameters
-                    if(metrics[i][name] instanceof Array) {
-                        multiQueryParams.push(name);
-                    }
-
-                    queryParams[name] =  metrics[i][name];
-
-                } else if(_metricsInfo[metricId]['params'].indexOf(name) !== -1) { //Is a param
+                if(_resourcesInfo[metricId]['optionalParams'][name] != null || _resourcesInfo[metricId]['requiredParams'][name] != null) { //Is a param
 
                     //Check if is multi parameter and add it to the list of multi parameters
                     if(metrics[i][name] instanceof Array) {
@@ -387,7 +391,7 @@
                 }
             }
 
-            var requestsCombinations = generateMetricRequestParamsCombinations(metricId, params, queryParams, multiparams, multiQueryParams);
+            var requestsCombinations = generateMetricRequestParamsCombinations(metricId, params, multiparams);
             requests = requests.concat(requestsCombinations);
 
         }
@@ -395,9 +399,8 @@
         for(var i in requests) {
             var metricId = requests[i]['metricId'];
             var params = requests[i]['params'];
-            var queryParams = requests[i]['queryParams'];
 
-            makeMetricRequest(metricId, params, queryParams, onMetricReady.bind(undefined, metricId, params, queryParams));
+            makeMetricRequest(metricId, params, onMetricReady.bind(undefined, metricId, params));
         }
 
     };
@@ -406,26 +409,20 @@
      * Generates an array of requests combining all the values of the multi parameters (param and queryParam).
      * @param metricId
      * @param params Hash map of param name and values.
-     * @param queryParams  Hash map of queryParam name and values.
      * @param multiparam List of parameter names that have multiple values.
-     * @param multiQueryParams List of queryParameter names that have multiple values.
      * @returns {Array} Array of requests to execute for one metric
      */
-    var generateMetricRequestParamsCombinations = function (metricId, params, queryParams, multiparam, multiQueryParams) {
+    var generateMetricRequestParamsCombinations = function (metricId, params, multiparam) {
 
         var paramsCombinations = generateParamsCombinations(params, multiparam);
-        var queryParamsCombinations = generateParamsCombinations(queryParams, multiQueryParams);
         var allCombinations = [];
 
         //Create the combinations of params and queryParams
         for(var i = 0, len_i = paramsCombinations.length; i < len_i; ++i) {
-            for(var j = 0, len_j = queryParamsCombinations.length; j < len_j; ++j) {
-                allCombinations.push({
-                    metricId: metricId,
-                    params: paramsCombinations[i],
-                    queryParams: queryParamsCombinations[j]
-                });
-            }
+            allCombinations.push({
+                metricId: metricId,
+                params: paramsCombinations[i]
+            });
         }
 
         return allCombinations;
@@ -518,14 +515,14 @@
         for(var i = 0; i < metrics.length; ++i) {
             var metric = metrics[i];
             var metricId = metric['id'];
-            var metricInfo = _metricsInfo[metricId];
+            var metricInfo = _resourcesInfo[metricId];
 
             if(metricInfo == null) {
                 warn("Metric '"+metricId+"' does not exist.");
             } else { //Check its parameters
                 var cleanParameters = {};
                 for(var paramName in metric) {
-                    if(paramName != 'id' && paramName != 'static' && metricInfo.params.indexOf(paramName) === -1 && metricInfo.queryParams.indexOf(paramName) === -1) {
+                    if(paramName != 'id' && paramName != 'static' && metricInfo['requiredParams'][paramName] == null && metricInfo['optionalParams'][paramName] == null) {
                         warn("Parameter '"+paramName+"' is not a valid parameter for metric '"+metricId+"'.");
                     } else {
                         cleanParameters[paramName] = metric[paramName];
@@ -660,7 +657,7 @@
      */
     var getCleanContextByMetric = function getCleanContextByMetric(context, metric) {
         var newContext = {};
-        var metricInfo = _metricsInfo[metric['id']];
+        var metricInfo = _resourcesInfo[metric['id']];
 
         var statics;
         if(metric['static'] != null){
@@ -670,16 +667,14 @@
         }
 
         //Add all the params this metric accepts
-        for(var i = 0, len = metricInfo.params.length; i < len; ++i) {
-            var name =  metricInfo.params[i];
+        for(var name in metricInfo['requiredParams']) {
             if(context[name] !== undefined && statics.indexOf(name) === -1){
                 newContext[name] = context[name];
             }
         }
 
         //Add all the query params this metric accepts
-        for(var i = 0, len = metricInfo.queryParams.length; i < len; ++i) {
-            var name =  metricInfo.queryParams[i];
+        for(var name in metricInfo['optionalParams']) {
             if(context[name] !== undefined && statics.indexOf(name) === -1){
                 newContext[name] = context[name];
             }

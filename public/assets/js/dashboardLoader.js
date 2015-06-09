@@ -58,6 +58,56 @@ require.config({
     }
 });
 
+var DashboardController = function DashboardController() {
+    this.widgets = [];
+};
+
+DashboardController.prototype.registerWidget = function registerWidget(widget) {
+    this.widgets.push(widget);
+};
+
+DashboardController.prototype.changeTo = function changeTo(newDashboard) {
+
+    showLoadingMessage("Disposing the previous dashboard...");
+
+    // Delete all the widgets
+    var widget;
+    while((widget = this.widgets) != null) {
+        widget.delete();
+    }
+
+    // Just to be sure in case some widet did not registered with the framework
+    framework.metrics.stopAllObserves();
+
+    //Now load the new dashboard
+    showLoadingMessage("Downloading dashboard template...");
+
+    $.get(newDashboard, function( data ) {
+
+        $("#template-exec").html(data);
+
+    });
+
+};
+
+var showLoadingMessage = function showLoadingMessage(mes) {
+
+    //Change loading info
+    $("#loading .loading-info span").text(mes);
+
+    //Display the loading animation
+    $("#loading").show();
+};
+
+var finishLoading = function() {
+    //Remove loading
+    $( "#loading" ).fadeOut(750, function() {
+        $(this).find(".loading-info span").text("");
+    });
+
+};
+
+
 define(function(require, exports, module) {
 
     document.getElementById("loading").className = "";
@@ -68,8 +118,12 @@ define(function(require, exports, module) {
         framework.ready(function() {
             console.log("Framework ready");
 
+            var dashboardController = new DashboardController();
+
+            framework.dashboard.setDashboardController(dashboardController);
+
             if(BASE_DASHBOARD != null) {
-                loadTemplate(BASE_DASHBOARD);
+                dashboardController.changeTo(BASE_DASHBOARD);
             } else {
                 console.error("BASE_DASHBOARD is not defined.");
             }
@@ -79,33 +133,5 @@ define(function(require, exports, module) {
 
     });
 });
-
-
-var loadTemplate = function loadTemplate(path) {
-
-    //Change loading info
-    $("#loading .loading-info span").text("Downloading template...");
-
-    //Display the loading animation
-    $("#loading").show();
-
-    framework.metrics.stopAllObserves();
-
-    $.get(path, function( data ) {
-
-        $("#template-exec").html(data);
-
-    });
-
-
-};
-
-var finishLoading = function() {
-    //Remove loading
-    $( "#loading" ).fadeOut(750, function() {
-        $(this).find(".loading-info span").text("");
-    });
-
-};
 
 

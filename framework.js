@@ -1068,6 +1068,7 @@
             loadResourcesInfo(function(){
 
                 window.framework.data = _self.data;
+                window.framework.dashboard = _self.dashboard;
 
                 _isReady = true;
                 $(_eventBox).trigger("FRAMEWORK_READY");
@@ -1076,6 +1077,7 @@
             window.framework = {
                 data: {},
                 widgets: {},
+                dashboard: {},
                 ready: frameworkReady, /* Method to add a callback that will be executed when the framework is ready */
                 isReady: isFrameworkReady
             };

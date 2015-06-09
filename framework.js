@@ -58,6 +58,8 @@
     // Dashboard controller
     var _dashboardController = null;
 
+    var _dashboardEnv = {};
+
     var _isReady = false;
 
     var FRAMEWORK_NAME = "SDHWebFramework";
@@ -988,20 +990,35 @@
         if(_dashboardController != null && _dashboardController.registerWidget != null) {
             _dashboardController.registerWidget(widget);
         } else {
-            error("Dashboard controller has no registerWidget method.");
+            warn("Dashboard controller has no registerWidget method.");
         }
     };
 
     /**
      * Changes the current dashboard
      * @param newDashboard Id of the new dashboard to visualize.
+     * @param env Environment object. This contains all the information of the environment that the new dashboard will need.
      */
-    _self.dashboard.changeTo = function changeTo(newDashboard) {
+    _self.dashboard.changeTo = function changeTo(newDashboard, env) {
+
         if(_dashboardController != null && _dashboardController.changeTo != null) {
-            _dashboardController.changeTo(newDashboard);
+
+            //Ask the dashboard controller to change the dashboard
+            _dashboardController.changeTo(newDashboard, function() {
+
+                //Dashboard controller is now ready to change the dashboard, so we need to change the env
+                _dashboardEnv = ( typeof env === 'object' ? env : {} );
+            });
         } else {
             error("Dashboard controller has no changeTo method.");
         }
+    };
+
+    /**
+     * Gets the dashboard environment
+     */
+    _self.dashboard.getEnv = function getEnv() {
+        return _dashboardEnv || {};
     };
 
 

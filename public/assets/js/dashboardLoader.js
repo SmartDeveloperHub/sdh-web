@@ -60,32 +60,46 @@ require.config({
 
 var DashboardController = function DashboardController() {
     this.widgets = [];
+    this.previousDashboard = null;
+    this.currentDashboard = null;
 };
 
 DashboardController.prototype.registerWidget = function registerWidget(widget) {
     this.widgets.push(widget);
 };
 
-DashboardController.prototype.changeTo = function changeTo(newDashboard) {
+DashboardController.prototype.changeTo = function changeTo(newDashboard, onSuccess) {
 
     showLoadingMessage("Disposing the previous dashboard...");
 
     // Delete all the widgets
     var widget;
-    while((widget = this.widgets) != null) {
+    while((widget = this.widgets.pop()) != null) {
         widget.delete();
     }
 
-    // Just to be sure in case some widet did not registered with the framework
-    framework.metrics.stopAllObserves();
+    // Just to be sure in case some widget did not registered with the framework
+    framework.data.stopAllObserves();
 
     //Now load the new dashboard
     showLoadingMessage("Downloading dashboard template...");
 
+    var _this = this; //Closure
+
     $.get(newDashboard, function( data ) {
+
+        //Tell the framework that the new template was retrieved correctly and that the controller is ready to chane the dashboard
+        typeof onSuccess === 'function' && onSuccess();
+
+        //Update previous and current dashboard
+        _this.previousDashboard = _this.currentDashboard;
+        _this.currentDashboard = newDashboard;
 
         $("#template-exec").html(data);
 
+    }).fail(function(e) {
+        alert("Oups! I couldn't get the dashboard '" + newDashboard + "'\nError " + e.status + " (" + e.statusText + ")\n\nReturning to the previous dashboard...");
+        _this.changeTo((_this.previousDashboard != null ? _this.previousDashboard : BASE_DASHBOARD));
     });
 
 };

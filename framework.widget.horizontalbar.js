@@ -215,8 +215,6 @@
             return metricId;
         } else if(metricData['request']['params'][str] != null) {
             return metricData['request']['params'][str];
-        } else if(metricData['request']['queryParams'][str] != null) {
-            return metricData['request']['queryParams'][str];
         }
 
         return "";

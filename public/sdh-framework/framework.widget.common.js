@@ -30,14 +30,17 @@
         return;
     }
 
-
 	var CommonWidget = function CommonWidget(extending, container) {
+
 		if (extending === true) {
             return;
         }
+
+        //First of all, register this widget with the dashboard
+        framework.dashboard.registerWidget(this);
+
         this.isloading = 0;
         this.callback = null;
-        this.callbackList = [];
         this._common = {};
         this._common.container = container;
         this._common.loadingContainer = document.createElement('div');
@@ -116,6 +119,13 @@
             console.log('discarding data...');
         }
     };
+
+    CommonWidget.prototype.changeDashboard = function changeDashboard(dashboard) {
+
+        //Ask the framework to change the dashboard
+        framework.dashboard.changeTo(dashboard);
+    };
+
 
 	window.framework.widgets.CommonWidget = CommonWidget;
 })();

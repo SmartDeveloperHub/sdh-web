@@ -103,8 +103,8 @@
 
     /* BigCounterBox constructor
     *   element: the DOM element that will contains the BigCounterBox div
-    *   metrics: the metrics id array
-    *   contextId: if necesary, the contextId link this chart metrics data
+    *   data: the data id array
+    *   contextId: if necesary, the contextId link this chart data data
     *           with changes in other context provider chart.
     *  configuration: you can use his optional parameter to assing a custom
     *       contextID for this context provider chart. Ej:
@@ -207,7 +207,7 @@
 
         }.bind(this);
 
-        framework.metrics.observe(metrics, this.observeCallback , contextId, 1);
+        framework.data.observe(metrics, this.observeCallback , contextId, 1);
 
     };
 
@@ -256,7 +256,7 @@
     BigCounterBox.prototype.delete = function() {
 
         //Stop observing for data changes
-        framework.metrics.stopObserve(this.observeCallback);
+        framework.data.stopObserve(this.observeCallback);
 
         //Clear DOM
         $(this.container).empty();

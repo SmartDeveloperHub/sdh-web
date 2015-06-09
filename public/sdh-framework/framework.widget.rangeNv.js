@@ -75,7 +75,7 @@
 
     /* rangeNv constructor
      *   element: the DOM element that will contain the rangeNv
-     *   metrics: the metrics id array
+     *   data: the data id array
      *   contextId: optional.
      *   configuration: additional chart configuration:
      *      {
@@ -141,7 +141,7 @@
 
         }.bind(this);
 
-        framework.metrics.observe(metrics, this.observeCallback , contextId);
+        framework.data.observe(metrics, this.observeCallback , contextId);
 
     };
 
@@ -165,7 +165,7 @@
     RangeNv.prototype.delete = function() {
 
         //Stop observing for data changes
-        framework.metrics.stopObserve(this.observeCallback);
+        framework.data.stopObserve(this.observeCallback);
 
         //Clear DOM
         $(this.svg).empty();
@@ -177,7 +177,7 @@
     };
 
     RangeNv.prototype.updateContext = function(d) {
-        framework.metrics.updateContext(this.ownContext, {from: moment(d[0]).format("YYYY-MM-DD"), to: moment(d[1]).format("YYYY-MM-DD")});
+        framework.data.updateContext(this.ownContext, {from: moment(d[0]).format("YYYY-MM-DD"), to: moment(d[1]).format("YYYY-MM-DD")});
 
     };
 
@@ -207,7 +207,7 @@
      * @returns {Array} Contains objects with 'label' and 'value'.
      */
     var getNormalizedData = function getNormalizedData(framework_data) {
-        var labelVariable = /%\w+%/; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
+        var labelVariable = /%\w+%/g; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
 
         var series = [];
         this.labels = {};

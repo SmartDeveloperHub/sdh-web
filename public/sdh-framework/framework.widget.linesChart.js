@@ -70,7 +70,7 @@
 
     /* LinesChart constructor
      *   element: the DOM element that will contain the LinesChart
-     *   metrics: the metrics id array
+     *   data: the data id array
      *   contextId: optional.
      *   configuration: additional chart configuration:
      *      {
@@ -124,7 +124,7 @@
 
         }.bind(this);
 
-        framework.metrics.observe(metrics, this.observeCallback , contextId);
+        framework.data.observe(metrics, this.observeCallback , contextId);
 
     };
 
@@ -148,7 +148,7 @@
     LinesChart.prototype.delete = function() {
 
         //Stop observing for data changes
-        framework.metrics.stopObserve(this.observeCallback);
+        framework.data.stopObserve(this.observeCallback);
 
         //Clear DOM
         $(this.svg).empty();
@@ -162,6 +162,23 @@
 
     // PRIVATE METHODS - - - - - - - - - - - - - - - - - - - - - -
 
+    //Function that returns the value to replace with the label variables
+    var replacer = function(metricId, metricData, str) {
+
+        //Remove the initial an trailing '%' of the string
+        str = str.substring(1, str.length-1);
+
+        //Check if it is a parameter an return its value
+        if(str === "mid") {
+            return metricId;
+        } else if(metricData['request']['params'][str] != null) {
+            return metricData['request']['params'][str];
+        } else if(metricData['request']['queryParams'][str] != null) {
+            return metricData['request']['queryParams'][str];
+        }
+
+        return "";
+    };
 
     /**
      * Gets a normalized array of data according to the chart expected input from the data returned by the framework.
@@ -169,25 +186,8 @@
      * @returns {Array} Contains objects with 'label' and 'value'.
      */
     var getNormalizedData = function getNormalizedData(framework_data) {
-        var labelVariable = /%\w+%/; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
+        var labelVariable = /%\w+%/g; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
 
-        //Function that returns the value to replace with the label variables
-        var replacer = function(metricId, metricData, str) {
-
-            //Remove the initial an trailing '%' of the string
-            str = str.substring(1, str.length-1);
-
-            //Check if it is a parameter an return its value
-            if(str === "mid") {
-                return metricId;
-            } else if(metricData['request']['params'][str] != null) {
-                return metricData['request']['params'][str];
-            } else if(metricData['request']['queryParams'][str] != null) {
-                return metricData['request']['queryParams'][str];
-            }
-
-            return "";
-        };
         var series = [];
         this.labels = {};
         //var colors = ['#ff7f0e','#2ca02c','#7777ff','#D53E4F','#9E0142'];

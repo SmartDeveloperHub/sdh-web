@@ -26,85 +26,119 @@
 
     // CHECK D3
     if(typeof d3 === 'undefined') {
-        console.error("PieChart could not be loaded because d3 did not exist.");
+        console.error("MultiBar could not be loaded because d3 did not exist.");
         return;
     }
 
     // CHECK NVD3
     if(typeof nv === 'undefined') {
-        console.error("PieChart could not be loaded because nvd3 did not exist.");
+        console.error("MultiBar could not be loaded because nvd3 did not exist.");
         return;
     }
 
+    /**
+     *
+     * @param configuration
+     * @returns {*}
+     */
     var normalizeConfig = function normalizeConfig(configuration) {
         if (configuration == null) {
             configuration = {};
         }
-        if (typeof configuration.donut != "boolean") {
-            configuration.donut = false;
-        }
-        if (typeof configuration.growOnHover != "boolean") {
-            configuration.growOnHover = false;
-        }
-        if (typeof configuration.cornerRadius != "number") {
-            configuration.cornerRadius = 4;
-        }
-        if (typeof configuration.padAngle != "number") {
-            configuration.padAngle = 0.05;
-        }
-        if (typeof configuration.showLegend != "boolean") {
-            configuration.showLegend = true;
-        }
-        if (typeof configuration.showLabels != "boolean") {
-            configuration.showLabels = true;
-        }
-        if (typeof configuration.donutRatio != "number") {
-            configuration.donutRatio = 0.5;
-        }
-        if (typeof configuration.duration != "number") {
-            configuration.duration = 250;
-        }
-        if (typeof configuration.labelFormat != "string") {
-            configuration.labelFormat = "%mid%";
-        }
-        if (typeof configuration.labelsOutside != "boolean") {
-            configuration.labelsOutside = true;
+
+        var defaultConfig = {
+            height: {
+                type: 'number',
+                default: 240
+            },
+            color: {
+                type: 'string',
+                default: nv.utils.defaultColor()
+            },
+            stacked: {
+                type: 'boolean',
+                default: false
+            },
+            groupSpacing: {
+                type: 'number',
+                default: 0.1
+            },
+            duration: {
+                type: 'number',
+                default: 250
+            },
+            showControls: {
+                type: 'boolean',
+                default: true
+            },
+            showLegend: {
+                type: 'boolean',
+                default: true
+            },
+            showXAxis: {
+                type: 'boolean',
+                default: true
+            },
+            showYAxis: {
+                type: 'boolean',
+                default: true
+            },
+            labelFormat: {
+                type: 'string',
+                default: '%mid%'
+            }
+
+        };
+
+        for(var confName in defaultConfig) {
+            var conf = defaultConfig[confName];
+            if (typeof configuration[confName] != conf['type']) {
+                configuration[confName] = conf['default'];
+            }
         }
 
         return configuration;
     };
 
-    /* PieChart constructor
-     *   element: the DOM element that will contain the PieChart
+    /* rangeNv constructor
+     *   element: the DOM element that will contain the rangeNv
      *   data: the data id array
      *   contextId: optional.
      *   configuration: additional chart configuration:
      *      {
-     *       ~ donut: boolean - Whether to make a pie graph a donut graph or not.
-     *       ~ growOnHover: boolean - For pie/donut charts, whether to increase slice radius on hover or not.
-     *       ~ cornerRadius: number - For donut charts only, the corner radius (in pixels) of the slices.
-     *       ~ padAngle: number - The percent of the chart that should be spacing between slices.
-     *       ~ showLegend: boolean - Whether to display the legend or not.
-     *       ~ showLabels: boolean - Show pie/donut chart labels for each slice.
-     *       ~ donutRatio: number - Percent of pie radius to cut out of the middle to make the donut. It is multiplied
-     *         by the outer radius to calculate the inner radius, thus it should be between 0 and 1.
+     *       ~ height: number - Height of the widget.
+     *       ~ color: array or function - Colors to use for the different data. If an array is given, it is converted to a function automatically.
+     *              Example:
+     *                  chart.color(["#FF0000","#00FF00","#0000FF"])
+     *                  chart.color(function (d, i) {
+     *                      var colors = d3.scale.category20().range().slice(10);
+     *                      return colors[i % colors.length-1];
+     *                  })
+     *       ~ stacked: boolean - Whether to display the different data stacked or not.
+     *       ~ groupSpacing: number - The padding between bar groups.
      *       ~ duration: number - Duration in ms to take when updating chart. For things like bar charts, each bar can
      *         animate by itself but the total time taken should be this value.
+     *       ~ showControls: boolean - Whether to show extra controls or not. Extra controls include things like making
+     *         MultiBar charts stacked or side by side.
+     *       ~ showLegend: boolean - Whether to display the legend or not.
+     *       ~ showXAxis: boolean - Display or hide the X axis.
+     *       ~ showYAxis: boolean - Display or hide the Y axis.
      *       ~ labelFormat: string - Format string for the labels. Metric parameters can be used as variables by
      *         surrounding their names with percentages. The metric name can also be accessed with %mid%. For example,
      *         the following is a valid labelFormat: "User: %uid%".
-     *       ~ labelsOutside: boolean - Whether pie/donut chart labels should be outside the slices instead of inside them.
      *      }
      */
-    var PieChart = function PieChart(element, metrics, contextId, configuration) {
+    var MultiBar = function MultiBar(element, metrics, contextId, configuration) {
 
         if(!framework.isReady()) {
-            console.error("PieChart object could not be created because framework is not loaded.");
+            console.error("MultiBar object could not be created because framework is not loaded.");
             return;
         }
 
+        // We need relative position for the nvd3 tooltips
+        element.style.position = 'inherit';
+
         this.element = $(element); //Store as jquery object
-        this.svg = null;
         this.data = null;
         this.chart = null;
 
@@ -113,6 +147,10 @@
 
         // Configuration
         this.configuration = normalizeConfig(configuration);
+
+        this.element.append('<svg class="blurable"></svg>');
+        this.svg = this.element.children("svg");
+        this.svg.get(0).style.minHeight = configuration.height;
 
         this.observeCallback = function(event){
 
@@ -128,14 +166,14 @@
 
     };
 
-    PieChart.prototype = new framework.widgets.CommonWidget(true);
+    MultiBar.prototype = new framework.widgets.CommonWidget(true);
 
-    PieChart.prototype.updateData = function(framework_data) {
+    MultiBar.prototype.updateData = function(framework_data) {
 
         var normalizedData = getNormalizedData.call(this,framework_data);
 
         //Update data
-        if(this.svg != null) {
+        if(this.chart != null) {
             d3.select(this.svg.get(0)).datum(normalizedData);
             this.chart.update();
 
@@ -145,7 +183,7 @@
 
     };
 
-    PieChart.prototype.delete = function() {
+    MultiBar.prototype.delete = function() {
 
         //Stop observing for data changes
         framework.data.stopObserve(this.observeCallback);
@@ -158,7 +196,6 @@
         this.chart = null;
 
     };
-
 
     // PRIVATE METHODS - - - - - - - - - - - - - - - - - - - - - -
 
@@ -180,6 +217,7 @@
         return "";
     };
 
+
     /**
      * Gets a normalized array of data according to the chart expected input from the data returned by the framework.
      * @param framework_data
@@ -192,7 +230,6 @@
 
         for(var metricId in framework_data) {
 
-            // TODO i<.length
             for(var m in framework_data[metricId]){
 
                 var metricData = framework_data[metricId][m];
@@ -203,13 +240,28 @@
                 //Generate the label by replacing the variables
                 var label = this.configuration.labelFormat.replace(labelVariable,metricReplacer);
 
-                for(var i in metricData['values']) {
+                //Get this metric date extent
+                var dateExtent = [new Date(metricData['interval']['from']), new Date(metricData['interval']['to'])];
 
-                    values.push({
-                        label: label,
-                        value: metricData['values'][i]
+                var mData = {
+                    key: label,
+                    values: []
+                };
+
+                for(var i = 0, len = metricData['values'].length; i < len; ++i) {
+
+                    var curDate = dateExtent[0].getTime() + i * metricData['step'];
+
+                    mData.values.push({
+                        x: curDate,
+                        y: metricData['values'][i]
                     });
+
                 }
+
+                values.push(mData);
+
+
             }
         }
 
@@ -219,61 +271,45 @@
 
     var paint = function paint(data) {
 
-        this.element.append('<svg class="blurable"></svg>');
-        this.svg = this.element.children("svg");
+        nv.addGraph(function() {
+            var chart = nv.models.multiBarChart()
+                .height(this.configuration.height)
+                .color(this.configuration.color)
+                .stacked(this.configuration.stacked)
+                .groupSpacing(this.configuration.groupSpacing)
+                .duration(this.configuration.duration)
+                .showControls(this.configuration.showControls)
+                .showLegend(this.configuration.showLegend)
+                .showXAxis(this.configuration.showXAxis)
+                .showYAxis(this.configuration.showYAxis) ;
+            this.chart = chart;
 
-        nv.addGraph({
-            generate: function() {
+            chart.xAxis.tickFormat(function(d) {
+                return d3.time.format('%x')(new Date(d));
+                })
+                .showMaxMin(false);
 
-                var width = this.element.get(0).getBoundingClientRect().width,
-                    height = this.element.get(0).getBoundingClientRect().height;
+            chart.yAxis.tickFormat(function(d) {
+                if (d >= 1000 || d <= -1000) {
+                    return Math.abs(d/1000) + " K";
+                } else {
+                    return Math.abs(d);
+                }
+            });
 
-                this.chart = nv.models.pieChart()
-                    .x(function(d) {
-                        return d.label;
-                    })
-                    .y(function(d) {
-                        return d.value;
-                    })
-                    .donut(this.configuration.donut)
-                    .width(width)
-                    .height(height)
-                    .padAngle(this.configuration.padAngle)
-                    .cornerRadius(this.configuration.cornerRadius)
-                    .growOnHover(this.configuration.growOnHover)
-                    .showLegend(this.configuration.showLegend)
-                    .showLabels(this.configuration.showLabels)
-                    .donutRatio(this.configuration.donutRatio)
-                    .duration(this.configuration.duration)
-                    .labelsOutside(this.configuration.labelsOutside);
+            d3.select(this.svg.get(0))
+                .datum(data)
+                .call(chart);
 
-                d3.select(this.svg.get(0))
-                    .datum(data) //TODO
-                    .transition().duration(0)
-                    .call(this.chart);
 
-                return this.chart;
+            nv.utils.windowResize(chart.update);
 
-            }.bind(this),
-            callback: function(graph) {
-                nv.utils.windowResize(function() {
-                    var width = this.element.get(0).getBoundingClientRect().width;
-                    var height = this.element.get(0).getBoundingClientRect().height;
-                    graph.width(width).height(height);
-
-                    d3.select(this.svg.get(0))
-                        .attr('width', width)
-                        .attr('height', height)
-                        .transition().duration(0)
-                        .call(graph);
-
-                }.bind(this));
-            }.bind(this)
-        });
+            return chart;
+        }.bind(this));
 
     };
 
-    window.framework.widgets.PieChart = PieChart;
+    window.framework.widgets.MultiBar = MultiBar;
 
 })();
 

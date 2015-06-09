@@ -31,7 +31,7 @@
      */
 
     //Variable where public methods and variables will be stored
-    var _self = { data: {}, widgets: {} };
+    var _self = { data: {}, widgets: {}, dashboard: {} };
 
     //Path to the SDH-API server without the trailing slash
     var _serverUrl;
@@ -54,6 +54,9 @@
 
     // This is a variable to make the events invisible outside the framework
     var _eventBox = {};
+
+    // Dashboard controller
+    var _dashboardController = null;
 
     var _isReady = false;
 
@@ -967,6 +970,38 @@
         }
 
 
+    };
+
+    /**
+     * Sets the dashboard controller for the framework.
+     * @param controller
+     */
+    _self.dashboard.setDashboardController = function setDashboardController(controller) {
+        _dashboardController = controller;
+    };
+
+    /**
+     * Registers a new widget in this dashboard
+     * @param newDashboard Widget object.
+     */
+    _self.dashboard.registerWidget = function registerWidget(widget) {
+        if(_dashboardController != null && _dashboardController.registerWidget != null) {
+            _dashboardController.registerWidget(widget);
+        } else {
+            error("Dashboard controller has no registerWidget method.");
+        }
+    };
+
+    /**
+     * Changes the current dashboard
+     * @param newDashboard Id of the new dashboard to visualize.
+     */
+    _self.dashboard.changeTo = function changeTo(newDashboard) {
+        if(_dashboardController != null && _dashboardController.changeTo != null) {
+            _dashboardController.changeTo(newDashboard);
+        } else {
+            error("Dashboard controller has no changeTo method.");
+        }
     };
 
 

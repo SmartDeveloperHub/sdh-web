@@ -162,7 +162,7 @@
                 { "id" : "repoinfo", "path" : "/repository/{rid}", params: {'rid': {name: 'rid',in: 'query',required: true}}, "description" : "Repository Information" },
                 { "id" : "orginfo", "path" : "/", "description" : "Organization Information" },
                 { "id" : "userlist", "path" : "/users/", "description" : "Users List" },
-                { "id" : "repolist", "path" : "/repository/", "description" : "Repository List" },
+                { "id" : "repolist", "path" : "/repositories/", "description" : "Repository List" },
                 { "id" : "metriclist", "path" : "/metrics/", "description" : "Metrics list" },
                 { "id" : "tbdlist", "path" : "/tbd/", "description" : "Time-based data list" }
             ];

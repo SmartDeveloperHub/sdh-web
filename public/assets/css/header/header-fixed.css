@@ -1,0 +1,312 @@
+.header-fixed {
+    background-color: #354A5B;
+    margin: 0;
+    z-index: 101;
+    min-height: 0px;
+    -webkit-box-shadow: 0 0px 1px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.15);
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    color: #EDEDED;
+	box-sizing: border-box;
+	top:-100px;
+	-webkit-transition:all 0.3s;
+	transition:all 0.3s;
+	width: 100%;
+	padding: 10px 12px;
+	height: 80px;
+}
+
+.header-fixed .header-limiter {
+	max-width: 1900px;
+	text-align: center;
+	height: 80px;
+	margin: 0 auto;
+	width: 100%;
+}
+
+/*	The header placeholder. It is displayed when the header is fixed to the top of the
+	browser window, in order to prevent the content of the page from jumping up. */
+
+.header-fixed-placeholder{
+	height: 80px;
+	display: none;
+}
+
+#headerright {
+    display: inline-block;
+    padding: 0;
+    text-align: center;
+    float: right;
+    width: 25%;
+}
+
+#headerright .control.row {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.control {
+	height: 80px;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	display: inline-block;
+}
+
+#userinfobox {
+    text-align: right;
+}
+
+#usernick {
+    display: block;
+	font-size: 20px;
+	line-height: 25px;
+	margin-top: 6px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+	-webkit-transition:all 0.3s;
+	transition:all 0.3s;
+}
+
+#username {
+    display: block;
+	font-size: 13px;
+	line-height: 23px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+	-webkit-transition:all 0.3s;
+	transition:all 0.3s;
+}
+
+#avatarbox {
+	font-family: 'FontAwesome';
+	width: 64px;
+	height: 64px;
+	margin-top: 0px;
+	margin-left: 16px;
+	vertical-align: middle;
+	text-align: center;
+	background-color: #212121;
+	border-radius: 44px;
+	box-shadow: 0px 0px 6px 0px #646262;
+	float: right;
+}
+
+#buttonbox {
+	margin-top: 4px;
+	margin-right: 2px;
+	margin-left: 12px;
+	float: right;
+}
+
+#avatarbox .useravatar {
+    display: block;
+    font-family: 'FontAwesome';
+	font-size: 45px;
+	margin-top: 9px;
+	margin-left: 3px;
+    color: #D7D7D7;
+	-webkit-transition:all 0.3s;
+	transition:all 0.3s;
+}
+
+.headbutton {
+    display: block !important;
+    font-family: 'FontAwesome';
+    border-radius: 15px;
+    background-color: #292F33;
+    color: #D7D7D7;
+    box-shadow: 0px 0px 6px 0px #646262;
+	font-size: 15px;
+	width: 25px;
+	height: 25px;
+	padding-top: 5px;
+	margin-bottom: 6px;
+	-webkit-transition:all 0.3s;
+	transition:all 0.3s;
+}
+
+#headermid {
+    text-align: center;
+    float: left;
+    width: 50%;
+}
+
+#hsubtitle {
+    display: block;
+    font-size: 20px;
+    line-height: 35px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+	-webkit-transition:all 0.3s;
+	transition:all 0.3s;
+}
+
+#htitle {
+    display: block;
+    font-size: 29px;
+    line-height: 27px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-top: 5px;
+	-webkit-transition:all 0.3s;
+	transition:all 0.3s;
+}
+
+/* Logo */
+#headerleft {
+	text-align: left;
+    float: left;
+    width: 25%;
+}
+
+#headerleft a.logo {
+    display: inline-block;
+}
+
+#headerleft a.logo img {
+	margin: -2px 20px 2px 3px;
+	width: 64px;
+    border-radius: 40px;
+    box-shadow: 0px 0px 5px 1px #212121;
+}
+
+#headerleft .logotextbox {
+    display: inline-block;
+    width: 110px;
+    vertical-align: middle;
+	font-size: 17px;
+	line-height: 20px;
+}
+
+#headerleft .logotextbox2 {
+    display: none;
+    width: 110px;
+    vertical-align: middle;
+	font-size: 17px;
+	line-height: 20px;
+}
+
+.header-first-bar{
+	height: 100px;
+	box-sizing: border-box;
+}
+
+
+/* Fixed version of the header */
+body.fixed .header-fixed {
+	padding: 10px 12px;
+	height: 60px;
+	position: fixed;
+	width: 100%;
+	top: 0;
+}
+
+body.fixed .header-fixed .header-limiter {
+	height: 60px;
+}
+
+body.fixed .header-fixed-placeholder {
+	display: block;
+	height: 60px;
+}
+
+body.fixed #hsubtitle {
+	display: none;
+	font-size: 20px;
+}
+
+body.fixed #htitle {
+	font-size: 27px;
+	line-height: 30px;
+}
+
+body.fixed #headerleft a.logo img {
+	margin: -2px 20px 2px 20px;
+	width: 45px;
+}
+
+body.fixed #headerleft .logotextbox {
+	font-size: 17px;
+	line-height: 20px;
+	display: none;
+}
+
+body.fixed #headerleft .logotextbox2 {
+	font-size: 24px;
+	line-height: 20px;
+	display: inline-block;
+}
+
+body.fixed #usernick {
+	font-size: 19px;
+	line-height: 25px;
+	margin-top: 6px;
+}
+
+body.fixed #username {
+  font-size: 13px;
+  line-height: 23px;
+  display: none;
+}
+
+body.fixed #avatarbox {
+	width: 45px;
+	height: 45px;
+	margin-top: 0px;
+	margin-left: 16px;
+}
+
+body.fixed #buttonbox {
+	margin-top: 9px;
+	margin-right: 7px;
+	white-space: nowrap;
+	overflow: hidden;
+	display: inline-block;
+}
+
+body.fixed #avatarbox .useravatar {
+	font-size: 34px;
+	margin-top: 6px;
+	margin-left: 3px;
+}
+
+body.fixed .headbutton {
+	font-size: 12px;
+	width: 21px;
+	height: 21px;
+	padding-top: 4px;
+	margin-bottom: 6px;
+	display: inline-block !important;
+}
+
+body.fixed .headbutton.mail {
+	padding-left: 1px;
+	margin-right: 3px;
+}
+
+body.fixed .control {
+	height: 45px;
+}
+
+/* Making the header responsive */
+
+@media all and (max-width: 600px) {
+
+	.header-fixed {
+		padding: 0;
+		margin: 0;
+		height: 75px;
+	}
+
+	body.fixed .header-fixed {
+		display: none;
+	}
+
+}

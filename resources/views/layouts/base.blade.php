@@ -11,6 +11,7 @@
         <script data-main="assets/js/dashboardLoader" src="assets/js/requirejs/require.js"></script>
     </head>
     <body class="page-body">
+    @yield('header')
     @yield('body')
     @yield('scripts')
     </body>

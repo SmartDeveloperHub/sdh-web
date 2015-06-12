@@ -2,12 +2,6 @@
 
 @section('scripts')
     @parent
-	<!-- d3 tip -->
-	<script src="assets/js/d3-tip/d3-tip.js"></script>
-    
-	<!-- moment src -->
-	<script src="assets/js/moment/moment.js"></script>
-
 	<!-- dashboards src -->
 	<script src="assets/js/dashboards/organization-dashboard.js"></script>
 	<script src="assets/js/activityChart.js"></script>

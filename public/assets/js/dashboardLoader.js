@@ -33,7 +33,8 @@ require.config({
         'nvd3': "sdh-framework/lib/nvd3/nv.d3.min",
         'joinable': "sdh-framework/lib/joinable/joinable",
         'moment': "sdh-framework/lib/moment/moment",
-        'framework': "sdh-framework/framework"
+        'framework': "sdh-framework/framework",
+        'headerHandler': "assets/js/header/headerHandler",
     },
     shim : {
         bootstrap : {
@@ -54,6 +55,9 @@ require.config({
         nvd3: {
             exports: 'nv',
             deps: ['d3']
+        },
+        headerHandler: {
+            deps: ['jquery']
         }
     }
 });
@@ -127,7 +131,7 @@ define(function(require, exports, module) {
     document.getElementById("loading").className = "";
     document.getElementById("loading").getElementsByTagName("span")[0].textContent = "Initializing SDH Framework...";
 
-    require(["jquery", "framework", "d3", "nvd3", "moment", "bootstrap", "joinable"], function($, framework,d3, nv, moment) {
+    require(["jquery", "framework", "d3", "nvd3", "moment", "bootstrap", "joinable", "headerHandler"], function($, framework,d3, nv, moment) {
 
         framework.ready(function() {
             console.log("Framework ready");

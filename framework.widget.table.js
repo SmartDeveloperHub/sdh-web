@@ -111,6 +111,9 @@
         this.tableDom = this.element.children("table");
         this.tableDom.get(0).style.minHeight = configuration.height;
 
+        //Add click listener for links
+        this.tableDom.on( 'click', '.dashboardLink', this, dashboardLinkClickHandler);
+
         this.observeCallback = function(event){
 
             if(event.event === 'loading') {
@@ -148,7 +151,22 @@
         // Get columns
         var columns = [];
         for(var i in this.configuration.columns) {
-            columns.push({data: this.configuration.columns[i]['property']});
+
+            var column = this.configuration.columns[i];
+
+            if(column['property'] != null) { //Is a property
+                columns.push({data: column['property']});
+
+            } else if(column['link'] != null && column['link']['href'] != null) { //Is a link
+
+                columns.push( {
+                    data: function(){return column['link']},
+                    orderable: false,
+                    searchable: false,
+                    render: columnIconRenderer
+                } );
+            }
+
         }
 
         //DataTable object
@@ -160,75 +178,7 @@
 
         //The rows can be selected
         if(this.configuration.selectable) {
-
-            this.tableDom.on( 'click', 'tbody tr', this, function (e) {
-
-                var widget = e.data;
-
-                if ( $(this).hasClass('selected') ) { //It is already selected
-                    $(this).removeClass('selected');
-
-                } else { //Not selected
-
-                    //Select it if the maximum of selected rows has not been achieved
-                    if(widget.configuration.maxRowsSelected > widget.table.$('tr.selected').length) {
-                        console.log(widget.table.row($(this)).data());
-                        $(this).addClass('selected');
-
-                    }
-
-                }
-
-                // Update contexts
-                var contexts = widget.configuration.updateContexts;
-                if(contexts != null) {
-
-                    for(var i in contexts) {
-                        var context = contexts[i];
-
-                        if(context['id'] != null) {
-
-                            // Data to send through the context
-                            var data = {};
-
-                            // Filter the data to send through the context update
-                            if(context['filter'] != null) {
-                                for(var f = 0; f < context['filter'].length; ++f) {
-
-                                    var filter = context['filter'][f];
-                                    var property = filter['property'];
-                                    var as = filter['as'] || property;
-
-                                    if(data[as] == null) {
-                                        data[as] = [];
-                                    }
-
-                                    //Selected items
-                                    var selected = widget.table.$('tr.selected');
-
-                                    //Calculate the data to send for all the selected rows
-                                    for(var s = 0, len = selected.length; s < len; ++s) {
-
-                                        var selectedData = widget.table.row(selected[s]).data();
-                                        var propertyValue = selectedData[property];
-
-                                        if(property != null && typeof propertyValue !== 'undefined') {
-                                            data[as].push(propertyValue);
-                                        }
-
-                                    }
-                                }
-
-                            }
-
-                            //Send the update context
-                            framework.data.updateContext(context['id'], data);
-                        }
-                    }
-                }
-
-            });
-
+            this.tableDom.on( 'click', 'tbody tr', this, rowClickHandler);
         }
 
 
@@ -245,22 +195,152 @@
 
     // PRIVATE METHODS - - - - - - - - - - - - - - - - - - - - - -
 
-    //Function that returns the value to replace with the label variables
-    var replacer = function(metricId, metricData, str) {
+    /**
+     * Renderer for columns that contain links.
+     * @param linkInfo Info about the link. Must contain an icon property (with the class of the icon to display)
+     *           or a label property (with the text to display).
+     *           See https://datatables.net/reference/option/columns.render#function
+     * @param type See https://datatables.net/reference/option/columns.render#function
+     * @param rowData See https://datatables.net/reference/option/columns.render#function
+     * @returns {*}
+     */
+    var columnIconRenderer = function columnIconRenderer(linkInfo, type, rowData) {
 
-        //Remove the initial an trailing '%' of the string
-        str = str.substring(1, str.length-1);
+        if ( type === 'display' ) {
 
-        //Check if it is a parameter an return its value
-        if(str === "mid") {
-            return metricId;
-        } else if(metricData['request']['params'][str] != null) {
-            return metricData['request']['params'][str];
+            if (linkInfo['icon'] != null) { //It is an icon
+                return '<div class="dashboardLink ' + linkInfo['icon'] + '"></div>';
+            } else { //Just a label
+                return '<div class="dashboardLink">' + linkInfo['label'] + '</div>';
+            }
+
         }
 
-        return "";
+        return linkInfo;
+
     };
 
+    /**
+     * Function that handles the click in a dashboard link.
+     * @param e
+     */
+    var dashboardLinkClickHandler = function dashboardLinkClickHandler(e) {
+
+        e.stopImmediatePropagation(); // stop the row selection when clicking on an icon
+
+        var widget = e.data;
+        var cell = $(this).parent();
+
+        var linkInfo = widget.table.cell(cell).data();
+        var rowData = widget.table.cell(cell).row().data();
+
+        //Generate the env
+        var env = null;
+        if (linkInfo['env'] != null) {
+            env = generateEnv(linkInfo['env'], rowData);
+        }
+
+        //Change the dashboard
+        framework.dashboard.changeTo(linkInfo['href'], env);
+
+    };
+
+    /**
+     * Function that handles clicks in rows. When selecting a row it may be necessary to update contexts.
+     * @param e
+     */
+    var rowClickHandler = function rowClickHandler(e) {
+
+        var widget = e.data;
+
+        if ( $(this).hasClass('selected') ) { //It is already selected
+            $(this).removeClass('selected');
+
+        } else { //Not selected
+
+            //Select it if the maximum of selected rows has not been achieved
+            if(widget.configuration.maxRowsSelected > widget.table.$('tr.selected').length) {
+                $(this).addClass('selected');
+            }
+
+        }
+
+        // Update contexts
+        var contexts = widget.configuration.updateContexts;
+        if(contexts != null) {
+
+            for(var i in contexts) {
+                var context = contexts[i];
+
+                if(context['id'] != null) {
+
+                    // Data to send through the context
+                    var data = {};
+
+                    // Filter the data to send through the context update
+                    if(context['filter'] != null) {
+                        for(var f = 0; f < context['filter'].length; ++f) {
+
+                            var filter = context['filter'][f];
+                            var property = filter['property'];
+                            var as = filter['as'] || property;
+
+                            if(data[as] == null) {
+                                data[as] = [];
+                            }
+
+                            //Selected items
+                            var selected = widget.table.$('tr.selected');
+
+                            //Calculate the data to send for all the selected rows
+                            for(var s = 0, len = selected.length; s < len; ++s) {
+
+                                var selectedData = widget.table.row(selected[s]).data();
+                                var propertyValue = selectedData[property];
+
+                                if(property != null && typeof propertyValue !== 'undefined') {
+                                    data[as].push(propertyValue);
+                                }
+
+                            }
+                        }
+
+                    }
+
+                    //Send the update context
+                    framework.data.updateContext(context['id'], data);
+                }
+            }
+        }
+
+    };
+
+    /**
+     * Generates an environment object containing all the information of the environment
+     * @param envProperty The env configuration property
+     * @param rowData Al, the data of the row.
+     * @returns {{}}
+     */
+    var generateEnv = function generateEnv(envProperty, rowData) {
+
+        var env = {};
+
+        for(var e = 0; e < envProperty.length; ++e) {
+
+            var envEntry = envProperty[e];
+            var property = envEntry['property'];
+            var as = envEntry['as'] || property;
+
+            var propertyValue = rowData[property];
+
+            if(typeof propertyValue !== 'undefined') {
+                env[as] = propertyValue;
+            }
+
+        }
+
+        return env;
+    };
 
     /**
      * Gets a normalized array of data according to the chart expected input from the data returned by the framework.

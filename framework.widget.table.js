@@ -86,9 +86,89 @@
 
     /* Table constructor
      *   element: the DOM element that will contain the rangeNv
-     *   data: the data id array
+     *   data: the resources array. It should contain only a resource, or at least the same resources with different
+     *      parameters.
      *   contextId: optional.
-     *   configuration: additional table configuration
+     *   configuration: additional table configuration:
+     *      {
+     *       ~ height: number - Height of the widget.
+     *       ~ filterControl: boolean - Whether to display the search filter control or not.
+     *       ~ paginationControl: boolean - Whether to display the pagination control or not.
+     *       ~ lengthControl: boolean - Whether to display a selector with the number of rows to show or not.
+     *       ~ tableInfo: boolean - Whether to show extra info about the table or not.
+     *       ~ selectable: boolean - If true, the rows of this table can be selected. When selected, the contexts are
+     *          are updated with the data updateContexts indicates.
+     *       ~ maxRowsSelected: number - Maximum number of rows that can be selected at the same time.
+     *       ~ updateContexts: array - Array of objects that configure how to update the contexts. It must contain an id with
+     *          the id of the context and a filter array with the data to send through the context update.
+     *          Each filter must contain a 'property' property with the name of the property of the data retrieved from
+     *          the framework and can optionally add an 'as' property to indicate the name that it must have in the
+     *          object that will be sent through the updateContext.
+     *          Format:
+     *          {
+     *               id: <String>,
+     *               filter: [
+     *                   {
+     *                       property: <String>,
+     *                       as: <String> //optional
+     *                   }
+     *               ]
+     *          }
+     *          Example (listing all the repositories):
+     *          {
+     *               id: "repoContext",
+     *               filter: [
+     *                   {
+     *                       property: "repositoryid",
+     *                       as: "rid"
+     *                   }
+     *               ]
+     *          }
+     *       ~ columns: array - Array of objects with the configuration of all the columns to display in the table.
+     *          Column object contains a 'label' and a 'property' or a link.
+     *          In case of a property, it is the name of the property of the data retrieved from the framework that
+     *          must be displayed in that column.
+     *          In case of a link, it displays a link to change to other dashboard. A link is an object with multiple
+     *          properties: a 'href' with the name of the dashboard to go to, an 'icon' (class of the icon to display)
+     *          or a 'label' (text) to display, and an 'env' that configures the environment info to send to the
+     *          new dashboard. The 'env' property is an array of objects that contains a 'property' and an optional 'as'.
+     *          Format:
+     *          {
+     *               label: <String>,
+     *               property: <String>
+     *           },
+     *           {
+     *              label: "Show",
+     *               link: {
+     *                   icon: <String>, //or label: <String>
+     *                   href: <String>,
+     *                   env: [
+     *                       {
+     *                           property: <String>,
+     *                           as: <String>
+     *                       }
+     *                   ]
+     *               }
+     *          }, ...
+     *          Example (listing all the repositories and changing to the dashboard of the selected repository):
+     *          {
+     *               label: "Name",
+     *               property: "name"
+     *           },
+     *           {
+     *              label: "Go to",
+     *               link: {
+     *                   icon: "fa fa-share-square-o",
+     *                   href: "repository-dashboard",
+     *                   env: [
+     *                       {
+     *                           property: "repositoryid",
+     *                           as: "rid"
+     *                       }
+     *                   ]
+     *               }
+     *          }
+     *      }
      */
     var Table = function Table(element, metrics, contextId, configuration) {
 

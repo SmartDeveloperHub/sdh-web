@@ -3,10 +3,9 @@
 @section('scripts')
     @parent
     <script type="application/javascript">
-        SDH_API_URL = "http://localhost:12345";
+        SDH_API_URL = "http://localhost:8080";
         BASE_DASHBOARD = "test-template";
     </script>
-
 @stop
 
 @section('css')
@@ -62,13 +61,24 @@
             </div>
         </div>
     </header>
-    <!--<div class="settings-pane open">
+    <div class="settings-pane open">
         <div id="timeBar">
-            <a>
-                <i class="timeBarIcon fa-angle-double-up"></i>
-                <i id="timeBarLabel"></i>
-                <i class="timeBarIcon fa-angle-double-up"></i>
-            </a>
+            <div id="infobar">
+                <div class="timeFromBox">
+                    <span id="fromLabel"></span>
+                </div>
+                <div class="sinceBox">
+                    <span id="sinceLabel"></span>
+                </div>
+                <div class="timeToBox">
+                    <span id="toLabel"></span>
+                </div>
+            </div>
+            <div id="timeControler">
+                <div class="timeMidBox">
+                    <i id="timeBarIcon fa-user-secret"></i>
+                </div>
+            </div>
         </div>
         <div class="row" id="floatingRow">
             <div class="col-sm-12 timePanel">
@@ -82,7 +92,7 @@
         </div>
         <div class="row" id="timeBarDown">
         </div>
-    </div>-->
+    </div>
 {{-- End of header section --}}
 @stop
 

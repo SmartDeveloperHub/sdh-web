@@ -1,7 +1,7 @@
 
 	$(document).ready(function(){
 
-		var showHeaderAt = 80;
+		var showHeaderAt = 292;
 
 		var win = $(window),
 				body = $('body');

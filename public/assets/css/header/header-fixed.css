@@ -118,7 +118,7 @@
 	font-size: 45px;
 	margin-top: 9px;
 	margin-left: 3px;
-    color: #D7D7D7;
+    color: #BFE5E3;
 	-webkit-transition:all 0.3s;
 	transition:all 0.3s;
 }
@@ -128,7 +128,7 @@
     font-family: 'FontAwesome';
     border-radius: 15px;
     background-color: #292F33;
-    color: #D7D7D7;
+    color: #BFE5E3;
     box-shadow: 0px 0px 6px 0px #646262;
 	font-size: 15px;
 	width: 25px;
@@ -414,19 +414,6 @@ div#floatingRow .panel.panel-default {
     overflow: hidden;
 }
 
-#infobar {
-	height: 25px;
-	width: 100%;
-	display: block;
-	background-color: #263C4A;
-}
-
-.timeFromBox {
-	text-align: left;
-  	height: 25px;
-  	position: absolute;
-}
-
 .timeMidBox {
     text-align: center;
     display: inline-block;
@@ -435,10 +422,41 @@ div#floatingRow .panel.panel-default {
     background-image: url("../../images/center_down_bar.png");
 }
 
-.timeToBox {
-	text-align: center;
+#infobar {
 	height: 25px;
-	position: absolute;
+	width: 100%;
+	display: block;
+	background-color: #263C4A;
+}
+
+.infoBox {
+	display: inline-block;
+	width: 33.33%;
+	height: 25px;
+	line-height: 25px;
+}
+
+.infoBox span {
+	color: #BFE5E3;
+	margin-left: 2px;
+}
+
+.infoBox.timeFrom {
+}
+
+.infoBox.since {
+}
+
+.infoBox.timeTo {
+}
+
+.infoBox.timeFrom #fromLabel {
+}
+
+.infoBox.since #sinceLabel {
+}
+
+.infoBox.timeTo #toLabel {
 }
 
 body.fixed .settings-pane {

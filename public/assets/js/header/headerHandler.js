@@ -1,3 +1,4 @@
+var setTimeInfo;
 
 	$(document).ready(function(){
 
@@ -8,6 +9,9 @@
 
 		var pane = $('.settings-pane');
 		var timeControl = $('#timeControler');
+		var fromLabel = $('#fromLabel');
+		var sinceLabel = $('#sinceLabel');
+		var toLabel = $('#toLabel');
 
 		var changePanehandler = function changePanehandler() {
 			if (pane.hasClass('open')) {
@@ -17,6 +21,15 @@
 			}
 		};
 
+		setTimeInfo = function setTimeInfo (from, to) {
+			if (moment(from).isValid() && moment(from).isValid()) {
+				fromLabel.text(moment(from).format("YYYY-MM-DD"));
+				sinceLabel.text(moment.duration(to-from).humanize());
+				toLabel.text(moment(to).format("YYYY-MM-DD"));
+			} else {
+				console.log("setTimeInfo... invalid dates");
+			}
+		}
 		timeControl.click(changePanehandler);
 
 		// Show the fixed header only on larger screen devices

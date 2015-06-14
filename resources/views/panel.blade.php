@@ -64,14 +64,16 @@
     <div class="settings-pane open">
         <div id="timeBar">
             <div id="infobar">
-                <div class="timeFromBox">
+                <div class="infoBox timeFrom">
+                    <span class= "fa-calendar"></span>
                     <span id="fromLabel"></span>
                 </div>
-                <div class="sinceBox">
+                <div class="infoBox since">
                     <span id="sinceLabel"></span>
                 </div>
-                <div class="timeToBox">
+                <div class="infoBox timeTo">
                     <span id="toLabel"></span>
+                    <span class= "fa-calendar"></span>
                 </div>
             </div>
             <div id="timeControler">

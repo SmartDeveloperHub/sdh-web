@@ -3,8 +3,21 @@
 
 		var showHeaderAt = 292;
 
-		var win = $(window),
-				body = $('body');
+		var win = $(window);
+		var body = $('body');
+
+		var pane = $('.settings-pane');
+		var timeControl = $('#timeControler');
+
+		var changePanehandler = function changePanehandler() {
+			if (pane.hasClass('open')) {
+				pane.removeClass('open');
+			} else {
+				pane.addClass('open');
+			}
+		};
+
+		timeControl.click(changePanehandler);
 
 		// Show the fixed header only on larger screen devices
 

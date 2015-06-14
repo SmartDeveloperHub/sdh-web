@@ -18,6 +18,12 @@
     -webkit-box-shadow: 0px 0px 2px 2px #00222F;
     -moz-box-shadow: 0px 0px 2px 2px #00222F;
     box-shadow: 0px 0px 2px 2px #00222F;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .header-fixed .header-limiter {
@@ -379,7 +385,7 @@ div#floatingRow .panel.panel-default {
     background: rgba(52, 52, 52,0.9);
     top: -15px;
     color: #FFF;
-    height: 32px;
+    height: 49px;
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -387,6 +393,12 @@ div#floatingRow .panel.panel-default {
     -moz-transition: all 300ms ease-in;
     -o-transition: all 300ms ease-in;
     transition: all 300ms ease-in;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .settings-pane div#floatingRow{

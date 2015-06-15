@@ -34,7 +34,7 @@
                     </div>
                     <div class="logotextbox2">
                         <span  class="logotext">
-                            S.D.H
+                            SDH
                         </span>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
             </div>
         </div>
     </header>
-    <div class="settings-pane open">
+    <div class="settings-pane">
         <div id="timeBar">
             <div id="infobar">
                 <div class="infoBox timeFrom">
@@ -76,11 +76,6 @@
                     <span class= "fa-calendar"></span>
                 </div>
             </div>
-            <div id="timeControler">
-                <div class="timeMidBox">
-                    <i id="timeBarIcon fa-user-secret"></i>
-                </div>
-            </div>
         </div>
         <div class="row" id="floatingRow">
             <div class="col-sm-12 timePanel">
@@ -93,6 +88,11 @@
             </div>
         </div>
         <div class="row" id="timeBarDown">
+           <div id="timeControler">
+                <div class="timeMidBox">
+                    <span id="timeBarIcon" class="fa-caret-down"></span>
+                </div>
+            </div>
         </div>
     </div>
 {{-- End of header section --}}

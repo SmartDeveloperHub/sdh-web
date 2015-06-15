@@ -130,32 +130,23 @@
     var rangeNv_dom = document.getElementById("fixed-chart");
     var rangeNv_metrics = [
         {
-            id: 'usercommits',
-            uid: 'u1',
-            max: 20,
+            id: 'orgcommits',
+            max: 24,
             aggr: 'avg'
         },
-        {
-            id: 'usercommits',
-            uid: 'u2',
-            max: 20,
-            aggr: 'avg'
-        },
-        {
-            id: 'usercommits',
-            uid: 'u3',
-            max: 20,
-            aggr: 'max'
-        }
+
     ];
     var rangeNv_configuration = {
         ownContext: context4rangeChart,
-        labelFormat: "User: %uid%",
-        isArea: false,
+        labelFormat: "Total Commits",
+        isArea: true,
         interpolate: 'monotone',
         showFocus: false,
         height : 140,
-        duration: 500
+        duration: 500,
+        axisColor: "#BFE5E3",
+        background: "rgba(25, 48, 63, 0.92)",
+        colors: ["#FF7F0E"]
     };
     var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, null, rangeNv_configuration);
 

@@ -2,24 +2,42 @@ var setTimeInfo;
 
 	$(document).ready(function(){
 
-		var showHeaderAt = 292;
+		var showHeaderAt = 150;
+		var closePaneAt = 300;
 
 		var win = $(window);
 		var body = $('body');
 
+		var lastTop = win.scrollTop();
+
 		var pane = $('.settings-pane');
 		var timeControl = $('#timeControler');
+		var controlIco = $('#timeBarIcon');
 		var fromLabel = $('#fromLabel');
 		var sinceLabel = $('#sinceLabel');
 		var toLabel = $('#toLabel');
 
 		var changePanehandler = function changePanehandler() {
 			if (pane.hasClass('open')) {
-				pane.removeClass('open');
+				closePanehandler();
 			} else {
-				pane.addClass('open');
+				openPanehandler();
 			}
 		};
+
+		var closePanehandler = function closePanehandler() {
+			pane.removeClass('open');
+			controlIco.removeClass("fa-caret-up");
+			controlIco.addClass("fa-caret-down");
+		}
+
+		var openPanehandler = function openPanehandler() {
+			pane.addClass('open');
+			closePaneAt = win.scrollTop();
+			lastTop = win.scrollTop();
+			controlIco.removeClass("fa-caret-down");
+			controlIco.addClass("fa-caret-up");
+		}
 
 		setTimeInfo = function setTimeInfo (from, to) {
 			if (moment(from).isValid() && moment(from).isValid()) {
@@ -40,12 +58,35 @@ var setTimeInfo;
 			// "fixed" class on the body element.
 
 			win.on('scroll', function(e){
-
-				if(win.scrollTop() > showHeaderAt) {
-					body.addClass('fixed');
+				// auto close time Panel
+				if(Math.abs(win.scrollTop() - closePaneAt) > 200) {
+					closePanehandler();
 				}
-				else {
+
+				// auto hide/show header
+				if((win.scrollTop() > 350)) {
+					if ((lastTop > win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 15)) {
+						// up
+						body.removeClass('hidd');
+					} else if ((lastTop <= win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 50)) {
+						// down
+						closePanehandler();
+						body.addClass('hidd');
+					}
+					lastTop = win.scrollTop();
+				} else if (body.hasClass('hidd') && (win.scrollTop() < 150)) {
+					body.removeClass('hidd');
+					lastTop = win.scrollTop();
+				}
+
+				// Fixed Header
+				if(!body.hasClass('fixed') && (win.scrollTop() > showHeaderAt)) {
+					body.addClass('fixed');
+					lastTop = win.scrollTop();
+				}
+				else if(body.hasClass('fixed') && (win.scrollTop() <= showHeaderAt)){
 					body.removeClass('fixed');
+					lastTop = win.scrollTop();
 				}
 			});
 

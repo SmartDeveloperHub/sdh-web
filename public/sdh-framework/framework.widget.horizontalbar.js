@@ -22,7 +22,7 @@
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
-(function() {
+define(['sdh-framework/framework.widget.common'], function() {
 
     // CHECK D3
     if(typeof d3 === 'undefined') {
@@ -215,8 +215,6 @@
             return metricId;
         } else if(metricData['request']['params'][str] != null) {
             return metricData['request']['params'][str];
-        } else if(metricData['request']['queryParams'][str] != null) {
-            return metricData['request']['queryParams'][str];
         }
 
         return "";
@@ -318,9 +316,4 @@
 
     window.framework.widgets.HorizontalBar = HorizontalBar;
 
-})();
-
-
-
-
-
+});

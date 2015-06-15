@@ -3,7 +3,7 @@
 @section('scripts')
     @parent
     <script type="application/javascript">
-        SDH_API_URL = "http://localhost:8080";
+        SDH_API_URL = "{{{ $_ENV['SDH_API'] }}}";
         BASE_DASHBOARD = "test-template";
     </script>
 @stop

@@ -25,8 +25,12 @@
 require.config({
     baseUrl: "/",
     //enforceDefine: true,
+    map: {
+        '*': {
+            'css': 'assets/js/requirejs/css.min' // or whatever the path to require-css is
+        }
+    },
     paths: {
-        'css':		'assets/js/requirejs/css.min', // Alias for CSS plugin
         'bootstrap': "assets/js/bootstrap/bootstrap.min",
         'jquery': 'sdh-framework/lib/jquery/jquery-2.1.3.min',
         'd3': "sdh-framework/lib/d3/d3.min",
@@ -131,7 +135,7 @@ define(function(require, exports, module) {
     document.getElementById("loading").className = "";
     document.getElementById("loading").getElementsByTagName("span")[0].textContent = "Initializing SDH Framework...";
 
-    require(["jquery", "framework", "d3", "nvd3", "moment", "bootstrap", "joinable", "headerHandler"], function($, framework,d3, nv, moment) {
+    require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler"], function($, d3, nv, moment) {
 
         framework.ready(function() {
             console.log("Framework ready");

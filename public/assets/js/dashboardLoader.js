@@ -46,7 +46,6 @@ require.config({
             deps : ['jquery']
         },
         framework: {
-            exports: "framework",
             deps :['jquery']
         },
         d3: {

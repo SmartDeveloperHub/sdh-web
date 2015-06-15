@@ -5,12 +5,9 @@
 
 @section('require')
     [
-    "sdh-framework/framework.widget.common",
     "sdh-framework/framework.widget.heatmap",
     "sdh-framework/framework.widget.piechart",
-    "sdh-framework/framework.widget.rangeNv",
-    "css!sdh-framework/framework.widget.common",
-    "css!sdh-framework/framework.widget.heatmap",
+    "sdh-framework/framework.widget.rangeNv"
     ]
 @stop
 

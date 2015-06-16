@@ -59,7 +59,7 @@ var setTimeInfo;
 
 			win.on('scroll', function(e){
 				// auto close time Panel
-				if(Math.abs(win.scrollTop() - closePaneAt) > 200) {
+				if(Math.abs(win.scrollTop() - closePaneAt) > 300) {
 					closePanehandler();
 				}
 
@@ -68,7 +68,7 @@ var setTimeInfo;
 					if ((lastTop > win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 15)) {
 						// up
 						body.removeClass('hidd');
-					} else if ((lastTop <= win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 50)) {
+					} else if ((lastTop <= win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 70)) {
 						// down
 						closePanehandler();
 						body.addClass('hidd');

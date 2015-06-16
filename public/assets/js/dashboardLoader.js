@@ -39,6 +39,7 @@ require.config({
         'moment': "sdh-framework/lib/moment/moment",
         'framework': "sdh-framework/framework",
         'headerHandler': "assets/js/header/headerHandler",
+        'datatables' : 'sdh-framework/lib/jquery/datatables/js/jquery.dataTables'
     },
     shim : {
         bootstrap : {

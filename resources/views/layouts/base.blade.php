@@ -6,7 +6,7 @@
         <link rel="icon" type="image/jpg" href="/assets/images/favicon.jpg" />
 
         <link rel="stylesheet" href="assets/css/bootstrap.css">
-        <link rel="stylesheet" href="sdh-framework/style/core.css">
+        <link rel="stylesheet" href="assets/css/core.css">
         @yield('css')
         <script data-main="assets/js/dashboardLoader" src="assets/js/requirejs/require.js"></script>
     </head>

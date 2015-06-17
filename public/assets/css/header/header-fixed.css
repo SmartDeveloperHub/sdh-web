@@ -138,6 +138,11 @@
 	margin-bottom: 6px;
 	-webkit-transition:all 0.3s;
 	transition:all 0.3s;
+	cursor: pointer;
+}
+
+.headbutton:hover {
+	color: #BFE5E3;
 }
 
 #headermid {
@@ -381,7 +386,13 @@ div#timeBarDown {
 	text-align: center;
 	bottom: 0;
 	height: 25px;
-	top: 175px;
+	top: 166px;
+}
+
+.settings-pane .panel-body {
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	background-color: rgba(25, 48, 63, 0.92);
 }
 
 div#timeControler {
@@ -398,9 +409,19 @@ div#timeControler {
 	height: 16px;
 	font-size: 19px;
 	margin-top: -3px;
+	color: #BFE5E3;
 }
 
 /* Setting Pane */
+#fixed-chart {
+	width: 100%;
+	display: inline-block;
+	height: 100%;
+	margin-top: -18px;
+	margin-bottom: 10px;
+	padding-right: 22px;
+}
+
 .timePanel {
     padding-left: 0;
     padding-right: 0;
@@ -442,7 +463,7 @@ div#floatingRow .panel.panel-default {
 
 .settings-pane.open {
     color: #FFF;
-    height: 199px;
+    height: 190px;
     width: 100%;
 }
 

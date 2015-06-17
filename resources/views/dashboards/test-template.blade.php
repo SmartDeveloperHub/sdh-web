@@ -146,7 +146,6 @@
         height : 140,
         duration: 500,
         axisColor: "#BFE5E3",
-        background: "rgba(25, 48, 63, 0.92)",
         colors: ["#FFC10E"]
     };
     var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, null, rangeNv_configuration);

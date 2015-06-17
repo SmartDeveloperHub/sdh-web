@@ -39,29 +39,33 @@ require.config({
         'moment': "sdh-framework/lib/moment/moment",
         'framework': "sdh-framework/framework",
         'headerHandler': "assets/js/header/headerHandler",
-        'datatables' : 'sdh-framework/lib/jquery/datatables/js/jquery.dataTables'
+        'datatables' : 'sdh-framework/lib/jquery/datatables/js/jquery.dataTables',
+        'widgetCommon': 'sdh-framework/framework.widget.common'
     },
     shim : {
-        bootstrap : {
+        'bootstrap' : {
             exports: "jQuery.fn.popover",
             deps : ['jquery']
         },
-        framework: {
+        'framework': {
             deps :['jquery']
         },
-        d3: {
+        'd3': {
             exports: 'd3',
             deps: ['jquery']
         },
-        joinable: {
+        'joinable': {
             deps: ['jquery']
         },
-        nvd3: {
+        'nvd3': {
             exports: 'nv',
             deps: ['d3']
         },
-        headerHandler: {
+        'headerHandler': {
             deps: ['jquery']
+        },
+        'widgetCommon': {
+            deps: ['framework']
         }
     }
 });
@@ -135,7 +139,7 @@ define(function(require, exports, module) {
     document.getElementById("loading").className = "";
     document.getElementById("loading").getElementsByTagName("span")[0].textContent = "Initializing SDH Framework...";
 
-    require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler"], function($, d3, nv, moment) {
+    require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler", "widgetCommon"], function() {
 
         framework.ready(function() {
             console.log("Framework ready");

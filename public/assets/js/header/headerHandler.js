@@ -50,46 +50,39 @@ var setTimeInfo;
 		}
 		timeControl.click(changePanehandler);
 
-		// Show the fixed header only on larger screen devices
+		// When we scroll more than 150px down, we set the
+		// "fixed" class on the body element.
 
-		if(win.width() > 600){
+		win.on('scroll', function(e){
+			// auto close time Panel
+			if(Math.abs(win.scrollTop() - closePaneAt) > 300) {
+				closePanehandler();
+			}
 
-			// When we scroll more than 150px down, we set the
-			// "fixed" class on the body element.
-
-			win.on('scroll', function(e){
-				// auto close time Panel
-				if(Math.abs(win.scrollTop() - closePaneAt) > 300) {
-					closePanehandler();
-				}
-
-				// auto hide/show header
-				if((win.scrollTop() > 350)) {
-					if ((lastTop > win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 15)) {
-						// up
-						body.removeClass('hidd');
-					} else if ((lastTop <= win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 70)) {
-						// down
-						closePanehandler();
-						body.addClass('hidd');
-					}
-					lastTop = win.scrollTop();
-				} else if (body.hasClass('hidd') && (win.scrollTop() < 150)) {
+			// auto hide/show header
+			if((win.scrollTop() > 350)) {
+				if ((lastTop > win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 15)) {
+					// up
 					body.removeClass('hidd');
-					lastTop = win.scrollTop();
+				} else if ((lastTop <= win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 70)) {
+					// down
+					closePanehandler();
+					body.addClass('hidd');
 				}
+				lastTop = win.scrollTop();
+			} else if (body.hasClass('hidd') && (win.scrollTop() < 150)) {
+				body.removeClass('hidd');
+				lastTop = win.scrollTop();
+			}
 
-				// Fixed Header
-				if(!body.hasClass('fixed') && (win.scrollTop() > showHeaderAt)) {
-					body.addClass('fixed');
-					lastTop = win.scrollTop();
-				}
-				else if(body.hasClass('fixed') && (win.scrollTop() <= showHeaderAt)){
-					body.removeClass('fixed');
-					lastTop = win.scrollTop();
-				}
-			});
-
-		}
-
+			// Fixed Header
+			if(!body.hasClass('fixed') && (win.scrollTop() > showHeaderAt)) {
+				body.addClass('fixed');
+				lastTop = win.scrollTop();
+			}
+			else if(body.hasClass('fixed') && (win.scrollTop() <= showHeaderAt)){
+				body.removeClass('fixed');
+				lastTop = win.scrollTop();
+			}
+		});
 	});

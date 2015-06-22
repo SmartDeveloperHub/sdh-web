@@ -1,230 +1,284 @@
-@extends('layouts.panel_old')
+{{--
+    User dashboard
+ --}}
+@extends('layouts.template')
 
-@section('scripts')
-    @parent
-    <script src="assets/js/chart.js/Chart.min.js"></script> {{-- From https://github.com/nnnick/Chart.js --}}
-    <script src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
-    <script src="assets/js/activityChart.js"></script>
-    <script src="assets/js/HeatMapChart.js"></script>
-    <script src="assets/js/dashboards/user-dashboard.js"></script>
-
-
+@section('require')
+    [
+    "sdh-framework/framework.widget.counterbox",
+    "sdh-framework/framework.widget.horizontalbar",
+    "sdh-framework/framework.widget.table",
+    "sdh-framework/framework.widget.linesChart",
+    "sdh-framework/framework.widget.rangeNv"
+    ]
 @stop
 
-@section('css')
-    @parent
-    <link rel="stylesheet" href="/assets/css/activityChart.css">
-    <link rel="stylesheet" href="/assets/css/dashboards/user-dashboard.css">
-@stop
-
-@section('main-content')
+@section('html')
     <div class="row">
-        <div class="col col-sm-3 col-lg-3"> <!-- LEFT PANEL -->
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row"><!-- user -->
-                        <div class="col text-center">
-                            <img src="assets/images/demo/JohnSnow_small.jpg" alt="John Snow" class="img-responsive img-circle center-block">
-                            <h1 style="color: #2c2e2f;">John Snow</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <canvas id="radar-chart"></canvas>
-                    </div>
-                    <div class="row"><!-- own projects -->
-                        <div class="col">
-                            <h3>Own Projects</h3>
-                            <div id="self-projects-list" class="list-group"></div>
-                        </div>
-                    </div>
-                    <div class="row"><!-- assigned projects -->
-                        <div class="col">
-                            <h3>Assigned Projects</h3>
-                            <div id="assigned-projects-list" class="list-group"></div>
-                        </div>
-                    </div>
-                    <div class="row"><!-- badges -->
-                        <div class="col">
-                            <h3>Badges</h3>
-                        </div>
-                    </div>
-
+        <div id="total-commits" class="col-sm-3"></div>
+        <div id="open-issues" class="col-sm-3"></div>
+        <div id="solved-issues" class="col-sm-3"></div>
+        <div id="total-projects" class="col-sm-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div>Email: <span id="user-email"></span></div>
+                    <div>Web: <span id="user-website"></span></div>
+                </div>
+                <div class="col-sm-6">
+                    <div>Skype: <span id="user-skype"></span></div>
+                    <div>Linkedin: <span id="user-linkedin"></span></div>
+                    <div>Twitter: <span id="user-twitter"></span></div>
                 </div>
             </div>
         </div>
-        <div class="col col-sm-9 col-lg-9">  <!-- CENTER PANEL -->
-
-            <div class="row"> <!-- TOP RANGE CHART -->
-                <div class="col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Added / deleted lines
-                        </div>
-                        <div class="panel-body">
-                            <div id="range-chart" class=".activity-chart"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row"> <!-- WIDGETS -->
-
-                <div class="col-md-5">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <span>Contributed projects</span>
-                        </div>
-                        <div class="panel-body">
-                            <table id="cont-proj-id" cellspacing="0" class="table table-small-font dataTable" role="grid">
-                                <thead>
-                                <tr>
-                                    <th>Project</th>
-                                    <th aria-controls="cont-proj-id" aria-sort="descending" data-priority="2">Commits</th>
-                                </tr>
-                                </thead>
-                                <tbody id="contributed-projects-table">
-                                <tr>
-                                    <th>GOOG <span class="co-name">Google Inc.</span></th>
-                                    <td>597</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-7">
-                    <div class="row">
-                        <div class="col-lg-6">
-
-                            <div id="commits-counter" class="com-widget com-counter" data-count=".num" data-from="0" data-to="0" data-suffix=" commits" data-duration="2">
-                                <div class="com-icon">
-                                    <i class="octicon octicon-git-commit"></i>
-                                </div>
-                                <div class="com-label">
-                                    <strong class="num">0 commits</strong>
-                                    <span>Total number of commits</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-6">
-
-                            <div id="contributed-projects-counter" class="com-widget com-counter com-counter-red" data-count=".num" data-from="0" data-to="0" data-suffix=" projects" data-duration="2">
-                                <div class="com-icon">
-                                    <i class="octicon octicon-repo"></i>
-                                </div>
-                                <div class="com-label">
-                                    <strong class="num">0 projects</strong>
-                                    <span>Contributed projects</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-6">
-
-                            <div id="created-issues-counter" class="com-widget com-counter com-counter-blue" data-count=".num" data-from="0" data-to="0" data-suffix=" issues" data-duration="2">
-                                <div class="com-icon">
-                                    <i class="octicon octicon-issue-opened"></i>
-                                </div>
-                                <div class="com-label">
-                                    <strong class="num">0 issues</strong>
-                                    <span>Total created issues</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-6">
-
-                            <div id="resolved-issues-counter" class="com-widget com-counter com-counter-info" data-count=".num" data-from="0" data-to="0" data-suffix=" issues" data-duration="2">
-                                <div class="com-icon">
-                                    <i class="octicon octicon-issue-closed"></i>
-                                </div>
-                                <div class="com-label">
-                                    <strong class="num">0 issues</strong>
-                                    <span>Total solved issues</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-md-5"> <!-- LANGUAGES CHART -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                                    <span>Most used languages</span>
-                        </div>
-                        <div class="panel-body">
-                            <svg id="languages-chart"></svg>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7"> <!-- ISSUES CHART -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                                    <span>Issues</span>
-                        </div>
-                        <div class="panel-body">
-                            <div id="issues-chart">
-                                <svg></svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                                    <span>Contribution heatmap</span>
-                        </div>
-                        <div class="panel-body panel-body-heatchart">
-                            <svg id="heatmap" role="heatmap" class="heatmap" preserveAspectRatio="xMidYMid"></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
+        <div class="col-sm-3">
+            <div>Favourite language: <span id="user-favourite-lang"></span></div>
+        </div>
+        <div class="col-sm-4">
+            <div>User since: <span id="user-since"></span></div>
+            <div>First commit: <span id="user-first-commit"></span></div>
+            <div>Last commit: <span id="user-last-commit"></span></div>
         </div>
     </div>
-
-
-
-
-
-    <!-- Main Footer -->
-    <!-- Choose between footer styles: "footer-type-1" or "footer-type-2" -->
-    <!-- Add class "sticky" to  always stick the footer to the end of page (if page contents is small) -->
-    <!-- Or class "fixed" to  always fix the footer to the end of page -->
-    <footer class="main-footer sticky footer-type-1">
-
-        <div class="footer-inner">
-
-            <!-- Add your copyright text here -->
-            <div class="footer-text">
-                &copy; 2014
-                <strong>Xenon</strong>
-                theme by <a href="http://laborator.co" target="_blank">Laborator</a>
+    <div class="row">
+        <div id="skills-star" class="col-sm-5"></div>
+        <div id="skills-lines" class="col-sm-7"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="row">
+                <div id="projects-horizontal" class="col"></div>
             </div>
-
-
-            <!-- Go to Top Link, just add rel="go-top" to any link to add this functionality -->
-            <div class="go-up">
-
-                <a href="#" rel="go-top">
-                    <i class="fa-angle-up"></i>
-                </a>
-
+            <div class="row">
+                <div id="projects-lines" class="col"></div>
             </div>
-
+            <div class="row">
+                <div id="projects-languages" class="col"></div>
+            </div>
         </div>
+        <div id="projects-table" class="col-sm-3"></div>
+    </div>
+@stop
 
-    </footer>
+@section('script')
+
+    context4rangeChart = "context4rangeChart";
+
+    //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
+    var userCtx = "uid";
+    framework.data.updateContext('uid', {uid: 'u1'}/*framework.dashboard.getEnv()['uid']*/);
+
+    // UPPER SELECTOR RANENV
+    var rangeNv_dom = document.getElementById("fixed-chart");
+    var rangeNv_metrics = [
+        {
+            id: 'usercommits',
+            uid: 'u1', //TODO
+            max: 24,
+            aggr: 'avg'
+        }
+    ];
+    var rangeNv_configuration = {
+        ownContext: context4rangeChart,
+        labelFormat: "Total Commits",
+        isArea: true,
+        showLegend: false,
+        interpolate: 'monotone',
+        showFocus: false,
+        height : 140,
+        duration: 500,
+        axisColor: "#BFE5E3",
+        background: "rgba(25, 48, 63, 0.92)",
+        colors: ["#FFC10E"]
+    };
+    var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, null, rangeNv_configuration);
+
+
+    // TOTAL COMMITS
+    var total_commits_dom = document.getElementById("total-commits");
+    var total_commits_metrics = [{
+        id: 'usercommits',
+        max: 1,
+        aggr: 'sum'
+    }];
+    var total_commits_conf = {
+        label: 'Total commits',
+        decimal: 0,
+        icon: 'octicon octicon-git-commit',
+        iconbackground: 'rgb(40, 118, 184)'
+    };
+    var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
+
+
+    // OPEN ISSUES
+    var open_issues_dom = document.getElementById("open-issues");
+    var open_issues_metrics = [{
+        id: 'usercommits', //TODO: not implemented in API
+        max: 1,
+        aggr: 'sum'
+    }];
+    var open_issues_conf = {
+        label: 'Open issues',
+        decimal: 0,
+        icon: 'octicon octicon-issue-opened',
+        iconbackground: 'rgb(205, 195, 10)'
+    };
+    var open_issues = new framework.widgets.CounterBox(open_issues_dom, open_issues_metrics, [context4rangeChart, userCtx], open_issues_conf);
+
+
+    // SOLVED ISSUES
+    var solved_issues_dom = document.getElementById("solved-issues");
+    var solved_issues_metrics = [{
+        id: 'usercommits', //TODO: not implemented in API
+        max: 1,
+        aggr: 'sum'
+    }];
+    var solved_issues_conf = {
+        label: 'Solved issues',
+        decimal: 0,
+        icon: 'octicon octicon-issue-closed',
+        iconbackground: 'rgb(104, 184, 40)'
+    };
+    var solved_issues = new framework.widgets.CounterBox(solved_issues_dom, solved_issues_metrics, [context4rangeChart, userCtx], solved_issues_conf);
+
+
+    // TOTAL PROJECTS
+    var total_projects_dom = document.getElementById("total-projects");
+    var total_projects_metrics = [{
+        id: 'userrepositories',
+        max: 1,
+        aggr: 'sum'
+    }];
+    var total_projects_conf = {
+        label: 'Total projects',
+        decimal: 0,
+        icon: 'octicon octicon-repo',
+        iconbackground: 'rgb(184, 40, 40)'
+    };
+    var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [context4rangeChart, userCtx], total_projects_conf);
+
+
+    // USER META INFO
+    framework.data.observe(['userinfo'], function(event){
+        if(event.event === 'loading') {
+            //TODO
+        } else if(event.event === 'data') {
+            var userinfo = event.data['userinfo'][0];
+
+            //Set data
+            document.getElementById('user-email').innerText = userinfo['email'];
+            document.getElementById('user-linkedin').innerText = userinfo['linkedin'];
+            document.getElementById('user-skype').innerText = userinfo['skype'];
+            document.getElementById('user-twitter').innerText = userinfo['twitter'];
+            document.getElementById('user-website').innerText = userinfo['website'];
+
+        }
+    }, [userCtx]);
+
+    //TEST PIECHART
+    /*var piechart_dom = document.getElementById("piechart");
+    var piechart_metrics = [
+        {
+            id: 'usercommits',
+            uid: 'u1',
+            max: 1,
+            aggr: 'avg'
+        },
+        {
+            id: 'usercommits',
+            uid: 'u2',
+            max: 1,
+            aggr: 'avg'
+        },
+        {
+            id: 'usercommits',
+            uid: 'u3',
+            max: 1,
+            aggr: 'avg'
+        },
+    ];
+    var piechart_configuration = {
+        labelFormat: "User: %uid%"
+    };
+    var piechart = new framework.widgets.PieChart(piechart_dom, piechart_metrics, [context4rangeChart], piechart_configuration);
+    */
+
+    // USER PROJECTS TABLE
+    var repoCtx = "repository-table-context";
+    var table_dom = document.getElementById("projects-table");
+    var table_metrics = ['userrangedrepolist'];
+    var table_configuration = {
+        columns: [
+            {
+                label: "Name",
+                property: "name"
+            },
+            {
+                label: "Show",
+                link: {
+                    icon: "fa fa-share-square-o", //or label
+                    href: "repo-dashboard",
+                    env: [
+                        {
+                            property: "repositoryid",
+                            as: "rid"
+                        }
+                    ]
+                },
+                width: "40px"
+            }
+        ],
+        updateContexts: [
+            {
+                id: repoCtx,
+                filter: [
+                    {
+                        property: "repositoryid",
+                        as: "rid"
+                    }
+                ]
+            }
+        ],
+        selectable: true,
+        maxRowsSelected: 6,
+        filterControl: true,
+        initialSelectedRows: 5
+    };
+
+    var table = new framework.widgets.Table(table_dom, table_metrics, [context4rangeChart, userCtx], table_configuration);
+
+    // HORIZONTAL CONTRIBUTION TO PROJECTS
+    var multibar_projects_dom = document.getElementById("projects-horizontal");
+    var multibar_projects_metrics = [{
+        id: 'usercommits',
+        max: 1
+    }];
+    var multibar_projects_configuration = {
+        labelFormat: "Commits for %rid%",
+        stacked: true,
+        showXAxis: false,
+        showControls: false,
+        yAxisTicks: 8
+    };
+    var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,
+            [context4rangeChart, userCtx, repoCtx], multibar_projects_configuration);
+
+    // COMMITS PER PROJECT AND USER
+    var user_project_commits_dom = document.getElementById("projects-lines");
+    var user_project_commits_metrics = [{
+        id: 'usercommits',
+        max: 0
+    }];
+    var user_project_commits_conf = {
+        xlabel: 'Date',
+        ylabel: 'Commits',
+        labelFormat: 'Commits %rid%'
+    };
+    var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
+            [context4rangeChart, userCtx, repoCtx], user_project_commits_conf);
+
 
 @stop

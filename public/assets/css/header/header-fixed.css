@@ -620,3 +620,15 @@ div#floatingRow .panel.panel-default {
 .page-body.light .infoBox span {
   color: #263C4A;
 }
+
+.page-body.light #headerleft a.logo img {
+	box-shadow: none;
+}
+
+.page-body.light #avatarbox {
+	box-shadow: none;
+}
+
+.page-body.light .headbutton {
+	box-shadow: none;
+}

@@ -629,6 +629,11 @@ div#floatingRow .panel.panel-default {
 	box-shadow: none;
 }
 
+.page-body.light #avatarbox .useravatar {
+	color: #FFF;
+}
+
 .page-body.light .headbutton {
 	box-shadow: none;
+	color: #FFF;
 }

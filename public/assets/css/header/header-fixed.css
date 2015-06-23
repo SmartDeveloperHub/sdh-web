@@ -614,6 +614,9 @@ div#floatingRow .panel.panel-default {
 }
 
 .page-body.light .infobar {
-	color: #263C4A;
 	background-color: #FFF
+}
+
+.page-body.light .infoBox span {
+  color: #263C4A;
 }

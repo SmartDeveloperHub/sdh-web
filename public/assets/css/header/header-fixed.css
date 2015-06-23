@@ -606,3 +606,14 @@ div#floatingRow .panel.panel-default {
 		margin-left: 1px;
 	}
 }
+
+/* light style */
+.page-body.light .header-fixed {
+	color: #263C4A;
+	background-color: #FFF
+}
+
+.page-body.light .infobar {
+	color: #263C4A;
+	background-color: #FFF
+}

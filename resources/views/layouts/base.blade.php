@@ -10,7 +10,7 @@
         @yield('css')
         <script data-main="assets/js/dashboardLoader" src="assets/js/requirejs/require.js"></script>
     </head>
-    <body class="page-body">
+    <body class="page-body light">
     @yield('header')
     @yield('body')
     @yield('scripts')

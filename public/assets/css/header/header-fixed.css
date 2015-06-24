@@ -333,6 +333,7 @@ div#timeBar {
 	z-index: 200;
 	white-space: nowrap;
 	height: 25px;
+	background-color: #2B404E;
 }
 
 div#timeBar i {
@@ -381,7 +382,7 @@ div#timeBarDown {
 }
 
 div#timeControler {
-	background-image: url("../../images/mini_down_bar.png");
+	background-image: url("../../images/mini_down_bar_dark.png");
 	background-repeat: repeat-x;
     text-align: center;
     cursor: pointer;
@@ -457,7 +458,7 @@ div#floatingRow .panel.panel-default {
     display: inline-block;
     width: 320px;
     height: 25px;
-    background-image: url("../../images/center_down_bar.png");
+    background-image: url("../../images/center_down_bar_dark.png");
 }
 
 #infobar {
@@ -613,12 +614,16 @@ div#floatingRow .panel.panel-default {
 	background-color: #FFF
 }
 
-.page-body.light .infobar {
+.page-body.light #timeBar {
 	background-color: #FFF
 }
 
 .page-body.light .infoBox span {
-  color: #263C4A;
+	color: #263C4A;
+}
+
+.page-body.light #timeBarIcon {
+	color: #292F33;
 }
 
 .page-body.light #headerleft a.logo img {
@@ -636,4 +641,20 @@ div#floatingRow .panel.panel-default {
 .page-body.light .headbutton {
 	box-shadow: none;
 	color: #FFF;
+}
+
+.page-body.light .settings-pane .panel-body {
+	background-color: rgba(255, 255, 255, 0.92);
+}
+
+.page-body.light #fixed-chart .nvd3 .nv-brushBackground rect {
+  	fill: rgba(255, 255, 255, 0.92);
+}
+
+.page-body.light div#timeControler {
+	background-image: url("../../images/mini_down_bar_light.png");
+}
+
+.page-body.light .timeMidBox {
+    background-image: url("../../images/center_down_bar_light.png");
 }

@@ -9,7 +9,9 @@
     "sdh-framework/framework.widget.horizontalbar",
     "sdh-framework/framework.widget.table",
     "sdh-framework/framework.widget.linesChart",
-    "sdh-framework/framework.widget.rangeNv"
+    "sdh-framework/framework.widget.rangeNv",
+    "sdh-framework/framework.widget.radarchart",
+    "css!assets/css/dashboards/user-dashboard"
     ]
 @stop
 
@@ -22,44 +24,62 @@
     </div>
     <div class="row">
         <div class="col-sm-5">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div>Email: <span id="user-email"></span></div>
-                    <div>Web: <span id="user-website"></span></div>
-                </div>
-                <div class="col-sm-6">
-                    <div>Skype: <span id="user-skype"></span></div>
-                    <div>Linkedin: <span id="user-linkedin"></span></div>
-                    <div>Twitter: <span id="user-twitter"></span></div>
+            <div class="com-widget widget static-info-widget">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Email: <span id="user-email"></span></label>
+                        <label>Web: <span id="user-website"></span></label>
+                    </div>
+                    <div class="col-sm-6 ">
+                        <label>Skype: <span id="user-skype"></span></label>
+                        <label>Linkedin: <span id="user-linkedin"></span></label>
+                        <label>Twitter: <span id="user-twitter"></span></label>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
-            <div>Favourite language: <span id="user-favourite-lang"></span></div>
+            <div class="com-widget com-widget widget static-info-widget">
+                <label>Favourite language: <span id="user-favourite-lang"></span></label>
+            </div>
         </div>
         <div class="col-sm-4">
-            <div>User since: <span id="user-since"></span></div>
-            <div>First commit: <span id="user-first-commit"></span></div>
-            <div>Last commit: <span id="user-last-commit"></span></div>
+            <div class="com-widget com-widget widget static-info-widget">
+                <label>User since: <span id="user-since"></span></label>
+                <label>First commit: <span id="user-first-commit"></span></label>
+                <label>Last commit: <span id="user-last-commit"></span></label>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div id="skills-star" class="col-sm-5"></div>
-        <div id="skills-lines" class="col-sm-7"></div>
+        <div class="col-sm-5">
+            <div id="skills-star" class="widget"></div>
+        </div>
+        <div class="col-sm-7">
+            <div id="skills-lines" class="widget"></div>
+        </div>
     </div>
     <div class="row">
         <div class="col-sm-9">
             <div class="row">
-                <div id="projects-horizontal" class="col"></div>
+                <div class="col-sm-12">
+                    <div id="projects-horizontal" class="widget"></div>
+                </div>
             </div>
             <div class="row">
-                <div id="projects-lines" class="col"></div>
+                <div class="col-sm-12">
+                    <div id="projects-lines" class="widget"></div>
+                </div>
             </div>
             <div class="row">
-                <div id="projects-languages" class="col"></div>
+                <div class="col-sm-12">
+                    <div id="projects-languages" class="widget"></div>
+                </div>
             </div>
         </div>
-        <div id="projects-table" class="col-sm-3"></div>
+        <div class="col-sm-3">
+            <div id="projects-table" class="widget"></div>
+        </div>
     </div>
 @stop
 
@@ -166,7 +186,7 @@
         if(event.event === 'loading') {
             //TODO
         } else if(event.event === 'data') {
-            var userinfo = event.data['userinfo'][0];
+            var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
 
             //Set data
             document.getElementById('user-email').innerText = userinfo['email'];
@@ -174,6 +194,10 @@
             document.getElementById('user-skype').innerText = userinfo['skype'];
             document.getElementById('user-twitter').innerText = userinfo['twitter'];
             document.getElementById('user-website').innerText = userinfo['website'];
+            document.getElementById('user-since').innerText = new Date(userinfo['register']);
+            document.getElementById('user-first-commit').innerText = new Date(userinfo['firstcommit']);
+            document.getElementById('user-last-commit').innerText = new Date(userinfo['lastcommit']);
+
 
         }
     }, [userCtx]);
@@ -205,6 +229,51 @@
     };
     var piechart = new framework.widgets.PieChart(piechart_dom, piechart_metrics, [context4rangeChart], piechart_configuration);
     */
+
+    // SKILLS STAR CHART
+    var skills_star_dom = document.getElementById("skills-star");
+    var skills_star_metrics = [
+        {
+            id: 'usercommits', //TODO: not implemented in API
+            max: 1
+        },
+        {
+            id: 'usercommits', //TODO: not implemented in API
+            max: 1
+        },
+        {
+            id: 'usercommits', //TODO: not implemented in API
+            max: 1
+        }];
+    var skills_star_configuration = {
+        labels: ["Speed", "Collaboration", "Quality"]
+    };
+    var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
+            [context4rangeChart, userCtx], skills_star_configuration);
+
+    // SKILLS LINES CHART
+    var skills_lines_dom = document.getElementById("skills-lines");
+    var skills_lines_metrics = [
+        {
+            id: 'usercommits', //TODO: not implemented in API
+            max: 0
+        },
+        {
+            id: 'usercommits', //TODO: not implemented in API
+            max: 0
+        },
+        {
+            id: 'usercommits', //TODO: not implemented in API
+            max: 0
+        }];
+    var skills_lines_configuration = {
+        xlabel: 'Date',
+        ylabel: 'Score',
+        labelFormat: '?????'
+    };
+    var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,
+            [context4rangeChart, userCtx], skills_lines_configuration);
+
 
     // USER PROJECTS TABLE
     var repoCtx = "repository-table-context";
@@ -247,21 +316,24 @@
         filterControl: true,
         initialSelectedRows: 5
     };
-
     var table = new framework.widgets.Table(table_dom, table_metrics, [context4rangeChart, userCtx], table_configuration);
 
     // HORIZONTAL CONTRIBUTION TO PROJECTS
     var multibar_projects_dom = document.getElementById("projects-horizontal");
     var multibar_projects_metrics = [{
-        id: 'usercommits',
+        id: 'userrepositorycommits',
         max: 1
     }];
     var multibar_projects_configuration = {
-        labelFormat: "Commits for %rid%",
+        labelFormat: "Commits for %data.info.rid.name%",
         stacked: true,
         showXAxis: false,
         showControls: false,
-        yAxisTicks: 8
+        yAxisTicks: 8,
+        total: {
+            id: 'usercommits',
+            max: 1
+        }
     };
     var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,
             [context4rangeChart, userCtx, repoCtx], multibar_projects_configuration);
@@ -269,13 +341,13 @@
     // COMMITS PER PROJECT AND USER
     var user_project_commits_dom = document.getElementById("projects-lines");
     var user_project_commits_metrics = [{
-        id: 'usercommits',
+        id: 'userrepositorycommits',
         max: 0
     }];
     var user_project_commits_conf = {
         xlabel: 'Date',
         ylabel: 'Commits',
-        labelFormat: 'Commits %rid%'
+        labelFormat: 'Commits for %data.info.rid.name%'
     };
     var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
             [context4rangeChart, userCtx, repoCtx], user_project_commits_conf);

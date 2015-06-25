@@ -1,25 +1,51 @@
-.panel .panel-heading {
-    font-size: 28px;
+.widget{
+    background-color: #ffffff;
+    display: block;
+    margin-bottom: 20px;
+    padding: 12px;
+    height: 100%;
+}
+
+.table-search{
+    width: 100%;
+    padding: 15px 10px;
+    border: solid #dddddd 2px;
+}
+.table-search label {
+    width: 100%;
+}
+.table-search .dataTables_filter{
+    width: 100%;
+    float: none !important;
+}
+.dataTables_filter input[type="search"] {
+    margin-left: 0 !important;
+    width: 100%;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+.dataTables_filter input[type="search"]:focus {
+    outline-style: none;
+}
+.static-info-widget{
+    min-height: 100px;
+}
+
+.static-info-widget label{
+    display: block;
+}
+
+.static-info-widget label span{
     font-weight: normal;
-    color: #3e3f3f;
+    color: rgba(100,100,100,1);
 }
 
-.panel-body-heatchart {
-	max-height: 280px;
-	text-align: top;
+table.dataTable tbody tr.selected{
+    background-color: #f0f0f0 !important;
 }
-
-.heatmap {
-	vertical-align: top;
-	display: block;
+#skills-star{
+    text-align: center;
 }
-#issues-chart, #languages-chart{
-	height: 350px;
+#skills-star canvas{
+    margin-bottom: -44px;
 }
-
- .nvd3.nv-pie.nv-chart-donut1 .nv-pie-title {
-	font-size: 45px;
-	opacity: 0.4;
-	fill: rgba(224, 116, 76, 0.91);
-}
-

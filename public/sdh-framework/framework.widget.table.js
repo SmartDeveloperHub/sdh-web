@@ -17,9 +17,6 @@
       See the License for the specific language governing permissions and
       limitations under the License.
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-      contributors: Alejandro Vera (alejandro.vera@centeropenmiddleware.com ),
-                    Carlos Blanco. (carlos.blanco@centeropenmiddleware.com)
-    #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
 (function() {
@@ -67,6 +64,10 @@
                 type: 'number',
                 default: 1
             },
+            initialSelectedRows: {
+                type: 'number',
+                default: 0
+            },
             updateContexts: {
                 type: 'object',
                 default: null
@@ -99,6 +100,7 @@
      *       ~ selectable: boolean - If true, the rows of this table can be selected. When selected, the contexts are
      *          are updated with the data updateContexts indicates.
      *       ~ maxRowsSelected: number - Maximum number of rows that can be selected at the same time.
+     *       ~ initialSelectedRows: number - Number of rows that must be selected at the beginning. Default: 0.
      *       ~ updateContexts: array - Array of objects that configure how to update the contexts. It must contain an id with
      *          the id of the context and a filter array with the data to send through the context update.
      *          Each filter must contain a 'property' property with the name of the property of the data retrieved from
@@ -219,6 +221,11 @@
 
             //Add click listener for links
             this.tableDom.on( 'click', '.dashboardLink', this, dashboardLinkClickHandler);
+
+            //Handle clicks in rows to select them or not
+            if(this.configuration.selectable) {
+                this.tableDom.on('click', 'tbody tr', this, rowClickHandler);
+            }
         }
 
         var normalizedData = getNormalizedData.call(this,framework_data);
@@ -270,6 +277,11 @@
 
         }
 
+        //Destroy the table it already exists
+        if(this.table != null) {
+            this.table.destroy();
+        }
+
         //DataTable object
         this.table = this.tableDom.DataTable({
             data: normalizedData,
@@ -277,11 +289,15 @@
             columns: columns
         });
 
-        //The rows can be selected
-        if(this.configuration.selectable) {
-            this.tableDom.on( 'click', 'tbody tr', this, rowClickHandler);
-        }
+        // If some rows must be selected from the beginning
+        if(this.configuration.selectable && this.configuration.initialSelectedRows > 0) {
 
+            //Select the first n rows
+            this.table.$('tr').slice(0, this.configuration.initialSelectedRows).addClass('selected');
+
+            //Update the contexts with the new selected rows
+            updateContexts.call(this);
+        }
 
     };
 
@@ -297,7 +313,7 @@
         this.tableDom.off();
 
         //Destroy DataTable
-        this.table.destroy()
+        this.table.destroy();
 
         //Clear DOM
         this.tableDom.empty();
@@ -365,7 +381,7 @@
      * @param e
      */
     var rowClickHandler = function rowClickHandler(e) {
-
+        e.stopImmediatePropagation();
         var widget = e.data;
 
         if ( $(this).hasClass('selected') ) { //It is already selected
@@ -380,8 +396,18 @@
 
         }
 
+        // Update contexts with the selected rows
+        updateContexts.call(widget);
+
+    };
+
+    /**
+     * Update the contexts with the selected rows
+     */
+    var updateContexts = function updateContexts(){
+
         // Update contexts
-        var contexts = widget.configuration.updateContexts;
+        var contexts = this.configuration.updateContexts;
         if(contexts != null) {
 
             for(var i in contexts) {
@@ -405,12 +431,12 @@
                             }
 
                             //Selected items
-                            var selected = widget.table.$('tr.selected');
+                            var selected = this.table.$('tr.selected');
 
                             //Calculate the data to send for all the selected rows
                             for(var s = 0, len = selected.length; s < len; ++s) {
 
-                                var selectedData = widget.table.row(selected[s]).data();
+                                var selectedData = this.table.row(selected[s]).data();
                                 var propertyValue = selectedData[property];
 
                                 if(property != null && typeof propertyValue !== 'undefined') {
@@ -475,23 +501,7 @@
      */
     var getNormalizedData = function getNormalizedData(framework_data) {
 
-        var values = [];
-        var labelVariable = /%\w+%/g; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
-
-        for(var metricId in framework_data) {
-
-            for(var m = 0; m < framework_data[metricId].length; ++m) {
-
-                var metricData = framework_data[metricId][m];
-
-                for(var d = 0; d < metricData.length; ++d) {
-                    values.push(metricData[d]);
-                }
-
-            }
-        }
-
-        return values;
+        return this.extractAll(framework_data);
 
     };
 

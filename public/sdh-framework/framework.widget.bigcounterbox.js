@@ -17,9 +17,6 @@
       See the License for the specific language governing permissions and
       limitations under the License.
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-      contributors: Alejandro Vera (alejandro.vera@centeropenmiddleware.com ),
-                    Carlos Blanco. (carlos.blanco@centeropenmiddleware.com)
-    #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
 (function() {
@@ -224,8 +221,8 @@
 
                 for(var m in framework_data[metricId]) {
 
-                    for(var i in framework_data[metricId][m]['values']) {
-                        values.push(framework_data[metricId][m]['values'][i]);
+                    for(var i in framework_data[metricId][m]['data']['values']) {
+                        values.push(framework_data[metricId][m]['data']['values'][i]);
 
                         if(values.length == 2) {
                             return values;

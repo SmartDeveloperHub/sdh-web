@@ -17,9 +17,6 @@
       See the License for the specific language governing permissions and
       limitations under the License.
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-      contributors: Alejandro Vera (alejandro.vera@centeropenmiddleware.com ),
-                    Carlos Blanco. (carlos.blanco@centeropenmiddleware.com)
-    #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
 (function() {
@@ -40,8 +37,8 @@
                 default: 240
             },
             color: {
-                type: 'string',
-                default: nv.utils.defaultColor()
+                type: 'object',
+                default: null
             },
             stacked: {
                 type: 'boolean',
@@ -78,6 +75,10 @@
             yAxisTicks: {
                 type: 'number',
                 default: 5
+            },
+            total: {
+                type: 'object',
+                default: null
             }
 
         };
@@ -99,13 +100,9 @@
      *   configuration: additional chart configuration:
      *      {
      *       ~ height: number - Height of the widget.
-     *       ~ color: array or function - Colors to use for the different data. If an array is given, it is converted to a function automatically.
+     *       ~ color: array - Array of colors to use for the different data.
      *              Example:
      *                  chart.color(["#FF0000","#00FF00","#0000FF"])
-     *                  chart.color(function (d, i) {
-     *                      var colors = d3.scale.category20().range().slice(10);
-     *                      return colors[i % colors.length-1];
-     *                  })
      *       ~ stacked: boolean - Whether to display the different data stacked or not.
      *       ~ groupSpacing: number - The padding between bar groups.
      *       ~ duration: number - Duration in ms to take when updating chart. For things like bar charts, each bar can
@@ -119,6 +116,8 @@
      *         surrounding their names with percentages. The metric name can also be accessed with %mid%. For example,
      *         the following is a valid labelFormat: "User: %uid%".
      *       ~ yAxisTicks: number - Number of ticks of the Y axis.
+     *       ~ total: object - Metric object to use as the total of the horizontal bar. I will make appear another
+     *         segment called 'Others' with the difference between the total value and the sum of the displayed segments.
      *      }
      */
     var HorizontalBar = function HorizontalBar(element, metrics, contextId, configuration) {
@@ -157,6 +156,10 @@
         this.svg = this.element.children("svg");
         this.svg.get(0).style.minHeight = configuration.height;
 
+        if(this.configuration.total != null) {
+            metrics.push(this.configuration.total);
+        }
+
         this.observeCallback = function(event){
 
             if(event.event === 'loading') {
@@ -180,10 +183,11 @@
         //Update data
         if(this.chart != null) {
             d3.select(this.svg.get(0)).datum(normalizedData);
+            this.chart.color(this.generateColors(framework_data, this.configuration.color));
             this.chart.update();
 
         } else { // Paint it for first time
-            paint.call(this, normalizedData);
+            paint.call(this, normalizedData, framework_data);
         }
 
     };
@@ -205,19 +209,28 @@
     // PRIVATE METHODS - - - - - - - - - - - - - - - - - - - - - -
 
     //Function that returns the value to replace with the label variables
-    var replacer = function(metricId, metricData, str) {
+    var replacer = function(resourceId, resource, str) {
 
         //Remove the initial an trailing '%' of the string
         str = str.substring(1, str.length-1);
 
         //Check if it is a parameter an return its value
-        if(str === "mid") {
-            return metricId;
-        } else if(metricData['request']['params'][str] != null) {
-            return metricData['request']['params'][str];
+        if(str === "resourceId") { //Special command to indicate the name of the resource
+            return resourceId;
+
+        } else { // Obtain its value through the object given the path
+
+            var path = str.split(".");
+            var subObject = resource;
+
+            for(var p = 0; p < path.length; ++p) {
+                if((subObject = subObject[path[p]]) == null)
+                    return "";
+            }
+
+            return subObject.toString();
         }
 
-        return "";
     };
 
 
@@ -229,16 +242,17 @@
     var getNormalizedData = function getNormalizedData(framework_data) {
 
         var values = [];
-        var labelVariable = /%\w+%/g; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
+        var labelVariable = /%(\w|\.)+%/g; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
 
         for(var metricId in framework_data) {
 
             for(var m in framework_data[metricId]){
 
-                var metricData = framework_data[metricId][m];
+                var metric = framework_data[metricId][m];
+                var metricData = metric['data'];
 
                 //Create a replacer for this metric
-                var metricReplacer = replacer.bind(null, metricId, metricData);
+                var metricReplacer = replacer.bind(null, metricId, metric);
 
                 //Generate the label by replacing the variables
                 var label = this.configuration.labelFormat.replace(labelVariable,metricReplacer);
@@ -268,18 +282,47 @@
             }
         }
 
+        // If total is used, then we have to make some arrangements with the last value
+        if(this.configuration.total != null) {
+            var totalData = values.pop();
+
+            //Calculate the total all the values shown
+            for(var v = 0; v < totalData['values'].length; ++v) {
+
+                var total = totalData['values'][v]['y'];
+
+                // The sum f the displayed values
+                var shownSum = 0;
+                for(var d = 0; d < values.length; ++d) {
+                    shownSum += values[d]['values'][v]['y'];
+                }
+
+                //Override the value with the difference between the total and the sum of the shown
+                totalData['values'][v]['y'] = total - shownSum;
+                if(totalData['values'][v]['y'] < 0 ) {
+                    totalData['values'][v]['y'] = 20; //TODO: temporal while still have made up values
+                }
+
+            }
+
+            totalData.key = "Others";
+
+            //Now add it again
+            values.push(totalData);
+        }
+
         return values;
 
     };
 
-    var paint = function paint(data) {
+    var paint = function paint(data, framework_data) {
 
         nv.addGraph(function() {
             var chart = nv.models.multiBarHorizontalChart()
                 .x(function(d) { return d.x; })
                 .y(function(d) { return d.y; })
                 .height(this.configuration.height)
-                .color(this.configuration.color)
+                .color(this.generateColors(framework_data, this.configuration.color))
                 .stacked(this.configuration.stacked)
                 .groupSpacing(this.configuration.groupSpacing)
                 .duration(this.configuration.duration)

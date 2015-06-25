@@ -17,9 +17,6 @@
       See the License for the specific language governing permissions and
       limitations under the License.
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-      contributors: Alejandro Vera (alejandro.vera@centeropenmiddleware.com ),
-                    Carlos Blanco. (carlos.blanco@centeropenmiddleware.com)
-    #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
 (function() {
@@ -158,8 +155,8 @@
             //TODO: I dont like this, but till now there is not any other way to get static data...
             var statInfo = [
                 // API static Information description
-                { "id" : "userinfo", "path" : "/users/{uid}", params: {'uid': {name: 'uid',in: 'query',required: true}}, "description" : "User Information" },
-                { "id" : "repoinfo", "path" : "/repository/{rid}", params: {'rid': {name: 'rid',in: 'query',required: true}}, "description" : "Repository Information" },
+                { "id" : "userinfo", "path" : "/users/{uid}", params: {'uid': {name: 'uid',in: 'path',required: true}}, "description" : "User Information" },
+                { "id" : "repoinfo", "path" : "/repository/{rid}", params: {'rid': {name: 'rid',in: 'path',required: true}}, "description" : "Repository Information" },
                 { "id" : "orginfo", "path" : "/", "description" : "Organization Information" },
                 { "id" : "userlist", "path" : "/users/", "description" : "Users List" },
                 { "id" : "repolist", "path" : "/repositories/", "description" : "Repository List" },
@@ -228,7 +225,7 @@
                                         in: parameters[i]['in'],
                                         required: true
                                     };
-                                } else {
+                                } else if(resourceInfo['optional'].indexOf(paramName) !== -1) {
                                     _resourcesInfo[resourceId]['optionalParams'][paramName] = {
                                         name: paramName,
                                         in: parameters[i]['in'],
@@ -361,11 +358,19 @@
                 allData[resourceId] = [];
             }
 
-            //Add the request info to the data received from the api
-            data['request'] = {
-                params: params
+            //Add the framework info to the data received from the api
+            var resUID = resourceHash(resourceId, params);
+            var info = {
+                UID: resUID,
+                request: {
+                    params: params
+                }
             };
-            allData[resourceId].push(data);
+
+            allData[resourceId].push({
+                data: data,
+                info: info
+            });
 
             if(++completedRequests === requests.length) {
                 sendDataEventToCallback(allData, callback);
@@ -607,6 +612,35 @@
             }
         }
         return obj1;
+    };
+
+    /**
+     * Generates a hashcode given an string
+     * @param str
+     * @returns {number} 32 bit integer
+     */
+    var hashCode = function hashCode(str) {
+        var hash = 0, i, chr, len;
+        if (str.length == 0) return hash;
+        for (i = 0, len = str.length; i < len; i++) {
+            chr   = str.charCodeAt(i);
+            hash  = ((hash << 5) - hash) + chr;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    };
+
+
+    var resourceHash = function resourceHash(resourceId, requestParams){
+
+        var str = resourceId;
+        var hasheable = "";
+        for(var i in _resourcesInfo[resourceId]['requiredParams']){
+            var param = _resourcesInfo[resourceId]['requiredParams'][i]['name'];
+            hasheable += param  + requestParams[param] + ";"
+        }
+
+        return resourceId + "#" + hashCode(hasheable).toString(16);
     };
 
     /**
@@ -940,6 +974,12 @@
         //Update values of the context (if null, remove it)
         var hasChanged = false;
         var changes = {};
+
+        var setChange = function(name, newValue) {
+            hasChanged = true;
+            changes[name] = newValue;
+        };
+
         for(var name in contextData) {
 
             //Check if that parameter exists. If not, ignore it
@@ -951,16 +991,28 @@
             var newValue = contextData[name];
             var oldValue = _resourcesContexts[contextId]['data'][name];
 
-            //Save the changes
-            if(newValue != oldValue) {
-                hasChanged = true;
-                changes[name] = newValue;
+            // Save the changes
+            if(newValue instanceof Array && oldValue instanceof Array ) { //Check if multiparameter arrays are identical
+
+                if(newValue.length != oldValue.length) {
+                    setChange(name, newValue);
+                }
+
+                //Check all the values inside the array
+                for(var i = 0; i < newValue.length; ++i) {
+                    if(newValue[i] != oldValue[i]){
+                        setChange(name, newValue);
+                        break;
+                    }
+                }
+            } else if(newValue != oldValue) {
+                    setChange(name, newValue);
             }
 
             //Change the context
-            if(newValue != null && newValue != oldValue) {
+            if(newValue != null && newValue != oldValue && (!(newValue instanceof Array) || newValue.length > 0)) {
                 _resourcesContexts[contextId]['data'][name] = newValue;
-            } else if(newValue == null && oldValue != null) {
+            } else if((newValue == null && oldValue != null) || (newValue instanceof Array && newValue.length === 0)) {
                 delete _resourcesContexts[contextId]['data'][name];
             }
         }

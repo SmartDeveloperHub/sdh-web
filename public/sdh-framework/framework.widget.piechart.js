@@ -17,9 +17,6 @@
       See the License for the specific language governing permissions and
       limitations under the License.
     #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-      contributors: Alejandro Vera (alejandro.vera@centeropenmiddleware.com ),
-                    Carlos Blanco. (carlos.blanco@centeropenmiddleware.com)
-    #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
 (function() {
@@ -137,10 +134,11 @@
         //Update data
         if(this.svg != null) {
             d3.select(this.svg.get(0)).datum(normalizedData);
+            this.chart.color(this.generateColors(framework_data));
             this.chart.update();
 
         } else { // Paint it for first time
-            paint.call(this, normalizedData);
+            paint.call(this, normalizedData, framework_data);
         }
 
     };
@@ -163,19 +161,28 @@
     // PRIVATE METHODS - - - - - - - - - - - - - - - - - - - - - -
 
     //Function that returns the value to replace with the label variables
-    var replacer = function(metricId, metricData, str) {
+    var replacer = function(resourceId, resource, str) {
 
         //Remove the initial an trailing '%' of the string
         str = str.substring(1, str.length-1);
 
         //Check if it is a parameter an return its value
-        if(str === "mid") {
-            return metricId;
-        } else if(metricData['request']['params'][str] != null) {
-            return metricData['request']['params'][str];
+        if(str === "resourceId") { //Special command to indicate the name of the resource
+            return resourceId;
+
+        } else { // Obtain its value through the object given the path
+
+            var path = str.split(".");
+            var subObject = resource;
+
+            for(var p = 0; p < path.length; ++p) {
+                if((subObject = subObject[path[p]]) == null)
+                    return "";
+            }
+
+            return subObject.toString();
         }
 
-        return "";
     };
 
     /**
@@ -186,17 +193,17 @@
     var getNormalizedData = function getNormalizedData(framework_data) {
 
         var values = [];
-        var labelVariable = /%\w+%/g; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
+        var labelVariable = /%(\w|\.)+%/g; //Regex that matches all the "variables" of the label such as %mid%, %pid%...
 
         for(var metricId in framework_data) {
 
-            // TODO i<.length
             for(var m in framework_data[metricId]){
 
-                var metricData = framework_data[metricId][m];
+                var metric = framework_data[metricId][m];
+                var metricData = framework_data[metricId][m]['data'];
 
                 //Create a replacer for this metric
-                var metricReplacer = replacer.bind(null, metricId, metricData);
+                var metricReplacer = replacer.bind(null, metricId, metric);
 
                 //Generate the label by replacing the variables
                 var label = this.configuration.labelFormat.replace(labelVariable,metricReplacer);
@@ -215,7 +222,7 @@
 
     };
 
-    var paint = function paint(data) {
+    var paint = function paint(data, framework_data) {
 
         this.element.append('<svg class="blurable"></svg>');
         this.svg = this.element.children("svg");
@@ -243,7 +250,8 @@
                     .showLabels(this.configuration.showLabels)
                     .donutRatio(this.configuration.donutRatio)
                     .duration(this.configuration.duration)
-                    .labelsOutside(this.configuration.labelsOutside);
+                    .labelsOutside(this.configuration.labelsOutside)
+                    .color(this.generateColors(framework_data));
 
                 d3.select(this.svg.get(0))
                     .datum(data) //TODO

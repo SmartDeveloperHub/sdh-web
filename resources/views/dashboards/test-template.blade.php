@@ -40,13 +40,21 @@
         lightTheme = true;
         $('body').addClass('light');
     };
-    var setLDarkTheme = function setLDarkTheme() {
+    var setDarkTheme = function setDarkTheme() {
         lightTheme = false;
         $('body').removeClass('light');
     };
+    var changeTheme = function changeTheme() {
+        if (lightTheme == false) {
+            setLightTheme();
+        } else {
+            setDarkTheme();
+        }
+    };
 
     // light theme test
-    setLightTheme();
+    //setLightTheme();
+    $(".headbutton.mail").click(changeTheme);
 
     context4rangeChart = "context4rangeChart";
     //TEST HEATMAP

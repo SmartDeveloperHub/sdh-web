@@ -34,6 +34,20 @@
 
 @section('script')
 
+    // light or dark theme?. Default is dark
+    var lightTheme = false;
+    var setLightTheme = function setLightTheme() {
+        lightTheme = true;
+        $('body').addClass('light');
+    };
+    var setLDarkTheme = function setLDarkTheme() {
+        lightTheme = false;
+        $('body').removeClass('light');
+    };
+
+    // light theme test
+    setLightTheme();
+
     context4rangeChart = "context4rangeChart";
     //TEST HEATMAP
     var heatmap_dom = document.getElementById("heatmap1");
@@ -43,7 +57,6 @@
         max: 1000
     }];
     var heatmap = new framework.widgets.Heatmap(heatmap_dom, heatmap_metrics, [context4rangeChart], null);
-
 
     //TEST PIECHART
     var piechart_dom = document.getElementById("piechart");
@@ -99,7 +112,7 @@
     };
     var piechart2 = new framework.widgets.PieChart(piechart_dom, piechart_metrics, [context4rangeChart], piechart_configuration);
 
-//TEST PIECHART3
+    //TEST PIECHART3
     var piechart_dom = document.getElementById("piechart3");
     var piechart_metrics = [
         {
@@ -138,16 +151,18 @@
     ];
     var rangeNv_configuration = {
         ownContext: context4rangeChart,
-        labelFormat: "Total Commits",
         isArea: true,
         showLegend: false,
         interpolate: 'monotone',
         showFocus: false,
         height : 140,
         duration: 500,
-        axisColor: "#BFE5E3",
-        colors: ["#FFC10E"]
+        colors: ["#FF0E0E"]
     };
+    if (!lightTheme) {
+        rangeNv_configuration['axisColor'] = "#BFE5E3";
+        rangeNv_configuration['colors'] = ["#FFC10E"];
+    }
     var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, null, rangeNv_configuration);
 
 @stop

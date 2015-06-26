@@ -63,7 +63,7 @@
     </header>
     <div class="settings-pane">
         <div id="timeBar">
-            <div id="infobar">
+            <div class="infobar">
                 <div class="infoBox timeFrom">
                     <span class= "fa-calendar"></span>
                     <span id="fromLabel"></span>

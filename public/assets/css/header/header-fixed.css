@@ -24,10 +24,7 @@
     margin: 0;
     z-index: 101;
     min-height: 0px;
-    -webkit-box-shadow: 0 0px 1px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 0 0px 1px rgba(0, 0, 0, 0.15);
-    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.15);
-    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-family: "Roboto";
     color: #EDEDED;
 	box-sizing: border-box;
 	top:0px;
@@ -447,6 +444,7 @@ div#floatingRow .panel.panel-default {
 }
 
 .settings-pane {
+	font-family: "Roboto";
     top: 81px;
     color: #FFF;
     height: 49px;

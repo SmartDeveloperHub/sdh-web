@@ -53,7 +53,7 @@
     };
 
     // light theme test
-    //setLightTheme();
+    setLightTheme();
     $(".headbutton.mail").click(changeTheme);
 
     context4rangeChart = "context4rangeChart";

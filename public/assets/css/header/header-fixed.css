@@ -32,10 +32,7 @@
 	transition:all 0.3s;
 	width: 100%;
 	padding: 10px 12px;
-	height: 80px;
-    -webkit-box-shadow: 0px 0px 2px 2px #00222F;
-    -moz-box-shadow: 0px 0px 2px 2px #00222F;
-    box-shadow: 0px 0px 2px 2px #00222F;
+	height: 81px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -182,7 +179,7 @@
 #htitle {
 	display: block;
 	font-size: 29px;
-	line-height: 27px;
+	line-height: 38px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
@@ -202,28 +199,12 @@
     display: inline-block;
 }
 
-#headerleft a.logo img {
-	margin: -2px 20px 2px 3px;
-	width: 64px;
-    border-radius: 40px;
-    box-shadow: 0px 0px 5px 1px #212121;
-}
-
-#headerleft .logotextbox {
-    display: inline-block;
-    width: 110px;
-    vertical-align: middle;
-	font-size: 17px;
-	line-height: 20px;
-	white-space: normal;
-}
-
-#headerleft .logotextbox2 {
-    display: none;
-    width: 110px;
-    vertical-align: middle;
-	font-size: 17px;
-	line-height: 20px;
+#myLogo {
+	background-image: url("../../images/sdh_400ppp_RGB.png");
+	margin: -2px 20px 2px 10px;
+	width: 164px;
+	height: 64px;
+    background-size: contain;
 }
 
 .header-first-bar{
@@ -235,7 +216,7 @@
 /* Fixed version of the header */
 body.fixed .header-fixed {
 	padding: 10px 12px;
-	height: 40px;
+	height: 41px;
 	position: fixed;
 	width: 100%;
 	top: 0;
@@ -272,21 +253,11 @@ body.fixed #htitle {
 	line-height: 25px;
 }
 
-body.fixed #headerleft a.logo img {
-	margin: -2px 20px 2px 20px;
+body.fixed #myLogo {
+	margin: -2px 20px 2px 35px;
 	width: 26px;
-}
-
-body.fixed #headerleft .logotextbox {
-	font-size: 17px;
-	line-height: 20px;
-	display: none;
-}
-
-body.fixed #headerleft .logotextbox2 {
-	font-size: 20px;
-	line-height: 20px;
-	display: inline-block;
+	height: 26px;
+	background-size: cover;
 }
 
 body.fixed #usernick {
@@ -535,17 +506,12 @@ div#floatingRow .panel.panel-default {
  
 /* Landscape phone to portrait tablet */
 @media all and (max-width: 768px) {
-	#headerleft a.logo img {
+	#myLogo {
 		width: 56px;
+		height: 56px;
 		margin-top: 1px;
-	}
-	#headerleft .logotextbox {
-  		display: none;
-	}
-	#headerleft .logotextbox2 {
-	  	display: inline-block;
-	    font-size: 19px;
-	    margin-left: -13px;
+		background-size: cover;
+		margin-left: 10px;
 	}
 	#htitle {
 		display: block;
@@ -580,9 +546,10 @@ div#floatingRow .panel.panel-default {
 	#userinfobox{
 		margin-top: 16px;
 	}
-	body.fixed #headerleft a.logo img {
-		margin: -2px 20px 2px 20px;
+	body.fixed #myLogo {
+		margin: -2px 20px 2px 13px;
 		width: 26px;
+		height: 26px;
 	}
 	body.fixed #usernick {
 		font-size: 11px;
@@ -591,9 +558,6 @@ div#floatingRow .panel.panel-default {
  
 /* Landscape phones and down */
 @media (max-width: 480px) {
-	#headerleft .logotextbox2, body.fixed #headerleft .logotextbox2 {
-		display: none;
-	}
 	body.fixed #buttonbox {
 		margin-top: -1px;
 		margin-right: -7px;
@@ -609,7 +573,7 @@ div#floatingRow .panel.panel-default {
 		margin-left: 5px;
 		margin-right: -6px;
 	}
-	body.fixed #headerleft a.logo img {
+	body.fixed #myLogo {
 		margin: -2px 14px 2px 10px;
 	}
 	body.fixed #htitle {
@@ -645,7 +609,7 @@ div#floatingRow .panel.panel-default {
 	color: #292F33;
 }
 
-.page-body.light #headerleft a.logo img {
+.page-body.light #myLogo {
 	box-shadow: none;
 }
 

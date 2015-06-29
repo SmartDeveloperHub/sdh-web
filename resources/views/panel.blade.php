@@ -25,18 +25,8 @@
             <div class="header-limiter">
                 <div id="headerleft" class="headcomp">
                     <a href="#" class="logo">
-                        <img src="assets/images/logo_bg.png" alt=""/>
+                        <div id="myLogo"></div>
                     </a>
-                    <div class="logotextbox">
-                        <span  class="logotext">
-                            Smart Developer Hub
-                        </span>
-                    </div>
-                    <div class="logotextbox2">
-                        <span  class="logotext">
-                            SDH
-                        </span>
-                    </div>
                 </div>
                 <div id="headermid" class="headcomp">
                     <span id="htitle">Repositories</span>

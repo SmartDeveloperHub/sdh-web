@@ -11,6 +11,7 @@
     "sdh-framework/framework.widget.linesChart",
     "sdh-framework/framework.widget.rangeNv",
     "sdh-framework/framework.widget.radarchart",
+    "assets/js/widget.languages",
     "css!assets/css/dashboards/user-dashboard"
     ]
 @stop
@@ -128,7 +129,8 @@
         label: 'Total commits',
         decimal: 0,
         icon: 'octicon octicon-git-commit',
-        iconbackground: 'rgb(40, 118, 184)'
+        iconbackground: 'rgb(40, 118, 184)',
+        background: '#EDEDED'
     };
     var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
 
@@ -136,7 +138,7 @@
     // OPEN ISSUES
     var open_issues_dom = document.getElementById("open-issues");
     var open_issues_metrics = [{
-        id: 'usercommits', //TODO: not implemented in API
+        id: 'useropenissue',
         max: 1,
         aggr: 'sum'
     }];
@@ -144,7 +146,8 @@
         label: 'Open issues',
         decimal: 0,
         icon: 'octicon octicon-issue-opened',
-        iconbackground: 'rgb(205, 195, 10)'
+        iconbackground: 'rgb(205, 195, 10)',
+        background: '#EDEDED'
     };
     var open_issues = new framework.widgets.CounterBox(open_issues_dom, open_issues_metrics, [context4rangeChart, userCtx], open_issues_conf);
 
@@ -152,7 +155,7 @@
     // SOLVED ISSUES
     var solved_issues_dom = document.getElementById("solved-issues");
     var solved_issues_metrics = [{
-        id: 'usercommits', //TODO: not implemented in API
+        id: 'usersolvedissue',
         max: 1,
         aggr: 'sum'
     }];
@@ -160,7 +163,8 @@
         label: 'Solved issues',
         decimal: 0,
         icon: 'octicon octicon-issue-closed',
-        iconbackground: 'rgb(104, 184, 40)'
+        iconbackground: 'rgb(104, 184, 40)',
+        background: '#EDEDED'
     };
     var solved_issues = new framework.widgets.CounterBox(solved_issues_dom, solved_issues_metrics, [context4rangeChart, userCtx], solved_issues_conf);
 
@@ -176,7 +180,8 @@
         label: 'Total projects',
         decimal: 0,
         icon: 'octicon octicon-repo',
-        iconbackground: 'rgb(184, 40, 40)'
+        iconbackground: 'rgb(184, 40, 40)',
+        background: '#EDEDED'
     };
     var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [context4rangeChart, userCtx], total_projects_conf);
 
@@ -234,15 +239,15 @@
     var skills_star_dom = document.getElementById("skills-star");
     var skills_star_metrics = [
         {
-            id: 'usercommits', //TODO: not implemented in API
+            id: 'userspeed',
             max: 1
         },
         {
-            id: 'usercommits', //TODO: not implemented in API
+            id: 'usercollaboration',
             max: 1
         },
         {
-            id: 'usercommits', //TODO: not implemented in API
+            id: 'userquality',
             max: 1
         }];
     var skills_star_configuration = {
@@ -255,21 +260,21 @@
     var skills_lines_dom = document.getElementById("skills-lines");
     var skills_lines_metrics = [
         {
-            id: 'usercommits', //TODO: not implemented in API
+            id: 'userspeed',
             max: 0
         },
         {
-            id: 'usercommits', //TODO: not implemented in API
+            id: 'usercollaboration',
             max: 0
         },
         {
-            id: 'usercommits', //TODO: not implemented in API
+            id: 'userquality',
             max: 0
         }];
     var skills_lines_configuration = {
         xlabel: 'Date',
         ylabel: 'Score',
-        labelFormat: '?????'
+        labelFormat: '%data.info.description%' //TODO
     };
     var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,
             [context4rangeChart, userCtx], skills_lines_configuration);
@@ -351,6 +356,15 @@
     };
     var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
             [context4rangeChart, userCtx, repoCtx], user_project_commits_conf);
+
+    //LANGUAGES WIDGET
+    var user_project_languages_dom = document.getElementById("projects-languages");
+    var user_project_languages_metrics = null;
+    var user_project_languages_conf = {
+    };
+    var user_project_languages = new framework.widgets.Languages(user_project_languages_dom, user_project_languages_metrics,
+            [context4rangeChart, userCtx, repoCtx], user_project_languages_conf);
+
 
 
 @stop

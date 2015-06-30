@@ -27,35 +27,89 @@
         if (configuration == null) {
             configuration = {};
         }
-        if (typeof configuration.donut != "boolean") {
-            configuration.donut = false;
+        if (configuration['pie'] == null) {
+            configuration['pie'] = {};
         }
-        if (typeof configuration.growOnHover != "boolean") {
-            configuration.growOnHover = false;
+        if (typeof configuration['pie'].donut != "boolean") {
+            configuration['pie'].donut = false;
         }
-        if (typeof configuration.cornerRadius != "number") {
-            configuration.cornerRadius = 4;
+        if (typeof configuration['pie'].growOnHover != "boolean") {
+            configuration['pie'].growOnHover = false;
         }
-        if (typeof configuration.padAngle != "number") {
-            configuration.padAngle = 0.05;
+        if (typeof configuration['pie'].cornerRadius != "number") {
+            configuration['pie'].cornerRadius = 4;
         }
-        if (typeof configuration.showLegend != "boolean") {
-            configuration.showLegend = true;
+        if (typeof configuration['pie'].padAngle != "number") {
+            configuration['pie'].padAngle = 0.05;
         }
-        if (typeof configuration.showLabels != "boolean") {
-            configuration.showLabels = true;
+        if (typeof configuration['pie'].showLegend != "boolean") {
+            configuration['pie'].showLegend = true;
         }
-        if (typeof configuration.donutRatio != "number") {
-            configuration.donutRatio = 0.5;
+        if (typeof configuration['pie'].showLabels != "boolean") {
+            configuration['pie'].showLabels = true;
+        }
+        if (typeof configuration['pie'].donutRatio != "number") {
+            configuration['pie'].donutRatio = 0.5;
         }
         if (typeof configuration.duration != "number") {
-            configuration.duration = 250;
+            configuration['pie'].duration = 250;
         }
-        if (typeof configuration.labelFormat != "string") {
-            configuration.labelFormat = "%mid%";
+        if (typeof configuration['pie'].labelsOutside != "boolean") {
+            configuration['pie'].labelsOutside = true;
         }
-        if (typeof configuration.labelsOutside != "boolean") {
-            configuration.labelsOutside = true;
+
+        if (configuration['horiz'] == null) {
+            configuration['horiz'] = {};
+        }
+
+        var horizDefaultConfig = {
+            height: {
+                type: 'number',
+                default: 240
+            },
+            color: {
+                type: 'object',
+                default: null
+            },
+            stacked: {
+                type: 'boolean',
+                default: false
+            },
+            groupSpacing: {
+                type: 'number',
+                default: 0.1
+            },
+            duration: {
+                type: 'number',
+                default: 250
+            },
+            showControls: {
+                type: 'boolean',
+                default: true
+            },
+            showLegend: {
+                type: 'boolean',
+                default: true
+            },
+            showXAxis: {
+                type: 'boolean',
+                default: true
+            },
+            showYAxis: {
+                type: 'boolean',
+                default: true
+            },
+            yAxisTicks: {
+                type: 'number',
+                default: 5
+            }
+        };
+
+        for(var confName in horizDefaultConfig) {
+            var conf = horizDefaultConfig[confName];
+            if (typeof configuration['horiz'][confName] != conf['type']) {
+                configuration['horiz'][confName] = conf['default'];
+            }
         }
 
         return configuration;
@@ -83,7 +137,7 @@
      *       ~ labelsOutside: boolean - Whether pie/donut chart labels should be outside the slices instead of inside them.
      *      }
      */
-    var Languages = function Languages(element, metrics, contextId, configuration) {
+    var Languages = function Languages(element, contextId, configuration) {
 
         if(!framework.isReady()) {
             console.error("Languages object could not be created because framework is not loaded.");
@@ -141,10 +195,12 @@
         var normalizedData = getNormalizedData.call(this,framework_data);
 
         //Update data
-        if(this.svg != null) {
-            d3.select(this.svg.get(0)).datum(normalizedData);
+        if(this.piechart != null) {
+            d3.select(this.svg.get(0)).datum(normalizedData['pie']);
             this.piechart.color(this.generateColors(framework_data));
             this.piechart.update();
+
+            paintHorizontals.call(this, data.horizontal, framework_data);
 
         } else { // Paint it for first time
             paint.call(this, normalizedData, framework_data);
@@ -163,7 +219,7 @@
         }
 
         //Clear DOM
-        $(this.svg).empty();
+        this.horizontals.empty();
         this.element.empty();
 
         this.svg = null;
@@ -268,7 +324,7 @@
                     var mData = {
                         key: metricData.info.rid.name,
                         values: [{
-                            x: 0,
+                            x: 1,
                             y: metricData['values'][lang]
                         }]
                     };
@@ -306,7 +362,7 @@
         html = $(html);
 
         this.element.append(html);
-        this.svg = html.find(".languages-piechart-widget svg");
+        var svg = html.find(".languages-piechart-widget svg");
         this.horizontals = html.find(".languages-horizontals");
 
         nv.addGraph({
@@ -322,20 +378,20 @@
                     .y(function(d) {
                         return d.value;
                     })
-                    .donut(this.configuration.donut)
+                    .donut(this.configuration.pie.donut)
                     .width(width)
                     .height(height)
-                    .padAngle(this.configuration.padAngle)
-                    .cornerRadius(this.configuration.cornerRadius)
-                    .growOnHover(this.configuration.growOnHover)
-                    .showLegend(this.configuration.showLegend)
-                    .showLabels(this.configuration.showLabels)
-                    .donutRatio(this.configuration.donutRatio)
-                    .duration(this.configuration.duration)
-                    .labelsOutside(this.configuration.labelsOutside)
+                    .padAngle(this.configuration.pie.padAngle)
+                    .cornerRadius(this.configuration.pie.cornerRadius)
+                    .growOnHover(this.configuration.pie.growOnHover)
+                    .showLegend(this.configuration.pie.showLegend)
+                    .showLabels(this.configuration.pie.showLabels)
+                    .donutRatio(this.configuration.pie.donutRatio)
+                    .duration(this.configuration.pie.duration)
+                    .labelsOutside(this.configuration.pie.labelsOutside)
                     .color(this.generateColors(framework_data));
 
-                d3.select(this.svg.get(0))
+                d3.select(svg.get(0))
                     .datum(data) //TODO
                     .transition().duration(0)
                     .call(this.piechart);
@@ -349,7 +405,7 @@
                     var height = this.element.get(0).getBoundingClientRect().height;
                     graph.width(width).height(height);
 
-                    d3.select(this.svg.get(0))
+                    d3.select(svg.get(0))
                         .attr('width', width)
                         .attr('height', height)
                         .transition().duration(0)
@@ -384,7 +440,7 @@
             var horizHtml = '';
             horizHtml += '<div class="row">';
             horizHtml += '  <div class="col-sm-10">';
-            horizHtml += '      <div class="languages-horizontal-widget"></div>';
+            horizHtml += '      <div class="languages-horizontal-widget"><svg class="blurable"></svg></div>';
             horizHtml += '  </div>';
             horizHtml += '  <div class="col-sm-2 languages-label"></div>';
             horizHtml += '</div>';
@@ -393,27 +449,28 @@
             this.horizontals.append(horizDom);
 
             horizDom.find(".languages-label").text(data[i]['label']);
+            var svg = horizDom.find(".languages-horizontal-widget svg");
 
-            paintHorizontal.call(this, i, data[i]['chart'], framework_data);
+            paintHorizontal.call(this, i, svg, data[i]['chart'], framework_data);
 
         }
 
     };
 
-    var paintHorizontal = function PaintHorizontal(number, data, framework_data) {
+    var paintHorizontal = function PaintHorizontal(number, svg, data, framework_data) {
         nv.addGraph(function() {
             var chart = nv.models.multiBarHorizontalChart()
                 .x(function(d) { return d.x; })
                 .y(function(d) { return d.y; })
-                .height(this.configuration.height)
-                .color(this.generateColors(framework_data, this.configuration.color))
-                .stacked(this.configuration.stacked)
-                .groupSpacing(this.configuration.groupSpacing)
-                .duration(this.configuration.duration)
-                .showControls(this.configuration.showControls)
-                .showLegend(this.configuration.showLegend)
-                .showXAxis(this.configuration.showXAxis)
-                .showYAxis(this.configuration.showYAxis);
+                .height(this.configuration.horiz.height)
+                .color(this.generateColors(framework_data, this.configuration.horiz.color))
+                .stacked(this.configuration.horiz.stacked)
+                .groupSpacing(this.configuration.horiz.groupSpacing)
+                .duration(this.configuration.horiz.duration)
+                .showControls(this.configuration.horiz.showControls)
+                .showLegend(this.configuration.horiz.showLegend)
+                .showXAxis(this.configuration.horiz.showXAxis)
+                .showYAxis(this.configuration.horiz.showYAxis);
             this.horizontalCharts[number] = chart;
 
             chart.xAxis.tickFormat(function(d) {
@@ -427,9 +484,9 @@
                 } else {
                     return Math.abs(d);
                 }
-            }).showMaxMin(true).ticks(this.configuration.yAxisTicks - 1);
+            }).showMaxMin(true).ticks(this.configuration.horiz.yAxisTicks - 1);
 
-            d3.select(this.svg.get(0))
+            d3.select(svg.get(0))
                 .datum(data)
                 .call(chart);
 

@@ -34,6 +34,10 @@
 
 @section('script')
 
+    //Header Titles
+    setTitle("Developers");
+    setSubtitle("Francisco Javier Hernandez");
+
     // light or dark theme?. Default is dark
     var lightTheme = false;
     var setLightTheme = function setLightTheme() {

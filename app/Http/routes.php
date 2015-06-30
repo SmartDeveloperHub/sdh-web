@@ -11,21 +11,28 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+//Route::get('/', 'WelcomeController@index');
+
+Route::get('/', function(){
+    return View::make('panel');
+});
 
 Route::get('home', 'HomeController@index');
 
+
+// Dashboard templates
 Route::get('user-dashboard', function(){
     return View::make('dashboards.user');
+});
+
+Route::get('repo-dashboard', function(){
+    return View::make('dashboards.repository');
 });
 
 Route::get('organization-dashboard', function(){
     return View::make('dashboards.organization');
 });
 
-Route::get('test-web', function(){
-    return View::make('panel');
-});
 Route::get('test-template', function(){
     return View::make('dashboards.test-template');
 });

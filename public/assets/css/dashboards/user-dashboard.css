@@ -70,3 +70,9 @@ table.dataTable tbody tr.selected{
 #skills-star canvas{
     margin-bottom: -44px;
 }
+.dashboardLink{
+    cursor: pointer;
+}
+#description {
+    text-overflow: ellipsis;
+}

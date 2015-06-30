@@ -19,9 +19,9 @@
 @section('html')
     <div class="row">
         <div id="total-commits" class="col-sm-3"></div>
-        <div id="open-issues" class="col-sm-3"></div>
+        <div id="total-users" class="col-sm-3"></div>
+        <div id="total-executions" class="col-sm-3"></div>
         <div id="solved-issues" class="col-sm-3"></div>
-        <div id="total-projects" class="col-sm-3"></div>
     </div>
     <div class="row">
         <div class="col-sm-5">
@@ -29,17 +29,19 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label>Name: <span id="name"></span></label>
-                        <label>SCM link: <span id="scm-link"></span></label>
+                        <label>Description: <span id="description"></span></label>
                     </div>
                     <div class="col-sm-6 ">
-                        <label>Description: <span id="description"></span></label>
+                        <label>SCM link: <span id="scm-link"></span></label>
+                        <label>Status: <span id="repo-status"></span></label>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="com-widget com-widget widget static-info-widget">
-                <label>Favourite language: <span id="user-favourite-lang"></span></label>
+                <label>Last build: <span id="last-build"></span></label>
+                <label>Build status: <span id="build-status"></span></label>
             </div>
         </div>
         <div class="col-sm-4">
@@ -84,7 +86,6 @@
     //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
     var repoCtx = "rid";
     framework.data.updateContext('rid', {rid: framework.dashboard.getEnv()['rid']});
-    console.log("Rid: " + framework.dashboard.getEnv()['rid']);
 
     // UPPER SELECTOR RANENV
     var rangeNv_dom = document.getElementById("fixed-chart");
@@ -127,56 +128,54 @@
     };
     var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, repoCtx], total_commits_conf);
 
+    // TOTAL DEVELOPERS
+    var total_users_dom = document.getElementById("total-users");
+    var total_users_metrics = [{
+        id: 'repositorydevelopers',
+        max: 1,
+        aggr: 'sum'
+    }];
+    var total_users_conf = {
+        label: 'Total developers',
+        decimal: 0,
+        icon: 'octicon octicon-organization',
+        iconbackground: 'rgb(40, 184, 179)',
+        background: '#EDEDED'
+    };
+    var total_users = new framework.widgets.CounterBox(total_users_dom, total_users_metrics, [context4rangeChart, repoCtx], total_users_conf);
 
-    // OPEN ISSUES
-    var open_issues_dom = document.getElementById("open-issues");
-    var open_issues_metrics = [{
+    // TOTAL EXECUTIONS
+    var total_executions_dom = document.getElementById("total-executions");
+    var total_executions_metrics = [{
         id: 'repositoryexec',
         max: 1,
         aggr: 'sum'
     }];
-    var open_issues_conf = {
+    var total_executions_conf = {
         label: 'Total executions',
         decimal: 0,
         icon: 'fa fa-cogs',
         iconbackground: 'rgb(205, 195, 10)',
         background: '#EDEDED'
     };
-    var open_issues = new framework.widgets.CounterBox(open_issues_dom, open_issues_metrics, [context4rangeChart, repoCtx], open_issues_conf);
+    var total_executions_issues = new framework.widgets.CounterBox(total_executions_dom, total_executions_metrics, [context4rangeChart, repoCtx], total_executions_conf);
 
 
-    // SOLVED ISSUES
-    var solved_issues_dom = document.getElementById("solved-issues");
-    var solved_issues_metrics = [{
+    // SUCCESSFUL EXECUTIONS
+    var success_executions_dom = document.getElementById("solved-issues");
+    var success_executions_metrics = [{
         id: 'repositoriesuccessexec',
         max: 1,
         aggr: 'sum'
     }];
-    var solved_issues_conf = {
+    var success_executions_conf = {
         label: 'Successful executions',
         decimal: 0,
         icon: 'octicon octicon-thumbsup',
         iconbackground: 'rgb(104, 184, 40)',
         background: '#EDEDED'
     };
-    var solved_issues = new framework.widgets.CounterBox(solved_issues_dom, solved_issues_metrics, [context4rangeChart, repoCtx], solved_issues_conf);
-
-
-    // TOTAL PROJECTS
-    var total_projects_dom = document.getElementById("total-projects");
-    var total_projects_metrics = [{
-        id: 'repositorydevelopers',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var total_projects_conf = {
-        label: 'Total developers',
-        decimal: 0,
-        icon: 'octicon octicon-organization',
-        iconbackground: 'rgb(184, 40, 40)',
-        background: '#EDEDED'
-    };
-    var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [context4rangeChart, repoCtx], total_projects_conf);
+    var success_executions_issues = new framework.widgets.CounterBox(success_executions_dom, success_executions_metrics, [context4rangeChart, repoCtx], success_executions_conf);
 
 
     // REPOSITORY META INFO
@@ -193,9 +192,16 @@
             document.getElementById('name').innerText = repoinfo['name'];
             document.getElementById('description').innerText = repoinfo['description'];
             document.getElementById('scm-link').innerText = repoinfo['scmlink'];
-            document.getElementById('since').innerText = new Date(repoinfo['register']);
+            document.getElementById('since').innerText = new Date(repoinfo['creation']);
             document.getElementById('first-commit').innerText = new Date(repoinfo['firstcommit']);
             document.getElementById('last-commit').innerText = new Date(repoinfo['lastcommit']);
+            document.getElementById('last-build').innerText = new Date(repoinfo['builddate']);
+            document.getElementById('build-status').innerHTML = (repoinfo['buildstatus'] ?
+                            '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
+                            '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');
+            document.getElementById('repo-status').innerHTML = (repoinfo['public'] ? '<i title="Public" class="fa fa-eye"></i> (Public)' : '<i title="Private" class="fa fa-eye-slash"></i> (Private)');
+
+
 
 
         }

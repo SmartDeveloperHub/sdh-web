@@ -165,7 +165,8 @@
         showFocus: false,
         height : 140,
         duration: 500,
-        colors: ["#FF0E0E"]
+        colors: ["#004C8B"],
+        axisColor: "#004C8B"
     };
     if (!lightTheme) {
         rangeNv_configuration['axisColor'] = "#BFE5E3";

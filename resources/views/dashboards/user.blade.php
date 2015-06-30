@@ -72,11 +72,11 @@
                     <div id="projects-lines" class="widget"></div>
                 </div>
             </div>
-            <div class="row">
+            <!--div class="row">
                 <div class="col-sm-12">
                     <div id="projects-languages" class="widget"></div>
                 </div>
-            </div>
+            </div-->
         </div>
         <div class="col-sm-3">
             <div id="projects-table" class="widget"></div>
@@ -93,14 +93,14 @@
 
     //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
     var userCtx = "uid";
-    framework.data.updateContext('uid', {uid: 'u1'}/*framework.dashboard.getEnv()['uid']*/);
+    var env = framework.dashboard.getEnv();
+    framework.data.updateContext('uid', {uid: (env['uid'] != null ? env['uid'] : USER_ID)}); //TODO: get the USER_ID from the env
 
     // UPPER SELECTOR RANENV
     var rangeNv_dom = document.getElementById("fixed-chart");
     var rangeNv_metrics = [
         {
             id: 'usercommits',
-            uid: 'u1', //TODO
             max: 24,
             aggr: 'avg'
         }
@@ -118,7 +118,7 @@
         background: "rgba(25, 48, 63, 0.92)",
         colors: ["#FFC10E"]
     };
-    var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, null, rangeNv_configuration);
+    var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [userCtx], rangeNv_configuration);
 
 
     // TOTAL COMMITS
@@ -299,7 +299,7 @@
             {
                 label: "Show",
                 link: {
-                    icon: "fa fa-share-square-o", //or label
+                    icon: "fa fa-share", //or label
                     href: "repo-dashboard",
                     env: [
                         {
@@ -364,12 +364,17 @@
             [context4rangeChart, userCtx, repoCtx], user_project_commits_conf);
 
     //LANGUAGES WIDGET
-    var user_project_languages_dom = document.getElementById("projects-languages");
-    var user_project_languages_metrics = null;
+    /*var user_project_languages_dom = document.getElementById("projects-languages");
     var user_project_languages_conf = {
+        horiz: {
+            stacked: true,
+            showControls: false,
+            showXAxis: false
+        },
+        pie: {}
     };
-    var user_project_languages = new framework.widgets.Languages(user_project_languages_dom, user_project_languages_metrics,
-            [context4rangeChart, userCtx, repoCtx], user_project_languages_conf);
+    var user_project_languages = new framework.widgets.Languages(user_project_languages_dom,
+            [context4rangeChart, userCtx, repoCtx], user_project_languages_conf);*/
 
 
 

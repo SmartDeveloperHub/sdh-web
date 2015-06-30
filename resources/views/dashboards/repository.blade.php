@@ -88,6 +88,9 @@
 
     context4rangeChart = "context4rangeChart";
 
+    //Set header title
+    $("#htitle").text("Repositories");
+
     //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
     var userCtx = "uid";
     framework.data.updateContext('uid', {uid: 'u1'}/*framework.dashboard.getEnv()['uid']*/);
@@ -192,6 +195,9 @@
             //TODO
         } else if(event.event === 'data') {
             var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
+
+            //Set header subtitle
+            $("#hsubtitle").text(repoinfo['name']);
 
             //Set data
             document.getElementById('user-email').innerText = userinfo['email'];

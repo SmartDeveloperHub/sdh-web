@@ -5,6 +5,7 @@
     <script type="application/javascript">
         SDH_API_URL = "{{{ $_ENV['SDH_API'] }}}";
         BASE_DASHBOARD = "test-template";
+        USER_ID = "u1";
     </script>
 @stop
 
@@ -29,8 +30,8 @@
                     </a>
                 </div>
                 <div id="headermid" class="headcomp">
-                    <span id="htitle">Repositories</span>
-                    <span id="hsubtitle">Jenkins</span>
+                    <span id="htitle"></span>
+                    <span id="hsubtitle"></span>
                 </div>
                 <div id="headerright" class="headcomp">
                     <div class="control">

@@ -40,6 +40,7 @@
     -ms-user-select: none;
     user-select: none;
     position: fixed;
+    min-width: 360px;
 }
 
 .header-fixed .header-limiter {
@@ -323,6 +324,7 @@ div#timeBar {
 	white-space: nowrap;
 	height: 25px;
 	background-color: #263C4A;
+	min-width: 360px;
 }
 
 div#timeBar i {

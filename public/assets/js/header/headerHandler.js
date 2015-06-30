@@ -19,7 +19,7 @@
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
-var setTimeInfo;
+var setTimeInfo, setTitle, setSubtitle;
 
 	$(document).ready(function(){
 
@@ -37,6 +37,8 @@ var setTimeInfo;
 		var fromLabel = $('#fromLabel');
 		var sinceLabel = $('#sinceLabel');
 		var toLabel = $('#toLabel');
+		var hTitle = $('#htitle');
+		var hSubtitle = $('#hsubtitle');
 
 		var changePanehandler = function changePanehandler() {
 			if (pane.hasClass('open')) {
@@ -69,6 +71,15 @@ var setTimeInfo;
 				console.log("setTimeInfo... invalid dates");
 			}
 		}
+
+		setTitle = function setTitle(newTitle) {
+			hTitle.text(newTitle);
+		}
+
+		setSubtitle = function setSubtitle(newSubtitle) {
+			hSubtitle.text(newSubtitle);
+		}
+
 		timeControl.click(changePanehandler);
 
 		// When we scroll more than 150px down, we set the

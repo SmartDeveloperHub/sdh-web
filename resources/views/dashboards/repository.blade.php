@@ -189,13 +189,13 @@
             $("#hsubtitle").text(repoinfo['name']);
 
             //Set data
-            document.getElementById('name').innerText = repoinfo['name'];
-            document.getElementById('description').innerText = repoinfo['description'];
-            document.getElementById('scm-link').innerText = repoinfo['scmlink'];
-            document.getElementById('since').innerText = new Date(repoinfo['creation']);
-            document.getElementById('first-commit').innerText = new Date(repoinfo['firstcommit']);
-            document.getElementById('last-commit').innerText = new Date(repoinfo['lastcommit']);
-            document.getElementById('last-build').innerText = new Date(repoinfo['builddate']);
+            document.getElementById('name').innerHTML = repoinfo['name'];
+            document.getElementById('description').innerHTML = repoinfo['description'];
+            document.getElementById('scm-link').innerHTML = repoinfo['scmlink'];
+            document.getElementById('since').innerHTML = new Date(repoinfo['creation']);
+            document.getElementById('first-commit').innerHTML = new Date(repoinfo['firstcommit']);
+            document.getElementById('last-commit').innerHTML = new Date(repoinfo['lastcommit']);
+            document.getElementById('last-build').innerHTML = new Date(repoinfo['builddate']);
             document.getElementById('build-status').innerHTML = (repoinfo['buildstatus'] ?
                             '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
                             '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');

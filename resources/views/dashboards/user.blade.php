@@ -200,14 +200,14 @@
             $("#hsubtitle").text(userinfo['name']);
 
             //Set data
-            document.getElementById('user-email').innerText = userinfo['email'];
-            document.getElementById('user-linkedin').innerText = userinfo['linkedin'];
-            document.getElementById('user-skype').innerText = userinfo['skype'];
-            document.getElementById('user-twitter').innerText = userinfo['twitter'];
-            document.getElementById('user-website').innerText = userinfo['website'];
-            document.getElementById('user-since').innerText = new Date(userinfo['register']);
-            document.getElementById('user-first-commit').innerText = new Date(userinfo['firstcommit']);
-            document.getElementById('user-last-commit').innerText = new Date(userinfo['lastcommit']);
+            document.getElementById('user-email').innerHTML = userinfo['email'];
+            document.getElementById('user-linkedin').innerHTML = userinfo['linkedin'];
+            document.getElementById('user-skype').innerHTML = userinfo['skype'];
+            document.getElementById('user-twitter').innerHTML = userinfo['twitter'];
+            document.getElementById('user-website').innerHTML = userinfo['website'];
+            document.getElementById('user-since').innerHTML = new Date(userinfo['register']);
+            document.getElementById('user-first-commit').innerHTML = new Date(userinfo['firstcommit']);
+            document.getElementById('user-last-commit').innerHTML = new Date(userinfo['lastcommit']);
 
 
         }

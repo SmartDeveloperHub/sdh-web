@@ -133,7 +133,7 @@
         decimal: 0,
         icon: 'octicon octicon-git-commit',
         iconbackground: 'rgb(40, 118, 184)',
-        background: '#EDEDED'
+        background: '#E0E0E0'
     };
     var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
 
@@ -150,7 +150,7 @@
         decimal: 0,
         icon: 'octicon octicon-issue-opened',
         iconbackground: 'rgb(205, 195, 10)',
-        background: '#EDEDED'
+        background: '#E0E0E0'
     };
     var open_issues = new framework.widgets.CounterBox(open_issues_dom, open_issues_metrics, [context4rangeChart, userCtx], open_issues_conf);
 
@@ -167,7 +167,7 @@
         decimal: 0,
         icon: 'octicon octicon-issue-closed',
         iconbackground: 'rgb(104, 184, 40)',
-        background: '#EDEDED'
+        background: '#E0E0E0'
     };
     var solved_issues = new framework.widgets.CounterBox(solved_issues_dom, solved_issues_metrics, [context4rangeChart, userCtx], solved_issues_conf);
 
@@ -184,7 +184,7 @@
         decimal: 0,
         icon: 'octicon octicon-repo',
         iconbackground: 'rgb(184, 40, 40)',
-        background: '#EDEDED'
+        background: '#E0E0E0'
     };
     var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [context4rangeChart, userCtx], total_projects_conf);
 

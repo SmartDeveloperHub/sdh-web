@@ -124,7 +124,7 @@
         decimal: 0,
         icon: 'octicon octicon-git-commit',
         iconbackground: 'rgb(40, 118, 184)',
-        background: '#EDEDED'
+        background: '#E0E0E0'
     };
     var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, repoCtx], total_commits_conf);
 
@@ -140,7 +140,7 @@
         decimal: 0,
         icon: 'octicon octicon-organization',
         iconbackground: 'rgb(40, 184, 179)',
-        background: '#EDEDED'
+        background: '#E0E0E0'
     };
     var total_users = new framework.widgets.CounterBox(total_users_dom, total_users_metrics, [context4rangeChart, repoCtx], total_users_conf);
 
@@ -156,7 +156,7 @@
         decimal: 0,
         icon: 'fa fa-cogs',
         iconbackground: 'rgb(205, 195, 10)',
-        background: '#EDEDED'
+        background: '#E0E0E0'
     };
     var total_executions_issues = new framework.widgets.CounterBox(total_executions_dom, total_executions_metrics, [context4rangeChart, repoCtx], total_executions_conf);
 
@@ -173,7 +173,7 @@
         decimal: 0,
         icon: 'octicon octicon-thumbsup',
         iconbackground: 'rgb(104, 184, 40)',
-        background: '#EDEDED'
+        background: '#E0E0E0'
     };
     var success_executions_issues = new framework.widgets.CounterBox(success_executions_dom, success_executions_metrics, [context4rangeChart, repoCtx], success_executions_conf);
 

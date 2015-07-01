@@ -88,38 +88,74 @@
 
     context4rangeChart = "context4rangeChart";
 
-    //Set header title
-    $("#htitle").text("Developers");
+    //Header Titles
+    //setTitle("Developers");
+    //setSubtitle("Javier Hernandez");
+
+    // light or dark theme?. Default is light
+    var lightTheme = true;
+    var setLightTheme = function setLightTheme() {
+        if (!lightTheme) {
+            lightTheme = true;
+            rangeNv.delete();
+            setRangeChart();
+        }
+        $('body').addClass('light');
+    };
+    var setDarkTheme = function setDarkTheme() {
+        if (lightTheme) {
+            lightTheme = false;
+            rangeNv.delete();
+            setRangeChart();
+        }
+        $('body').removeClass('light');
+    };
+    var changeTheme = function changeTheme() {
+        if (lightTheme == false) {
+            setLightTheme();
+        } else {
+            setDarkTheme();
+        }
+    };
+    // Change theme
+    setLightTheme();
+
+    $(".headbutton.mail").click(changeTheme);
 
     //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
     var userCtx = "uid";
     var env = framework.dashboard.getEnv();
     framework.data.updateContext('uid', {uid: (env['uid'] != null ? env['uid'] : USER_ID)}); //TODO: get the USER_ID from the env
 
-    // UPPER SELECTOR RANENV
-    var rangeNv_dom = document.getElementById("fixed-chart");
-    var rangeNv_metrics = [
-        {
-            id: 'usercommits',
-            max: 24,
-            aggr: 'avg'
+    var setRangeChart = function() {
+        // UPPER SELECTOR RANENV
+        var rangeNv_dom = document.getElementById("fixed-chart");
+        var rangeNv_metrics = [
+            {
+                id: 'usercommits',
+                max: 24,
+                aggr: 'avg'
+            }
+        ];
+        var rangeNv_configuration = {
+            ownContext: context4rangeChart,
+            isArea: true,
+            showLegend: false,
+            interpolate: 'monotone',
+            showFocus: false,
+            height : 140,
+            duration: 500,
+            colors: ["#004C8B"],
+            axisColor: "#004C8B"
+        };
+        if (!lightTheme) {
+            rangeNv_configuration['axisColor'] = "#BFE5E3";
+            rangeNv_configuration['colors'] = ["#FFC10E"];
         }
-    ];
-    var rangeNv_configuration = {
-        ownContext: context4rangeChart,
-        labelFormat: "Total Commits",
-        isArea: true,
-        showLegend: false,
-        interpolate: 'monotone',
-        showFocus: false,
-        height : 140,
-        duration: 500,
-        axisColor: "#BFE5E3",
-        background: "rgba(25, 48, 63, 0.92)",
-        colors: ["#FFC10E"]
-    };
-    var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [userCtx], rangeNv_configuration);
-
+        var _rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [userCtx], rangeNv_configuration);
+        return _rangeNv;
+    }.bind(this);
+    var rangeNv = setRangeChart();
 
     // TOTAL COMMITS
     var total_commits_dom = document.getElementById("total-commits");
@@ -280,6 +316,7 @@
     var skills_lines_configuration = {
         xlabel: 'Date',
         ylabel: 'Score',
+        interpolation: true,
         labelFormat: '%data.info.description%' //TODO
     };
     var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,

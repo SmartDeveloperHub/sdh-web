@@ -233,7 +233,7 @@
             var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
 
             //Set header subtitle
-            $("#hsubtitle").text(userinfo['name']);
+            setSubtitle(userinfo['name']);
 
             //Set data
             document.getElementById('user-email').innerHTML = userinfo['email'];
@@ -241,9 +241,9 @@
             document.getElementById('user-skype').innerHTML = userinfo['skype'];
             document.getElementById('user-twitter').innerHTML = userinfo['twitter'];
             document.getElementById('user-website').innerHTML = userinfo['website'];
-            document.getElementById('user-since').innerHTML = new Date(userinfo['register']);
-            document.getElementById('user-first-commit').innerHTML = new Date(userinfo['firstcommit']);
-            document.getElementById('user-last-commit').innerHTML = new Date(userinfo['lastcommit']);
+            document.getElementById('user-since').innerHTML = moment(new Date(userinfo['register'])).format('LLLL');
+            document.getElementById('user-first-commit').innerHTML = moment(new Date(userinfo['firstcommit'])).format('LLLL');
+            document.getElementById('user-last-commit').innerHTML = moment(new Date(userinfo['lastcommit'])).format('LLLL');
 
 
         }

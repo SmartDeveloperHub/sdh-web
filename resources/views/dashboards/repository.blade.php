@@ -81,7 +81,7 @@
     context4rangeChart = "context4rangeChart";
 
     //Set header title
-    $("#htitle").text("Repositories");
+    setTitle("Repositories");
 
     //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
     var repoCtx = "rid";
@@ -186,16 +186,16 @@
             var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
 
             //Set header subtitle
-            $("#hsubtitle").text(repoinfo['name']);
+            setSubtitle(repoinfo['name']);
 
             //Set data
             document.getElementById('name').innerHTML = repoinfo['name'];
             document.getElementById('description').innerHTML = repoinfo['description'];
             document.getElementById('scm-link').innerHTML = repoinfo['scmlink'];
-            document.getElementById('since').innerHTML = new Date(repoinfo['creation']);
-            document.getElementById('first-commit').innerHTML = new Date(repoinfo['firstcommit']);
-            document.getElementById('last-commit').innerHTML = new Date(repoinfo['lastcommit']);
-            document.getElementById('last-build').innerHTML = new Date(repoinfo['builddate']);
+            document.getElementById('since').innerHTML = moment(new Date(repoinfo['creation'])).format('LLLL');
+            document.getElementById('first-commit').innerHTML = moment(new Date(repoinfo['firstcommit'])).format('LLLL');
+            document.getElementById('last-commit').innerHTML = moment(new Date(repoinfo['lastcommit'])).format('LLLL');
+            document.getElementById('last-build').innerHTML = moment(new Date(repoinfo['builddate'])).format('LLLL');
             document.getElementById('build-status').innerHTML = (repoinfo['buildstatus'] ?
                             '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
                             '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');

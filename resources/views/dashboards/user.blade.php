@@ -89,7 +89,7 @@
     context4rangeChart = "context4rangeChart";
 
     //Header Titles
-    //setTitle("Developers");
+    setTitle("Developers");
     //setSubtitle("Javier Hernandez");
 
     // light or dark theme?. Default is light

@@ -309,17 +309,17 @@
         {
             id: 'userspeed',
             max: 20,
-            agg: 'avg'
+            aggr: 'avg'
         },
         {
             id: 'usercollaboration',
             max: 20,
-            agg: 'avg'
+            aggr: 'avg'
         },
         {
             id: 'userquality',
             max: 100,
-            agg: 'avg'
+            aggr: 'avg'
         }];
     var skills_lines_configuration = {
         xlabel: 'Date',

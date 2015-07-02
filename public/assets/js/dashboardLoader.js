@@ -145,6 +145,9 @@ define(function(require, exports, module) {
 
             framework.dashboard.setDashboardController(dashboardController);
 
+            //Show header
+            $('body').removeClass('hidd');
+
             if(BASE_DASHBOARD != null) {
                 dashboardController.changeTo(BASE_DASHBOARD);
             } else {

@@ -262,6 +262,7 @@
         showXAxis: false,
         showControls: false,
         yAxisTicks: 8,
+        height: 155,
         total: {
             id: 'repositorycommits',
             max: 1

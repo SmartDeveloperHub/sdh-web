@@ -54,6 +54,9 @@
 
 .static-info-widget label{
     display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .static-info-widget label span{

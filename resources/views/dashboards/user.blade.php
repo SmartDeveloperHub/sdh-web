@@ -308,20 +308,23 @@
     var skills_lines_metrics = [
         {
             id: 'userspeed',
-            max: 0
+            max: 20,
+            agg: 'avg'
         },
         {
             id: 'usercollaboration',
-            max: 0
+            max: 20,
+            agg: 'avg'
         },
         {
             id: 'userquality',
-            max: 0
+            max: 100,
+            agg: 'avg'
         }];
     var skills_lines_configuration = {
         xlabel: 'Date',
         ylabel: 'Score',
-        interpolation: true,
+        interpolate: 'monotone',
         labelFormat: '%data.info.description%' //TODO
     };
     var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,
@@ -383,6 +386,7 @@
         showXAxis: false,
         showControls: false,
         yAxisTicks: 8,
+        height: 155,
         total: {
             id: 'usercommits',
             max: 1
@@ -400,7 +404,8 @@
     var user_project_commits_conf = {
         xlabel: 'Date',
         ylabel: 'Commits',
-        labelFormat: 'Commits for %data.info.rid.name%'
+        labelFormat: 'Commits for %data.info.rid.name%',
+        interpolate: 'monotone'
     };
     var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
             [context4rangeChart, userCtx, repoCtx], user_project_commits_conf);

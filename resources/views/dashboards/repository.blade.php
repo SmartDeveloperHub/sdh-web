@@ -279,7 +279,8 @@
     var user_project_commits_conf = {
         xlabel: 'Date',
         ylabel: 'Commits',
-        labelFormat: 'Commits for %data.info.uid.name%'
+        labelFormat: 'Commits for %data.info.uid.name%',
+        interpolate: 'monotone'
     };
     var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
             [context4rangeChart, usersCtx, repoCtx], user_project_commits_conf);

@@ -36,7 +36,7 @@
                 <div id="headerright" class="headcomp">
                     <div class="control">
                         <div id="buttonbox" class="headcomp">
-                            <a class="headbutton mail fa-envelope-o"></a>
+                            <a class="headbutton mail fa-moon-o"></a>
                             <a class="headbutton settings fa-cog"></a>
                         </div>
                         <div id="avatarbox" class="headcomp">

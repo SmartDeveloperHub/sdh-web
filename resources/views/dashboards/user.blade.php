@@ -94,11 +94,14 @@
 
     // light or dark theme?. Default is light
     var lightTheme = true;
+    var themebutton = $(".headbutton.mail");
     var setLightTheme = function setLightTheme() {
         if (!lightTheme) {
             lightTheme = true;
             rangeNv.delete();
             setRangeChart();
+            themebutton.removeClass("fa-sun-o");
+            themebutton.addClass("fa-moon-o");
         }
         $('body').addClass('light');
     };
@@ -107,6 +110,8 @@
             lightTheme = false;
             rangeNv.delete();
             setRangeChart();
+            themebutton.removeClass("fa-moon-o");
+            themebutton.addClass("fa-sun-o");
         }
         $('body').removeClass('light');
     };

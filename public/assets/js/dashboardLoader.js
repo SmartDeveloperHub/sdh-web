@@ -85,6 +85,7 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
     var widget;
     while((widget = this.widgets.pop()) != null) {
         widget.delete();
+        widget.dispose();
     }
 
     // Just to be sure in case some widget did not registered with the framework

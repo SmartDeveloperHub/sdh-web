@@ -19,94 +19,91 @@
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
-body {
-    font-family: sans-serif;
-    overflow: hidden;
+.page-container {
+    background-color: #ffffff !important;
+    padding-top: 82px !important;
 }
-
-#averageHealth-widget .com-progress-fill {
-    -webkit-transition: width 3s ease-in-out;
-    -moz-transition: width 3s ease-in-out;
-    -o-transition: width 3s ease-in-out;
-    transition: width 3s ease-in-out;
+.page-container .main-content {
+    padding: 0 !important;
 }
-
-#averageHealth-widget {
-    -webkit-transition: background-color 1000ms linear;
-    -moz-transition: background-color 1000ms linear;
-    -o-transition: background-color 1000ms linear;
-    -ms-transition: background-color 1000ms linear;
-    transition: background-color 1000ms linear;
-    white-space: nowrap;
+.feature-section {
+    min-height: 660px;
+    padding: 4rem;
 }
-
-#averageHealth-widget .leftBox {
-	display: inline-block;
-	width: 60%;
-	vertical-align: top;
+.initial-section {
+    min-height: 360px;
+    padding: 4rem;
+    -webkit-box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
+    -moz-box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
+    box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
 }
-
-#healthy-chart {
-    display: inline-block;
-    width: 37%;
-    vertical-align: bottom;
+.initial-section-content{
+    max-width: 75em;
+    text-align: center;
 }
-
-#activeIssues-widget .ntotal, #projects-widget .ntotal {
-	display: inline-block;
-	padding-bottom: 2px;
+.gradient-1 {
+    background: linear-gradient(140deg, #FFFFFF 0%, #CCCCCC 50%, #4A4A4A 100%);
+    /*linear-gradient(to right, rgba(147,193,31,1) 0%, rgba(82,142,78,1) 68%, rgba(0,74,139,1) 100%)*/
 }
-
-
-/*Commits icon*/
-.octicon.octicon-git-commit {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg);
+.gradient-2 {
+    background: rgba(0, 76, 139, 1);
+    /*linear-gradient(to right, rgba(147,193,31,1) 0%, rgba(82,142,78,1) 68%, rgba(0,74,139,1) 100%)*/
 }
-
-#commits-widget .com-icon i {
-    background-color: #F75F10;
+.gradient-3 {
+    background: linear-gradient(to right, rgba(216, 216, 216, 1) 0%, rgba(78, 127, 142, 1) 68%, rgba(0,74,139,1) 100%);
+    /*linear-gradient(to right, rgba(147,193,31,1) 0%, rgba(82,142,78,1) 68%, rgba(0,74,139,1) 100%)*/
 }
-
-
-/* Health-chart */
-#healthy-chart g.nvd3.nv-wrap.nv-axis {
-    fill: #FFF;
-}
-
-#healthy-chart path.domain {
-    stroke: #FFF;
-}
-
-/* speed-chart */
-
-.chart-item-bg {
-    background: #FFF;
-    padding: 28px;
-    line-height: 1;
-    display: table;
+.container {
     width: 100%;
-    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
 }
-
-.chart-label {
-    color: #666;
-    margin-left: 31px;
-    margin-top: 23px;
+.screenshot {
+    position: relative;
+    display: block;
+    right: 0%;
 }
+.ss-left {
+    left: 0%;
+    right: auto;
 }
-
-span.text-small.text-muted.text-upper {
-    color: #743C3C;
+.radius-img{
+    border-radius: 15px;
+    display: block;
 }
-
-#speed-chart g.nvd3.nv-wrap.nv-axis {
-    fill: #010FA5;
+.radius-icon{
+    border-radius: 5px;
 }
-
-#speed-chart path.domain {
-    stroke: #010FA5;
+.feature {
+    margin-top: 15%;
+    height: auto;
+}
+.p4 {
+    padding: 4rem;
+}
+.left {
+    float: left;
+}
+.white {
+    color: #FFF;
+}
+.black {
+    color: #000;
+}
+.blue{
+    color: #024074;
+}
+.lighter-gray {
+    color: #323232;
+    text-shadow: 0px 0.5px rgba(228, 228, 228, 0.55);
+}
+.roboto{
+    font-family: Roboto;
+}
+.page-title{
+    font-size: 50px;
+}
+.page-title-content{
+    line-height: 1.28em;
 }

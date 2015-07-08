@@ -109,7 +109,9 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
 
     }).fail(function(e) {
         alert("Oups! I couldn't get the dashboard '" + newDashboard + "'\nError " + e.status + " (" + e.statusText + ")\n\nReturning to the previous dashboard...");
-        _this.changeTo((_this.previousDashboard != null ? _this.previousDashboard : BASE_DASHBOARD));
+        if(_this.previousDashboard != null) {
+            _this.changeTo(_this.previousDashboard);
+        }
     });
 
 };

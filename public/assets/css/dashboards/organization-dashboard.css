@@ -26,23 +26,28 @@
 .page-container .main-content {
     padding: 0 !important;
 }
+.auto-height-feature-section {
+    padding: 4rem;
+}
 .feature-section {
     min-height: 660px;
     padding: 4rem;
 }
-.initial-section {
-    min-height: 360px;
-    padding: 4rem;
+.section-shadow{
     -webkit-box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
     -moz-box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
     box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
+}
+.initial-section {
+    min-height: 360px;
+    padding: 4rem;
 }
 .initial-section-content{
     max-width: 75em;
     text-align: center;
 }
 .gradient-1 {
-    background: linear-gradient(140deg, #FFFFFF 0%, #CCCCCC 50%, #4A4A4A 100%);
+    background: linear-gradient(140deg, #FFFFFF 0%, #CCCCCC 50%, #737373 100%);
     /*linear-gradient(to right, rgba(147,193,31,1) 0%, rgba(82,142,78,1) 68%, rgba(0,74,139,1) 100%)*/
 }
 .gradient-2 {
@@ -106,4 +111,41 @@
 }
 .page-title-content{
     line-height: 1.28em;
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+.user-card {
+    height: 125px;
+    background-color: #fdc303;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 27px;
+}
+.user-card:hover {
+    background-color: rgb(166, 166, 166);
+}
+.user-avatar{
+    display: inline-block;
+    height: 80%;
+    width: 100px;
+}
+.user-name{
+    display: inline-block;
+    margin-left: 10px;
+}
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
 }

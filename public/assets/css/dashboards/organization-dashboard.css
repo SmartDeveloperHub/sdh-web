@@ -26,17 +26,15 @@
 .page-container .main-content {
     padding: 0 !important;
 }
-.auto-height-feature-section{
+.section{
     padding: 4rem;
 }
-.list-section {
-    padding: 4rem;
+.card-list {
     max-height: 660px;
     overflow-y: auto;
 }
 .feature-section {
     min-height: 660px;
-    padding: 4rem;
 }
 .section-shadow{
     -webkit-box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
@@ -45,7 +43,6 @@
 }
 .initial-section {
     min-height: 360px;
-    padding: 4rem;
 }
 .initial-section-content{
     max-width: 75em;
@@ -68,6 +65,23 @@
     margin-left: auto;
     margin-right: auto;
     font-weight: bold;
+}
+.search{
+    margin-bottom: 10px;
+}
+.search * {
+    display: inline-block;
+}
+.search input {
+    border-radius: 10px;
+    border: 0px;
+    margin-left: 5px;
+    padding-left: 7px;
+    height: 30px;
+    display: inline-block;
+}
+.search input:focus {
+    outline: none;
 }
 .screenshot {
     position: relative;

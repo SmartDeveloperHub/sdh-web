@@ -16,7 +16,7 @@
 
 @section('html')
     <div class="dashContainer" ng-app>
-        <div class="initial-section section-shadow gradient-2 white wow pulse animated" data-wow-duration="3s" data-wow-iteration="infinite" data-wow-delay="300ms">
+        <div class="section initial-section section-shadow gradient-2 white wow pulse animated" data-wow-duration="3s" data-wow-iteration="infinite" data-wow-delay="300ms">
             <div class="container">
                 <div class="row">
                     <div class="center-block p4 initial-section-content">
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="feature-section gradient-1 blue">
+        <div class="section feature-section gradient-1 blue">
             <div class="container">
                 <div class="row">
                     <div class="col col-sm-6 wow fadeInLeft animated" data-wow-duration="1.1s" data-wow-delay="0.2s">
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="auto-height-feature-section">
+        <div class="section">
             <div class="row row-centered">
                 <div id="orgcommits" class="col-sm-3 col-centered"></div>
                 <div id="orgdevelopers" class="col-sm-3 col-centered"></div>
@@ -62,24 +62,24 @@
 
         </div>
     </div>
-    <div class="list-section gradient-2" ng-controller="UsersController">
-        <div class="row row-centered">
-            Search developer: <input ng-model="userQuery">
+    <div class="section gradient-2" ng-controller="UsersController">
+        <div class="row row-centered search">
+            <h4 class="white">Search developer: </h4><input ng-model="userQuery" placeholder="Developer name" />
         </div>
-        <div class="row row-centered">
-            <div class="col-sm-3 col-centered card" ng-repeat="user in users | filter:userQuery | orderBy:'name'" ng-click="changeToUserDashboard(user)">
+        <div class="row row-centered card-list">
+            <div class="col-sm-3 col-centered card" ng-repeat="user in users | orderBy:'name'" ng-show="([user.name, user.avatar] | filter:userQuery).length" ng-click="changeToUserDashboard(user)">
                 <span class="helper"></span>
                 <img class="card-avatar img-circle" ng-src="@{{ user.avatar }}" alt="@{{ user.name }}">
                 <h2 class="card-name">@{{ user.name }}</h2>
             </div>
         </div>
     </div>
-    <div class="list-section gradient-2" ng-controller="ReposController">
-        <div class="row row-centered">
-            Search repo: <input ng-model="repoQuery">
+    <div class="section gradient-2" ng-controller="ReposController">
+        <div class="row row-centered search">
+            <h4 class="white">Search repo: </h4><input ng-model="repoQuery" placeholder="Repository name" />
         </div>
-        <div class="row row-centered">
-            <div class="col-sm-3 col-centered card" ng-repeat="repo in repos | filter:repoQuery | orderBy:'name'" ng-click="changeToRepoDashboard(repo)">
+        <div class="row row-centered card-list">
+            <div class="col-sm-3 col-centered card" ng-repeat="repo in repos | orderBy:'name'" ng-show="([repo.name, repo.avatar] | filter:repoQuery).length" ng-click="changeToRepoDashboard(repo)">
                 <span class="helper"></span>
                 <img class="card-avatar img-circle" ng-src="@{{ repo.avatar }}" alt="@{{ repo.name }}">
                 <h2 class="card-name">@{{ repo.name }}</h2>

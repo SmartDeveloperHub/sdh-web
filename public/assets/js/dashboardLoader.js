@@ -136,7 +136,7 @@ var showLoadingMessage = function showLoadingMessage(mes) {
 
 var finishLoading = function() {
     //Remove loading
-    $( "#loading" ).fadeOut(750, function() {
+    $( "#loading" ).fadeOut(250, function() {
         $(this).find(".loading-info span").text("");
     });
 
@@ -155,6 +155,17 @@ define(function(require, exports, module) {
 
             var dashboardController = new DashboardController();
 
+            //Set an error handler for require js
+            requirejs.onError = function (err) {
+                alert("Oups! There were some problems trying to download all the dependencies of the dashboard." +
+                " If problems persist, check your Internet connection. \n\nReturning to the previous dashboard...");
+                if(this.previousDashboard != null) {
+                    this.changeTo(this.previousDashboard);
+                }
+                //throw err; //Should I throw it?
+            }.bind(dashboardController);
+
+            //Tell the framework this is the Dashboard Controller
             framework.dashboard.setDashboardController(dashboardController);
 
             //Show header

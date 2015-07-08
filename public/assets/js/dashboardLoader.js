@@ -96,6 +96,13 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
 
     var _this = this; //Closure
 
+    var onLoadError = function(e) {
+        alert("Oups! I couldn't get the dashboard '" + newDashboard + "'\nError " + e.status + " (" + e.statusText + ")\n\nReturning to the previous dashboard...");
+        if(_this.previousDashboard != null) {
+            _this.changeTo(_this.previousDashboard);
+        }
+    };
+
     $.get(newDashboard, function( data ) {
 
         //Tell the framework that the new template was retrieved correctly and that the controller is ready to chane the dashboard
@@ -105,14 +112,16 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
         _this.previousDashboard = _this.currentDashboard;
         _this.currentDashboard = newDashboard;
 
-        $("#template-exec").html(data);
-
-    }).fail(function(e) {
-        alert("Oups! I couldn't get the dashboard '" + newDashboard + "'\nError " + e.status + " (" + e.statusText + ")\n\nReturning to the previous dashboard...");
-        if(_this.previousDashboard != null) {
-            _this.changeTo(_this.previousDashboard);
+        try{
+            $("#template-exec").html(data);
+        } catch(e) {
+            e.status = 0;
+            e.statusText = "Could not parse response";
+            onLoadError(e);
         }
-    });
+
+
+    }).fail(onLoadError);
 
 };
 

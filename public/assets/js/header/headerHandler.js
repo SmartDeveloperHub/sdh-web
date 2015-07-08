@@ -117,4 +117,10 @@ var setTimeInfo, setTitle, setSubtitle;
 				lastTop = win.scrollTop();
 			}
 		});
+
+        //Link to organization dashboard
+        $("#myLogo").parent("a").click(function(event) {
+            event.preventDefault();
+            framework.dashboard.changeTo('organization-dashboard', framework.dashboard.getEnv());
+        })
 	});

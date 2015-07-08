@@ -26,8 +26,13 @@
 .page-container .main-content {
     padding: 0 !important;
 }
-.auto-height-feature-section {
+.auto-height-feature-section{
     padding: 4rem;
+}
+.list-section {
+    padding: 4rem;
+    max-height: 660px;
+    overflow-y: auto;
 }
 .feature-section {
     min-height: 660px;
@@ -125,22 +130,22 @@
     /* inline-block space fix */
     margin-right:-4px;
 }
-.user-card {
+.card {
     height: 125px;
     background-color: #fdc303;
     margin: 10px;
     cursor: pointer;
     border-radius: 27px;
 }
-.user-card:hover {
+.card:hover {
     background-color: rgb(166, 166, 166);
 }
-.user-avatar{
+.card-avatar{
     display: inline-block;
     height: 80%;
     width: 100px;
 }
-.user-name{
+.card-name{
     display: inline-block;
     margin-left: 10px;
 }

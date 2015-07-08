@@ -15,7 +15,7 @@
 @stop
 
 @section('html')
-    <div ng-app>
+    <div class="dashContainer" ng-app>
         <div class="initial-section section-shadow gradient-2 white wow pulse animated" data-wow-duration="3s" data-wow-iteration="infinite" data-wow-delay="300ms">
             <div class="container">
                 <div class="row">
@@ -31,12 +31,12 @@
         <div class="feature-section gradient-1 blue">
             <div class="container">
                 <div class="row">
-                    <div class="col col-sm-6 wow animated fadeInLeft animated" data-wow-duration="1.1s" data-wow-delay="0.2s">
+                    <div class="col col-sm-6 wow fadeInLeft animated" data-wow-duration="1.1s" data-wow-delay="0.2s">
                         <div class="screenshot ss-left">
                             <img class="feature-section-img 2x radius-img" height="100%" width="100%" src="/assets/images/sdh-architecture.png">
                         </div>
                     </div>
-                    <div class="col col-md-4 col-sm-6 wow animated fadeInUp animated" data-wow-duration="1.1s">
+                    <div class="col col-md-4 col-sm-6 wow fadeInUp animated" data-wow-duration="1.1s">
                         <div class="left p4 feature">
                             <h2 class="h1 thin  h-has-icon roboto">A Linked Data Platform</h2>
                             <p class="lighter-gray h4">
@@ -62,19 +62,34 @@
 
         </div>
     </div>
-    <div class="auto-height-feature-section gradient-2" ng-controller="UsersController">
+    <div class="list-section gradient-2" ng-controller="UsersController">
         <div class="row row-centered">
-            <div class="col-sm-3 col-centered user-card" ng-repeat="user in users">
+            Search developer: <input ng-model="userQuery">
+        </div>
+        <div class="row row-centered">
+            <div class="col-sm-3 col-centered card" ng-repeat="user in users | filter:userQuery | orderBy:'name'" ng-click="changeToUserDashboard(user)">
                 <span class="helper"></span>
-                <img class="user-avatar img-circle" src="@{{ user.avatar }}" alt="@{{ user.name }}">
-                <h2 class="user-name">@{{user.name}}</h2>
+                <img class="card-avatar img-circle" ng-src="@{{ user.avatar }}" alt="@{{ user.name }}">
+                <h2 class="card-name">@{{ user.name }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="list-section gradient-2" ng-controller="ReposController">
+        <div class="row row-centered">
+            Search repo: <input ng-model="repoQuery">
+        </div>
+        <div class="row row-centered">
+            <div class="col-sm-3 col-centered card" ng-repeat="repo in repos | filter:repoQuery | orderBy:'name'" ng-click="changeToRepoDashboard(repo)">
+                <span class="helper"></span>
+                <img class="card-avatar img-circle" ng-src="@{{ repo.avatar }}" alt="@{{ repo.name }}">
+                <h2 class="card-name">@{{ repo.name }}</h2>
             </div>
         </div>
     </div>
 @stop
 
 @section('script')
-
+<!--script-->
     $(".timeMidBox").remove();
     $("#timeBar").remove();
 
@@ -226,6 +241,38 @@
     var organizationexectime = new framework.widgets.CounterBox(organizationexectime_dom, organizationexectime_metrics, null, organizationexectime_conf);
 
 
+    //ANGULAR INITIALIZATION
+    try {
+        angular.module('OrganizationDashboard');
+        angular.element(document).injector().invoke(function($compile) {
+            var content = $(".main-content");
+            var scope = angular.element(content).scope();
+            $compile(content)(scope);
+        });
+
+    } catch(e) { //Module not initialized
+
+        angular.module('OrganizationDashboard', [])
+                .controller('UsersController', ['$scope', function ($scope) {
+                    $scope.changeToUserDashboard = function(user) {
+                        var env = framework.dashboard.getEnv();
+                        env['uid'] = user['userid'];
+                        framework.dashboard.changeTo('user-dashboard', env);
+                    };
+                }])
+                .controller('ReposController', ['$scope', function ($scope) {
+                    $scope.changeToRepoDashboard = function(repo) {
+                        var env = framework.dashboard.getEnv();
+                        env['rid'] = repo['repositoryid'];
+                        framework.dashboard.changeTo('repo-dashboard', env);
+                    };
+                }]);
+
+        angular.element(document).ready(function() {
+            angular.bootstrap(document, ['OrganizationDashboard']);
+        });
+    }
+
     //USER LIST
     framework.data.observe(['userlist'], function(event){
         if(event.event === 'loading') {
@@ -233,13 +280,26 @@
         } else if(event.event === 'data') {
             var users = event.data['userlist'][Object.keys(event.data['userlist'])[0]]['data'];
 
-            angular.module('OrganizationDashboard', [])
-                    .controller('UsersController', ['$scope', function ($scope) {
-                        $scope.users = users;
-                    }]);
+            $scope = angular.element($(".main-content")).scope();
 
-            angular.element(document).ready(function() {
-                angular.bootstrap(document, ['OrganizationDashboard']);
+            $scope.$apply(function () {
+                $scope.users = users;
+            });
+
+        }
+    }, []);
+
+    //REPO LIST
+    framework.data.observe(['repolist'], function(event){
+        if(event.event === 'loading') {
+            //TODO
+        } else if(event.event === 'data') {
+            var repos = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
+
+            $scope = angular.element($(".main-content")).scope();
+
+            $scope.$apply(function () {
+                $scope.repos = repos;
             });
 
         }

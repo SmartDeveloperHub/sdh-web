@@ -57,6 +57,14 @@
         <div class="col-sm-5">
             <div id="commiters-lines" class="widget"></div>
         </div>
+        <div class="col-sm-2">
+            <div id="executions-info" class="widget">
+                <h3>Executions</h3>
+                <div id="executions-info-compare"><span>0</span> successful / <span>0</span> broken</div>
+                <div id="executions-info-percent"><span>0</span>%</div>
+                <div id="executions-info-total">Total executions <span>0</span></div>
+            </div>
+        </div>
         <div class="col-sm-5">
             <div id="executions-stacked" class="widget"></div>
         </div>
@@ -253,7 +261,34 @@
     var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
             [context4rangeChart, repoCtx], executions_conf);
 
+
+    // EXECUTIONS
+    var executions_info = [
+        {
+            id: 'repositoriesuccessexec',
+            aggr: 'avg'
+        },
+        {
+            id: 'repositorybrokenexec',
+            aggr: 'avg'
         }
+    ];
+    var display_executions_info = function(event) {
+        if(event.event === 'data') {
+            var success = event.data['repositoriesuccessexec'][Object.keys(event.data['repositoriesuccessexec'])[0]]['data']['values'][0];
+            var broken = event.data['repositorybrokenexec'][Object.keys(event.data['repositorybrokenexec'])[0]]['data']['values'][0];
+            var total = broken + success;
+
+            $("#executions-info-compare").children("span").first().text(success);
+            $("#executions-info-compare").children("span").last().text(broken);
+            $("#executions-info-percent").children("span").text(Math.round(broken*100/total));
+            $("#executions-info-total").children("span").text(total);
+
+
+        }
+    };
+    framework.data.observe(executions_info, display_executions_info, [context4rangeChart, repoCtx]);
+
 
     // REPOSITORY USERS TABLE
     var usersCtx = "user-table-context";

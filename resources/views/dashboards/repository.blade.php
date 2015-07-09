@@ -11,6 +11,7 @@
     "sdh-framework/framework.widget.linesChart",
     "sdh-framework/framework.widget.rangeNv",
     "sdh-framework/framework.widget.radarchart",
+    "sdh-framework/framework.widget.multibar",
     "assets/js/widget.languages",
     "css!assets/css/dashboards/user-dashboard"
     ]
@@ -55,6 +56,9 @@
     <div class="row">
         <div class="col-sm-5">
             <div id="commiters-lines" class="widget"></div>
+        </div>
+        <div class="col-sm-5">
+            <div id="executions-stacked" class="widget"></div>
         </div>
     </div>
     <div class="row">
@@ -228,6 +232,26 @@
     var commiters = new framework.widgets.LinesChart(commiters_dom, commiters_metrics,
             [context4rangeChart, repoCtx], commiters_conf);
 
+
+    // EXECUTIONS MULTIBAR
+    var executions_dom = document.getElementById("executions-stacked");
+    var executions_metrics = [
+        {
+            id: 'repositoriesuccessexec',
+            max: 0
+        },
+        {
+            id: 'repositorybrokenexec',
+            max: 0
+        }];
+    var executions_conf = {
+        stacked: true,
+        labelFormat: "%data.info.description%",
+        showControls: false,
+        height: 250
+    };
+    var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
+            [context4rangeChart, repoCtx], executions_conf);
 
         }
 

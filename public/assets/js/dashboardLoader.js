@@ -71,6 +71,7 @@ var DashboardController = function DashboardController() {
     this.widgets = [];
     this.previousDashboard = null;
     this.currentDashboard = null;
+    this.cssRequirejsMaps = [];
 };
 
 DashboardController.prototype.registerWidget = function registerWidget(widget) {
@@ -112,15 +113,41 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
         _this.previousDashboard = _this.currentDashboard;
         _this.currentDashboard = newDashboard;
 
-        //Remove previous css dependencies
+        // Remove previous css dependencies
         var deps = (typeof _REQUIREJS_DASHBOARD_DEPENDENCIES === 'undefined' ? [] : _REQUIREJS_DASHBOARD_DEPENDENCIES);
         for(var i = deps.length - 1; i >= 0; i-- ) {
             var dependency = deps[i];
+
             if(dependency.startsWith("css!")) {
-                var cssurl = require.toUrl(dependency.slice(4)) + ".css";
-                $("link[href='" + cssurl + "']").remove();
+
+                //Search it in the maps
+                var map = null;
+                for(var m = _this.cssRequirejsMaps.length - 1; m >= 0; m--) {
+                    if(_this.cssRequirejsMaps[m]['originalName'] == dependency) {
+                        map = _this.cssRequirejsMaps[m];
+                        break;
+                    }
+                }
+
+                // It should be found
+                if(map != null) {
+
+                    //Remove the css link from the head
+                    var cssurl = require.toUrl(dependency.slice(4));
+                    if(!cssurl.startsWith("http")) { //If not an url, add the trailing .css
+                        cssurl += ".css";
+                    }
+                    $("link[href='" + cssurl + "']").remove();
+
+                    //Undefine it from requirejs to be loaded next time is required
+                    requirejs.undef(map.prefix + '!' + map.name);
+                }
+
             }
         }
+
+        //Clear the cssMaps
+        _this.cssRequirejsMaps = [];
 
         try{
             $("#template-exec").html(data);
@@ -174,6 +201,12 @@ define(function(require, exports, module) {
                 }
                 //throw err; //Should I throw it?
             }.bind(dashboardController);
+
+            //Set a load handler to add the load maps to the dashboard controller
+            requirejs.onResourceLoad = function(context, map)
+            {
+                dashboardController.cssRequirejsMaps.push(map);
+            };
 
             //Tell the framework this is the Dashboard Controller
             framework.dashboard.setDashboardController(dashboardController);

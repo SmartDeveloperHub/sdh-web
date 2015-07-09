@@ -90,8 +90,8 @@
 
 @section('script')
 <!--script-->
-    $(".timeMidBox").remove();
-    $("#timeBar").remove();
+    $(".timeMidBox").hide();
+    $("#timeBar").hide();
 
     // TOTAL COMMITS
     var orgcommits_dom = document.getElementById("orgcommits");

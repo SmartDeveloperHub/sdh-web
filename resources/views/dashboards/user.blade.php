@@ -86,6 +86,9 @@
 
 @section('script')
 
+    $(".timeMidBox").show();
+    $("#timeBar").show();
+
     context4rangeChart = "context4rangeChart";
 
     //Header Titles

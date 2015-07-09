@@ -152,6 +152,7 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
         try{
             $("#template-exec").html(data);
         } catch(e) {
+            console.err(e);
             e.status = 0;
             e.statusText = "Could not parse response";
             onLoadError(e);
@@ -194,6 +195,7 @@ define(function(require, exports, module) {
 
             //Set an error handler for require js
             requirejs.onError = function (err) {
+                console.err(err);
                 alert("Oups! There were some problems trying to download all the dependencies of the dashboard." +
                 " If problems persist, check your Internet connection. \n\nReturning to the previous dashboard...");
                 if(this.previousDashboard != null) {

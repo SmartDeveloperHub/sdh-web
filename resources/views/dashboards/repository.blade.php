@@ -53,6 +53,11 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-sm-5">
+            <div id="commiters-lines" class="widget"></div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-9">
             <div class="row">
                 <div class="col-sm-12">
@@ -204,11 +209,27 @@
                             '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');
             document.getElementById('repo-status').innerHTML = (repoinfo['public'] ? '<i title="Public" class="fa fa-eye"></i> (Public)' : '<i title="Private" class="fa fa-eye-slash"></i> (Private)');
 
+        }
+    }, [repoCtx]);
 
+    // COMMITERS
+    var commiters_dom = document.getElementById("commiters-lines");
+    var commiters_metrics = [{
+        id: 'repositorydevelopers',
+        max: 0
+    }];
+    var commiters_conf = {
+        xlabel: 'Date',
+        ylabel: 'Commiters',
+        labelFormat: 'Commiters',
+        interpolate: 'monotone',
+        height: 250
+    };
+    var commiters = new framework.widgets.LinesChart(commiters_dom, commiters_metrics,
+            [context4rangeChart, repoCtx], commiters_conf);
 
 
         }
-    }, [repoCtx]);
 
     // REPOSITORY USERS TABLE
     var usersCtx = "user-table-context";

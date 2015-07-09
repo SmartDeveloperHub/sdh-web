@@ -3,7 +3,8 @@
 </script>
 <script type="application/javascript">
     $(".main-content").html($('#html-template').html());
-    require( @yield('require', '[]'), function() {
+    _REQUIREJS_DASHBOARD_DEPENDENCIES = @yield('require', '[]');
+    require( _REQUIREJS_DASHBOARD_DEPENDENCIES, function() {
 
         // Dashboard script
         @yield('script')

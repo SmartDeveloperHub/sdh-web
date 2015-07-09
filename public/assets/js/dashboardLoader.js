@@ -112,6 +112,16 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
         _this.previousDashboard = _this.currentDashboard;
         _this.currentDashboard = newDashboard;
 
+        //Remove previous css dependencies
+        var deps = (typeof _REQUIREJS_DASHBOARD_DEPENDENCIES === 'undefined' ? [] : _REQUIREJS_DASHBOARD_DEPENDENCIES);
+        for(var i = deps.length - 1; i >= 0; i-- ) {
+            var dependency = deps[i];
+            if(dependency.startsWith("css!")) {
+                var cssurl = require.toUrl(dependency.slice(4)) + ".css";
+                $("link[href='" + cssurl + "']").remove();
+            }
+        }
+
         try{
             $("#template-exec").html(data);
         } catch(e) {

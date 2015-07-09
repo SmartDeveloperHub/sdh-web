@@ -194,7 +194,7 @@
             document.getElementById('scm-link').innerHTML = repoinfo['scmlink'];
             document.getElementById('since').innerHTML = moment(new Date(repoinfo['creation'])).format('LLLL');
             document.getElementById('first-commit').innerHTML = moment(new Date(repoinfo['firstcommit'])).format('LLLL');
-            document.getElementById('last-commit').innerHTML = moment(new Date(repoinfo['lastcommit'])).format('LLLL');
+            document.getElementById('last-commit').innerHTML = moment(new Date(repoinfo['lastcommit'])).fromNow();
             document.getElementById('last-build').innerHTML = moment(new Date(repoinfo['builddate'])).format('LLLL');
             document.getElementById('build-status').innerHTML = (repoinfo['buildstatus'] ?
                             '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :

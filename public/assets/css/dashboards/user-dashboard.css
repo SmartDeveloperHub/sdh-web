@@ -89,3 +89,18 @@ table.dataTable tbody tr.selected{
 #description {
     text-overflow: ellipsis;
 }
+
+/* Repository */
+#executions-info-percent {
+    height: 50px;
+    width: 50px;
+    border: 1px solid #898989;
+    border-radius: 35px;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 20px;
+}
+#executions-info-percent span {
+    vertical-align: middle;
+    display: inline-block;
+}

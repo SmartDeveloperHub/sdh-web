@@ -98,7 +98,7 @@
 
 @section('script')
 
-    $(".timeMidBox").show();
+    $("#timeControler").show();
     $("#timeBar").show();
 
     context4rangeChart = "context4rangeChart";

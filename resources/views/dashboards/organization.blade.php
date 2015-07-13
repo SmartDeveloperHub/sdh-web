@@ -90,7 +90,7 @@
 
 @section('script')
 <!--script-->
-    $(".timeMidBox").hide();
+    $("#timeControler").hide();
     $("#timeBar").hide();
 
     // TOTAL COMMITS

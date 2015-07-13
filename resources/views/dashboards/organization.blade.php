@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="section feature-section gradient-1 blue">
+        <div id="arqPanel" class="section feature-section gradient-1">
             <div class="container">
                 <div class="row">
                     <div class="col col-sm-6 wow fadeInLeft animated" data-wow-duration="1.1s" data-wow-delay="0.2s">
@@ -36,7 +36,7 @@
                             <img class="feature-section-img 2x radius-img" height="100%" width="100%" src="/assets/images/sdh-architecture.png">
                         </div>
                     </div>
-                    <div class="col col-md-4 col-sm-6 wow fadeInUp animated" data-wow-duration="1.1s">
+                    <div class="col col-md-6 col-sm-6 wow fadeInUp animated" data-wow-duration="1.1s">
                         <div class="left p4 feature">
                             <h2 class="h1 thin  h-has-icon roboto">A Linked Data Platform</h2>
                             <p class="lighter-gray h4">
@@ -47,42 +47,57 @@
                 </div>
             </div>
         </div>
-        <div class="section">
+        <div id="metricsPanel" class="section">
+            <div id="metricsHeader" class="row row-centered">
+                <span id="headIcon" class="headIcon fa-bar-chart"></span>
+                <span class="headTitle">Organization Metrics:</span>
+            </div>
             <div class="row row-centered">
                 <div id="orgcommits" class="col-sm-3 col-centered"></div>
                 <div id="orgdevelopers" class="col-sm-3 col-centered"></div>
                 <div id="orgrepositories" class="col-sm-3 col-centered"></div>
+            </div>
+            <div class="row row-centered">
                 <div id="orgbuilds" class="col-sm-3 col-centered"></div>
+                <div id="organizationexectime" class="col-sm-3 col-centered"></div>
                 <div id="organizationexec" class="col-sm-3 col-centered"></div>
+            </div>
+            <div class="row row-centered">
                 <div id="organizationsuccessexec" class="col-sm-3 col-centered"></div>
                 <div id="organizationbrokenexec" class="col-sm-3 col-centered"></div>
-                <div id="organizationexectime" class="col-sm-3 col-centered"></div>
                 <div id="organizationbrokentime" class="col-sm-3 col-centered"></div>
             </div>
-
         </div>
     </div>
-    <div class="section gradient-2" ng-controller="UsersController">
+    <div id="usersPanel" class="section" ng-controller="UsersController">
+        <div id="develHeader" class="row row-centered">
+            <span id="headIcon" class="headIcon octicon octicon-organization"></span>
+            <span class="headTitle">Developers:</span>
+        </div>
         <div class="row row-centered search">
-            <h4 class="white">Search developer: </h4><input ng-model="userQuery" placeholder="Developer name" />
+            <span id="searchDevLabel" >Search developer: </span><input ng-model="userQuery" placeholder="Developer name" />
         </div>
         <div class="row row-centered card-list">
             <div class="col-sm-3 col-centered card" ng-repeat="user in users | orderBy:'name'" ng-show="([user.name, user.avatar] | filter:userQuery).length" ng-click="changeToUserDashboard(user)">
                 <span class="helper"></span>
                 <img class="card-avatar img-circle" ng-src="@{{ user.avatar }}" alt="@{{ user.name }}">
-                <h2 class="card-name">@{{ user.name }}</h2>
+                <span class="card-name">@{{ user.name }}</span>
             </div>
         </div>
     </div>
-    <div class="section gradient-2" ng-controller="ReposController">
+    <div id="reposPanel" class="section" ng-controller="ReposController">
+        <div id="reposHeader" class="row row-centered">
+            <span id="headIcon" class="headIcon octicon octicon-repo"></span>
+            <span class="headTitle">Repositories:</span>
+        </div>
         <div class="row row-centered search">
-            <h4 class="white">Search repo: </h4><input ng-model="repoQuery" placeholder="Repository name" />
+            <span id="searchRepLabel" >Search repository: </span><input ng-model="repoQuery" placeholder="Repository name" />
         </div>
         <div class="row row-centered card-list">
             <div class="col-sm-3 col-centered card" ng-repeat="repo in repos | orderBy:'name'" ng-show="([repo.name, repo.avatar] | filter:repoQuery).length" ng-click="changeToRepoDashboard(repo)">
                 <span class="helper"></span>
                 <img class="card-avatar img-circle" ng-src="@{{ repo.avatar }}" alt="@{{ repo.name }}">
-                <h2 class="card-name">@{{ repo.name }}</h2>
+                <span class="card-name">@{{ repo.name }}</span>
             </div>
         </div>
     </div>
@@ -104,8 +119,9 @@
         label: 'Total commits',
         decimal: 0,
         icon: 'octicon octicon-git-commit',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        iconbackground: '#004B8B',
+        background: 'transparent',
+        labelcolor: '#000'
     };
     var orgcommits = new framework.widgets.CounterBox(orgcommits_dom, orgcommits_metrics, null, orgcommits_conf);
 
@@ -120,8 +136,9 @@
         label: 'Total developers',
         decimal: 0,
         icon: 'octicon octicon-organization',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        iconbackground: '#E70083',
+        background: 'transparent',
+        labelcolor: '#000'
     };
     var orgdevelopers = new framework.widgets.CounterBox(orgdevelopers_dom, orgdevelopers_metrics, null, orgdevelopers_conf);
 
@@ -136,8 +153,9 @@
         label: 'Total repositories',
         decimal: 0,
         icon: 'octicon octicon-repo',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        iconbackground: '#9FCE23',
+        background: 'transparent',
+        labelcolor: '#000'
     };
     var orgrepositories = new framework.widgets.CounterBox(orgrepositories_dom, orgrepositories_metrics, null, orgrepositories_conf);
 
@@ -152,8 +170,9 @@
         label: 'Total builds',
         decimal: 0,
         icon: 'fa fa-cogs',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        iconbackground: '#F7853C',
+        background: 'transparent',
+        labelcolor: '#000'
     };
     var orgbuilds = new framework.widgets.CounterBox(orgbuilds_dom, orgbuilds_metrics, null, orgbuilds_conf);
 
@@ -168,8 +187,9 @@
         label: 'Total executions',
         decimal: 0,
         icon: 'octicon octicon-flame',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        iconbackground: '#FFAC00',
+        background: 'transparent',
+        labelcolor: '#000'
     };
     var organizationexec = new framework.widgets.CounterBox(organizationexec_dom, organizationexec_metrics, null, organizationexec_conf);
 
@@ -185,8 +205,9 @@
         label: 'Total successful executions',
         decimal: 0,
         icon: 'octicon octicon-thumbsup',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        iconbackground: '#069744',
+        background: 'transparent',
+        labelcolor: '#000'
     };
     var organizationsuccessexec = new framework.widgets.CounterBox(organizationsuccessexec_dom, organizationsuccessexec_metrics, null, organizationsuccessexec_conf);
 
@@ -202,8 +223,9 @@
         label: 'Total broken executions',
         decimal: 0,
         icon: 'octicon octicon-thumbsdown',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        iconbackground: '#E21B23',
+        background: 'transparent',
+        labelcolor: '#000'
     };
     var organizationbrokenexec = new framework.widgets.CounterBox(organizationbrokenexec_dom, organizationbrokenexec_metrics, null, organizationbrokenexec_conf);
 
@@ -219,8 +241,10 @@
         label: 'Build broken time',
         decimal: 0,
         icon: 'octicon octicon-history',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        iconbackground: '#5F65D7',
+        background: 'transparent',
+        labelcolor: '#000',
+        suffix: " days"
     };
     var organizationbrokentime = new framework.widgets.CounterBox(organizationbrokentime_dom, organizationbrokentime_metrics, null, organizationbrokentime_conf);
 
@@ -235,8 +259,10 @@
         label: 'Build execution time',
         decimal: 0,
         icon: 'octicon octicon-clock',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        iconbackground: '#8D197B',
+        background: 'transparent',
+        labelcolor: '#000',
+        suffix: " days"
     };
     var organizationexectime = new framework.widgets.CounterBox(organizationexectime_dom, organizationexectime_metrics, null, organizationexectime_conf);
 

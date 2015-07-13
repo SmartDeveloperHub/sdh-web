@@ -28,11 +28,14 @@
         <div class="col-sm-5">
             <div class="com-widget widget static-info-widget">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
+                        <img id="avatar" class="avatar img-circle" src="" alt="">
+                    </div>
+                    <div class="col-sm-5">
                         <label>Name: <span id="name"></span></label>
                         <label>Description: <span id="description"></span></label>
                     </div>
-                    <div class="col-sm-6 ">
+                    <div class="col-sm-5">
                         <label>SCM link: <span id="scm-link"></span></label>
                         <label>Status: <span id="repo-status"></span></label>
                     </div>
@@ -220,6 +223,7 @@
                             '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
                             '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');
             document.getElementById('repo-status').innerHTML = (repoinfo['public'] ? '<i title="Public" class="fa fa-eye"></i> (Public)' : '<i title="Private" class="fa fa-eye-slash"></i> (Private)');
+            $("#avatar").attr('src', repoinfo['avatar']).attr('alt', repoinfo['name']);
 
         }
     }, [repoCtx]);

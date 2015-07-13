@@ -213,6 +213,12 @@
         //Stop observing for data changes
         framework.data.stopObserve(this.observeCallback);
 
+        //Remove resize event listener
+        if(this.resizeEventHandler != null) {
+            $(window).off("resize", this.resizeEventHandler);
+            this.resizeEventHandler = null;
+        }
+
         //Remove the horizontal widgets
         for(var i = 0; i < this.horizontalCharts.length; ++i) {
             this.horizontalCharts[i].delete();
@@ -491,7 +497,9 @@
                 .call(chart);
 
 
-            nv.utils.windowResize(chart.update);
+            //Update the chart when window resizes.
+            this.resizeEventHandler = function() { chart.update() };
+            $(window).resize(this.resizeEventHandler);
 
             return chart;
         }.bind(this));

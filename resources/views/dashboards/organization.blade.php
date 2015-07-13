@@ -50,7 +50,7 @@
         <div id="metricsPanel" class="section">
             <div id="metricsHeader" class="row row-centered">
                 <span id="headIcon" class="headIcon fa-bar-chart"></span>
-                <span class="headTitle">Organization Metrics:</span>
+                <span class="headTitle">Organization Metrics</span>
             </div>
             <div class="row row-centered">
                 <div id="orgcommits" class="col-sm-3 col-centered"></div>
@@ -72,7 +72,7 @@
     <div id="usersPanel" class="section" ng-controller="UsersController">
         <div id="develHeader" class="row row-centered">
             <span id="headIcon" class="headIcon octicon octicon-organization"></span>
-            <span class="headTitle">Developers:</span>
+            <span class="headTitle">Developers</span>
         </div>
         <div class="row row-centered search">
             <span id="searchDevLabel" >Search developer: </span><input ng-model="userQuery" placeholder="Developer name" />
@@ -88,7 +88,7 @@
     <div id="reposPanel" class="section" ng-controller="ReposController">
         <div id="reposHeader" class="row row-centered">
             <span id="headIcon" class="headIcon octicon octicon-repo"></span>
-            <span class="headTitle">Repositories:</span>
+            <span class="headTitle">Repositories</span>
         </div>
         <div class="row row-centered search">
             <span id="searchRepLabel" >Search repository: </span><input ng-model="repoQuery" placeholder="Repository name" />

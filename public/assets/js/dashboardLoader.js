@@ -91,6 +91,9 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
     //Loading animation
     startLoading();
 
+    //Scroll to top
+    window.scrollTo(0, 0);
+
     // Delete all the widgets
     var widget;
     while((widget = this.widgets.pop()) != null) {

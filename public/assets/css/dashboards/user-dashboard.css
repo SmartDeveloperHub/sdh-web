@@ -27,14 +27,22 @@
     height: 100%;
 }
 
-table#DataTables_Table_0 {
-    width: auto !important;
+table.dataTable {
+    width: 100% !important;
 }
-
+table.dataTable thead {
+    background-color: rgba(199, 199, 199, 0.6);
+}
+table.dataTable, table.dataTable thead th, table.dataTable thead td {
+    border: 0 !important;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background: #ffffff;
+}
 .table-search{
     width: 100%;
-    padding: 15px 10px;
-    border: solid #dddddd 2px;
+    padding: 0 10px 5px 10px;
+    border: 0;
 }
 .table-search label {
     width: 100%;
@@ -44,7 +52,7 @@ table#DataTables_Table_0 {
     float: none !important;
 }
 
-table#DataTables_Table_0 .sorting_disabled, table#DataTables_Table_0 .sorting_asc {
+table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
     overflow: hidden;
     white-space: nowrap;
 }
@@ -54,6 +62,7 @@ table#DataTables_Table_0 .sorting_disabled, table#DataTables_Table_0 .sorting_as
     width: 100%;
     border-radius: 10px;
     padding-left: 20px;
+    border: 0;
 }
 .dataTables_filter input[type="search"]:focus {
     outline-style: none;
@@ -75,7 +84,7 @@ table#DataTables_Table_0 .sorting_disabled, table#DataTables_Table_0 .sorting_as
 }
 
 table.dataTable tbody tr.selected{
-    background-color: #f0f0f0 !important;
+    background-color: #EDEDED !important;
 }
 #skills-star{
     text-align: center;

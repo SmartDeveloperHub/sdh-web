@@ -195,7 +195,7 @@ define(function(require, exports, module) {
 
             //Set an error handler for require js
             requirejs.onError = function (err) {
-                console.err(err);
+                console.error(err);
                 alert("Oups! There were some problems trying to download all the dependencies of the dashboard." +
                 " If problems persist, check your Internet connection. \n\nReturning to the previous dashboard...");
                 if(this.previousDashboard != null) {

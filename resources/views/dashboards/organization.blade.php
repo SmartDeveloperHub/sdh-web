@@ -104,7 +104,7 @@
 @stop
 
 @section('script')
-<!--script-->
+    
     $("#timeControler").hide();
     $("#timeBar").hide();
 

@@ -152,7 +152,7 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
         try{
             $("#template-exec").html(data);
         } catch(e) {
-            console.err(e);
+            console.error(e);
             e.status = 0;
             e.statusText = "Could not parse response";
             onLoadError(e);

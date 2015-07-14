@@ -368,6 +368,7 @@
             }
         ],
         selectable: true,
+        minRowsSelected: 1,
         maxRowsSelected: 6,
         filterControl: true,
         initialSelectedRows: 5

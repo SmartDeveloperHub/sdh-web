@@ -1271,21 +1271,39 @@ a:hover {
 }
 
 #loading {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.loading-protection {
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 999;
 }
 
-#loading .loading-info {
+.loading-white .loading-info {
     position: relative;
     top: 50%;
     font-size: 30px;
+    background-color: #FFFFFF;
 }
 
 .loading-info .loading-icon{
     display: block;
+}
+
+.loading-white {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
 }

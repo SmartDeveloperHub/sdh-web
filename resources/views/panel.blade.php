@@ -91,18 +91,20 @@
 
 @section('body')
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-
     <div class="main-content"></div>
-
-</div>
-<div id="template-exec" style="display: none;"></div>
-<div id="loading" class="hidden">
-    <div class="loading-info text-center">
-        <span class="loading-text"></span>
-        <i class="loading-icon fa fa-spinner fa-pulse fa-3x"></i>
+    <div id="loading" class="hidden">
+        <div class="loading-protection"></div>
+        <div class="loading-white">
+            <div class="loading-info text-center">
+                <i class="loading-icon fa fa-spin">
+                    <img height="150" width="150" src="assets/images/sdh_400ppp_RGB_imagotipo.png" />
+                </i>
+            </div>
+        </div>
     </div>
 
 </div>
+<div id="template-exec" style="display: none;"></div>
 
 {{-- End of body section --}}
 @stop

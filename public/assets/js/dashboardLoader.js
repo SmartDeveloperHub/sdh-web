@@ -88,7 +88,8 @@ DashboardController.prototype.registerWidget = function registerWidget(widget) {
 
 DashboardController.prototype.changeTo = function changeTo(newDashboard, onSuccess) {
 
-    showLoadingMessage("Disposing the previous dashboard...");
+    //Loading animation
+    startLoading();
 
     // Delete all the widgets
     var widget;
@@ -99,9 +100,6 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
 
     // Just to be sure in case some widget did not registered with the framework
     framework.data.stopAllObserves();
-
-    //Now load the new dashboard
-    showLoadingMessage("Downloading dashboard template...");
 
     var _this = this; //Closure
 
@@ -171,28 +169,22 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
 
 };
 
-var showLoadingMessage = function showLoadingMessage(mes) {
-
-    //Change loading info
-    $("#loading .loading-info span").text(mes);
-
-    //Display the loading animation
+//Display the loading animation
+var startLoading = function startLoading() {
+    $("#loading .loading-icon").show();
     $("#loading").show();
 };
 
+//Remove loading animation
 var finishLoading = function() {
-    //Remove loading
-    $( "#loading" ).fadeOut(250, function() {
-        $(this).find(".loading-info span").text("");
-    });
-
+    $("#loading .loading-icon").hide();
+    $( "#loading" ).fadeOut(250);
 };
 
 
 define(function(require, exports, module) {
 
     document.getElementById("loading").className = "";
-    document.getElementById("loading").getElementsByTagName("span")[0].textContent = "Initializing SDH Framework...";
 
     require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler", "widgetCommon"], function() {
 

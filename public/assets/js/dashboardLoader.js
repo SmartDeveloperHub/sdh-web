@@ -220,7 +220,13 @@ define(function(require, exports, module) {
             $('body').removeClass('hidd');
 
             if(BASE_DASHBOARD != null) {
+
+                //Show the page container
+                $(".page-container").show();
+
+                // Load the initial dashboard
                 dashboardController.changeTo(BASE_DASHBOARD);
+
             } else {
                 console.error("BASE_DASHBOARD is not defined.");
             }

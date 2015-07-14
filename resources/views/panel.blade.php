@@ -90,7 +90,7 @@
 @stop
 
 @section('body')
-<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+<div class="page-container" style="display: none;">
     <div class="main-content"></div>
     <div id="loading" class="hidden">
         <div class="loading-protection"></div>

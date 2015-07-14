@@ -86,14 +86,11 @@
 
 @section('script')
 
-    $("#timeControler").show();
-    $("#timeBar").show();
+    //Show header chart and set titles
+    setTitle("Developers");
+    showHeaderChart();
 
     context4rangeChart = "context4rangeChart";
-
-    //Header Titles
-    setTitle("Developers");
-    //setSubtitle("Javier Hernandez");
 
     // light or dark theme?. Default is light
     var lightTheme = true;

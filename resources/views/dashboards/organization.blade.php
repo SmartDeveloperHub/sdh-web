@@ -104,9 +104,11 @@
 @stop
 
 @section('script')
-    
-    $("#timeControler").hide();
-    $("#timeBar").hide();
+
+    //Show header chart and set titles
+    setTitle("");
+    setSubtitle("");
+    hideHeaderChart();
 
     // TOTAL COMMITS
     var orgcommits_dom = document.getElementById("orgcommits");

@@ -98,13 +98,11 @@
 
 @section('script')
 
-    $("#timeControler").show();
-    $("#timeBar").show();
+    //Show header chart and set titles
+    setTitle("Repositories");
+    showHeaderChart();
 
     context4rangeChart = "context4rangeChart";
-
-    //Set header title
-    setTitle("Repositories");
 
     //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
     var repoCtx = "rid";

@@ -19,7 +19,7 @@
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
-var setTimeInfo, setTitle, setSubtitle;
+var setTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHeaderChart;
 
 	$(document).ready(function(){
 
@@ -79,6 +79,16 @@ var setTimeInfo, setTitle, setSubtitle;
 		setSubtitle = function setSubtitle(newSubtitle) {
 			hSubtitle.text(newSubtitle);
 		}
+
+        hideHeaderChart = function() {
+            $("#timeControler").hide();
+            $("#timeBar").hide();
+        };
+
+        showHeaderChart = function() {
+            $("#timeControler").show();
+            $("#timeBar").show();
+        };
 
 		timeControl.click(changePanehandler);
 

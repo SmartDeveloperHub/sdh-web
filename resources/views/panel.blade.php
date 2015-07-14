@@ -95,7 +95,7 @@
     <div class="main-content"></div>
 
 </div>
-<div id="template-exec" style="display: none";></div>
+<div id="template-exec" style="display: none;"></div>
 <div id="loading" class="hidden">
     <div class="loading-info text-center">
         <span class="loading-text"></span>

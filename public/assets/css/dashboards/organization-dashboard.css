@@ -32,7 +32,7 @@
 }
 
 #arqPanel {
-    box-shadow: 0 4px 2px -2px #989595;
+    /*box-shadow: 0 4px 2px -2px #989595;*/
 }
 
 #metricsPanel {
@@ -78,7 +78,7 @@
     text-align: center;
 }
 .gradient-1 {
-    background: linear-gradient(140deg, #FFFFFF 0%, #CCCCCC 50%, #737373 100%);
+    background: linear-gradient(140deg, #FFF 0%, #CBCBCB 50%, #CDCDCD 100%);
     /*linear-gradient(to right, rgba(147,193,31,1) 0%, rgba(82,142,78,1) 68%, rgba(0,74,139,1) 100%)*/
 }
 .gradient-2 {
@@ -196,6 +196,7 @@
 .lighter-gray {
     color: #323232;
     text-shadow: 0px 0.5px rgba(228, 228, 228, 0.55);
+    text-align: left;
 }
 .roboto {
     font-family: Roboto;

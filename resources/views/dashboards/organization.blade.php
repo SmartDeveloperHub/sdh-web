@@ -53,19 +53,19 @@
                 <span class="headTitle">Organization Metrics</span>
             </div>
             <div class="row row-centered">
-                <div id="orgcommits" class="col-sm-3 col-centered"></div>
-                <div id="orgdevelopers" class="col-sm-3 col-centered"></div>
-                <div id="orgrepositories" class="col-sm-3 col-centered"></div>
+                <div id="orgcommits" class="col-sm-4 col-centered"></div>
+                <div id="orgdevelopers" class="col-sm-4 col-centered"></div>
+                <div id="orgrepositories" class="col-sm-4 col-centered"></div>
             </div>
             <div class="row row-centered">
-                <div id="orgbuilds" class="col-sm-3 col-centered"></div>
-                <div id="organizationexectime" class="col-sm-3 col-centered"></div>
-                <div id="organizationexec" class="col-sm-3 col-centered"></div>
+                <div id="orgbuilds" class="col-sm-4 col-centered"></div>
+                <div id="organizationexectime" class="col-sm-4 col-centered"></div>
+                <div id="organizationexec" class="col-sm-4 col-centered"></div>
             </div>
             <div class="row row-centered">
-                <div id="organizationsuccessexec" class="col-sm-3 col-centered"></div>
-                <div id="organizationbrokenexec" class="col-sm-3 col-centered"></div>
-                <div id="organizationbrokentime" class="col-sm-3 col-centered"></div>
+                <div id="organizationsuccessexec" class="col-sm-4 col-centered"></div>
+                <div id="organizationbrokenexec" class="col-sm-4 col-centered"></div>
+                <div id="organizationbrokentime" class="col-sm-4 col-centered"></div>
             </div>
         </div>
     </div>

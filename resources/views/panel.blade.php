@@ -53,7 +53,7 @@
         </div>
     </header>
     <div class="settings-pane">
-        <div id="timeBar">
+        <div id="timeBar" style="display: none;">
             <div class="infobar">
                 <div class="infoBox timeFrom">
                     <span class= "fa-calendar"></span>
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="row" id="timeBarDown">
-           <div id="timeControler">
+           <div id="timeControler" style="display: none;">
                 <div class="timeMidBox">
                     <span id="timeBarIcon" class="fa-caret-down"></span>
                 </div>

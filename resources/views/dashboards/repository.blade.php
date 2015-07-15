@@ -97,41 +97,52 @@
 @stop
 
 @section('script')
-
+/* <script> */
     //Show header chart and set titles
     setTitle("Repositories");
     showHeaderChart();
-
-    context4rangeChart = "context4rangeChart";
 
     //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
     var repoCtx = "rid";
     framework.data.updateContext('rid', {rid: framework.dashboard.getEnv()['rid']});
 
-    // UPPER SELECTOR RANENV
-    var rangeNv_dom = document.getElementById("fixed-chart");
-    var rangeNv_metrics = [
-        {
-            id: 'repositorycommits',
-            max: 24,
-            aggr: 'avg'
-        }
-    ];
-    var rangeNv_configuration = {
-        ownContext: context4rangeChart,
-        labelFormat: "Total Commits",
-        isArea: true,
-        showLegend: false,
-        interpolate: 'monotone',
-        showFocus: false,
-        height : 140,
-        duration: 500,
-        axisColor: "#BFE5E3",
-        background: "rgba(25, 48, 63, 0.92)",
-        colors: ["#FFC10E"]
-    };
-    var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
+    var context4rangeChart = "context4rangeChart";
 
+    // UPPER SELECTOR RANENV (NEEDS FIRST COMMIT)
+    framework.data.observe(['repoinfo'], function(event){
+        if(event.event === 'loading') {
+            //TODO
+        } else if(event.event === 'data') {
+            var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
+            var firstCommit = parseInt(repoinfo['firstcommit']);
+
+
+            var rangeNv_dom = document.getElementById("fixed-chart");
+            var rangeNv_metrics = [
+                {
+                    id: 'repositorycommits',
+                    max: 24,
+                    aggr: 'avg',
+                    from: moment(firstCommit).format("YYYY-MM-DD")
+                }
+            ];
+            var rangeNv_configuration = {
+                ownContext: context4rangeChart,
+                labelFormat: "Total Commits",
+                isArea: true,
+                showLegend: false,
+                interpolate: 'monotone',
+                showFocus: false,
+                height : 140,
+                duration: 500,
+                axisColor: "#BFE5E3",
+                background: "rgba(25, 48, 63, 0.92)",
+                colors: ["#FFC10E"]
+            };
+
+            new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
+        }
+    }, [repoCtx]);
 
     // TOTAL COMMITS
     var total_commits_dom = document.getElementById("total-commits");

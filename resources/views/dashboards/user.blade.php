@@ -88,21 +88,26 @@
 @stop
 
 @section('script')
-
+/* <script> */
     //Show header chart and set titles
     setTitle("Developers");
     showHeaderChart();
 
-    context4rangeChart = "context4rangeChart";
+    //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
+    var userCtx = "uid";
+    var env = framework.dashboard.getEnv();
+    framework.data.updateContext('uid', {uid: (env['uid'] != null ? env['uid'] : USER_ID)}); //TODO: get the USER_ID from the env
 
     // light or dark theme?. Default is light
     var lightTheme = true;
+    var setRangeChart = null;
+    var rangeNv = null;
     var themebutton = $(".headbutton.mail");
     var setLightTheme = function setLightTheme() {
         if (!lightTheme) {
             lightTheme = true;
-            rangeNv.delete();
-            setRangeChart();
+            rangeNv && rangeNv.delete();
+            setRangeChart && setRangeChart();
             themebutton.removeClass("fa-sun-o");
             themebutton.addClass("fa-moon-o");
         }
@@ -111,8 +116,8 @@
     var setDarkTheme = function setDarkTheme() {
         if (lightTheme) {
             lightTheme = false;
-            rangeNv.delete();
-            setRangeChart();
+            rangeNv && rangeNv.delete();
+            setRangeChart && setRangeChart();
             themebutton.removeClass("fa-moon-o");
             themebutton.addClass("fa-sun-o");
         }
@@ -130,40 +135,48 @@
 
     $(".headbutton.mail").click(changeTheme);
 
-    //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
-    var userCtx = "uid";
-    var env = framework.dashboard.getEnv();
-    framework.data.updateContext('uid', {uid: (env['uid'] != null ? env['uid'] : USER_ID)}); //TODO: get the USER_ID from the env
+    var context4rangeChart = "context4rangeChart";
 
-    var setRangeChart = function() {
-        // UPPER SELECTOR RANENV
-        var rangeNv_dom = document.getElementById("fixed-chart");
-        var rangeNv_metrics = [
-            {
-                id: 'usercommits',
-                max: 24,
-                aggr: 'avg'
-            }
-        ];
-        var rangeNv_configuration = {
-            ownContext: context4rangeChart,
-            isArea: true,
-            showLegend: false,
-            interpolate: 'monotone',
-            showFocus: false,
-            height : 140,
-            duration: 500,
-            colors: ["#004C8B"],
-            axisColor: "#004C8B"
-        };
-        if (!lightTheme) {
-            rangeNv_configuration['axisColor'] = "#BFE5E3";
-            rangeNv_configuration['colors'] = ["#FFC10E"];
+    // UPPER SELECTOR RANENV (NEEDS FIRST COMMIT)
+    framework.data.observe(['userinfo'], function(event){
+        if(event.event === 'loading') {
+            //TODO
+        } else if(event.event === 'data') {
+            var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
+            var firstCommit = parseInt(userinfo['firstcommit']);
+
+            var setRangeChart = function() {
+                var rangeNv_dom = document.getElementById("fixed-chart");
+                var rangeNv_metrics = [
+                    {
+                        id: 'usercommits',
+                        max: 24,
+                        aggr: 'avg',
+                        from: moment(firstCommit).format("YYYY-MM-DD")
+                    }
+                ];
+                var rangeNv_configuration = {
+                    ownContext: context4rangeChart,
+                    isArea: true,
+                    showLegend: false,
+                    interpolate: 'monotone',
+                    showFocus: false,
+                    height: 140,
+                    duration: 500,
+                    colors: ["#004C8B"],
+                    axisColor: "#004C8B"
+                };
+                if (!lightTheme) {
+                    rangeNv_configuration['axisColor'] = "#BFE5E3";
+                    rangeNv_configuration['colors'] = ["#FFC10E"];
+                }
+                return new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [userCtx], rangeNv_configuration);
+            };
+
+            rangeNv = setRangeChart();
+
         }
-        var _rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [userCtx], rangeNv_configuration);
-        return _rangeNv;
-    }.bind(this);
-    var rangeNv = setRangeChart();
+    }, [userCtx]);
 
     // TOTAL COMMITS
     var total_commits_dom = document.getElementById("total-commits");

@@ -27,11 +27,14 @@
         <div class="col-sm-5">
             <div class="com-widget widget static-info-widget">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
+                        <img id="avatar" class="avatar img-circle" src="" alt="">
+                    </div>
+                    <div class="col-sm-5">
                         <label>Email: <span id="user-email"></span></label>
                         <label>Web: <span id="user-website"></span></label>
                     </div>
-                    <div class="col-sm-6 ">
+                    <div class="col-sm-5">
                         <label>Skype: <span id="user-skype"></span></label>
                         <label>Linkedin: <span id="user-linkedin"></span></label>
                         <label>Twitter: <span id="user-twitter"></span></label>
@@ -249,7 +252,7 @@
             document.getElementById('user-since').innerHTML = moment(new Date(userinfo['register'])).format('LLLL');
             document.getElementById('user-first-commit').innerHTML = moment(new Date(userinfo['firstcommit'])).format('LLLL');
             document.getElementById('user-last-commit').innerHTML = moment(new Date(userinfo['lastcommit'])).format('LLLL');
-
+            $("#avatar").attr('src', userinfo['avatar']).attr('alt', userinfo['name']);
 
         }
     }, [userCtx]);
@@ -298,6 +301,7 @@
             max: 1
         }];
     var skills_star_configuration = {
+        height: 279,
         labels: ["Speed", "Collaboration", "Quality"]
     };
     var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,

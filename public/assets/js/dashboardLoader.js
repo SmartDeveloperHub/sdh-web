@@ -77,13 +77,36 @@ if (!String.prototype.startsWith) {
 
 var DashboardController = function DashboardController() {
     this.widgets = [];
-    this.previousDashboard = null;
-    this.currentDashboard = null;
     this.cssRequirejsMaps = [];
+    this.isLoaderPage = true;
+    this.onHistoryChange = false;
+    this.historyOwnIndex = 0;
+
+    window.onpopstate = function(event) {
+
+        if(event.state.dashboard != null) {
+
+            this.onHistoryChange = true;
+
+            this.historyOwnIndex = event.state.index;
+
+            //Set the new environment
+            framework.dashboard.changeTo(event.state.dashboard, event.state.env);
+
+        }
+    }.bind(this);
 };
 
 DashboardController.prototype.registerWidget = function registerWidget(widget) {
     this.widgets.push(widget);
+};
+
+DashboardController.prototype.goToPrevious = function goToPrevious() {
+
+    if(this.historyOwnIndex > 0) {
+        history.back();
+    }
+
 };
 
 DashboardController.prototype.changeTo = function changeTo(newDashboard, onSuccess) {
@@ -108,9 +131,7 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
 
     var onLoadError = function(e) {
         alert("Oups! I couldn't get the dashboard '" + newDashboard + "'\nError " + e.status + " (" + e.statusText + ")\n\nReturning to the previous dashboard...");
-        if(_this.previousDashboard != null) {
-            _this.changeTo(_this.previousDashboard);
-        }
+        _this.goToPrevious();
     };
 
     $.get(newDashboard, function( data ) {
@@ -118,9 +139,32 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
         //Tell the framework that the new template was retrieved correctly and that the controller is ready to chane the dashboard
         typeof onSuccess === 'function' && onSuccess();
 
-        //Update previous and current dashboard
-        _this.previousDashboard = _this.currentDashboard;
-        _this.currentDashboard = newDashboard;
+        //Update history
+        if(!_this.onHistoryChange) {
+
+            //In the first page we need to overwrite the current history to avoid having it duplicated
+            if(_this.isLoaderPage) { //First page
+
+                _this.isLoaderPage = false;
+                history.replaceState({
+                    dashboard: newDashboard,
+                    env: framework.dashboard.getEnv(),
+                    index: _this.historyOwnIndex
+                }, "");
+
+            } else { //Next dashboards
+
+                history.pushState({
+                    dashboard: newDashboard,
+                    env: framework.dashboard.getEnv(),
+                    index: ++_this.historyOwnIndex
+                }, "");
+
+            }
+
+        } else {
+            _this.onHistoryChange  = false;
+        }
 
         // Remove previous css dependencies
         var deps = (typeof _REQUIREJS_DASHBOARD_DEPENDENCIES === 'undefined' ? [] : _REQUIREJS_DASHBOARD_DEPENDENCIES);
@@ -201,9 +245,7 @@ define(function(require, exports, module) {
                 console.error(err);
                 alert("Oups! There were some problems trying to download all the dependencies of the dashboard." +
                 " If problems persist, check your Internet connection. \n\nReturning to the previous dashboard...");
-                if(this.previousDashboard != null) {
-                    this.changeTo(this.previousDashboard);
-                }
+                this.goToPrevious();
                 //throw err; //Should I throw it?
             }.bind(dashboardController);
 

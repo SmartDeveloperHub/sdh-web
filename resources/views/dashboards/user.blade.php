@@ -335,7 +335,7 @@
         },
         {
             id: 'userquality',
-            max: 100,
+            max: 20,
             aggr: 'avg'
         }];
     var skills_lines_configuration = {
@@ -343,7 +343,7 @@
         ylabel: 'Score',
         interpolate: 'monotone',
         height: 240,
-        labelFormat: '%data.info.description%' //TODO
+        labelFormat: '%data.info.id%' //TODO add title in metrics
     };
     var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,
             [context4rangeChart, userCtx], skills_lines_configuration);
@@ -408,7 +408,8 @@
         height: 155,
         total: {
             id: 'usercommits',
-            max: 1
+            max: 1,
+            aggr: 'sum'
         }
     };
     var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,

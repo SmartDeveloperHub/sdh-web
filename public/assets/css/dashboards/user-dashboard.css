@@ -27,6 +27,15 @@
     height: 100%;
 }
 
+.com-widget.com-counter .com-label .num {
+  font-size: 38px;
+}
+
+.com-widget.com-counter .com-label span {
+  font-size: 16px;
+  font-family: Roboto;
+}
+
 table.dataTable {
     width: 100% !important;
 }
@@ -39,6 +48,11 @@ table.dataTable, table.dataTable thead th, table.dataTable thead td {
 .table-striped > tbody > tr:nth-of-type(odd) {
     background: #ffffff;
 }
+
+.boxCounter {
+    vertical-align: top;
+}
+
 .table-search{
     width: 100%;
     padding: 0 10px 5px 10px;

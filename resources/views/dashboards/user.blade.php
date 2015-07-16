@@ -18,10 +18,10 @@
 
 @section('html')
     <div class="row">
-        <div id="total-commits" class="col-sm-3"></div>
-        <div id="open-issues" class="col-sm-3"></div>
-        <div id="solved-issues" class="col-sm-3"></div>
-        <div id="total-projects" class="col-sm-3"></div>
+        <div id="total-commits" class="boxCounter col-sm-3"></div>
+        <div id="open-issues" class="boxCounter col-sm-3"></div>
+        <div id="solved-issues" class="boxCounter col-sm-3"></div>
+        <div id="total-projects" class="boxCounter col-sm-3"></div>
     </div>
     <div class="row">
         <div class="col-sm-5">
@@ -190,7 +190,7 @@
         decimal: 0,
         icon: 'octicon octicon-git-commit',
         iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        background: 'transparent'
     };
     var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
 
@@ -207,7 +207,7 @@
         decimal: 0,
         icon: 'octicon octicon-issue-opened',
         iconbackground: 'rgb(205, 195, 10)',
-        background: '#E0E0E0'
+        background: 'transparent'
     };
     var open_issues = new framework.widgets.CounterBox(open_issues_dom, open_issues_metrics, [context4rangeChart, userCtx], open_issues_conf);
 
@@ -224,7 +224,7 @@
         decimal: 0,
         icon: 'octicon octicon-issue-closed',
         iconbackground: 'rgb(104, 184, 40)',
-        background: '#E0E0E0'
+        background: 'transparent'
     };
     var solved_issues = new framework.widgets.CounterBox(solved_issues_dom, solved_issues_metrics, [context4rangeChart, userCtx], solved_issues_conf);
 
@@ -241,7 +241,7 @@
         decimal: 0,
         icon: 'octicon octicon-repo',
         iconbackground: 'rgb(184, 40, 40)',
-        background: '#E0E0E0'
+        background: 'transparent'
     };
     var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [context4rangeChart, userCtx], total_projects_conf);
 

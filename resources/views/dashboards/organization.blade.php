@@ -8,7 +8,7 @@
     "https://cdn.rawgit.com/matthieua/WOW/master/dist/wow.js",
     "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js",
     "//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js",
-    "css!https://cdn.rawgit.com/daneden/animate.css/master/animate.css",
+    "css!assets/css/animate.css",
     "css!assets/css/dashboards/organization-dashboard",
     "sdh-framework/framework.widget.counterbox"
     ]

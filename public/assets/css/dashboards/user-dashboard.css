@@ -20,7 +20,7 @@
 */
 
 .widget{
-    background-color: #E0E0E0;
+    background-color: transparent;
     display: block;
     margin-bottom: 20px;
     padding: 12px;
@@ -83,6 +83,7 @@ table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
 }
 .static-info-widget{
     min-height: 100px;
+    font-family: Roboto;
 }
 
 .static-info-widget label{
@@ -90,11 +91,13 @@ table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    font-family: Roboto;
 }
 
 .static-info-widget label span{
     font-weight: normal;
     color: rgba(100,100,100,1);
+    font-family: Roboto;
 }
 
 table.dataTable tbody tr.selected{
@@ -122,8 +125,10 @@ table.dataTable tbody tr.selected{
     text-align: center;
     padding-top: 10px;
     font-size: 20px;
+    font-family: Roboto;
 }
 #executions-info-percent span {
     vertical-align: middle;
     display: inline-block;
+    font-family: Roboto;
 }

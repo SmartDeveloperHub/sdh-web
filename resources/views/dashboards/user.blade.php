@@ -252,7 +252,7 @@
             //TODO
         } else if(event.event === 'data') {
             var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
-
+            console.log(JSON.stringify(userinfo));
             //Set header subtitle
             setSubtitle(userinfo['name']);
 
@@ -342,6 +342,7 @@
         xlabel: 'Date',
         ylabel: 'Score',
         interpolate: 'monotone',
+        height: 240,
         labelFormat: '%data.info.description%' //TODO
     };
     var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,

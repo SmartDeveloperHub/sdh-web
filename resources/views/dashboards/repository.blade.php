@@ -243,10 +243,10 @@
             document.getElementById('description').innerHTML = repoinfo['description'];
             document.getElementById('scm-link').innerHTML = repoinfo['scmlink'];
             document.getElementById('since').innerHTML = moment(new Date(repoinfo['creation'])).format('LLLL');
-            document.getElementById('first-commit').innerHTML = moment(new Date(repoinfo['firstcommit'])).format('LLLL');
-            document.getElementById('last-commit').innerHTML = moment(new Date(repoinfo['lastcommit'])).fromNow();
-            document.getElementById('last-build').innerHTML = moment(new Date(repoinfo['builddate'])).format('LLLL');
-            document.getElementById('build-status').innerHTML = (repoinfo['buildstatus'] ?
+            document.getElementById('first-commit').innerHTML = moment(new Date(repoinfo['firstCommit'])).format('LLLL');
+            document.getElementById('last-commit').innerHTML = moment(new Date(repoinfo['lastCommit'])).format('LLLL');
+            document.getElementById('last-build').innerHTML = moment(new Date(repoinfo['builDdate'])).format('LLLL');
+            document.getElementById('build-status').innerHTML = (repoinfo['buildStatus'] ?
                             '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
                             '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');
             document.getElementById('repo-status').innerHTML = (repoinfo['public'] ? '<i title="Public" class="fa fa-eye"></i> (Public)' : '<i title="Private" class="fa fa-eye-slash"></i> (Private)');

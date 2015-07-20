@@ -13,85 +13,103 @@
     "sdh-framework/framework.widget.radarchart",
     "sdh-framework/framework.widget.multibar",
     "assets/js/widget.languages",
-    "css!assets/css/dashboards/user-dashboard"
+    "css!assets/css/dashboards/repository-dashboard"
     ]
 @stop
 
 @section('html')
     <div class="row">
-        <div id="total-commits" class="col-sm-3"></div>
-        <div id="total-users" class="col-sm-3"></div>
-        <div id="total-executions" class="col-sm-3"></div>
-        <div id="solved-issues" class="col-sm-3"></div>
+        <div id="total-commits" class="boxCounter col-sm-3"></div>
+        <div id="total-users" class="boxCounter col-sm-3"></div>
+        <div id="total-executions" class="boxCounter col-sm-3"></div>
+        <div id="solved-issues" class="boxCounter col-sm-3"></div>
     </div>
-    <div class="row">
-        <div class="col-sm-5">
-            <div class="com-widget widget static-info-widget">
+    <div class="row" id="RepoInfoBox">
+        <div class="row titleRow" id="repoInfoTitle">
+            <span id="detailsIco" class="titleIcon fa fa-info-circle"></span>
+            <span class="titleLabel">Repository Details</span>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="com-widget widget static-info-widget">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <img id="avatar" class="avatar img-circle" src="" alt="">
+                        </div>
+                        <div class="col-sm-5">
+                            <label>Name: <span id="name"></span></label>
+                            <label>Description: <span id="description"></span></label>
+                        </div>
+                        <div class="col-sm-5">
+                            <label>SCM link: <span id="scm-link"></span></label>
+                            <label>Status: <span id="repo-status"></span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="com-widget com-widget widget static-info-widget">
+                    <label>Last build: <span id="last-build"></span></label>
+                    <label>Build status: <span id="build-status"></span></label>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="com-widget com-widget widget static-info-widget">
+                    <label>Created: <span id="since"></span></label>
+                    <label>First commit: <span id="first-commit"></span></label>
+                    <label>Last commit: <span id="last-commit"></span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="UserSkillBox">
+        <div class="row titleRow" id="userSkillTitle">
+            <span id="skillsIco" class="titleIcon fa fa-history"></span>
+            <span class="titleLabel">Continuous Integration</span>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div id="commiters-lines" class="widget"></div>
+            </div>
+            <div class="col-sm-2">
+                <div id="executions-info" class="widget">
+                    <h3>Executions</h3>
+                    <div id="executions-info-compare"><span>0</span> successful / <span>0</span> broken</div>
+                    <div id="executions-info-percent"><span>0</span>%</div>
+                    <div id="executions-info-total">Total executions <span>0</span></div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div id="executions-stacked" class="widget"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="UserRepoBox">
+        <div class="row titleRow" id="userRepoTitle">
+            <span id="repoIco" class="titleIcon octicon octicon-organization"></span>
+            <span class="titleLabel">Users</span>
+        </div>
+        <div class="row">
+            <div class="col-sm-9">
                 <div class="row">
-                    <div class="col-sm-2">
-                        <img id="avatar" class="avatar img-circle" src="" alt="">
-                    </div>
-                    <div class="col-sm-5">
-                        <label>Name: <span id="name"></span></label>
-                        <label>Description: <span id="description"></span></label>
-                    </div>
-                    <div class="col-sm-5">
-                        <label>SCM link: <span id="scm-link"></span></label>
-                        <label>Status: <span id="repo-status"></span></label>
+                    <div class="col-sm-12">
+                        <div id="user-commits-horizontal" class="widget"></div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="com-widget com-widget widget static-info-widget">
-                <label>Last build: <span id="last-build"></span></label>
-                <label>Build status: <span id="build-status"></span></label>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="com-widget com-widget widget static-info-widget">
-                <label>Created: <span id="since"></span></label>
-                <label>First commit: <span id="first-commit"></span></label>
-                <label>Last commit: <span id="last-commit"></span></label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-5">
-            <div id="commiters-lines" class="widget"></div>
-        </div>
-        <div class="col-sm-2">
-            <div id="executions-info" class="widget">
-                <h3>Executions</h3>
-                <div id="executions-info-compare"><span>0</span> successful / <span>0</span> broken</div>
-                <div id="executions-info-percent"><span>0</span>%</div>
-                <div id="executions-info-total">Total executions <span>0</span></div>
-            </div>
-        </div>
-        <div class="col-sm-5">
-            <div id="executions-stacked" class="widget"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-9">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="user-commits-horizontal" class="widget"></div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="user-commits-lines" class="widget"></div>
+                    </div>
                 </div>
+                <!--div class="row">
+                    <div class="col-sm-12">
+                        <div id="projects-languages" class="widget"></div>
+                    </div>
+                </div-->
             </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="user-commits-lines" class="widget"></div>
-                </div>
+            <div class="col-sm-3">
+                <div id="users-table" class="widget"></div>
             </div>
-            <!--div class="row">
-                <div class="col-sm-12">
-                    <div id="projects-languages" class="widget"></div>
-                </div>
-            </div-->
-        </div>
-        <div class="col-sm-3">
-            <div id="users-table" class="widget"></div>
         </div>
     </div>
 @stop
@@ -156,7 +174,7 @@
         decimal: 0,
         icon: 'octicon octicon-git-commit',
         iconbackground: 'rgb(40, 118, 184)',
-        background: '#E0E0E0'
+        background: 'transparent'
     };
     var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, repoCtx], total_commits_conf);
 
@@ -172,7 +190,7 @@
         decimal: 0,
         icon: 'octicon octicon-organization',
         iconbackground: 'rgb(40, 184, 179)',
-        background: '#E0E0E0'
+        background: 'transparent'
     };
     var total_users = new framework.widgets.CounterBox(total_users_dom, total_users_metrics, [context4rangeChart, repoCtx], total_users_conf);
 
@@ -188,7 +206,7 @@
         decimal: 0,
         icon: 'fa fa-cogs',
         iconbackground: 'rgb(205, 195, 10)',
-        background: '#E0E0E0'
+        background: 'transparent'
     };
     var total_executions_issues = new framework.widgets.CounterBox(total_executions_dom, total_executions_metrics, [context4rangeChart, repoCtx], total_executions_conf);
 
@@ -205,7 +223,7 @@
         decimal: 0,
         icon: 'octicon octicon-thumbsup',
         iconbackground: 'rgb(104, 184, 40)',
-        background: '#E0E0E0'
+        background: 'transparent'
     };
     var success_executions_issues = new framework.widgets.CounterBox(success_executions_dom, success_executions_metrics, [context4rangeChart, repoCtx], success_executions_conf);
 

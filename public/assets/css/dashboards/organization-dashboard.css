@@ -261,6 +261,7 @@
 
 #metricsPanel .com-widget.com-counter .com-label strong {
     font-size: 38px;
+    white-space: nowrap;
 }
 
 #metricsPanel .com-widget.com-counter .com-label span {

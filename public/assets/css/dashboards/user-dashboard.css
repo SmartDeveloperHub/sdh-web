@@ -18,17 +18,38 @@
   limitations under the License.
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
+.page-container .main-content {
+    padding: 0;
+    overflow: hidden;
+}
+
+.page-body.light .page-container {
+    background-color: rgba(213, 213, 213, 0.2) !important;
+}
 
 .widget{
     background-color: transparent;
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 12px;
     height: 100%;
 }
 
+.boxCounter {
+    vertical-align: top;}
+
+.com-widget.com-counter {
+    margin-bottom: 1px;
+    max-height: 151px;
+}
+
+.com-widget.com-counter .com-icon {
+      vertical-align: top;
+}
+
 .com-widget.com-counter .com-label .num {
   font-size: 38px;
+  white-space: nowrap;
 }
 
 .com-widget.com-counter .com-label span {
@@ -36,11 +57,105 @@
   font-family: Roboto;
 }
 
+#UserInfoBox {
+    background-color: #FFF;
+    box-shadow: inset 0px 2px 5px 0px #DDD;
+    margin-top: 12px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+#UserSkillBox {
+    background-color: #FFF;
+    box-shadow: inset 0px 2px 5px 0px #DDD;
+    margin-top: 14px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+#UserRepoBox {
+    background-color: #FFF;
+    box-shadow: inset 0px 2px 5px 0px #DDD;
+    margin-top: 14px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.static-info-widget {
+    min-height: 100px;
+    font-family: Roboto;
+    font-size: 20px;
+    line-height: 35px;
+}
+
+.static-info-widget .staticInfoLine {
+    white-space: nowrap;
+    margin-left: 6px;
+}
+
+.static-info-widget .theicon {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 2px;
+    font-size: 29px;
+    width: 40px;
+    margin-left: 12px;
+}
+
+#emailIco {
+    color: #004C8B;
+}
+
+#timeIco {
+    color: #8A1978;
+    margin-left: 14px;
+    width: 37px;
+}
+
+#firstIco {
+    color: #94C11F;
+    margin-left: 17px;
+    width: 35px;
+}
+
+#lastIco {
+    color: #019640;
+    margin-left: 17px;
+    width: 35px;
+}
+
+.static-info-widget .thelabel {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-family: Roboto;
+    vertical-align: middle;
+    font-weight: bold;
+    color: #3E3F3F;
+}
+
+.static-info-widget .theVal {
+    color: #737070;
+    vertical-align: middle;
+    font-family: Roboto;
+    white-space: nowrap;
+    margin-left: 10px;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 18px;
+    display: inline-block;
+    overflow: hidden;
+    max-width: 65%;
+    text-overflow: ellipsis;
+}
+
+/* Repos Table */
 table.dataTable {
     width: 100% !important;
 }
 table.dataTable thead {
-    background-color: rgba(199, 199, 199, 0.6);
+    background-color: transparent;
 }
 table.dataTable, table.dataTable thead th, table.dataTable thead td {
     border: 0 !important;
@@ -48,12 +163,7 @@ table.dataTable, table.dataTable thead th, table.dataTable thead td {
 .table-striped > tbody > tr:nth-of-type(odd) {
     background: #ffffff;
 }
-
-.boxCounter {
-    vertical-align: top;
-}
-
-.table-search{
+.table-search {
     width: 100%;
     padding: 0 10px 5px 10px;
     border: 0;
@@ -61,7 +171,7 @@ table.dataTable, table.dataTable thead th, table.dataTable thead td {
 .table-search label {
     width: 100%;
 }
-.table-search .dataTables_filter{
+.table-search .dataTables_filter {
     width: 100%;
     float: none !important;
 }
@@ -81,33 +191,25 @@ table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
 .dataTables_filter input[type="search"]:focus {
     outline-style: none;
 }
-.static-info-widget{
-    min-height: 100px;
-    font-family: Roboto;
+
+table.dataTable tbody tr.selected {
+    background-color: transparent !important;
 }
 
-.static-info-widget label{
-    display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-family: Roboto;
+table.dataTable tbody tr .odd {
+    border-bottom: solid 1px #808080;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
 }
 
-.static-info-widget label span{
-    font-weight: normal;
-    color: rgba(100,100,100,1);
-    font-family: Roboto;
-}
-
-table.dataTable tbody tr.selected{
-    background-color: #EDEDED !important;
-}
-#skills-star{
+/* Radar Chart */
+#skills-star {
     text-align: center;
 }
-#skills-star canvas{
-    margin-bottom: -44px;
+#skills-star canvas {
+    margin-bottom: -135px;
+    margin-top: -33px;
 }
 .dashboardLink{
     cursor: pointer;
@@ -130,5 +232,82 @@ table.dataTable tbody tr.selected{
 #executions-info-percent span {
     vertical-align: middle;
     display: inline-block;
+    font-family: Roboto;
+}
+
+/* titles */
+
+.titleRow {
+    margin-bottom: 8px;
+    text-align: center;
+    margin-top: 35px;
+}
+
+.titleCol {
+    text-align: center;
+    height: 95px;
+}
+
+.titleIcon {
+    font-size: 54px;
+    vertical-align: middle;
+}
+
+.titleLabel {
+    font-size: 32px;
+    margin-left: 20px;
+    color: #5A5858;
+    vertical-align: middle;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    margin-left: 14px;
+    margin-top: 24px;
+}
+
+#userInfoTitle {
+}
+
+#userSkillTitle {
+}
+
+#userRepoTitle {
+}
+
+
+#detailsIco {
+    color:#EE7325;
+}
+
+#skillsIco {
+    color: #DB2830;
+}
+
+#repoIco {
+    color: #68B828;
+}
+
+/* LineChart */
+.nvd3 .nv-axis {
+    fill: #2876B8;
+}
+
+#commitChart .nvd3 .nv-axis, #commitChart .nvd3 .nv-legend .nv-series {
+    fill: #002A4D;
+}
+
+.nvd3 .nv-axis text {
+    font-size: 15px;
+    font-family: Roboto;
+}
+
+.nvd3 .nv-legend .nv-series {
+    fill: #2876B8;
+}
+
+.nvd3 .nv-legend .nv-series text {
+    font-size: 15px;
     font-family: Roboto;
 }

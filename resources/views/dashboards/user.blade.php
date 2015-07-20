@@ -23,66 +23,79 @@
         <div id="solved-issues" class="boxCounter col-sm-3"></div>
         <div id="total-projects" class="boxCounter col-sm-3"></div>
     </div>
-    <div class="row">
-        <div class="col-sm-5">
-            <div class="com-widget widget static-info-widget">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <img id="avatar" class="avatar img-circle" src="" alt="">
+    <div class="row" id="UserInfoBox">
+        <div class="row titleRow" id="userInfoTitle">
+            <span id="detailsIco" class="titleIcon fa fa-info-circle"></span>
+            <span class="titleLabel">User Details</span>
+        </div>
+        <div class="row">
+            <div class="com-widget widget static-info-widget col-sm-6">
+                <div class="col-sm-3">
+                    <img id="avatar" class="avatar img-circle" src="" alt=""></image>
+                </div>
+                <div class="col-sm-9">
+                    <div class="row staticInfoLine">
+                        <span id="emailIco" class="theicon octicon octicon-mail-read"></span><span class="thelabel">Contact:</span><span class="theVal" id="user-email"></span>
                     </div>
-                    <div class="col-sm-5">
-                        <label>Email: <span id="user-email"></span></label>
+                    <div class="row staticInfoLine">
+                        <span id="timeIco" class="theicon octicon octicon-hourglass"></span><span class="thelabel">Register: </span><span class="theVal" id="user-since"></span>
+                    </div>
+                    <div class="row staticInfoLine">
+                        <span id="firstIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">First Commit:</span><span class="theVal" id="user-first-commit"></span>
+                    </div>
+                    <div class="row staticInfoLine">
+                        <span id="lastIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">Last Commit:</span><span class="theVal" id="user-last-commit"></span>
+                    </div>
+                </div>
+                    <!--div class="col-sm-8">
                         <label>Web: <span id="user-website"></span></label>
                     </div>
                     <div class="col-sm-5">
                         <label>Skype: <span id="user-skype"></span></label>
                         <label>Linkedin: <span id="user-linkedin"></span></label>
                         <label>Twitter: <span id="user-twitter"></span></label>
+                    </div-->
+            </div>
+            <div class="col-sm-6">
+                <div id="commitChart"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="UserSkillBox">
+        <div class="row titleRow" id="userSkillTitle">
+            <span id="skillsIco" class="titleIcon fa fa-heartbeat"></span>
+            <span class="titleLabel">Skills</span>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div id="skills-star" class="widget"></div>
+            </div>
+            <div class="col-sm-7">
+                <div id="skills-lines" class="widget"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="UserRepoBox">
+        <div class="row titleRow" id="userRepoTitle">
+            <span id="repoIco" class="titleIcon octicon octicon-repo"></span>
+            <span class="titleLabel">Repositories</span>
+        </div>
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="projects-horizontal" class="widget"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="projects-lines" class="widget"></div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="com-widget com-widget widget static-info-widget">
-                <label>Favourite language: <span id="user-favourite-lang"></span></label>
+            <div class="col-sm-3">
+                <div id="projects-table" class="widget"></div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="com-widget com-widget widget static-info-widget">
-                <label>User since: <span id="user-since"></span></label>
-                <label>First commit: <span id="user-first-commit"></span></label>
-                <label>Last commit: <span id="user-last-commit"></span></label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-5">
-            <div id="skills-star" class="widget"></div>
-        </div>
-        <div class="col-sm-7">
-            <div id="skills-lines" class="widget"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-9">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="projects-horizontal" class="widget"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="projects-lines" class="widget"></div>
-                </div>
-            </div>
-            <!--div class="row">
-                <div class="col-sm-12">
-                    <div id="projects-languages" class="widget"></div>
-                </div>
-            </div-->
-        </div>
-        <div class="col-sm-3">
-            <div id="projects-table" class="widget"></div>
         </div>
     </div>
 @stop
@@ -143,16 +156,16 @@
             //TODO
         } else if(event.event === 'data') {
             var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
-            var firstCommit = parseInt(userinfo['firstcommit']);
+            var firstCommit = userinfo.firstCommit;
 
             var setRangeChart = function() {
                 var rangeNv_dom = document.getElementById("fixed-chart");
                 var rangeNv_metrics = [
                     {
                         id: 'usercommits',
-                        max: 24,
                         aggr: 'avg',
-                        from: moment(firstCommit).format("YYYY-MM-DD")
+                        from: moment(firstCommit).format("YYYY-MM-DD"),
+                        max: 101
                     }
                 ];
                 var rangeNv_configuration = {
@@ -252,23 +265,47 @@
             //TODO
         } else if(event.event === 'data') {
             var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
-            console.log(JSON.stringify(userinfo));
             //Set header subtitle
             setSubtitle(userinfo['name']);
 
             //Set data
             document.getElementById('user-email').innerHTML = userinfo['email'];
-            document.getElementById('user-linkedin').innerHTML = userinfo['linkedin'];
+            /*document.getElementById('user-linkedin').innerHTML = userinfo['linkedin'];
             document.getElementById('user-skype').innerHTML = userinfo['skype'];
             document.getElementById('user-twitter').innerHTML = userinfo['twitter'];
-            document.getElementById('user-website').innerHTML = userinfo['website'];
-            document.getElementById('user-since').innerHTML = moment(new Date(userinfo['register'])).format('LLLL');
-            document.getElementById('user-first-commit').innerHTML = moment(new Date(userinfo['firstcommit'])).format('LLLL');
-            document.getElementById('user-last-commit').innerHTML = moment(new Date(userinfo['lastcommit'])).format('LLLL');
-            $("#avatar").attr('src', userinfo['avatar']).attr('alt', userinfo['name']);
+            document.getElementById('user-website').innerHTML = userinfo['website'];*/
+            document.getElementById('user-since').innerHTML = moment(new Date(userinfo['register'])).format('MMMM Do YYYY');
+            document.getElementById('user-first-commit').innerHTML = moment(new Date(userinfo['firstCommit'])).format('MMMM Do YYYY');
+            document.getElementById('user-last-commit').innerHTML = moment(new Date(userinfo['lastCommit'])).format('MMMM Do YYYY');
+            if(userinfo['avatar'] !== undefined && userinfo['avatar'] !== null && userinfo['avatar'] !== "" && userinfo['avatar'] !== "http://avatarURL") {
+                $("#avatar").attr('src', userinfo['avatar']);
+            } else {
+                $("#avatar").attr('src', "../../assets/images/user-4.png");
+            }        
 
         }
     }, [userCtx]);
+
+
+    // USER COMMITS LINE CHART
+    var userCC_dom = document.getElementById("commitChart");
+    var userCC_metrics = [
+        {
+            id: 'usercommits',
+            max: 25
+        }
+    ];
+    var userCC_configuration = {
+        xlabel: '',
+        ylabel: '',
+        interpolate: 'monotone',
+        height: 180,
+        labelFormat: 'Commits', //TODO add title in metrics
+        colors: ["#2876B8"],
+        area: true
+    };
+    var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
+            [context4rangeChart, userCtx], userCC_configuration);
 
     //TEST PIECHART
     /*var piechart_dom = document.getElementById("piechart");
@@ -314,11 +351,16 @@
             max: 1
         }];
     var skills_star_configuration = {
-        height: 279,
-        labels: ["Speed", "Collaboration", "Quality"]
+        height: 300,
+        labels: ["Speed", "Collaboration", "Quality"],
+        fillColor: "rgba(1, 150, 64, 0.4)",
+        strokeColor: "#019640",
+        pointLabelFontColor: "#2876B8",
+        pointLabelFontSize: 12
     };
     var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
             [context4rangeChart, userCtx], skills_star_configuration);
+
 
     // SKILLS LINES CHART
     var skills_lines_dom = document.getElementById("skills-lines");
@@ -337,13 +379,15 @@
             id: 'userquality',
             max: 20,
             aggr: 'avg'
-        }];
+        }
+    ];
     var skills_lines_configuration = {
-        xlabel: 'Date',
-        ylabel: 'Score',
+        xlabel: '',
+        ylabel: '',
         interpolate: 'monotone',
-        height: 240,
-        labelFormat: '%data.info.id%' //TODO add title in metrics
+        height: 205,
+        labelFormat: '%data.info.id%', //TODO add title in metrics
+        colors: ["#FF7F0E", "#1F77B4", "#68B828"]
     };
     var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,
             [context4rangeChart, userCtx], skills_lines_configuration);
@@ -400,7 +444,7 @@
         max: 1
     }];
     var multibar_projects_configuration = {
-        labelFormat: "Commits for %data.info.rid.name%",
+        labelFormat: "%data.info.rid.name%",
         stacked: true,
         showXAxis: false,
         showControls: false,
@@ -424,7 +468,7 @@
     var user_project_commits_conf = {
         xlabel: 'Date',
         ylabel: 'Commits',
-        labelFormat: 'Commits for %data.info.rid.name%',
+        labelFormat: '%data.info.rid.name%',
         interpolate: 'monotone'
     };
     var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,

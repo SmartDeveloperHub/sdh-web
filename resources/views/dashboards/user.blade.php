@@ -396,7 +396,7 @@
     // USER PROJECTS TABLE
     var repoCtx = "repository-table-context";
     var table_dom = document.getElementById("projects-table");
-    var table_metrics = ['userrangedrepolist'];
+    var table_metrics = ['userrepositoriestbd'];
     var table_configuration = {
         columns: [
             {
@@ -440,7 +440,7 @@
     // HORIZONTAL CONTRIBUTION TO PROJECTS
     var multibar_projects_dom = document.getElementById("projects-horizontal");
     var multibar_projects_metrics = [{
-        id: 'userrepositorycommits',
+        id: 'repousercommits',
         max: 1
     }];
     var multibar_projects_configuration = {
@@ -462,13 +462,13 @@
     // COMMITS PER PROJECT AND USER
     var user_project_commits_dom = document.getElementById("projects-lines");
     var user_project_commits_metrics = [{
-        id: 'userrepositorycommits',
+        id: 'repousercommits',
         max: 0
     }];
     var user_project_commits_conf = {
-        xlabel: 'Date',
-        ylabel: 'Commits',
-        labelFormat: '%data.info.rid.name%',
+        xlabel: '',
+        ylabel: '',
+        labelFormat: 'Commits',
         interpolate: 'monotone'
     };
     var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,

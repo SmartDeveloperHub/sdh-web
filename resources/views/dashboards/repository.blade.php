@@ -132,7 +132,7 @@
             //TODO
         } else if(event.event === 'data') {
             var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
-            var firstCommit = parseInt(repoinfo['firstcommit']);
+            var firstCommit = repoinfo['firstCommit'];
 
 
             var rangeNv_dom = document.getElementById("fixed-chart");
@@ -324,7 +324,7 @@
     // REPOSITORY USERS TABLE
     var usersCtx = "user-table-context";
     var table_dom = document.getElementById("users-table");
-    var table_metrics = ['reporangeduserlist'];
+    var table_metrics = ['repodeveloperstbd'];
     var table_configuration = {
         columns: [
             {
@@ -368,7 +368,7 @@
     // HORIZONTAL CONTRIBUTION TO PROJECTS
     var multibar_projects_dom = document.getElementById("user-commits-horizontal");
     var multibar_projects_metrics = [{
-        id: 'userrepositorycommits',
+        id: 'repousercommits',
         max: 1
     }];
     var multibar_projects_configuration = {
@@ -389,11 +389,11 @@
     // COMMITS PER PROJECT AND USER
     var user_project_commits_dom = document.getElementById("user-commits-lines");
     var user_project_commits_metrics = [{
-        id: 'userrepositorycommits',
+        id: 'repousercommits',
         max: 0
     }];
     var user_project_commits_conf = {
-        xlabel: 'Date',
+        xlabel: '',
         ylabel: 'Commits',
         labelFormat: 'Commits for %data.info.uid.name%',
         interpolate: 'monotone'

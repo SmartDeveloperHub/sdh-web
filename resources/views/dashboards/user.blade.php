@@ -18,10 +18,9 @@
 
 @section('html')
     <div class="row">
-        <div id="total-commits" class="boxCounter col-sm-3"></div>
-        <div id="open-issues" class="boxCounter col-sm-3"></div>
-        <div id="solved-issues" class="boxCounter col-sm-3"></div>
-        <div id="total-projects" class="boxCounter col-sm-3"></div>
+        <div id="total-commits" class="boxCounter col-sm-4"></div>
+        <div id="open-issues" class="boxCounter col-sm-4"></div>
+        <div id="total-projects" class="boxCounter col-sm-4"></div>
     </div>
     <div class="row" id="UserInfoBox">
         <div class="row titleRow" id="userInfoTitle">
@@ -226,7 +225,7 @@
 
 
     // SOLVED ISSUES
-    var solved_issues_dom = document.getElementById("solved-issues");
+    /*var solved_issues_dom = document.getElementById("solved-issues");
     var solved_issues_metrics = [{
         id: 'usersolvedissue',
         max: 1,
@@ -240,7 +239,7 @@
         background: 'transparent'
     };
     var solved_issues = new framework.widgets.CounterBox(solved_issues_dom, solved_issues_metrics, [context4rangeChart, userCtx], solved_issues_conf);
-
+*/
 
     // TOTAL PROJECTS
     var total_projects_dom = document.getElementById("total-projects");

@@ -54,17 +54,15 @@
     max-height: 660px;
     min-height: 125px;
     overflow-y: auto;
-    width: 75%;
+    width: 77%;
     display: inline-block;
     -webkit-box-shadow: 0px 0px 9px -2px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 0px 9px -2px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 0px 9px -2px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
 }
-.feature-section {
-    min-height: 660px;
-}
-.section-shadow{
+
+.section-shadow {
     -webkit-box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
     -moz-box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
     box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
@@ -78,7 +76,7 @@
     text-align: center;
 }
 .gradient-1 {
-    background: linear-gradient(140deg, #FFF 0%, #CBCBCB 50%, #CDCDCD 100%);
+    background: linear-gradient(140deg, #FFF 0%, #EAEAEA 50%, #E5E5E5 100%);
     /*linear-gradient(to right, rgba(147,193,31,1) 0%, rgba(82,142,78,1) 68%, rgba(0,74,139,1) 100%)*/
 }
 .gradient-2 {
@@ -158,26 +156,18 @@
 .search input:focus {
     outline: none;
 }
+
+.image {
+    display: inline-block;
+}
+
 .screenshot {
-    position: relative;
-    display: block;
-    right: 0%;
+    max-width: 1000px;
+    display: inline-block;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
-.ss-left {
-    left: 0%;
-    right: auto;
-}
-.radius-img{
-    border-radius: 15px;
-    display: block;
-}
-.radius-icon{
-    border-radius: 5px;
-}
-.feature {
-    margin-top: 15%;
-    height: auto;
-}
+
 .p4 {
     padding: 4rem;
 }
@@ -190,7 +180,7 @@
 .black {
     color: #000;
 }
-.blue{
+.blue {
     color: #024074;
 }
 .lighter-gray {
@@ -198,14 +188,13 @@
     text-shadow: 0px 0.5px rgba(228, 228, 228, 0.55);
     text-align: left;
 }
-.roboto {
-    font-family: Roboto;
-}
+
 .page-title {
     font-size: 50px;
 }
 .page-title-content {
-    line-height: 1.28em;
+    font-family: Roboto;
+    line-height: 24px;
 }
 
 /* centered columns styles */
@@ -258,7 +247,6 @@
 }
 
 /* Metric widgets */
-
 #metricsPanel .com-widget.com-counter .com-label strong {
     font-size: 38px;
     white-space: nowrap;
@@ -267,4 +255,28 @@
 #metricsPanel .com-widget.com-counter .com-label span {
     font-size: 16px;
     font-family: Roboto;
+}
+
+/* titles and desc */
+#arqPanel .arqTitle {
+    font-size: 32px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.63);
+    font-family: Roboto;
+    width: 85%;
+    display: inline-block;
+}
+
+#arqPanel .parr {
+    padding: 6px;
+    display: inline-block;
+    text-align: justify;
+    color: rgba(85, 85, 85, 0.94);
+    font-family: Roboto;
+    width: 85%;
+    line-height: 24px;
+}
+
+#arqPanel .parr .first {
+    padding-bottom: 20px;
 }

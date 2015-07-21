@@ -97,7 +97,7 @@
         <div class="loading-white">
             <div class="loading-info text-center">
                 <i class="loading-icon fa fa-spin">
-                    <img height="150" width="150" src="assets/images/sdh_400ppp_RGB_imagotipo.png" />
+                    <img height="158" width="150" src="assets/images/sdh_400ppp_RGB_imagotipo_small.png" />
                 </i>
             </div>
         </div>

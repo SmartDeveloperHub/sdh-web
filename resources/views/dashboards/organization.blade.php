@@ -262,15 +262,15 @@
     // TOTAL EXECUTIONS
     var organizationexec_dom = document.getElementById("organizationexec");
     var organizationexec_metrics = [{
-        id: 'organizationexec',
+        id: 'orgexecutions',
         max: 1,
         aggr: 'sum'
     }];
     var organizationexec_conf = {
         label: 'Total executions',
         decimal: 0,
-        icon: 'octicon octicon-flame',
-        iconbackground: '#FFAC00',
+        icon: 'fa fa-terminal',
+        iconbackground: '#2A2A2A',
         background: 'transparent',
         labelcolor: '#000'
     };
@@ -280,7 +280,7 @@
     // TOTAL SUCCESSFUL EXECUTIONS
     var organizationsuccessexec_dom = document.getElementById("organizationsuccessexec");
     var organizationsuccessexec_metrics = [{
-        id: 'organizationsuccessexec',
+        id: 'orgpassedexecutions',
         max: 1,
         aggr: 'sum'
     }];
@@ -298,7 +298,7 @@
     // TOTAL BROKEN EXECUTIONS
     var organizationbrokenexec_dom = document.getElementById("organizationbrokenexec");
     var organizationbrokenexec_metrics = [{
-        id: 'organizationbrokenexec',
+        id: 'orgfailedexecutions',
         max: 1,
         aggr: 'sum'
     }];
@@ -315,54 +315,48 @@
     // TIME TO FIX
     var orgtimetofix_dom = document.getElementById("orgtimetofix");
     var orgtimetofix_metrics = [{
-        id: 'organizationexectime',
-        max: 1,
-        aggr: 'sum'
+        id: 'orgtimetofixtbd'
     }];
     var orgtimetofix_conf = {
         label: 'Average time to Fix broken builds',
-        decimal: 0,
+        decimal: 1,
         icon: 'octicon octicon-clock',
         iconbackground: '#8D197B',
         background: 'transparent',
         labelcolor: '#000',
-        suffix: " days"
+        suffix: " h"
     };
     var orgtimetofix = new framework.widgets.CounterBox(orgtimetofix_dom, orgtimetofix_metrics, null, orgtimetofix_conf);
 
     // BUILD EXECUTION TIME
     var organizationexectime_dom = document.getElementById("orgexectime");
     var organizationexectime_metrics = [{
-        id: 'organizationexectime',
-        max: 1,
-        aggr: 'sum'
+        id: 'orgbuildtimetbd'
     }];
     var organizationexectime_conf = {
         label: 'Build execution time',
-        decimal: 0,
+        decimal: 1,
         icon: 'octicon octicon-clock',
         iconbackground: '#8D197B',
         background: 'transparent',
         labelcolor: '#000',
-        suffix: " days"
+        suffix: " h"
     };
     var organizationexectime = new framework.widgets.CounterBox(organizationexectime_dom, organizationexectime_metrics, null, organizationexectime_conf);
 
     // BUILD BROKEN TIME
     var organizationbrokentime_dom = document.getElementById("orgbrokentime");
     var organizationbrokentime_metrics = [{
-        id: 'organizationbrokentime',
-        max: 1,
-        aggr: 'sum'
+        id: 'orgbrokentimetbd'
     }];
     var organizationbrokentime_conf = {
         label: 'Build broken time',
-        decimal: 0,
+        decimal: 1,
         icon: 'octicon octicon-history',
         iconbackground: '#5F65D7',
         background: 'transparent',
         labelcolor: '#000',
-        suffix: " days"
+        suffix: " d"
     };
     var organizationbrokentime = new framework.widgets.CounterBox(organizationbrokentime_dom, organizationbrokentime_metrics, null, organizationbrokentime_conf);
 

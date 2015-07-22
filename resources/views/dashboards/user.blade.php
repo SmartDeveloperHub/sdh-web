@@ -301,17 +301,17 @@
         {
             id: 'userspeed',
             max: 1,
-            aggr: "avg"
+            aggr: "sum"
         },
         {
             id: 'usercollaboration',
             max: 1,
-            aggr: "avg"
+            aggr: "sum"
         },
         {
             id: 'userquality',
             max: 1,
-            aggr: "avg"
+            aggr: "sum"
         }];
     var skills_star_configuration = {
         height: 300,
@@ -331,17 +331,17 @@
         {
             id: 'userspeed',
             max: 20,
-            aggr: 'avg' //TODO: avg?
+            aggr: 'sum'
         },
         {
             id: 'usercollaboration',
             max: 20,
-            aggr: 'avg' //TODO: avg?
+            aggr: 'sum'
         },
         {
             id: 'userquality',
             max: 20,
-            aggr: 'avg' //TODO: avg?
+            aggr: 'sum'
         }
     ];
     var skills_lines_configuration = {

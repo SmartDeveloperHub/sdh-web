@@ -28,7 +28,7 @@
             <span class="titleLabel">User Details</span>
         </div>
         <div class="row">
-            <div class="com-widget widget static-info-widget col-sm-6">
+            <div class="com-widget widget static-info-widget col-sm-5">
                 <div class="col-sm-3">
                     <img id="avatar" class="avatar img-circle" src="" alt=""></image>
                 </div>
@@ -55,7 +55,7 @@
                         <label>Twitter: <span id="user-twitter"></span></label>
                     </div-->
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-7">
                 <div id="commitChart"></div>
             </div>
         </div>
@@ -210,7 +210,7 @@
     // OPEN ISSUES
     var open_issues_dom = document.getElementById("longest-streak");
     var open_issues_metrics = [{
-        id: 'userloneststreak',
+        id: 'userstreak',
         max: 1,
         aggr: 'sum'
     }];
@@ -219,7 +219,8 @@
         decimal: 0,
         icon: 'octicon octicon-flame',
         iconbackground: 'rgb(205, 195, 10)',
-        background: 'transparent'
+        background: 'transparent',
+        suffix: " days"
     };
     var open_issues = new framework.widgets.CounterBox(open_issues_dom, open_issues_metrics, [context4rangeChart, userCtx], open_issues_conf);
 
@@ -249,7 +250,7 @@
         aggr: 'sum'
     }];
     var total_projects_conf = {
-        label: 'Total projects',
+        label: 'Total repositories',
         decimal: 0,
         icon: 'octicon octicon-repo',
         iconbackground: 'rgb(184, 40, 40)',
@@ -291,16 +292,21 @@
     var userCC_metrics = [
         {
             id: 'usercommits',
-            max: 25
+            max: 30
+        },
+        {
+            id: 'usercommits',
+            max: 30,
+            aggr: "avg"
         }
     ];
     var userCC_configuration = {
         xlabel: '',
         ylabel: '',
         interpolate: 'monotone',
-        height: 180,
-        labelFormat: 'Commits', //TODO add title in metrics
-        colors: ["#2876B8"],
+        height: 200,
+        labelFormat: '%data.info.id%', //TODO add title in metrics
+        colors: ["#2876B8", "#8A1978"],
         area: true
     };
     var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
@@ -339,15 +345,18 @@
     var skills_star_metrics = [
         {
             id: 'userspeed',
-            max: 1
+            max: 1,
+            aggr: "avg"
         },
         {
             id: 'usercollaboration',
-            max: 1
+            max: 1,
+            aggr: "avg"
         },
         {
             id: 'userquality',
-            max: 1
+            max: 1,
+            aggr: "avg"
         }];
     var skills_star_configuration = {
         height: 300,

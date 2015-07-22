@@ -122,7 +122,13 @@
             <span class="headTitle">Developers</span>
         </div>
         <div class="row row-centered search">
-            <span id="searchDevLabel" >Search developer: </span><input ng-model="userQuery" placeholder="Developer name" />
+             <div class="searchDevForm">
+                 <input class="searchDevInput form-control input-lg hint" ng-model="userQuery" placeholder="Developer name">
+             </div>
+             <label for="filter-by" class="searchDevIcon">
+                 <i class="fa fa-search"></i>
+             </label>
+             <a href="#" class="fa fa-times searchDevClear"></a>
         </div>
         <div class="row row-centered card-list">
             <div class="col-sm-3 col-centered card" ng-repeat="user in users | orderBy:'name'" ng-show="([user.name, user.avatar] | filter:userQuery).length" ng-click="changeToUserDashboard(user)">
@@ -138,7 +144,13 @@
             <span class="headTitle">Repositories</span>
         </div>
         <div class="row row-centered search">
-            <span id="searchRepLabel" >Search repository: </span><input ng-model="repoQuery" placeholder="Repository name" />
+             <div class="searchDevForm">
+                 <input class="searchDevInput form-control input-lg hint" ng-model="repoQuery" placeholder="Repository name">
+             </div>
+             <label for="filter-by" class="searchDevIcon">
+                 <i class="fa fa-search"></i>
+             </label>
+             <a href="#" class="fa fa-times searchDevClear"></a>
         </div>
         <div class="row row-centered card-list">
             <div class="col-sm-3 col-centered card" ng-repeat="repo in repos | orderBy:'name'" ng-show="([repo.name, repo.avatar] | filter:repoQuery).length" ng-click="changeToRepoDashboard(repo)">

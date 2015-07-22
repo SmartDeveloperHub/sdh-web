@@ -124,6 +124,43 @@
     var repoCtx = "rid";
     framework.data.updateContext('rid', {rid: framework.dashboard.getEnv()['rid']});
 
+    // light or dark theme?. Default is light
+    var lightTheme = true;
+    var setRangeChart = null;
+    var rangeNv = null;
+    var themebutton = $(".headbutton.mail");
+    var setLightTheme = function setLightTheme() {
+        if (!lightTheme) {
+            lightTheme = true;
+            rangeNv && rangeNv.delete();
+            setRangeChart && setRangeChart();
+            themebutton.removeClass("fa-sun-o");
+            themebutton.addClass("fa-moon-o");
+        }
+        $('body').addClass('light');
+    };
+    var setDarkTheme = function setDarkTheme() {
+        if (lightTheme) {
+            lightTheme = false;
+            rangeNv && rangeNv.delete();
+            setRangeChart && setRangeChart();
+            themebutton.removeClass("fa-moon-o");
+            themebutton.addClass("fa-sun-o");
+        }
+        $('body').removeClass('light');
+    };
+    var changeTheme = function changeTheme() {
+        if (lightTheme == false) {
+            setLightTheme();
+        } else {
+            setDarkTheme();
+        }
+    };
+    // Change theme
+    setLightTheme();
+
+    $(".headbutton.mail").click(changeTheme);
+
     var context4rangeChart = "context4rangeChart";
 
     // UPPER SELECTOR RANENV (NEEDS FIRST COMMIT)
@@ -138,7 +175,7 @@
             var rangeNv_dom = document.getElementById("fixed-chart");
             var rangeNv_metrics = [
                 {
-                    id: 'repositorycommits',
+                    id: 'repocommits',
                     max: 24,
                     aggr: 'avg',
                     from: moment(firstCommit).format("YYYY-MM-DD")
@@ -146,17 +183,19 @@
             ];
             var rangeNv_configuration = {
                 ownContext: context4rangeChart,
-                labelFormat: "Total Commits",
                 isArea: true,
                 showLegend: false,
                 interpolate: 'monotone',
                 showFocus: false,
-                height : 140,
+                height: 140,
                 duration: 500,
-                axisColor: "#BFE5E3",
-                background: "rgba(25, 48, 63, 0.92)",
-                colors: ["#FFC10E"]
+                colors: ["#004C8B"],
+                axisColor: "#004C8B"
             };
+            if (!lightTheme) {
+                rangeNv_configuration['axisColor'] = "#BFE5E3";
+                rangeNv_configuration['colors'] = ["#FFC10E"];
+            }
 
             new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
         }
@@ -165,7 +204,7 @@
     // TOTAL COMMITS
     var total_commits_dom = document.getElementById("total-commits");
     var total_commits_metrics = [{
-        id: 'repositorycommits',
+        id: 'repocommits',
         max: 1,
         aggr: 'sum'
     }];
@@ -181,7 +220,7 @@
     // TOTAL DEVELOPERS
     var total_users_dom = document.getElementById("total-users");
     var total_users_metrics = [{
-        id: 'repositorydevelopers',
+        id: 'repodevelopers',
         max: 1,
         aggr: 'sum'
     }];
@@ -197,7 +236,7 @@
     // TOTAL EXECUTIONS
     var total_executions_dom = document.getElementById("total-executions");
     var total_executions_metrics = [{
-        id: 'repositoryexec',
+        id: 'repoexecutions',
         max: 1,
         aggr: 'sum'
     }];
@@ -214,7 +253,7 @@
     // SUCCESSFUL EXECUTIONS
     var success_executions_dom = document.getElementById("solved-issues");
     var success_executions_metrics = [{
-        id: 'repositoriesuccessexec',
+        id: 'repopassedexecutions',
         max: 1,
         aggr: 'sum'
     }];
@@ -250,7 +289,7 @@
                             '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
                             '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');
             document.getElementById('repo-status').innerHTML = (repoinfo['public'] ? '<i title="Public" class="fa fa-eye"></i> (Public)' : '<i title="Private" class="fa fa-eye-slash"></i> (Private)');
-            $("#avatar").attr('src', repoinfo['avatar']).attr('alt', repoinfo['name']);
+            $("#avatar").attr('src', repoinfo['avatar']['avatar']).attr('alt', repoinfo['name']);console.log(repoinfo);
 
         }
     }, [repoCtx]);
@@ -258,8 +297,8 @@
     // COMMITERS
     var commiters_dom = document.getElementById("commiters-lines");
     var commiters_metrics = [{
-        id: 'repositorydevelopers',
-        max: 0
+        id: 'repodevelopers',
+        max: 50
     }];
     var commiters_conf = {
         xlabel: 'Date',
@@ -276,12 +315,12 @@
     var executions_dom = document.getElementById("executions-stacked");
     var executions_metrics = [
         {
-            id: 'repositoriesuccessexec',
-            max: 0
+            id: 'repopassedexecutions',
+            max: 30
         },
         {
-            id: 'repositorybrokenexec',
-            max: 0
+            id: 'repofailedexecutions',
+            max: 30
         }];
     var executions_conf = {
         stacked: true,
@@ -296,18 +335,20 @@
     // EXECUTIONS
     var executions_info = [
         {
-            id: 'repositoriesuccessexec',
-            aggr: 'avg'
+            id: 'repopassedexecutions',
+            aggr: 'sum',
+            max: 1
         },
         {
-            id: 'repositorybrokenexec',
-            aggr: 'avg'
+            id: 'repofailedexecutions',
+            aggr: 'sum',
+            max: 1
         }
     ];
     var display_executions_info = function(event) {
         if(event.event === 'data') {
-            var success = event.data['repositoriesuccessexec'][Object.keys(event.data['repositoriesuccessexec'])[0]]['data']['values'][0];
-            var broken = event.data['repositorybrokenexec'][Object.keys(event.data['repositorybrokenexec'])[0]]['data']['values'][0];
+            var success = event.data['repopassedexecutions'][Object.keys(event.data['repopassedexecutions'])[0]]['data']['values'][0];
+            var broken = event.data['repofailedexecutions'][Object.keys(event.data['repofailedexecutions'])[0]]['data']['values'][0];
             var total = broken + success;
 
             $("#executions-info-compare").children("span").first().text(success);
@@ -328,13 +369,9 @@
     var table_configuration = {
         columns: [
             {
-                label: "Name",
-                property: "name"
-            },
-            {
                 label: "Show",
                 link: {
-                    icon: "fa fa-share", //or label
+                    img: "avatar", //or icon or label
                     href: "user-dashboard",
                     env: [
                         {
@@ -344,7 +381,12 @@
                     ]
                 },
                 width: "40px"
+            },
+            {
+                label: "Name",
+                property: "name"
             }
+
         ],
         updateContexts: [
             {
@@ -372,14 +414,14 @@
         max: 1
     }];
     var multibar_projects_configuration = {
-        labelFormat: "Commits for %data.info.uid.name%",
+        labelFormat: "%data.info.uid.name%",
         stacked: true,
         showXAxis: false,
         showControls: false,
         yAxisTicks: 8,
         height: 155,
         total: {
-            id: 'repositorycommits',
+            id: 'repocommits',
             max: 1
         }
     };
@@ -390,12 +432,12 @@
     var user_project_commits_dom = document.getElementById("user-commits-lines");
     var user_project_commits_metrics = [{
         id: 'repousercommits',
-        max: 0
+        max: 100
     }];
     var user_project_commits_conf = {
         xlabel: '',
         ylabel: 'Commits',
-        labelFormat: 'Commits for %data.info.uid.name%',
+        labelFormat: '%data.info.uid.name%',
         interpolate: 'monotone'
     };
     var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,

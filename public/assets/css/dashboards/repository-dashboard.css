@@ -193,7 +193,7 @@ table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
 }
 
 table.dataTable tbody tr.selected {
-    background-color: transparent !important;
+    background-color: rgb(240, 240, 240) !important;
 }
 
 table.dataTable tbody tr .odd {
@@ -289,4 +289,16 @@ table.dataTable tbody tr .odd {
 .nvd3 .nv-legend .nv-series text {
     font-size: 15px;
     font-family: Roboto;
+}
+
+.dashboardLink img {
+    cursor: pointer;
+}
+
+.dataTable td {
+    vertical-align: middle;
+}
+
+.dataTable tr td:nth-child(2) {
+    cursor: pointer;
 }

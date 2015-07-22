@@ -10,7 +10,8 @@
     "//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js",
     "css!assets/css/animate.css",
     "css!assets/css/dashboards/organization-dashboard",
-    "sdh-framework/framework.widget.counterbox"
+    "sdh-framework/framework.widget.counterbox",
+    "sdh-framework/framework.widget.linesChart"
     ]
 @stop
 
@@ -115,6 +116,20 @@
                 <div id="orgbrokentime" class="col-sm-4 col-centered"></div>
             </div>
         </div>
+    </div>
+    <div class="row executionsBox">
+        <div class="boxtitle">
+            <span id="execIco" class="orgSubtitleIco fa fa-history"></span>
+            <span id="execTitle" class="orgSubtitle">Continuous Integration History</span>
+        </div>
+        <div id="execs-lines" class="col-sm-12 col-centered"></div>
+    </div>
+    <div class="row devBox">
+        <div class="boxtitle">
+            <span id="devIco" class="orgSubtitleIco octicon octicon-squirrel"></span>
+            <span id="devTitle" class="orgSubtitle">Developers History</span>
+        </div>
+        <div id="dev-lines" class="col-sm-12 col-centered"></div>
     </div>
     <div id="usersPanel" class="section" ng-controller="UsersController">
         <div id="develHeader" class="row row-centered">
@@ -240,7 +255,7 @@
    // TOTAL CURRENT SUCCESS BUILDS
     var currentbuilds_dom = document.getElementById("orgcurrentsuccessbuilds");
     var currentbuilds_metrics = [{
-        id: 'orgsuccessbuilds',
+        id: 'orgpassedbuilds',
         max: 1,
         aggr: 'sum'
     }];
@@ -257,7 +272,7 @@
    // TOTAL CURRENT BROKEN BUILDS
     var currentFbuilds_dom = document.getElementById("orgcurrentbrokenbuilds");
     var currentFbuilds_metrics = [{
-        id: 'orgbrokenbuilds',
+        id: 'orgfailedbuilds',
         max: 1,
         aggr: 'sum'
     }];
@@ -279,7 +294,7 @@
         aggr: 'sum'
     }];
     var organizationexec_conf = {
-        label: 'Total executions',
+        label: 'Total Jobs',
         decimal: 0,
         icon: 'fa fa-terminal',
         iconbackground: '#2A2A2A',
@@ -297,7 +312,7 @@
         aggr: 'sum'
     }];
     var organizationsuccessexec_conf = {
-        label: 'Total successful executions',
+        label: 'Total successful Jobs',
         decimal: 0,
         icon: 'fa fa-thumbs-up',
         iconbackground: '#069744',
@@ -315,7 +330,7 @@
         aggr: 'sum'
     }];
     var organizationbrokenexec_conf = {
-        label: 'Total broken executions',
+        label: 'Total broken Jobs',
         decimal: 0,
         icon: 'fa fa-thumbs-down',
         iconbackground: '#e21b23',
@@ -330,7 +345,7 @@
         id: 'orgtimetofixtbd'
     }];
     var orgtimetofix_conf = {
-        label: 'Average time to Fix broken builds',
+        label: 'Average time to Fix',
         decimal: 1,
         icon: 'fa fa-line-chart',
         iconbackground: '#f7853c',
@@ -371,6 +386,57 @@
         suffix: " d"
     };
     var organizationbrokentime = new framework.widgets.CounterBox(organizationbrokentime_dom, organizationbrokentime_metrics, null, organizationbrokentime_conf);
+
+    // DEVELOPERS LINES CHART
+    var dev_lines_dom = document.getElementById("dev-lines");
+    var dev_lines_metrics = [
+        {
+            id: 'orgdevelopers',
+            max: 100,
+            aggr: 'sum'
+        }
+    ];
+    var dev_lines_configuration = {
+        xlabel: '',
+        ylabel: '',
+        interpolate: 'monotone',
+        height: 250,
+        labelFormat: '%data.info.title%',
+        colors: ["#FF7F0E", "#1F77B4", "#68B828"],
+        area: true
+    };
+    var skills_lines = new framework.widgets.LinesChart(dev_lines_dom, dev_lines_metrics,
+            null, dev_lines_configuration);
+
+    // EXECUTIONS LINES CHART
+    var ex_lines_dom = document.getElementById("execs-lines");
+    var ex_lines_metrics = [
+        {
+            id: 'orgexecutions',
+            max: 100,
+            aggr: 'sum'
+        },
+        {
+            id: 'orgpassedexecutions',
+            max: 100,
+            aggr: 'sum'
+        },
+        {
+            id: 'orgfailedexecutions',
+            max: 100,
+            aggr: 'sum'
+        }
+    ];
+    var ex_lines_configuration = {
+        xlabel: '',
+        ylabel: '',
+        interpolate: 'monotone',
+        height: 250,
+        labelFormat: '%data.info.title%',
+        colors: ["#FF7F0E", "#1F77B4", "#68B828"]
+    };
+    var ex_lines = new framework.widgets.LinesChart(ex_lines_dom, ex_lines_metrics,
+            null, ex_lines_configuration);
 
     //ANGULAR INITIALIZATION
     try {

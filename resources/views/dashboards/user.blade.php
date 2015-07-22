@@ -287,7 +287,7 @@
         ylabel: '',
         interpolate: 'monotone',
         height: 200,
-        labelFormat: '%data.info.id%', //TODO add title in metrics
+        labelFormat: '%data.info.title%',
         colors: ["#2876B8", "#8A1978"],
         area: true
     };
@@ -348,7 +348,7 @@
         ylabel: '',
         interpolate: 'monotone',
         height: 205,
-        labelFormat: '%data.info.id%', //TODO add title in metrics
+        labelFormat: '%data.info.title%',
         colors: ["#FF7F0E", "#1F77B4", "#68B828"]
     };
     var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,

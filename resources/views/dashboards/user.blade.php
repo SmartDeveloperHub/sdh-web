@@ -207,14 +207,14 @@
     var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
 
 
-    // OPEN ISSUES
-    var open_issues_dom = document.getElementById("longest-streak");
-    var open_issues_metrics = [{
+    // LONGEST STREAK
+    var streak_dom = document.getElementById("longest-streak");
+    var streak_metrics = [{
         id: 'userstreak',
         max: 1,
         aggr: 'sum'
     }];
-    var open_issues_conf = {
+    var streak_conf = {
         label: 'Longest streak',
         decimal: 0,
         icon: 'octicon octicon-flame',
@@ -222,25 +222,7 @@
         background: 'transparent',
         suffix: " days"
     };
-    var open_issues = new framework.widgets.CounterBox(open_issues_dom, open_issues_metrics, [context4rangeChart, userCtx], open_issues_conf);
-
-
-    // SOLVED ISSUES
-    /*var solved_issues_dom = document.getElementById("solved-issues");
-    var solved_issues_metrics = [{
-        id: 'usersolvedissue',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var solved_issues_conf = {
-        label: 'Solved issues',
-        decimal: 0,
-        icon: 'octicon octicon-issue-closed',
-        iconbackground: 'rgb(104, 184, 40)',
-        background: 'transparent'
-    };
-    var solved_issues = new framework.widgets.CounterBox(solved_issues_dom, solved_issues_metrics, [context4rangeChart, userCtx], solved_issues_conf);
-*/
+    var streak = new framework.widgets.CounterBox(streak_dom, streak_metrics, [context4rangeChart, userCtx], streak_conf);
 
     // TOTAL PROJECTS
     var total_projects_dom = document.getElementById("total-projects");
@@ -312,34 +294,6 @@
     var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
             [context4rangeChart, userCtx], userCC_configuration);
 
-    //TEST PIECHART
-    /*var piechart_dom = document.getElementById("piechart");
-    var piechart_metrics = [
-        {
-            id: 'usercommits',
-            uid: 'u1',
-            max: 1,
-            aggr: 'avg'
-        },
-        {
-            id: 'usercommits',
-            uid: 'u2',
-            max: 1,
-            aggr: 'avg'
-        },
-        {
-            id: 'usercommits',
-            uid: 'u3',
-            max: 1,
-            aggr: 'avg'
-        },
-    ];
-    var piechart_configuration = {
-        labelFormat: "User: %uid%"
-    };
-    var piechart = new framework.widgets.PieChart(piechart_dom, piechart_metrics, [context4rangeChart], piechart_configuration);
-    */
-
     // SKILLS STAR CHART
     var skills_star_dom = document.getElementById("skills-star");
     var skills_star_metrics = [
@@ -376,17 +330,17 @@
         {
             id: 'userspeed',
             max: 20,
-            aggr: 'sum' //TODO: avg?
+            aggr: 'avg' //TODO: avg?
         },
         {
             id: 'usercollaboration',
             max: 20,
-            aggr: 'sum' //TODO: avg?
+            aggr: 'avg' //TODO: avg?
         },
         {
             id: 'userquality',
             max: 20,
-            aggr: 'sum' //TODO: avg?
+            aggr: 'avg' //TODO: avg?
         }
     ];
     var skills_lines_configuration = {

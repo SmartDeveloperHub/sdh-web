@@ -219,7 +219,7 @@
         label: 'Total builds',
         decimal: 0,
         icon: 'fa fa-cogs',
-        iconbackground: '#F7853C',
+        iconbackground: '#2a2a2a',
         background: 'transparent',
         labelcolor: '#000'
     };
@@ -235,8 +235,8 @@
     var currentbuilds_conf = {
         label: 'Current Success Builds',
         decimal: 0,
-        icon: 'fa fa-cogs',
-        iconbackground: '#F7853C',
+        icon: 'fa-sort-amount-asc',
+        iconbackground: '#069744',
         background: 'transparent',
         labelcolor: '#000'
     };
@@ -252,8 +252,8 @@
     var currentFbuilds_conf = {
         label: 'Current Broken Builds',
         decimal: 0,
-        icon: 'fa fa-cogs',
-        iconbackground: '#F7853C',
+        icon: 'fa-sort-amount-desc',
+        iconbackground: '#e21b23',
         background: 'transparent',
         labelcolor: '#000'
     };
@@ -287,7 +287,7 @@
     var organizationsuccessexec_conf = {
         label: 'Total successful executions',
         decimal: 0,
-        icon: 'octicon octicon-thumbsup',
+        icon: 'fa fa-thumbs-up',
         iconbackground: '#069744',
         background: 'transparent',
         labelcolor: '#000'
@@ -305,8 +305,8 @@
     var organizationbrokenexec_conf = {
         label: 'Total broken executions',
         decimal: 0,
-        icon: 'octicon octicon-thumbsdown',
-        iconbackground: '#E21B23',
+        icon: 'fa fa-thumbs-down',
+        iconbackground: '#e21b23',
         background: 'transparent',
         labelcolor: '#000'
     };
@@ -320,8 +320,8 @@
     var orgtimetofix_conf = {
         label: 'Average time to Fix broken builds',
         decimal: 1,
-        icon: 'octicon octicon-clock',
-        iconbackground: '#8D197B',
+        icon: 'fa fa-line-chart',
+        iconbackground: '#f7853c',
         background: 'transparent',
         labelcolor: '#000',
         suffix: " h"
@@ -336,8 +336,8 @@
     var organizationexectime_conf = {
         label: 'Build execution time',
         decimal: 1,
-        icon: 'octicon octicon-clock',
-        iconbackground: '#8D197B',
+        icon: 'fa fa-history',
+        iconbackground: '#8d197b',
         background: 'transparent',
         labelcolor: '#000',
         suffix: " h"
@@ -352,8 +352,8 @@
     var organizationbrokentime_conf = {
         label: 'Build broken time',
         decimal: 1,
-        icon: 'octicon octicon-history',
-        iconbackground: '#5F65D7',
+        icon: 'fa fa-history',
+        iconbackground: '#7C45CF',
         background: 'transparent',
         labelcolor: '#000',
         suffix: " d"

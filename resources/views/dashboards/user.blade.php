@@ -289,7 +289,8 @@
         height: 200,
         labelFormat: '%data.info.title%',
         colors: ["#2876B8", "#8A1978"],
-        area: true
+        area: true,
+        _demo: true // Only for demo
     };
     var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
             [context4rangeChart, userCtx], userCC_configuration);

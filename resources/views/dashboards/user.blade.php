@@ -19,7 +19,7 @@
 @section('html')
     <div class="row">
         <div id="total-commits" class="boxCounter col-sm-4"></div>
-        <div id="open-issues" class="boxCounter col-sm-4"></div>
+        <div id="longest-streak" class="boxCounter col-sm-4"></div>
         <div id="total-projects" class="boxCounter col-sm-4"></div>
     </div>
     <div class="row" id="UserInfoBox">
@@ -208,16 +208,16 @@
 
 
     // OPEN ISSUES
-    var open_issues_dom = document.getElementById("open-issues");
+    var open_issues_dom = document.getElementById("longest-streak");
     var open_issues_metrics = [{
-        id: 'useropenissue',
+        id: 'userloneststreak',
         max: 1,
         aggr: 'sum'
     }];
     var open_issues_conf = {
-        label: 'Open issues',
+        label: 'Longest streak',
         decimal: 0,
-        icon: 'octicon octicon-issue-opened',
+        icon: 'octicon octicon-flame',
         iconbackground: 'rgb(205, 195, 10)',
         background: 'transparent'
     };
@@ -367,17 +367,17 @@
         {
             id: 'userspeed',
             max: 20,
-            aggr: 'avg'
+            aggr: 'sum' //TODO: avg?
         },
         {
             id: 'usercollaboration',
             max: 20,
-            aggr: 'avg'
+            aggr: 'sum' //TODO: avg?
         },
         {
             id: 'userquality',
             max: 20,
-            aggr: 'avg'
+            aggr: 'sum' //TODO: avg?
         }
     ];
     var skills_lines_configuration = {

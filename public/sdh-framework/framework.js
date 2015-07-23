@@ -949,9 +949,8 @@
             if(_event_handlers[i].userCallback === callback) {
                 for (var c in _event_handlers[i]['contexts']) {
                     $(_eventBox).off("CONTEXT" + _event_handlers[i]['contexts'][c], _event_handlers[i]['contextHandler']);
-                    _event_handlers.splice(i, 1);
-                    break;
                 }
+                _event_handlers.splice(i, 1);
             }
         }
     };
@@ -970,6 +969,18 @@
 
         //Empty the array
         _event_handlers.splice(0, _event_handlers.length);
+
+    };
+
+    _self.data.clear = function() {
+
+        //Stop all the observes
+        _self.data.stopAllObserves();
+
+        //Clear the resources contexts storage
+        for(var key in _resourcesContexts) {
+            delete _resourcesContexts[key];
+        }
 
     };
 

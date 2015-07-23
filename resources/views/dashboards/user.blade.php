@@ -18,9 +18,10 @@
 
 @section('html')
     <div class="row">
-        <div id="total-commits" class="boxCounter col-sm-4"></div>
-        <div id="longest-streak" class="boxCounter col-sm-4"></div>
-        <div id="total-projects" class="boxCounter col-sm-4"></div>
+        <div id="total-commits" class="boxCounter col-sm-3"></div>
+        <div id="avg-commitsday" class="boxCounter col-sm-3"></div>
+        <div id="longest-streak" class="boxCounter col-sm-3"></div>
+        <div id="total-projects" class="boxCounter col-sm-3"></div>
     </div>
     <div class="row" id="UserInfoBox">
         <div class="row titleRow" id="userInfoTitle">
@@ -37,7 +38,7 @@
                         <span id="emailIco" class="theicon octicon octicon-mail-read"></span><span class="thelabel">Contact:</span><span class="theVal blurado" id="user-email">email@emaildom.com</span>
                     </div>
                     <div class="row staticInfoLine">
-                        <span id="timeIco" class="theicon octicon octicon-hourglass"></span><span class="thelabel">Registered:</span><span class="theVal blurado" id="user-since">July 3rd 2012</span>
+                        <span id="timeIco" class="theicon fa fa-pencil-square-o"></span><span class="thelabel">Registered:</span><span class="theVal blurado" id="user-since">July 3rd 2012</span>
                     </div>
                     <div class="row staticInfoLine">
                         <span id="firstIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">First Commit:</span><span class="theVal blurado" id="user-first-commit">July 3rd 2012</span>
@@ -198,6 +199,21 @@
     };
     var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
 
+    // AVG COMMITS PER DAY
+    var avg_commits_dom = document.getElementById("avg-commitsday");
+    var avg_commits_metrics = [{
+        id: 'usercommits',
+        max: 1,
+        aggr: 'avg'
+    }];
+    var avg_commits_conf = {
+        label: 'Average commits per day',
+        decimal: 0,
+        icon: 'octicon octicon-git-commit',
+        iconbackground: '#009640',
+        background: 'transparent'
+    };
+    var total_commits = new framework.widgets.CounterBox(avg_commits_dom, avg_commits_metrics, [context4rangeChart, userCtx], avg_commits_conf);
 
     // LONGEST STREAK
     var streak_dom = document.getElementById("longest-streak");

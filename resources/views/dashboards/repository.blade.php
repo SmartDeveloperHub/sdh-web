@@ -324,7 +324,7 @@
         }];
     var executions_conf = {
         stacked: true,
-        labelFormat: "%data.info.description%",
+        labelFormat: "%data.info.title%",
         showControls: false,
         height: 250,
         color: ["#0A8931", "#DB0013"]

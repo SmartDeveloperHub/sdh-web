@@ -19,54 +19,52 @@
 
 @section('html')
     <div class="row" id="RepoInfoBox">
-        <div class="row titleRow" id="repoInfoTitle">
+        <!--div class="row titleRow" id="repoInfoTitle">
             <span id="detailsIco" class="titleIcon fa fa-info-circle"></span>
             <span class="titleLabel">Repository Details</span>
-        </div>
+        </div-->
         <div class="row">
-            <div class="col-sm-5">
-                <div class="com-widget widget static-info-widget">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <img id="avatar" class="avatar img-circle" src="" alt="">
+            <div class="com-widget widget static-info-widget col-sm-12">
+                <div class="row">
+                    <div class="col-sm-2 avatarBox">
+                        <div id="avatar" class="avatar octicon octicon-repo"></div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="row staticInfoLine">
+                            <span id="createdIco" class="theicon fa fa-pencil-square-o"></span><span class="thelabel">Created:</span><span class="theVal blurado" id="repo-created">July 3rd 2012</span>
                         </div>
-                        <div class="col-sm-5">
-                            <label>Name: <span id="name"></span></label>
-                            <label>Description: <span id="description"></span></label>
+                        <div class="row staticInfoLine">
+                            <span id="firstIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">First commit:</span><span class="theVal blurado" id="repo-first">July 3rd 2012</span>
                         </div>
-                        <div class="col-sm-5">
-                            <label>SCM link: <span id="scm-link"></span></label>
-                            <label>Status: <span id="repo-status"></span></label>
+                        <div class="row staticInfoLine"> 
+                            <span id="lastIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">Last commit:</span><span class="theVal blurado" id="repo-last">Jan 7rd 2015</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="row staticInfoLine" id="buildStatusRow"> 
+                            <span id="buildStatusIco" class="theicon fa fa-history"></span><span class="thelabel">Last Build:</span><span class="theVal blurado" id="repo-buildstatus"> TheBuild OK</span>
+                        </div>
+                        <div class="row staticInfoLine"> 
+                            <span id="repStatusIco" class="theicon octicon octicon-globe"></span><span class="thelabel">Status:</span><span class="theVal blurado" id="repo-status"> repository OK</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
-                <div class="com-widget com-widget widget static-info-widget">
-                    <label>Last build: <span id="last-build"></span></label>
-                    <label>Build status: <span id="build-status"></span></label>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="com-widget com-widget widget static-info-widget">
-                    <label>Created: <span id="since"></span></label>
-                    <label>First commit: <span id="first-commit"></span></label>
-                    <label>Last commit: <span id="last-commit"></span></label>
-                </div>
-            </div>
         </div>
     </div>
-    <div class="row">
-        <div id="total-commits" class="boxCounter col-sm-3"></div>
-        <div id="total-users" class="boxCounter col-sm-3"></div>
-        <div id="total-executions" class="boxCounter col-sm-3"></div>
-        <div id="solved-issues" class="boxCounter col-sm-3"></div>
-    </div>
-    <div class="row">
-        <div id="avg-commits" class="boxCounter col-sm-3"></div>
-        <div id="avg-time-to-fix" class="boxCounter col-sm-3"></div>
-        <div id="avg-build-time" class="boxCounter col-sm-3"></div>
-        <div id="avg-broken-time" class="boxCounter col-sm-3"></div>
+    <div class="row" id="widgetsRow">
+        <div class="row">
+            <div id="total-commits" class="boxCounter col-sm-3"></div>
+            <div id="total-users" class="boxCounter col-sm-3"></div>
+            <div id="total-executions" class="boxCounter col-sm-3"></div>
+            <div id="solved-issues" class="boxCounter col-sm-3"></div>
+        </div>
+        <div class="row">
+            <div id="avg-commits" class="boxCounter col-sm-3"></div>
+            <div id="avg-time-to-fix" class="boxCounter col-sm-3"></div>
+            <div id="avg-build-time" class="boxCounter col-sm-3"></div>
+            <div id="avg-broken-time" class="boxCounter col-sm-3"></div>
+        </div>
     </div>
     <div class="row" id="devActivBox">
         <div class="row titleRow" id="devActivityTitle">
@@ -283,7 +281,7 @@
             aggr: 'sum'
         }];
         var success_executions_conf = {
-            label: 'Successful build executions',
+            label: 'Success build executions',
             decimal: 0,
             icon: 'fa fa-thumbs-up',
             iconbackground: 'rgb(6, 151, 68)',
@@ -384,24 +382,37 @@
                 //TODO
             } else if(event.event === 'data') {
                 var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
-
                 //Set header subtitle
                 setSubtitle(repoinfo['name']);
 
                 //Set data
-                document.getElementById('name').innerHTML = repoinfo['name'];
-                document.getElementById('description').innerHTML = repoinfo['description'];
-                document.getElementById('scm-link').innerHTML = repoinfo['scmlink'];
-                document.getElementById('since').innerHTML = moment(new Date(repoinfo['creation'])).format('LLLL');
-                document.getElementById('first-commit').innerHTML = moment(new Date(repoinfo['firstCommit'])).format('LLLL');
-                document.getElementById('last-commit').innerHTML = moment(new Date(repoinfo['lastCommit'])).format('LLLL');
-                document.getElementById('last-build').innerHTML = moment(new Date(repoinfo['builDdate'])).format('LLLL');
-                document.getElementById('build-status').innerHTML = (repoinfo['buildStatus'] ?
-                        '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
-                        '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');
-                document.getElementById('repo-status').innerHTML = (repoinfo['public'] ? '<i title="Public" class="fa fa-eye"></i> (Public)' : '<i title="Private" class="fa fa-eye-slash"></i> (Private)');
-                $("#avatar").attr('src', repoinfo['avatar']['avatar']).attr('alt', repoinfo['name']);
+                var creation = document.getElementById('repo-created');
+                var rbuildstatus = document.getElementById('repo-buildstatus');
+                var rfirstc = document.getElementById('repo-first');
+                var rlastc = document.getElementById('repo-last');
+                var repostatus = document.getElementById('repo-status');
+                creation.innerHTML = moment(new Date(repoinfo['creation'])).format('MMMM Do YYYY');
+                rfirstc.innerHTML = moment(new Date(repoinfo['firstCommit'])).format('MMMM Do YYYY');
+                rlastc.innerHTML = moment(new Date(repoinfo['lastCommit'])).format('MMMM Do YYYY');
+                rbuildstatus.innerHTML = (repoinfo['buildStatus'] ?
+                        '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i><span class="passedLabel">(Passed)</span>' :
+                        '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i><span class="errorLabel">(Error)</span>');
+                repostatus.innerHTML = (repoinfo['public'] ?
+                        '<i title="Public" class="fa fa-eye publicIco"></i><span class="publicLabel">(Public)</span>' :
+                        '<i title="Private" class="octicon octicon-loc privateIco"></i><span class="privateLabel">(Private)</span>');
 
+                $(creation).removeClass('blurado');
+                $(rfirstc).removeClass('blurado');
+                $(rlastc).removeClass('blurado');
+                $(rbuildstatus).removeClass('blurado');
+                $(repostatus).removeClass('blurado');
+                $("#avatar").removeClass('octicon octicon-repo');
+
+                if(repoinfo['avatar'] !== undefined && repoinfo['avatar'] !== null && repoinfo['avatar'] !== "" && repoinfo['avatar'] !== "http://avatarURL") {
+                    $("#avatar").css("background-image", "url("+repoinfo['avatar']+")");
+                } else {
+                    $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
+                }
             }
         }, [repoCtx]);
 

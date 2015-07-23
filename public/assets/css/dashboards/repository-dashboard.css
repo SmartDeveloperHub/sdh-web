@@ -18,13 +18,14 @@
   limitations under the License.
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
-.page-container .main-content {
-    padding: 0;
+.page-container {
+    background-color: #ffffff !important;
+    padding-top: 82px !important;
     overflow: hidden;
 }
-
-.page-body.light .page-container {
-    background-color: rgba(213, 213, 213, 0.2) !important;
+.page-container .main-content {
+    padding: 0 !important;
+    overflow: hidden;
 }
 
 .widget{
@@ -59,10 +60,18 @@
 
 #RepoInfoBox {
     background-color: #FFF;
-    box-shadow: inset 0px 2px 5px 0px #DDD;
-    margin-top: 12px;
+    margin-top: 51px;
     margin-left: -2px;
     margin-right: -2px;
+}
+
+#buildStatusRow {
+    margin-top: 15px;
+}
+
+#widgetsRow {
+    box-shadow: 0px -2px 5px 0px #DDD;
+    background-color: rgba(241, 241, 241, 0.76);
 }
 
 #UserSkillBox {
@@ -102,28 +111,61 @@
     margin-left: 12px;
 }
 
-#emailIco {
-    color: #004C8B;
+.blurado {
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
 }
 
-#timeIco {
-    color: #8A1978;
-    margin-left: 14px;
-    width: 37px;
+#createdIco {
+  color: #019640;
 }
 
 #firstIco {
-    color: #94C11F;
+    color: #004C8B;
     margin-left: 17px;
     width: 35px;
 }
 
 #lastIco {
-    color: #019640;
+    color: #8A1978;;
     margin-left: 17px;
     width: 35px;
 }
 
+#buildStatusIco {
+  color: #F07528;
+}
+
+#repStatusIco {
+  color: #004C8B;
+}
+
+.passedLabel {
+    color: green;
+    margin-left: 8px;
+}
+
+.errorLabel {
+    color: red;
+}
+
+.publicIco {
+    color: green;
+    margin-right: 8px;
+}
+
+.privateIco {
+    color: red;
+}
+
+.publicLabel {
+    color: green;
+}
+
+.privateLabel {
+    color: red;
+}
+                    
 .static-info-widget .thelabel {
     display: inline-block;
     white-space: nowrap;
@@ -141,13 +183,12 @@
     font-family: Roboto;
     white-space: nowrap;
     margin-left: 10px;
-    font-style: italic;
-    font-weight: bold;
     font-size: 18px;
     display: inline-block;
     overflow: hidden;
     max-width: 65%;
     text-overflow: ellipsis;
+    line-height: 27px;
 }
 
 /* Users Table */
@@ -247,22 +288,22 @@ table.dataTable tbody tr .odd {
     font-family: Roboto;
 }
 
+/* avatar */
+.avatarBox {
+    text-align: center;
+}
+
 .avatar {
-    width: 80px;
-    height: 80px;
-    margin-left: 14px;
-    margin-top: 24px;
-}
-
-#repoInfoTitle {
-}
-
-#detailsIco {
-    color:#EE7325;
-}
-
-#skillsIco {
-    color: #DB2830;
+    width: 76px;
+    height: 76px;
+    font-size: 73px;
+    color: #004C8B;
+    text-align: center;
+    display: inline-block;
+    border-radius: 1px;
+    background-size: contain;
+    margin-left: 31%;
+    margin-top: 23px;
 }
 
 #repoIco {

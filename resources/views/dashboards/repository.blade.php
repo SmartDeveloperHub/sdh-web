@@ -339,7 +339,7 @@
             labelFormat: "%data.info.title%",
             showControls: false,
             height: 250,
-            color: ["#0A8931", "#DB0013"]
+            color: ["#DB0013", "#0A8931"]
         };
         var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
                 [context4rangeChart, repoCtx], executions_conf);

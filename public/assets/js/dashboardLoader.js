@@ -272,6 +272,7 @@ define(function(require, exports, module) {
 
                 //Show the page container
                 $(".page-container").show();
+                $("footer.footer-container").show();
 
                 // Load the initial dashboard
                 dashboardController.changeTo(BASE_DASHBOARD);

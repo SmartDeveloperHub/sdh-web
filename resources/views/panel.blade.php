@@ -103,7 +103,7 @@
         </div>
     </div>
 </div>
-<footer class="footer-container">
+<footer class="footer-container" style="display: none;">
     <div class="row">
         <div class="col-sm-8 footer-text">
             <p>Copyright &copy; 2015 Center for Open Middleware, Universidad Politécnica de Madrid</p>

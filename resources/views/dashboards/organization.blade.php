@@ -117,19 +117,19 @@
             </div>
         </div>
     </div>
-    <div class="row executionsBox">
-        <div class="boxtitle">
-            <span id="execIco" class="orgSubtitleIco fa fa-history"></span>
-            <span id="execTitle" class="orgSubtitle">Continuous Integration History</span>
-        </div>
-        <div id="execs-lines" class="col-sm-12 col-centered"></div>
-    </div>
     <div class="row devBox">
         <div class="boxtitle">
             <span id="devIco" class="orgSubtitleIco octicon octicon-squirrel"></span>
             <span id="devTitle" class="orgSubtitle">Developers History</span>
         </div>
         <div id="dev-lines" class="col-sm-12 col-centered"></div>
+    </div>
+    <div class="row executionsBox">
+        <div class="boxtitle">
+            <span id="execIco" class="orgSubtitleIco fa fa-history"></span>
+            <span id="execTitle" class="orgSubtitle">Continuous Integration History</span>
+        </div>
+        <div id="execs-lines" class="col-sm-12 col-centered"></div>
     </div>
     <div id="usersPanel" class="section" ng-controller="UsersController">
         <div id="develHeader" class="row row-centered">
@@ -148,7 +148,7 @@
         <div class="row row-centered card-list">
             <div class="col-sm-3 col-centered card" ng-repeat="user in users | orderBy:'name'" ng-show="([user.name, user.avatar] | filter:userQuery).length" ng-click="changeToUserDashboard(user)">
                 <span class="helper"></span>
-                <img class="card-avatar img-circle" ng-src="@{{ user.avatar }}" alt="@{{ user.name }}">
+                <img class="card-avatar" ng-src="@{{ user.avatar }}" alt="@{{ user.name }}">
                 <span class="card-name">@{{ user.name }}</span>
             </div>
         </div>
@@ -168,9 +168,9 @@
              <a href="#" class="fa fa-times searchDevClear"></a>
         </div>
         <div class="row row-centered card-list">
-            <div class="col-sm-3 col-centered card" ng-repeat="repo in repos | orderBy:'name'" ng-show="([repo.name, repo.avatar] | filter:repoQuery).length" ng-click="changeToRepoDashboard(repo)">
+            <div class="col-sm-3 col-centered card card_backg" ng-repeat="repo in repos | orderBy:'name'" ng-show="([repo.name, repo.avatar] | filter:repoQuery).length" ng-click="changeToRepoDashboard(repo)">
                 <span class="helper"></span>
-                <img class="card-avatar img-circle" ng-src="@{{ repo.avatar }}" alt="@{{ repo.name }}">
+                <img class="card-avatar-rep" ng-src="@{{ repo.avatar }}" alt="@{{ repo.name }}">
                 <span class="card-name">@{{ repo.name }}</span>
             </div>
         </div>

@@ -185,7 +185,7 @@
 }
 
 #develHeader .headIcon {
-    color: #E70083;
+    color: #F7853C;
 }
 
 #reposHeader .headIcon {
@@ -270,16 +270,38 @@
     background-color: #FFF;
     width: 300px;
 }
-.card:hover {
-    background-color: #DFDFDF;
+
+.card.card_backg {
+    background-color: #E6E6E6;
 }
+
+.card.card_backg:hover {
+    background-color: rgba(159, 206, 35, 0.53);
+    border: solid 1px #9FCE23;
+}
+
+.card:hover {
+    background-color: #FFB88A;
+    border: solid 1px #F7853C;
+}
+
 .card-avatar {
     display: inline-block;
     height: 60px;
     width: 60px;
-    border: solid 1px #BABABA;
+    border: solid 1px rgba(186, 186, 186, 0.34);
     vertical-align: middle;
+    border-radius: 2px;
 }
+
+.card-avatar-rep {
+    display: inline-block;
+    height: 60px;
+    width: 60px;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+
 .card-name {
     margin-left: 10px;
     font-size: 22px;
@@ -324,7 +346,7 @@
     padding: 6px;
     display: inline-block;
     text-align: justify;
-    color: rgba(85, 85, 85, 0.94);
+    color: #3F3F3F;
     font-family: Roboto;
     width: 85%;
     line-height: 24px;

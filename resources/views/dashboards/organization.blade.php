@@ -178,7 +178,7 @@
 @stop
 
 @section('script')
-
+/* <script> */
     //Show header chart and set titles
     setTitle("");
     setSubtitle("");
@@ -454,6 +454,7 @@
                     $scope.changeToUserDashboard = function(user) {
                         var env = framework.dashboard.getEnv();
                         env['uid'] = user['userid'];
+                        env['name'] = user['name'];
                         framework.dashboard.changeTo('user-dashboard', env);
                     };
                 }])
@@ -461,6 +462,7 @@
                     $scope.changeToRepoDashboard = function(repo) {
                         var env = framework.dashboard.getEnv();
                         env['rid'] = repo['repositoryid'];
+                        env['name'] = repo['name'];
                         framework.dashboard.changeTo('repo-dashboard', env);
                     };
                 }]);

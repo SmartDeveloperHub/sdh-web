@@ -303,3 +303,35 @@ table.dataTable tbody tr .odd {
 .dataTable tr td:nth-child(2) {
     cursor: pointer;
 }
+
+#devActivityTitle {
+    background-color: #fff;
+    box-shadow: 0 2px 5px 0 #ddd inset;
+    margin-left: -2px;
+    margin-right: -2px;
+    margin-top: 0;
+    padding-bottom: 14px;
+    padding-top: 33px;
+}
+.titleRow {
+    margin-bottom: 8px;
+    margin-top: 35px;
+    text-align: center;
+}
+
+.titleLabel {
+    color: #5a5858;
+    font-family: Roboto;
+    font-size: 32px;
+    margin-left: 20px;
+    vertical-align: middle;
+}
+
+#devActIco {
+    color: #004c8b;
+}
+
+.titleIcon {
+    font-size: 54px;
+    vertical-align: middle;
+}

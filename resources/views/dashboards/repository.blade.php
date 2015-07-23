@@ -68,6 +68,13 @@
         <div id="avg-build-time" class="boxCounter col-sm-3"></div>
         <div id="avg-broken-time" class="boxCounter col-sm-3"></div>
     </div>
+    <div class="row" id="devActivBox">
+        <div class="row titleRow" id="devActivityTitle">
+            <span id="devActIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
+            <span class="titleLabel">Activity</span>
+        </div>
+        <div class="row" id="commitChart"></div>
+    </div>
     <div class="row" id="UserSkillBox">
         <div class="row titleRow" id="userSkillTitle">
             <span id="skillsIco" class="titleIcon fa fa-history"></span>
@@ -344,6 +351,32 @@
             suffix: " d"
         };
         var avg_broken_time = new framework.widgets.CounterBox(avg_broken_time_dom, avg_broken_time_metrics, [context4rangeChart, repoCtx], avg_broken_time_conf);
+
+        // USER COMMITS LINE CHART
+        var userCC_dom = document.getElementById("commitChart");
+        var userCC_metrics = [
+            {
+                id: 'repocommits',
+                max: 30
+            },
+            {
+                id: 'repocommits',
+                max: 30,
+                aggr: "avg"
+            }
+        ];
+        var userCC_configuration = {
+            xlabel: '',
+            ylabel: '',
+            interpolate: 'monotone',
+            height: 200,
+            labelFormat: '%data.info.title%',
+            colors: ["#2876B8", "#C0485E"],
+            area: true,
+            _demo: true // Only for demo
+        };
+        var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
+                [context4rangeChart, repoCtx], userCC_configuration);
 
         // REPOSITORY META INFO
         framework.data.observe(['repoinfo'], function(event){

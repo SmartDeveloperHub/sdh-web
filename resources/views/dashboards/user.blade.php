@@ -209,7 +209,7 @@
             label: 'Total commits',
             decimal: 0,
             icon: 'octicon octicon-git-commit',
-            iconbackground: 'rgb(40, 118, 184)',
+            iconbackground: 'rgb(0, 75, 139)',
             background: 'transparent'
         };
         var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
@@ -224,8 +224,8 @@
         var avg_commits_conf = {
             label: 'Average commits per day',
             decimal: 3,
-            icon: 'octicon octicon-git-commit',
-            iconbackground: '#009640',
+            icon: 'octicon octicon-git-merge',
+            iconbackground: 'rgb(192, 72, 94)',
             background: 'transparent'
         };
         var total_commits = new framework.widgets.CounterBox(avg_commits_dom, avg_commits_metrics, [context4rangeChart, userCtx], avg_commits_conf);
@@ -241,7 +241,7 @@
             label: 'Longest streak',
             decimal: 0,
             icon: 'octicon octicon-flame',
-            iconbackground: 'rgb(205, 195, 10)',
+            iconbackground: 'rgb(247, 83, 51)',
             background: 'transparent',
             suffix: " days"
         };
@@ -258,7 +258,7 @@
             label: 'Total repositories',
             decimal: 0,
             icon: 'octicon octicon-repo',
-            iconbackground: 'rgb(184, 40, 40)',
+            iconbackground: 'rgb(159, 206, 35)',
             background: 'transparent'
         };
         var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [context4rangeChart, userCtx], total_projects_conf);
@@ -320,7 +320,7 @@
             interpolate: 'monotone',
             height: 200,
             labelFormat: '%data.info.title%',
-            colors: ["#2876B8", "#8A1978"],
+            colors: ["#2876B8", "#C0485E"],
             area: true,
             _demo: true // Only for demo
         };

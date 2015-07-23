@@ -18,12 +18,6 @@
 @stop
 
 @section('html')
-    <div class="row">
-        <div id="total-commits" class="boxCounter col-sm-3"></div>
-        <div id="total-users" class="boxCounter col-sm-3"></div>
-        <div id="total-executions" class="boxCounter col-sm-3"></div>
-        <div id="solved-issues" class="boxCounter col-sm-3"></div>
-    </div>
     <div class="row" id="RepoInfoBox">
         <div class="row titleRow" id="repoInfoTitle">
             <span id="detailsIco" class="titleIcon fa fa-info-circle"></span>
@@ -61,6 +55,18 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div id="total-commits" class="boxCounter col-sm-3"></div>
+        <div id="total-users" class="boxCounter col-sm-3"></div>
+        <div id="total-executions" class="boxCounter col-sm-3"></div>
+        <div id="solved-issues" class="boxCounter col-sm-3"></div>
+    </div>
+    <div class="row">
+        <div id="avg-commits" class="boxCounter col-sm-3"></div>
+        <div id="avg-time-to-fix" class="boxCounter col-sm-3"></div>
+        <div id="avg-build-time" class="boxCounter col-sm-3"></div>
+        <div id="avg-broken-time" class="boxCounter col-sm-3"></div>
     </div>
     <div class="row" id="UserSkillBox">
         <div class="row titleRow" id="userSkillTitle">
@@ -224,7 +230,7 @@
             label: 'Total commits',
             decimal: 0,
             icon: 'octicon octicon-git-commit',
-            iconbackground: 'rgb(40, 118, 184)',
+            iconbackground: 'rgb(0, 75, 139)',
             background: 'transparent'
         };
         var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, repoCtx], total_commits_conf);
@@ -240,7 +246,7 @@
             label: 'Total developers',
             decimal: 0,
             icon: 'octicon octicon-organization',
-            iconbackground: 'rgb(40, 184, 179)',
+            iconbackground: 'rgb(231, 0, 131)',
             background: 'transparent'
         };
         var total_users = new framework.widgets.CounterBox(total_users_dom, total_users_metrics, [context4rangeChart, repoCtx], total_users_conf);
@@ -255,8 +261,8 @@
         var total_executions_conf = {
             label: 'Total build executions',
             decimal: 0,
-            icon: 'fa fa-cogs',
-            iconbackground: 'rgb(205, 195, 10)',
+            icon: 'fa fa-terminal',
+            iconbackground: 'rgb(42, 42, 42)',
             background: 'transparent'
         };
         var total_executions_issues = new framework.widgets.CounterBox(total_executions_dom, total_executions_metrics, [context4rangeChart, repoCtx], total_executions_conf);
@@ -272,12 +278,72 @@
         var success_executions_conf = {
             label: 'Successful build executions',
             decimal: 0,
-            icon: 'octicon octicon-thumbsup',
-            iconbackground: 'rgb(104, 184, 40)',
+            icon: 'fa fa-thumbs-up',
+            iconbackground: 'rgb(6, 151, 68)',
             background: 'transparent'
         };
         var success_executions_issues = new framework.widgets.CounterBox(success_executions_dom, success_executions_metrics, [context4rangeChart, repoCtx], success_executions_conf);
 
+        // AVG COMMITS
+        var avg_commits_dom = document.getElementById("avg-commits");
+        var avg_commits_metrics = [{
+            id: 'repocommits',
+            max: 1,
+            aggr: 'avg'
+        }];
+        var avg_commits_conf = {
+            label: 'Average commits per day',
+            decimal: 2,
+            icon: 'octicon octicon-git-merge',
+            iconbackground: 'rgb(192, 72, 94)',
+            background: 'transparent'
+        };
+        var avg_commits = new framework.widgets.CounterBox(avg_commits_dom, avg_commits_metrics, [context4rangeChart, repoCtx], avg_commits_conf);
+
+        // AVG TIME TO FIX
+        var avg_time_to_fix_dom = document.getElementById("avg-time-to-fix");
+        var avg_time_to_fix_metrics = [{
+            id: 'repotimetofixtbd'
+        }];
+        var avg_time_to_fix_conf = {
+            label: 'Average time to fix',
+            decimal: 2,
+            icon: 'fa fa-line-chart',
+            iconbackground: 'rgb(247, 133, 60)',
+            background: 'transparent',
+            suffix: " h"
+        };
+        var avg_time_to_fix = new framework.widgets.CounterBox(avg_time_to_fix_dom, avg_time_to_fix_metrics, [context4rangeChart, repoCtx], avg_time_to_fix_conf);
+
+        // AVG BUILD TIME
+        var avg_build_time_dom = document.getElementById("avg-build-time");
+        var avg_build_time_metrics = [{
+            id: 'repobuildtimetbd'
+        }];
+        var avg_build_time_conf = {
+            label: 'Build execution time',
+            decimal: 2,
+            icon: 'fa fa-history',
+            iconbackground: 'rgb(141, 25, 123)',
+            background: 'transparent',
+            suffix: " h"
+        };
+        var avg_build_time = new framework.widgets.CounterBox(avg_build_time_dom, avg_build_time_metrics, [context4rangeChart, repoCtx], avg_build_time_conf);
+
+        // AVG BROKEN TIME
+        var avg_broken_time_dom = document.getElementById("avg-broken-time");
+        var avg_broken_time_metrics = [{
+            id: 'repobrokentimetbd'
+        }];
+        var avg_broken_time_conf = {
+            label: 'Build broken time',
+            decimal: 2,
+            icon: 'fa fa-history',
+            iconbackground: 'rgb(124, 69, 207)',
+            background: 'transparent',
+            suffix: " d"
+        };
+        var avg_broken_time = new framework.widgets.CounterBox(avg_broken_time_dom, avg_broken_time_metrics, [context4rangeChart, repoCtx], avg_broken_time_conf);
 
         // REPOSITORY META INFO
         framework.data.observe(['repoinfo'], function(event){

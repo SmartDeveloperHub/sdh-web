@@ -54,16 +54,21 @@
     </div>
     <div class="row" id="widgetsRow">
         <div class="row">
-            <div id="total-commits" class="boxCounter col-sm-3"></div>
-            <div id="total-users" class="boxCounter col-sm-3"></div>
-            <div id="total-executions" class="boxCounter col-sm-3"></div>
-            <div id="solved-issues" class="boxCounter col-sm-3"></div>
+            <div id="total-commits" class="boxCounter col-sm-4"></div>
+            <div id="total-users" class="boxCounter col-sm-4"></div>
+            <div id="total-executions" class="boxCounter col-sm-4"></div>
+            
         </div>
         <div class="row">
-            <div id="avg-commits" class="boxCounter col-sm-3"></div>
-            <div id="avg-time-to-fix" class="boxCounter col-sm-3"></div>
-            <div id="avg-build-time" class="boxCounter col-sm-3"></div>
-            <div id="avg-broken-time" class="boxCounter col-sm-3"></div>
+            <div id="solved-issues" class="boxCounter col-sm-4"></div>
+            <div id="avg-commits" class="boxCounter col-sm-4"></div>
+            <div id="avg-time-to-fix" class="boxCounter col-sm-4"></div>
+        </div>
+        <div class="row">
+            <div class="boxCounter col-sm-2"></div>
+            <div id="avg-build-time" class="boxCounter col-sm-4"></div>
+            <div id="avg-broken-time" class="boxCounter col-sm-4"></div>
+            <div class="boxCounter col-sm-2"></div>
         </div>
     </div>
     <div class="row" id="devActivBox">

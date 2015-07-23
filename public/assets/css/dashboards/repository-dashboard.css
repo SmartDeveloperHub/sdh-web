@@ -72,6 +72,7 @@
 #widgetsRow {
     box-shadow: 0px -2px 5px 0px #DDD;
     background-color: rgba(241, 241, 241, 0.76);
+    padding-left: 5%;
 }
 
 #UserSkillBox {

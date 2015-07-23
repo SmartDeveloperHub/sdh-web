@@ -395,13 +395,9 @@
         var table_configuration = {
             columns: [
                 {
-                    label: "Name",
-                    property: "name"
-                },
-                {
                     label: "Show",
                     link: {
-                        icon: "fa fa-share", //or label
+                        img: "avatar", //or label
                         href: "repo-dashboard",
                         env: [
                             {
@@ -415,6 +411,10 @@
                         ]
                     },
                     width: "40px"
+                },
+                {
+                    label: "Name",
+                    property: "name"
                 }
             ],
             updateContexts: [

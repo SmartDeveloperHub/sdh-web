@@ -241,9 +241,6 @@ table.dataTable tbody tr .odd {
     margin-bottom: -135px;
     margin-top: -33px;
 }
-.dashboardLink{
-    cursor: pointer;
-}
 #description {
     text-overflow: ellipsis;
 }
@@ -357,4 +354,18 @@ table.dataTable tbody tr .odd {
 .nvd3 .nv-legend .nv-series text {
     font-size: 15px;
     font-family: Roboto;
+}
+
+.dashboardLink img {
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+}
+
+.dataTable td {
+    vertical-align: middle;
+}
+
+.dataTable tr td:nth-child(2) {
+    cursor: pointer;
 }

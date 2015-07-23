@@ -24,15 +24,15 @@
 }
 
 .page-body.light .page-container {
-    background-color: rgba(213, 213, 213, 0.2) !important;
+    background-color: #FFF;
+    padding-top: 25px;
 }
 
-.widget{
-    background-color: transparent;
-    display: block;
-    margin-bottom: 10px;
-    padding: 12px;
-    height: 100%;
+div#UserInfoBox {
+  display: block;
+  padding: 12px;
+  height: 100%;
+  background-color: rgba(244, 244, 244, 0.3);
 }
 
 .boxCounter {
@@ -60,10 +60,36 @@
 
 #UserInfoBox {
     background-color: #FFF;
-    box-shadow: inset 0px 2px 5px 0px #DDD;
-    margin-top: 12px;
+}
+
+#widgetsRow {
+    box-shadow: 0px -2px 5px 0px #DDD;
+    background-color: rgba(241, 241, 241, 0.76);
+    height: 167px;
+}
+
+#devActivBox {
+    margin-top: 0;
     margin-left: -2px;
     margin-right: -2px;
+    padding-bottom: 14px;
+}
+
+#userInfoTitle {
+    background-color: #FFF;
+    margin-top: 84px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+#devActivityTitle {
+    background-color: #FFF;
+    box-shadow: inset 0px 2px 5px 0px #DDD;
+    margin-top: 0;
+    margin-left: -2px;
+    margin-right: -2px;
+    padding-bottom: 14px;
+    padding-top: 33px;
 }
 
 #UserSkillBox {
@@ -87,9 +113,14 @@
     font-family: Roboto;
     font-size: 19px;
     line-height: 35px;
+    margin-top: 100px;
 }
 
 .static-info-widget .staticInfoLine {
+    white-space: nowrap;
+}
+
+.static-info-widget .leftStaticInfoLine {
     white-space: nowrap;
 }
 
@@ -141,13 +172,12 @@
     font-family: Roboto;
     white-space: nowrap;
     margin-left: 10px;
-    font-style: italic;
-    font-weight: bold;
     font-size: 18px;
     display: inline-block;
     overflow: hidden;
     max-width: 65%;
     text-overflow: ellipsis;
+    line-height: 27px;
 }
 
 /* Repos Table */
@@ -271,17 +301,16 @@ table.dataTable tbody tr .odd {
 }
 
 .avatar {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     font-size: 73px;
     color: #004C8B;
     text-align: center;
     display: inline-block;
-    margin-left: 8%;
-    margin-top: 25px;
-}
-
-#userInfoTitle {
+    box-shadow: 0px 0px 3px 0px #000;
+    border-radius: 1px;
+    background-size: contain;
+    margin-left: 19%;
 }
 
 #userSkillTitle {
@@ -293,6 +322,10 @@ table.dataTable tbody tr .odd {
 
 #detailsIco {
     color:#1667b6;
+}
+
+#devActIco {
+    color: #004C8B;
 }
 
 #skillsIco {

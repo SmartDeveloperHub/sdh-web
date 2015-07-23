@@ -17,29 +17,21 @@
 @stop
 
 @section('html')
-    <div class="row">
-        <div id="total-commits" class="boxCounter col-sm-3"></div>
-        <div id="avg-commitsday" class="boxCounter col-sm-3"></div>
-        <div id="longest-streak" class="boxCounter col-sm-3"></div>
-        <div id="total-projects" class="boxCounter col-sm-3"></div>
-    </div>
     <div class="row" id="UserInfoBox">
-        <div class="row titleRow" id="userInfoTitle">
-            <span id="detailsIco" class="titleIcon fa fa-info-circle"></span>
-            <span class="titleLabel">User Details</span>
-        </div>
         <div class="row">
-            <div class="com-widget widget static-info-widget col-sm-5">
-                <div class="col-sm-3 avatarBox">
+            <div class="com-widget widget static-info-widget col-sm-12">
+                <div class="col-sm-2 avatarBox">
                     <div id="avatar" class="avatar img-circle fa-user-secret"></div>
                 </div>
-                <div class="col-sm-9">
-                    <div class="row staticInfoLine">
+                <div class="col-sm-5">
+                    <div class="row leftStaticInfoLine">
                         <span id="emailIco" class="theicon octicon octicon-mail-read"></span><span class="thelabel">Contact:</span><span class="theVal blurado" id="user-email">email@emaildom.com</span>
                     </div>
-                    <div class="row staticInfoLine">
+                    <div class="row leftStaticInfoLine">
                         <span id="timeIco" class="theicon fa fa-pencil-square-o"></span><span class="thelabel">Registered:</span><span class="theVal blurado" id="user-since">July 3rd 2012</span>
                     </div>
+                </div>
+                <div class="col-sm-5">
                     <div class="row staticInfoLine">
                         <span id="firstIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">First Commit:</span><span class="theVal blurado" id="user-first-commit">July 3rd 2012</span>
                     </div>
@@ -48,10 +40,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-7">
-                <div id="commitChart"></div>
-            </div>
         </div>
+    </div>
+    <div class="row" id="widgetsRow">
+        <div id="total-commits" class="boxCounter col-sm-3"></div>
+        <div id="avg-commitsday" class="boxCounter col-sm-3"></div>
+        <div id="longest-streak" class="boxCounter col-sm-3"></div>
+        <div id="total-projects" class="boxCounter col-sm-3"></div>
+    </div>
+    <div class="row" id="devActivBox">
+        <div class="row titleRow" id="devActivityTitle">
+            <span id="devActIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
+            <span class="titleLabel">Activity</span>
+        </div>
+        <div class="row" id="commitChart"></div>
     </div>
     <div class="row" id="UserSkillBox">
         <div class="row titleRow" id="userSkillTitle">

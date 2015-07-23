@@ -131,8 +131,8 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
         widget.dispose();
     }
 
-    // Just to be sure in case some widget did not registered with the framework
-    framework.data.stopAllObserves();
+    // Tell the framework to clear itself (remove observers and context data)
+    framework.data.clear();
 
     var _this = this; //Closure
 

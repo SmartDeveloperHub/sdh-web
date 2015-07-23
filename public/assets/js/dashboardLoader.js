@@ -118,6 +118,9 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
     setTitle("");
     setSubtitle("");
 
+    //Clear time info
+    clearTimeInfo();
+
     //Scroll to top
     window.scrollTo(0, 0);
 

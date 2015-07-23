@@ -19,7 +19,7 @@
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
-var setTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHeaderChart;
+var setTimeInfo, clearTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHeaderChart;
 
 	$(document).ready(function(){
 
@@ -52,7 +52,7 @@ var setTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHeaderChart;
 			pane.removeClass('open');
 			controlIco.removeClass("fa-caret-up");
 			controlIco.addClass("fa-caret-down");
-		}
+		};
 
 		var openPanehandler = function openPanehandler() {
 			pane.addClass('open');
@@ -60,7 +60,7 @@ var setTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHeaderChart;
 			lastTop = win.scrollTop();
 			controlIco.removeClass("fa-caret-down");
 			controlIco.addClass("fa-caret-up");
-		}
+		};
 
 		setTimeInfo = function setTimeInfo (from, to) {
 			if (moment(from).isValid() && moment(from).isValid()) {
@@ -70,15 +70,21 @@ var setTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHeaderChart;
 			} else {
 				console.log("setTimeInfo... invalid dates");
 			}
-		}
+		};
+
+        clearTimeInfo = function clearTimeInfo() {
+            fromLabel.text('');
+            sinceLabel.text('');
+            toLabel.text('');
+        };
 
 		setTitle = function setTitle(newTitle) {
 			hTitle.text(newTitle);
-		}
+		};
 
 		setSubtitle = function setSubtitle(newSubtitle) {
 			hSubtitle.text(newSubtitle);
-		}
+		};
 
         hideHeaderChart = function() {
             $("#timeControler").hide();

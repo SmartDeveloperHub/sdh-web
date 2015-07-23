@@ -366,7 +366,7 @@
 
                 $("#executions-info-compare").children("span").first().text(success);
                 $("#executions-info-compare").children("span").last().text(broken);
-                $("#executions-info-percent").children("span").text(Math.round(broken*100/total));
+                $("#executions-info-percent").children("span").text((total > 0 ? Math.round(broken*100/total) : 0));
                 $("#executions-info-total").children("span").text(total);
 
 

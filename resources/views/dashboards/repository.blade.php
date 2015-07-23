@@ -253,7 +253,7 @@
             aggr: 'sum'
         }];
         var total_executions_conf = {
-            label: 'Total executions',
+            label: 'Total build executions',
             decimal: 0,
             icon: 'fa fa-cogs',
             iconbackground: 'rgb(205, 195, 10)',
@@ -270,7 +270,7 @@
             aggr: 'sum'
         }];
         var success_executions_conf = {
-            label: 'Successful executions',
+            label: 'Successful build executions',
             decimal: 0,
             icon: 'octicon octicon-thumbsup',
             iconbackground: 'rgb(104, 184, 40)',

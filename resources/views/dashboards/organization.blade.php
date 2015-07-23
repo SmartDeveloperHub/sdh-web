@@ -260,7 +260,7 @@
         aggr: 'sum'
     }];
     var currentbuilds_conf = {
-        label: 'Current Success Builds',
+        label: 'Current Successful Builds',
         decimal: 0,
         icon: 'fa-sort-amount-asc',
         iconbackground: '#069744',
@@ -294,7 +294,7 @@
         aggr: 'sum'
     }];
     var organizationexec_conf = {
-        label: 'Total Jobs',
+        label: 'Total Executions',
         decimal: 0,
         icon: 'fa fa-terminal',
         iconbackground: '#2A2A2A',
@@ -312,7 +312,7 @@
         aggr: 'sum'
     }];
     var organizationsuccessexec_conf = {
-        label: 'Total successful Jobs',
+        label: 'Total successful Executions',
         decimal: 0,
         icon: 'fa fa-thumbs-up',
         iconbackground: '#069744',
@@ -330,7 +330,7 @@
         aggr: 'sum'
     }];
     var organizationbrokenexec_conf = {
-        label: 'Total broken Jobs',
+        label: 'Total broken Executions',
         decimal: 0,
         icon: 'fa fa-thumbs-down',
         iconbackground: '#e21b23',

@@ -218,7 +218,7 @@
         }];
         var avg_commits_conf = {
             label: 'Average commits per day',
-            decimal: 0,
+            decimal: 2,
             icon: 'octicon octicon-git-commit',
             iconbackground: '#009640',
             background: 'transparent'
@@ -453,13 +453,14 @@
         var user_project_commits_dom = document.getElementById("projects-lines");
         var user_project_commits_metrics = [{
             id: 'repousercommits',
-            max: 0
+            max: 100
         }];
         var user_project_commits_conf = {
             xlabel: '',
             ylabel: '',
             labelFormat: 'Commits',
-            interpolate: 'monotone'
+            interpolate: 'monotone',
+            area: true
         };
         var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
                 [context4rangeChart, userCtx, repoCtx], user_project_commits_conf);

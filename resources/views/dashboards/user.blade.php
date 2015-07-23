@@ -29,31 +29,23 @@
         </div>
         <div class="row">
             <div class="com-widget widget static-info-widget col-sm-5">
-                <div class="col-sm-3">
-                    <img id="avatar" class="avatar img-circle" src="" alt=""></image>
+                <div class="col-sm-3 avatarBox">
+                    <div id="avatar" class="avatar img-circle fa-user-secret"></div>
                 </div>
                 <div class="col-sm-9">
                     <div class="row staticInfoLine">
-                        <span id="emailIco" class="theicon octicon octicon-mail-read"></span><span class="thelabel">Contact:</span><span class="theVal" id="user-email"></span>
+                        <span id="emailIco" class="theicon octicon octicon-mail-read"></span><span class="thelabel">Contact:</span><span class="theVal blurado" id="user-email">email@emaildom.com</span>
                     </div>
                     <div class="row staticInfoLine">
-                        <span id="timeIco" class="theicon octicon octicon-hourglass"></span><span class="thelabel">Register: </span><span class="theVal" id="user-since"></span>
+                        <span id="timeIco" class="theicon octicon octicon-hourglass"></span><span class="thelabel">Registered:</span><span class="theVal blurado" id="user-since">July 3rd 2012</span>
                     </div>
                     <div class="row staticInfoLine">
-                        <span id="firstIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">First Commit:</span><span class="theVal" id="user-first-commit"></span>
+                        <span id="firstIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">First Commit:</span><span class="theVal blurado" id="user-first-commit">July 3rd 2012</span>
                     </div>
                     <div class="row staticInfoLine">
-                        <span id="lastIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">Last Commit:</span><span class="theVal" id="user-last-commit"></span>
+                        <span id="lastIco" class="theicon octicon octicon-git-branch"></span><span class="thelabel">Last Commit:</span><span class="theVal blurado" id="user-last-commit">Mar 5rd 2015</span>
                     </div>
                 </div>
-                    <!--div class="col-sm-8">
-                        <label>Web: <span id="user-website"></span></label>
-                    </div>
-                    <div class="col-sm-5">
-                        <label>Skype: <span id="user-skype"></span></label>
-                        <label>Linkedin: <span id="user-linkedin"></span></label>
-                        <label>Twitter: <span id="user-twitter"></span></label>
-                    </div-->
             </div>
             <div class="col-sm-7">
                 <div id="commitChart"></div>
@@ -251,18 +243,26 @@
             setSubtitle(userinfo['name']);
 
             //Set data
-            document.getElementById('user-email').innerHTML = userinfo['email'];
-            /*document.getElementById('user-linkedin').innerHTML = userinfo['linkedin'];
-            document.getElementById('user-skype').innerHTML = userinfo['skype'];
-            document.getElementById('user-twitter').innerHTML = userinfo['twitter'];
-            document.getElementById('user-website').innerHTML = userinfo['website'];*/
-            document.getElementById('user-since').innerHTML = moment(new Date(userinfo['register'])).format('MMMM Do YYYY');
-            document.getElementById('user-first-commit').innerHTML = moment(new Date(userinfo['firstCommit'])).format('MMMM Do YYYY');
-            document.getElementById('user-last-commit').innerHTML = moment(new Date(userinfo['lastCommit'])).format('MMMM Do YYYY');
+            var uemail = document.getElementById('user-email');
+            var usince = document.getElementById('user-since');
+            var ufirstc = document.getElementById('user-first-commit');
+            var ulastc = document.getElementById('user-last-commit');
+
+            uemail.innerHTML = userinfo['email'];
+            usince.innerHTML = moment(new Date(userinfo['register'])).format('MMMM Do YYYY');
+            ufirstc.innerHTML = moment(new Date(userinfo['firstCommit'])).format('MMMM Do YYYY');
+            ulastc.innerHTML = moment(new Date(userinfo['lastCommit'])).format('MMMM Do YYYY');
+
+            $(uemail).removeClass('blurado');
+            $(usince).removeClass('blurado');
+            $(ufirstc).removeClass('blurado');
+            $(ulastc).removeClass('blurado');
+            $("#avatar").removeClass('fa-user-secret');
+
             if(userinfo['avatar'] !== undefined && userinfo['avatar'] !== null && userinfo['avatar'] !== "" && userinfo['avatar'] !== "http://avatarURL") {
-                $("#avatar").attr('src', userinfo['avatar']);
+                $("#avatar").css("background-image", "url("+userinfo['avatar']+")");
             } else {
-                $("#avatar").attr('src', "../../assets/images/user-4.png");
+                $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
             }        
 
         }

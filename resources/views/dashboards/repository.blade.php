@@ -76,28 +76,38 @@
             <span id="devActIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
             <span class="titleLabel">Activity</span>
         </div>
-        <div class="row" id="commitChart"></div>
+        <div class="row" id="activityChart"></div>
     </div>
-    <div class="row" id="UserSkillBox">
-        <div class="row titleRow" id="userSkillTitle">
-            <span id="skillsIco" class="titleIcon fa fa-history"></span>
+    <div class="row" id="RepoCIBox">
+        <div class="row titleRow" id="RepoCITitle">
+            <span id="ciTitIco" class="titleIcon fa fa-history"></span>
             <span class="titleLabel">Continuous Integration</span>
         </div>
         <div class="row">
-            <div class="col-sm-5">
-                <div id="commiters-lines" class="widget"></div>
-            </div>
-            <div class="col-sm-2">
+            <div class="col-sm-6">
                 <div id="executions-info" class="widget">
-                    <h3>Executions</h3>
-                    <div id="executions-info-compare"><span>0</span> successful / <span>0</span> broken</div>
-                    <div id="executions-info-percent"><span>0</span>%</div>
-                    <div id="executions-info-total">Total executions <span>0</span></div>
+                    <div id="executions-info-titleBox">
+                        <span id="executions-info-icon" class="octicon octicon-chevron-right"></span>
+                        <span id="executions-info-title">Executions</span>
+                    </div>
+                    <div id="executions-info-compare">
+                        <span id="successNum">0</span><span> successful / </span><span id="brokenNum">0</span><span> broken</span> 
+                    </div>
+                    <div id="executions-info-percent">
+                        <span id="percentBall">
+                            <span class="percentlabel execPercent">0</span>
+                            <span class="percentlabel">%</span>
+                        </span>
+                    </div>
+                    <div id="executions-info-total">Total executions: <span id="totalNum">0</span></div>
                 </div>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-6">
                 <div id="executions-stacked" class="widget"></div>
             </div>
+        </div>
+        <div class="row" id="execChartBox">
+            <div class="row" id="execChart"></div>
         </div>
     </div>
     <div class="row" id="UserRepoBox">
@@ -355,9 +365,9 @@
         };
         var avg_broken_time = new framework.widgets.CounterBox(avg_broken_time_dom, avg_broken_time_metrics, [context4rangeChart, repoCtx], avg_broken_time_conf);
 
-        // USER COMMITS LINE CHART
-        var userCC_dom = document.getElementById("commitChart");
-        var userCC_metrics = [
+        // ACTIVITY LINE CHART
+        var activity_dom = document.getElementById("activityChart");
+        var activity_metrics = [
             {
                 id: 'repocommits',
                 max: 30
@@ -368,7 +378,7 @@
                 aggr: "avg"
             }
         ];
-        var userCC_configuration = {
+        var activity_configuration = {
             xlabel: '',
             ylabel: '',
             interpolate: 'monotone',
@@ -378,8 +388,36 @@
             area: true,
             _demo: true // Only for demo
         };
-        var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
-                [context4rangeChart, repoCtx], userCC_configuration);
+        var activity = new framework.widgets.LinesChart(activity_dom, activity_metrics,
+                [context4rangeChart, repoCtx], activity_configuration);
+
+        // CI LINE CHART
+        var ci_dom = document.getElementById("execChart");
+        var ci_metrics = [
+            {
+                id: 'repoexecutions',
+                max: 30
+            },
+            {
+                id: 'repofailedexecutions',
+                max: 30
+            },
+            {
+                id: 'repopassedexecutions',
+                max: 30
+            }
+        ];
+        var ci_configuration = {
+            xlabel: '',
+            ylabel: '',
+            interpolate: 'monotone',
+            height: 200,
+            labelFormat: '%data.info.title%',
+            colors: ["#004B8B", "#DB0013", "#0A8931"]
+        };
+        var ci_lines = new framework.widgets.LinesChart(ci_dom, ci_metrics,
+                [context4rangeChart, repoCtx], ci_configuration);
+
 
         // REPOSITORY META INFO
         framework.data.observe(['repoinfo'], function(event){
@@ -420,23 +458,6 @@
                 }
             }
         }, [repoCtx]);
-
-        // COMMITERS
-        var commiters_dom = document.getElementById("commiters-lines");
-        var commiters_metrics = [{
-            id: 'repodevelopers',
-            max: 50
-        }];
-        var commiters_conf = {
-            xlabel: 'Date',
-            ylabel: 'Commiters',
-            labelFormat: 'Commiters',
-            interpolate: 'monotone',
-            height: 250
-        };
-        var commiters = new framework.widgets.LinesChart(commiters_dom, commiters_metrics,
-                [context4rangeChart, repoCtx], commiters_conf);
-
 
         // EXECUTIONS MULTIBAR
         var executions_dom = document.getElementById("executions-stacked");
@@ -479,10 +500,10 @@
                 var broken = event.data['repofailedexecutions'][Object.keys(event.data['repofailedexecutions'])[0]]['data']['values'][0];
                 var total = broken + success;
 
-                $("#executions-info-compare").children("span").first().text(success);
-                $("#executions-info-compare").children("span").last().text(broken);
-                $("#executions-info-percent").children("span").text((total > 0 ? Math.round(broken*100/total) : 0));
-                $("#executions-info-total").children("span").text(total);
+                $("#successNum").text(success);
+                $("#brokenNum").text(broken);
+                $("#execPercent").text((total > 0 ? Math.round(broken*100/total) : 0));
+                $("#totalNum").text(total);
 
 
             }
@@ -576,19 +597,6 @@
         };
         var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
                 [context4rangeChart, usersCtx, repoCtx], user_project_commits_conf);
-
-        //LANGUAGES WIDGET
-        /*var user_project_languages_dom = document.getElementById("projects-languages");
-         var user_project_languages_conf = {
-         horiz: {
-         stacked: true,
-         showControls: false,
-         showXAxis: false
-         },
-         pie: {}
-         };
-         var user_project_languages = new framework.widgets.Languages(user_project_languages_dom,
-         [context4rangeChart, usersCtx, repoCtx], user_project_languages_conf);*/
 
     };
 

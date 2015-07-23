@@ -289,7 +289,7 @@
                             '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
                             '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');
             document.getElementById('repo-status').innerHTML = (repoinfo['public'] ? '<i title="Public" class="fa fa-eye"></i> (Public)' : '<i title="Private" class="fa fa-eye-slash"></i> (Private)');
-            $("#avatar").attr('src', repoinfo['avatar']['avatar']).attr('alt', repoinfo['name']);console.log(repoinfo);
+            $("#avatar").attr('src', repoinfo['avatar']['avatar']).attr('alt', repoinfo['name']);
 
         }
     }, [repoCtx]);
@@ -404,7 +404,9 @@
         minRowsSelected: 1,
         maxRowsSelected: 6,
         filterControl: true,
-        initialSelectedRows: 5
+        initialSelectedRows: 5,
+        keepSelectedByProperty: "userid",
+        orderByColumn: [[1, 'asc']]
     };
     var table = new framework.widgets.Table(table_dom, table_metrics, [context4rangeChart, repoCtx], table_configuration);
 

@@ -60,7 +60,7 @@
 
 #RepoInfoBox {
     background-color: #FFF;
-    margin-top: 51px;
+    margin-top: 40px;
     margin-left: -2px;
     margin-right: -2px;
 }
@@ -96,6 +96,7 @@
     font-family: Roboto;
     font-size: 20px;
     line-height: 35px;
+    margin-bottom: 18px;
 }
 
 .static-info-widget .staticInfoLine {

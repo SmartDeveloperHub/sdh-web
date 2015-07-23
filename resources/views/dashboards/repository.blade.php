@@ -41,10 +41,10 @@
                         </div>
                     </div>
                     <div class="col-sm-5">
-                        <div class="row staticInfoLine" id="buildStatusRow"> 
+                        <div class="row staticInfoLine buildStatusRow"> 
                             <span id="buildStatusIco" class="theicon fa fa-history"></span><span class="thelabel">Last Build:</span><span class="theVal blurado" id="repo-buildstatus"> TheBuild OK</span>
                         </div>
-                        <div class="row staticInfoLine"> 
+                        <div class="row staticInfoLine buildStatusRow"> 
                             <span id="repStatusIco" class="theicon octicon octicon-globe"></span><span class="thelabel">Status:</span><span class="theVal blurado" id="repo-status"> repository OK</span>
                         </div>
                     </div>

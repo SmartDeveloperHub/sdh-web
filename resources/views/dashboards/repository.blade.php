@@ -326,7 +326,8 @@
         stacked: true,
         labelFormat: "%data.info.description%",
         showControls: false,
-        height: 250
+        height: 250,
+        color: ["#0A8931", "#DB0013"]
     };
     var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
             [context4rangeChart, repoCtx], executions_conf);

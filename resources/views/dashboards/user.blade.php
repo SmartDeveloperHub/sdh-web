@@ -465,7 +465,7 @@
         var user_project_commits_conf = {
             xlabel: '',
             ylabel: '',
-            labelFormat: 'Commits',
+            labelFormat: "%data.info.rid.name%",
             interpolate: 'monotone',
             area: true
         };

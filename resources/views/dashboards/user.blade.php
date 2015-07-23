@@ -102,6 +102,9 @@
     var userCtx = "uid";
     var env = framework.dashboard.getEnv();
     framework.data.updateContext('uid', {uid: (env['uid'] != null ? env['uid'] : USER_ID)}); //TODO: get the USER_ID from the env
+    if(env['name'] != null) {
+        setSubtitle(env['name']);
+    }
 
     // light or dark theme?. Default is light
     var lightTheme = true;
@@ -402,6 +405,10 @@
                             {
                                 property: "repositoryid",
                                 as: "rid"
+                            },
+                            {
+                                property: "name",
+                                as: "name"
                             }
                         ]
                     },

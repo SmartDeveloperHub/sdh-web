@@ -122,7 +122,11 @@
 
     //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
     var repoCtx = "rid";
-    framework.data.updateContext('rid', {rid: framework.dashboard.getEnv()['rid']});
+    var env = framework.dashboard.getEnv();
+    framework.data.updateContext('rid', {rid: env['rid']});
+    if(env['name'] != null) {
+        setSubtitle(env['name']);
+    }
 
     // light or dark theme?. Default is light
     var lightTheme = true;
@@ -386,6 +390,10 @@
                             {
                                 property: "userid",
                                 as: "uid"
+                            },
+                            {
+                                property: "name",
+                                as: "name"
                             }
                         ]
                     },

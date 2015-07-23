@@ -180,292 +180,303 @@
 
             rangeNv = setRangeChart();
 
-        }
-    }, [userCtx]);
+            $(rangeNv).on("CONTEXT_UPDATED", function() {
+                $(rangeNv).off("CONTEXT_UPDATED");
+                loadTimeDependentWidgets();
 
-    // TOTAL COMMITS
-    var total_commits_dom = document.getElementById("total-commits");
-    var total_commits_metrics = [{
-        id: 'usercommits',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var total_commits_conf = {
-        label: 'Total commits',
-        decimal: 0,
-        icon: 'octicon octicon-git-commit',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: 'transparent'
-    };
-    var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
-
-    // AVG COMMITS PER DAY
-    var avg_commits_dom = document.getElementById("avg-commitsday");
-    var avg_commits_metrics = [{
-        id: 'usercommits',
-        max: 1,
-        aggr: 'avg'
-    }];
-    var avg_commits_conf = {
-        label: 'Average commits per day',
-        decimal: 0,
-        icon: 'octicon octicon-git-commit',
-        iconbackground: '#009640',
-        background: 'transparent'
-    };
-    var total_commits = new framework.widgets.CounterBox(avg_commits_dom, avg_commits_metrics, [context4rangeChart, userCtx], avg_commits_conf);
-
-    // LONGEST STREAK
-    var streak_dom = document.getElementById("longest-streak");
-    var streak_metrics = [{
-        id: 'userstreak',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var streak_conf = {
-        label: 'Longest streak',
-        decimal: 0,
-        icon: 'octicon octicon-flame',
-        iconbackground: 'rgb(205, 195, 10)',
-        background: 'transparent',
-        suffix: " days"
-    };
-    var streak = new framework.widgets.CounterBox(streak_dom, streak_metrics, [context4rangeChart, userCtx], streak_conf);
-
-    // TOTAL PROJECTS
-    var total_projects_dom = document.getElementById("total-projects");
-    var total_projects_metrics = [{
-        id: 'userrepositories',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var total_projects_conf = {
-        label: 'Total repositories',
-        decimal: 0,
-        icon: 'octicon octicon-repo',
-        iconbackground: 'rgb(184, 40, 40)',
-        background: 'transparent'
-    };
-    var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [context4rangeChart, userCtx], total_projects_conf);
-
-
-    // USER META INFO
-    framework.data.observe(['userinfo'], function(event){
-        if(event.event === 'loading') {
-            //TODO
-        } else if(event.event === 'data') {
-            var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
-            //Set header subtitle
-            setSubtitle(userinfo['name']);
-
-            //Set data
-            var uemail = document.getElementById('user-email');
-            var usince = document.getElementById('user-since');
-            var ufirstc = document.getElementById('user-first-commit');
-            var ulastc = document.getElementById('user-last-commit');
-
-            uemail.innerHTML = userinfo['email'];
-            usince.innerHTML = moment(new Date(userinfo['register'])).format('MMMM Do YYYY');
-            ufirstc.innerHTML = moment(new Date(userinfo['firstCommit'])).format('MMMM Do YYYY');
-            ulastc.innerHTML = moment(new Date(userinfo['lastCommit'])).format('MMMM Do YYYY');
-
-            $(uemail).removeClass('blurado');
-            $(usince).removeClass('blurado');
-            $(ufirstc).removeClass('blurado');
-            $(ulastc).removeClass('blurado');
-            $("#avatar").removeClass('fa-user-secret');
-
-            if(userinfo['avatar'] !== undefined && userinfo['avatar'] !== null && userinfo['avatar'] !== "" && userinfo['avatar'] !== "http://avatarURL") {
-                $("#avatar").css("background-image", "url("+userinfo['avatar']+")");
-            } else {
-                $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
-            }        
+                // Hide the loading animation
+                finishLoading();
+            });
 
         }
     }, [userCtx]);
 
+    var loadTimeDependentWidgets = function loadTimeDependentWidgets() {
 
-    // USER COMMITS LINE CHART
-    var userCC_dom = document.getElementById("commitChart");
-    var userCC_metrics = [
-        {
+        // TOTAL COMMITS
+        var total_commits_dom = document.getElementById("total-commits");
+        var total_commits_metrics = [{
             id: 'usercommits',
-            max: 30
-        },
-        {
-            id: 'usercommits',
-            max: 30,
-            aggr: "avg"
-        }
-    ];
-    var userCC_configuration = {
-        xlabel: '',
-        ylabel: '',
-        interpolate: 'monotone',
-        height: 200,
-        labelFormat: '%data.info.title%',
-        colors: ["#2876B8", "#8A1978"],
-        area: true,
-        _demo: true // Only for demo
-    };
-    var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
-            [context4rangeChart, userCtx], userCC_configuration);
-
-    // SKILLS STAR CHART
-    var skills_star_dom = document.getElementById("skills-star");
-    var skills_star_metrics = [
-        {
-            id: 'userspeed',
             max: 1,
-            aggr: "sum"
-        },
-        {
-            id: 'usercollaboration',
-            max: 1,
-            aggr: "sum"
-        },
-        {
-            id: 'userquality',
-            max: 1,
-            aggr: "sum"
+            aggr: 'sum'
         }];
-    var skills_star_configuration = {
-        height: 300,
-        labels: ["Speed", "Collaboration", "Quality"],
-        fillColor: "rgba(1, 150, 64, 0.4)",
-        strokeColor: "#019640",
-        pointLabelFontColor: "#2876B8",
-        pointLabelFontSize: 12
-    };
-    var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
-            [context4rangeChart, userCtx], skills_star_configuration);
+        var total_commits_conf = {
+            label: 'Total commits',
+            decimal: 0,
+            icon: 'octicon octicon-git-commit',
+            iconbackground: 'rgb(40, 118, 184)',
+            background: 'transparent'
+        };
+        var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
 
+        // AVG COMMITS PER DAY
+        var avg_commits_dom = document.getElementById("avg-commitsday");
+        var avg_commits_metrics = [{
+            id: 'usercommits',
+            max: 1,
+            aggr: 'avg'
+        }];
+        var avg_commits_conf = {
+            label: 'Average commits per day',
+            decimal: 0,
+            icon: 'octicon octicon-git-commit',
+            iconbackground: '#009640',
+            background: 'transparent'
+        };
+        var total_commits = new framework.widgets.CounterBox(avg_commits_dom, avg_commits_metrics, [context4rangeChart, userCtx], avg_commits_conf);
 
-    // SKILLS LINES CHART
-    var skills_lines_dom = document.getElementById("skills-lines");
-    var skills_lines_metrics = [
-        {
-            id: 'userspeed',
-            max: 20,
+        // LONGEST STREAK
+        var streak_dom = document.getElementById("longest-streak");
+        var streak_metrics = [{
+            id: 'userstreak',
+            max: 1,
             aggr: 'sum'
-        },
-        {
-            id: 'usercollaboration',
-            max: 20,
+        }];
+        var streak_conf = {
+            label: 'Longest streak',
+            decimal: 0,
+            icon: 'octicon octicon-flame',
+            iconbackground: 'rgb(205, 195, 10)',
+            background: 'transparent',
+            suffix: " days"
+        };
+        var streak = new framework.widgets.CounterBox(streak_dom, streak_metrics, [context4rangeChart, userCtx], streak_conf);
+
+        // TOTAL PROJECTS
+        var total_projects_dom = document.getElementById("total-projects");
+        var total_projects_metrics = [{
+            id: 'userrepositories',
+            max: 1,
             aggr: 'sum'
-        },
-        {
-            id: 'userquality',
-            max: 20,
-            aggr: 'sum'
-        }
-    ];
-    var skills_lines_configuration = {
-        xlabel: '',
-        ylabel: '',
-        interpolate: 'monotone',
-        height: 205,
-        labelFormat: '%data.info.title%',
-        colors: ["#FF7F0E", "#1F77B4", "#68B828"]
-    };
-    var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,
-            [context4rangeChart, userCtx], skills_lines_configuration);
+        }];
+        var total_projects_conf = {
+            label: 'Total repositories',
+            decimal: 0,
+            icon: 'octicon octicon-repo',
+            iconbackground: 'rgb(184, 40, 40)',
+            background: 'transparent'
+        };
+        var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [context4rangeChart, userCtx], total_projects_conf);
 
 
-    // USER PROJECTS TABLE
-    var repoCtx = "repository-table-context";
-    var table_dom = document.getElementById("projects-table");
-    var table_metrics = ['userrepositoriestbd'];
-    var table_configuration = {
-        columns: [
+        // USER META INFO
+        framework.data.observe(['userinfo'], function(event){
+            if(event.event === 'loading') {
+                //TODO
+            } else if(event.event === 'data') {
+                var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
+                //Set header subtitle
+                setSubtitle(userinfo['name']);
+
+                //Set data
+                var uemail = document.getElementById('user-email');
+                var usince = document.getElementById('user-since');
+                var ufirstc = document.getElementById('user-first-commit');
+                var ulastc = document.getElementById('user-last-commit');
+
+                uemail.innerHTML = userinfo['email'];
+                usince.innerHTML = moment(new Date(userinfo['register'])).format('MMMM Do YYYY');
+                ufirstc.innerHTML = moment(new Date(userinfo['firstCommit'])).format('MMMM Do YYYY');
+                ulastc.innerHTML = moment(new Date(userinfo['lastCommit'])).format('MMMM Do YYYY');
+
+                $(uemail).removeClass('blurado');
+                $(usince).removeClass('blurado');
+                $(ufirstc).removeClass('blurado');
+                $(ulastc).removeClass('blurado');
+                $("#avatar").removeClass('fa-user-secret');
+
+                if(userinfo['avatar'] !== undefined && userinfo['avatar'] !== null && userinfo['avatar'] !== "" && userinfo['avatar'] !== "http://avatarURL") {
+                    $("#avatar").css("background-image", "url("+userinfo['avatar']+")");
+                } else {
+                    $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
+                }
+
+            }
+        }, [userCtx]);
+
+
+
+        // USER COMMITS LINE CHART
+        var userCC_dom = document.getElementById("commitChart");
+        var userCC_metrics = [
             {
-                label: "Name",
-                property: "name"
+                id: 'usercommits',
+                max: 30
             },
             {
-                label: "Show",
-                link: {
-                    icon: "fa fa-share", //or label
-                    href: "repo-dashboard",
-                    env: [
+                id: 'usercommits',
+                max: 30,
+                aggr: "avg"
+            }
+        ];
+        var userCC_configuration = {
+            xlabel: '',
+            ylabel: '',
+            interpolate: 'monotone',
+            height: 200,
+            labelFormat: '%data.info.title%',
+            colors: ["#2876B8", "#8A1978"],
+            area: true,
+            _demo: true // Only for demo
+        };
+        var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
+                [context4rangeChart, userCtx], userCC_configuration);
+
+        // SKILLS STAR CHART
+        var skills_star_dom = document.getElementById("skills-star");
+        var skills_star_metrics = [
+            {
+                id: 'userspeed',
+                max: 1,
+                aggr: "sum"
+            },
+            {
+                id: 'usercollaboration',
+                max: 1,
+                aggr: "sum"
+            },
+            {
+                id: 'userquality',
+                max: 1,
+                aggr: "sum"
+            }];
+        var skills_star_configuration = {
+            height: 300,
+            labels: ["Speed", "Collaboration", "Quality"],
+            fillColor: "rgba(1, 150, 64, 0.4)",
+            strokeColor: "#019640",
+            pointLabelFontColor: "#2876B8",
+            pointLabelFontSize: 12
+        };
+        var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
+                [context4rangeChart, userCtx], skills_star_configuration);
+
+
+        // SKILLS LINES CHART
+        var skills_lines_dom = document.getElementById("skills-lines");
+        var skills_lines_metrics = [
+            {
+                id: 'userspeed',
+                max: 20,
+                aggr: 'sum'
+            },
+            {
+                id: 'usercollaboration',
+                max: 20,
+                aggr: 'sum'
+            },
+            {
+                id: 'userquality',
+                max: 20,
+                aggr: 'sum'
+            }
+        ];
+        var skills_lines_configuration = {
+            xlabel: '',
+            ylabel: '',
+            interpolate: 'monotone',
+            height: 205,
+            labelFormat: '%data.info.title%',
+            colors: ["#FF7F0E", "#1F77B4", "#68B828"]
+        };
+        var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,
+                [context4rangeChart, userCtx], skills_lines_configuration);
+
+
+        // USER PROJECTS TABLE
+        var repoCtx = "repository-table-context";
+        var table_dom = document.getElementById("projects-table");
+        var table_metrics = ['userrepositoriestbd'];
+        var table_configuration = {
+            columns: [
+                {
+                    label: "Name",
+                    property: "name"
+                },
+                {
+                    label: "Show",
+                    link: {
+                        icon: "fa fa-share", //or label
+                        href: "repo-dashboard",
+                        env: [
+                            {
+                                property: "repositoryid",
+                                as: "rid"
+                            }
+                        ]
+                    },
+                    width: "40px"
+                }
+            ],
+            updateContexts: [
+                {
+                    id: repoCtx,
+                    filter: [
                         {
                             property: "repositoryid",
                             as: "rid"
                         }
                     ]
-                },
-                width: "40px"
-            }
-        ],
-        updateContexts: [
-            {
-                id: repoCtx,
-                filter: [
-                    {
-                        property: "repositoryid",
-                        as: "rid"
-                    }
-                ]
-            }
-        ],
-        selectable: true,
-        minRowsSelected: 1,
-        maxRowsSelected: 6,
-        filterControl: true,
-        initialSelectedRows: 5
-    };
-    var table = new framework.widgets.Table(table_dom, table_metrics, [context4rangeChart, userCtx], table_configuration);
+                }
+            ],
+            selectable: true,
+            minRowsSelected: 1,
+            maxRowsSelected: 6,
+            filterControl: true,
+            initialSelectedRows: 5
+        };
+        var table = new framework.widgets.Table(table_dom, table_metrics, [context4rangeChart, userCtx], table_configuration);
 
-    // HORIZONTAL CONTRIBUTION TO PROJECTS
-    var multibar_projects_dom = document.getElementById("projects-horizontal");
-    var multibar_projects_metrics = [{
-        id: 'repousercommits',
-        max: 1
-    }];
-    var multibar_projects_configuration = {
-        labelFormat: "%data.info.rid.name%",
-        stacked: true,
-        showXAxis: false,
-        showControls: false,
-        yAxisTicks: 8,
-        height: 155,
-        total: {
-            id: 'usercommits',
-            max: 1,
-            aggr: 'sum'
-        }
-    };
-    var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,
-            [context4rangeChart, userCtx, repoCtx], multibar_projects_configuration);
-
-    // COMMITS PER PROJECT AND USER
-    var user_project_commits_dom = document.getElementById("projects-lines");
-    var user_project_commits_metrics = [{
-        id: 'repousercommits',
-        max: 0
-    }];
-    var user_project_commits_conf = {
-        xlabel: '',
-        ylabel: '',
-        labelFormat: 'Commits',
-        interpolate: 'monotone'
-    };
-    var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
-            [context4rangeChart, userCtx, repoCtx], user_project_commits_conf);
-
-    //LANGUAGES WIDGET
-    /*var user_project_languages_dom = document.getElementById("projects-languages");
-    var user_project_languages_conf = {
-        horiz: {
+        // HORIZONTAL CONTRIBUTION TO PROJECTS
+        var multibar_projects_dom = document.getElementById("projects-horizontal");
+        var multibar_projects_metrics = [{
+            id: 'repousercommits',
+            max: 1
+        }];
+        var multibar_projects_configuration = {
+            labelFormat: "%data.info.rid.name%",
             stacked: true,
+            showXAxis: false,
             showControls: false,
-            showXAxis: false
-        },
-        pie: {}
-    };
-    var user_project_languages = new framework.widgets.Languages(user_project_languages_dom,
-            [context4rangeChart, userCtx, repoCtx], user_project_languages_conf);*/
+            yAxisTicks: 8,
+            height: 155,
+            total: {
+                id: 'usercommits',
+                max: 1,
+                aggr: 'sum'
+            }
+        };
+        var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,
+                [context4rangeChart, userCtx, repoCtx], multibar_projects_configuration);
 
+        // COMMITS PER PROJECT AND USER
+        var user_project_commits_dom = document.getElementById("projects-lines");
+        var user_project_commits_metrics = [{
+            id: 'repousercommits',
+            max: 0
+        }];
+        var user_project_commits_conf = {
+            xlabel: '',
+            ylabel: '',
+            labelFormat: 'Commits',
+            interpolate: 'monotone'
+        };
+        var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
+                [context4rangeChart, userCtx, repoCtx], user_project_commits_conf);
 
+        //LANGUAGES WIDGET
+        /*var user_project_languages_dom = document.getElementById("projects-languages");
+         var user_project_languages_conf = {
+         horiz: {
+         stacked: true,
+         showControls: false,
+         showXAxis: false
+         },
+         pie: {}
+         };
+         var user_project_languages = new framework.widgets.Languages(user_project_languages_dom,
+         [context4rangeChart, userCtx, repoCtx], user_project_languages_conf);*/
+
+    }
 
 @stop

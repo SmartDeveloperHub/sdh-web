@@ -171,7 +171,6 @@
             var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
             var firstCommit = repoinfo['firstCommit'];
 
-
             var rangeNv_dom = document.getElementById("fixed-chart");
             var rangeNv_metrics = [
                 {
@@ -197,268 +196,278 @@
                 rangeNv_configuration['colors'] = ["#FFC10E"];
             }
 
-            new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
+            var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
+            $(rangeNv).on("CONTEXT_UPDATED", function() {
+                $(rangeNv).off("CONTEXT_UPDATED");
+                loadTimeDependentWidgets();
+
+                // Hide the loading animation
+                finishLoading();
+            });
         }
     }, [repoCtx]);
 
-    // TOTAL COMMITS
-    var total_commits_dom = document.getElementById("total-commits");
-    var total_commits_metrics = [{
-        id: 'repocommits',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var total_commits_conf = {
-        label: 'Total commits',
-        decimal: 0,
-        icon: 'octicon octicon-git-commit',
-        iconbackground: 'rgb(40, 118, 184)',
-        background: 'transparent'
-    };
-    var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, repoCtx], total_commits_conf);
+    var loadTimeDependentWidgets = function loadTimeDependentWidgets() {
 
-    // TOTAL DEVELOPERS
-    var total_users_dom = document.getElementById("total-users");
-    var total_users_metrics = [{
-        id: 'repodevelopers',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var total_users_conf = {
-        label: 'Total developers',
-        decimal: 0,
-        icon: 'octicon octicon-organization',
-        iconbackground: 'rgb(40, 184, 179)',
-        background: 'transparent'
-    };
-    var total_users = new framework.widgets.CounterBox(total_users_dom, total_users_metrics, [context4rangeChart, repoCtx], total_users_conf);
-
-    // TOTAL EXECUTIONS
-    var total_executions_dom = document.getElementById("total-executions");
-    var total_executions_metrics = [{
-        id: 'repoexecutions',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var total_executions_conf = {
-        label: 'Total executions',
-        decimal: 0,
-        icon: 'fa fa-cogs',
-        iconbackground: 'rgb(205, 195, 10)',
-        background: 'transparent'
-    };
-    var total_executions_issues = new framework.widgets.CounterBox(total_executions_dom, total_executions_metrics, [context4rangeChart, repoCtx], total_executions_conf);
-
-
-    // SUCCESSFUL EXECUTIONS
-    var success_executions_dom = document.getElementById("solved-issues");
-    var success_executions_metrics = [{
-        id: 'repopassedexecutions',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var success_executions_conf = {
-        label: 'Successful executions',
-        decimal: 0,
-        icon: 'octicon octicon-thumbsup',
-        iconbackground: 'rgb(104, 184, 40)',
-        background: 'transparent'
-    };
-    var success_executions_issues = new framework.widgets.CounterBox(success_executions_dom, success_executions_metrics, [context4rangeChart, repoCtx], success_executions_conf);
-
-
-    // REPOSITORY META INFO
-    framework.data.observe(['repoinfo'], function(event){
-        if(event.event === 'loading') {
-            //TODO
-        } else if(event.event === 'data') {
-            var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
-
-            //Set header subtitle
-            setSubtitle(repoinfo['name']);
-
-            //Set data
-            document.getElementById('name').innerHTML = repoinfo['name'];
-            document.getElementById('description').innerHTML = repoinfo['description'];
-            document.getElementById('scm-link').innerHTML = repoinfo['scmlink'];
-            document.getElementById('since').innerHTML = moment(new Date(repoinfo['creation'])).format('LLLL');
-            document.getElementById('first-commit').innerHTML = moment(new Date(repoinfo['firstCommit'])).format('LLLL');
-            document.getElementById('last-commit').innerHTML = moment(new Date(repoinfo['lastCommit'])).format('LLLL');
-            document.getElementById('last-build').innerHTML = moment(new Date(repoinfo['builDdate'])).format('LLLL');
-            document.getElementById('build-status').innerHTML = (repoinfo['buildStatus'] ?
-                            '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
-                            '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');
-            document.getElementById('repo-status').innerHTML = (repoinfo['public'] ? '<i title="Public" class="fa fa-eye"></i> (Public)' : '<i title="Private" class="fa fa-eye-slash"></i> (Private)');
-            $("#avatar").attr('src', repoinfo['avatar']['avatar']).attr('alt', repoinfo['name']);
-
-        }
-    }, [repoCtx]);
-
-    // COMMITERS
-    var commiters_dom = document.getElementById("commiters-lines");
-    var commiters_metrics = [{
-        id: 'repodevelopers',
-        max: 50
-    }];
-    var commiters_conf = {
-        xlabel: 'Date',
-        ylabel: 'Commiters',
-        labelFormat: 'Commiters',
-        interpolate: 'monotone',
-        height: 250
-    };
-    var commiters = new framework.widgets.LinesChart(commiters_dom, commiters_metrics,
-            [context4rangeChart, repoCtx], commiters_conf);
-
-
-    // EXECUTIONS MULTIBAR
-    var executions_dom = document.getElementById("executions-stacked");
-    var executions_metrics = [
-        {
-            id: 'repopassedexecutions',
-            max: 30
-        },
-        {
-            id: 'repofailedexecutions',
-            max: 30
+        // TOTAL COMMITS
+        var total_commits_dom = document.getElementById("total-commits");
+        var total_commits_metrics = [{
+            id: 'repocommits',
+            max: 1,
+            aggr: 'sum'
         }];
-    var executions_conf = {
-        stacked: true,
-        labelFormat: "%data.info.title%",
-        showControls: false,
-        height: 250,
-        color: ["#0A8931", "#DB0013"]
-    };
-    var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
-            [context4rangeChart, repoCtx], executions_conf);
+        var total_commits_conf = {
+            label: 'Total commits',
+            decimal: 0,
+            icon: 'octicon octicon-git-commit',
+            iconbackground: 'rgb(40, 118, 184)',
+            background: 'transparent'
+        };
+        var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, repoCtx], total_commits_conf);
+
+        // TOTAL DEVELOPERS
+        var total_users_dom = document.getElementById("total-users");
+        var total_users_metrics = [{
+            id: 'repodevelopers',
+            max: 1,
+            aggr: 'sum'
+        }];
+        var total_users_conf = {
+            label: 'Total developers',
+            decimal: 0,
+            icon: 'octicon octicon-organization',
+            iconbackground: 'rgb(40, 184, 179)',
+            background: 'transparent'
+        };
+        var total_users = new framework.widgets.CounterBox(total_users_dom, total_users_metrics, [context4rangeChart, repoCtx], total_users_conf);
+
+        // TOTAL EXECUTIONS
+        var total_executions_dom = document.getElementById("total-executions");
+        var total_executions_metrics = [{
+            id: 'repoexecutions',
+            max: 1,
+            aggr: 'sum'
+        }];
+        var total_executions_conf = {
+            label: 'Total executions',
+            decimal: 0,
+            icon: 'fa fa-cogs',
+            iconbackground: 'rgb(205, 195, 10)',
+            background: 'transparent'
+        };
+        var total_executions_issues = new framework.widgets.CounterBox(total_executions_dom, total_executions_metrics, [context4rangeChart, repoCtx], total_executions_conf);
 
 
-    // EXECUTIONS
-    var executions_info = [
-        {
+        // SUCCESSFUL EXECUTIONS
+        var success_executions_dom = document.getElementById("solved-issues");
+        var success_executions_metrics = [{
             id: 'repopassedexecutions',
-            aggr: 'sum',
-            max: 1
-        },
-        {
-            id: 'repofailedexecutions',
-            aggr: 'sum',
-            max: 1
-        }
-    ];
-    var display_executions_info = function(event) {
-        if(event.event === 'data') {
-            var success = event.data['repopassedexecutions'][Object.keys(event.data['repopassedexecutions'])[0]]['data']['values'][0];
-            var broken = event.data['repofailedexecutions'][Object.keys(event.data['repofailedexecutions'])[0]]['data']['values'][0];
-            var total = broken + success;
-
-            $("#executions-info-compare").children("span").first().text(success);
-            $("#executions-info-compare").children("span").last().text(broken);
-            $("#executions-info-percent").children("span").text(Math.round(broken*100/total));
-            $("#executions-info-total").children("span").text(total);
+            max: 1,
+            aggr: 'sum'
+        }];
+        var success_executions_conf = {
+            label: 'Successful executions',
+            decimal: 0,
+            icon: 'octicon octicon-thumbsup',
+            iconbackground: 'rgb(104, 184, 40)',
+            background: 'transparent'
+        };
+        var success_executions_issues = new framework.widgets.CounterBox(success_executions_dom, success_executions_metrics, [context4rangeChart, repoCtx], success_executions_conf);
 
 
-        }
-    };
-    framework.data.observe(executions_info, display_executions_info, [context4rangeChart, repoCtx]);
+        // REPOSITORY META INFO
+        framework.data.observe(['repoinfo'], function(event){
+            if(event.event === 'loading') {
+                //TODO
+            } else if(event.event === 'data') {
+                var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
+
+                //Set header subtitle
+                setSubtitle(repoinfo['name']);
+
+                //Set data
+                document.getElementById('name').innerHTML = repoinfo['name'];
+                document.getElementById('description').innerHTML = repoinfo['description'];
+                document.getElementById('scm-link').innerHTML = repoinfo['scmlink'];
+                document.getElementById('since').innerHTML = moment(new Date(repoinfo['creation'])).format('LLLL');
+                document.getElementById('first-commit').innerHTML = moment(new Date(repoinfo['firstCommit'])).format('LLLL');
+                document.getElementById('last-commit').innerHTML = moment(new Date(repoinfo['lastCommit'])).format('LLLL');
+                document.getElementById('last-build').innerHTML = moment(new Date(repoinfo['builDdate'])).format('LLLL');
+                document.getElementById('build-status').innerHTML = (repoinfo['buildStatus'] ?
+                        '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i> (Passed)' :
+                        '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i> (Error)');
+                document.getElementById('repo-status').innerHTML = (repoinfo['public'] ? '<i title="Public" class="fa fa-eye"></i> (Public)' : '<i title="Private" class="fa fa-eye-slash"></i> (Private)');
+                $("#avatar").attr('src', repoinfo['avatar']['avatar']).attr('alt', repoinfo['name']);
+
+            }
+        }, [repoCtx]);
+
+        // COMMITERS
+        var commiters_dom = document.getElementById("commiters-lines");
+        var commiters_metrics = [{
+            id: 'repodevelopers',
+            max: 50
+        }];
+        var commiters_conf = {
+            xlabel: 'Date',
+            ylabel: 'Commiters',
+            labelFormat: 'Commiters',
+            interpolate: 'monotone',
+            height: 250
+        };
+        var commiters = new framework.widgets.LinesChart(commiters_dom, commiters_metrics,
+                [context4rangeChart, repoCtx], commiters_conf);
 
 
-    // REPOSITORY USERS TABLE
-    var usersCtx = "user-table-context";
-    var table_dom = document.getElementById("users-table");
-    var table_metrics = ['repodeveloperstbd'];
-    var table_configuration = {
-        columns: [
+        // EXECUTIONS MULTIBAR
+        var executions_dom = document.getElementById("executions-stacked");
+        var executions_metrics = [
             {
-                label: "Show",
-                link: {
-                    img: "avatar", //or icon or label
-                    href: "user-dashboard",
-                    env: [
+                id: 'repopassedexecutions',
+                max: 30
+            },
+            {
+                id: 'repofailedexecutions',
+                max: 30
+            }];
+        var executions_conf = {
+            stacked: true,
+            labelFormat: "%data.info.title%",
+            showControls: false,
+            height: 250,
+            color: ["#0A8931", "#DB0013"]
+        };
+        var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
+                [context4rangeChart, repoCtx], executions_conf);
+
+
+        // EXECUTIONS
+        var executions_info = [
+            {
+                id: 'repopassedexecutions',
+                aggr: 'sum',
+                max: 1
+            },
+            {
+                id: 'repofailedexecutions',
+                aggr: 'sum',
+                max: 1
+            }
+        ];
+        var display_executions_info = function(event) {
+            if(event.event === 'data') {
+                var success = event.data['repopassedexecutions'][Object.keys(event.data['repopassedexecutions'])[0]]['data']['values'][0];
+                var broken = event.data['repofailedexecutions'][Object.keys(event.data['repofailedexecutions'])[0]]['data']['values'][0];
+                var total = broken + success;
+
+                $("#executions-info-compare").children("span").first().text(success);
+                $("#executions-info-compare").children("span").last().text(broken);
+                $("#executions-info-percent").children("span").text(Math.round(broken*100/total));
+                $("#executions-info-total").children("span").text(total);
+
+
+            }
+        };
+        framework.data.observe(executions_info, display_executions_info, [context4rangeChart, repoCtx]);
+
+
+        // REPOSITORY USERS TABLE
+        var usersCtx = "user-table-context";
+        var table_dom = document.getElementById("users-table");
+        var table_metrics = ['repodeveloperstbd'];
+        var table_configuration = {
+            columns: [
+                {
+                    label: "Show",
+                    link: {
+                        img: "avatar", //or icon or label
+                        href: "user-dashboard",
+                        env: [
+                            {
+                                property: "userid",
+                                as: "uid"
+                            }
+                        ]
+                    },
+                    width: "40px"
+                },
+                {
+                    label: "Name",
+                    property: "name"
+                }
+
+            ],
+            updateContexts: [
+                {
+                    id: usersCtx,
+                    filter: [
                         {
                             property: "userid",
                             as: "uid"
                         }
                     ]
-                },
-                width: "40px"
-            },
-            {
-                label: "Name",
-                property: "name"
-            }
+                }
+            ],
+            selectable: true,
+            minRowsSelected: 1,
+            maxRowsSelected: 6,
+            filterControl: true,
+            initialSelectedRows: 5,
+            keepSelectedByProperty: "userid",
+            orderByColumn: [[1, 'asc']]
+        };
+        var table = new framework.widgets.Table(table_dom, table_metrics, [context4rangeChart, repoCtx], table_configuration);
 
-        ],
-        updateContexts: [
-            {
-                id: usersCtx,
-                filter: [
-                    {
-                        property: "userid",
-                        as: "uid"
-                    }
-                ]
-            }
-        ],
-        selectable: true,
-        minRowsSelected: 1,
-        maxRowsSelected: 6,
-        filterControl: true,
-        initialSelectedRows: 5,
-        keepSelectedByProperty: "userid",
-        orderByColumn: [[1, 'asc']]
-    };
-    var table = new framework.widgets.Table(table_dom, table_metrics, [context4rangeChart, repoCtx], table_configuration);
-
-    // HORIZONTAL CONTRIBUTION TO PROJECTS
-    var multibar_projects_dom = document.getElementById("user-commits-horizontal");
-    var multibar_projects_metrics = [{
-        id: 'repousercommits',
-        max: 1
-    }];
-    var multibar_projects_configuration = {
-        labelFormat: "%data.info.uid.name%",
-        stacked: true,
-        showXAxis: false,
-        showControls: false,
-        yAxisTicks: 8,
-        height: 155,
-        total: {
-            id: 'repocommits',
+        // HORIZONTAL CONTRIBUTION TO PROJECTS
+        var multibar_projects_dom = document.getElementById("user-commits-horizontal");
+        var multibar_projects_metrics = [{
+            id: 'repousercommits',
             max: 1
-        }
-    };
-    var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,
-            [context4rangeChart, usersCtx, repoCtx], multibar_projects_configuration);
-
-    // COMMITS PER PROJECT AND USER
-    var user_project_commits_dom = document.getElementById("user-commits-lines");
-    var user_project_commits_metrics = [{
-        id: 'repousercommits',
-        max: 100
-    }];
-    var user_project_commits_conf = {
-        xlabel: '',
-        ylabel: 'Commits',
-        labelFormat: '%data.info.uid.name%',
-        interpolate: 'monotone'
-    };
-    var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
-            [context4rangeChart, usersCtx, repoCtx], user_project_commits_conf);
-
-    //LANGUAGES WIDGET
-    /*var user_project_languages_dom = document.getElementById("projects-languages");
-    var user_project_languages_conf = {
-        horiz: {
+        }];
+        var multibar_projects_configuration = {
+            labelFormat: "%data.info.uid.name%",
             stacked: true,
+            showXAxis: false,
             showControls: false,
-            showXAxis: false
-        },
-        pie: {}
-    };
-    var user_project_languages = new framework.widgets.Languages(user_project_languages_dom,
-            [context4rangeChart, usersCtx, repoCtx], user_project_languages_conf);*/
+            yAxisTicks: 8,
+            height: 155,
+            total: {
+                id: 'repocommits',
+                max: 1
+            }
+        };
+        var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,
+                [context4rangeChart, usersCtx, repoCtx], multibar_projects_configuration);
 
+        // COMMITS PER PROJECT AND USER
+        var user_project_commits_dom = document.getElementById("user-commits-lines");
+        var user_project_commits_metrics = [{
+            id: 'repousercommits',
+            max: 100
+        }];
+        var user_project_commits_conf = {
+            xlabel: '',
+            ylabel: 'Commits',
+            labelFormat: '%data.info.uid.name%',
+            interpolate: 'monotone'
+        };
+        var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
+                [context4rangeChart, usersCtx, repoCtx], user_project_commits_conf);
+
+        //LANGUAGES WIDGET
+        /*var user_project_languages_dom = document.getElementById("projects-languages");
+         var user_project_languages_conf = {
+         horiz: {
+         stacked: true,
+         showControls: false,
+         showXAxis: false
+         },
+         pie: {}
+         };
+         var user_project_languages = new framework.widgets.Languages(user_project_languages_dom,
+         [context4rangeChart, usersCtx, repoCtx], user_project_languages_conf);*/
+
+    };
 
 
 @stop

@@ -9,9 +9,6 @@
         // Dashboard script
         @yield('script')
 
-        // Hide the loading animation
-        finishLoading();
-
     });
 
 

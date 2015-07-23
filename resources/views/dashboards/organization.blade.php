@@ -502,5 +502,8 @@
         }
     }, []);
 
+    // Hide the loading animation
+    finishLoading();
+
 
 @stop

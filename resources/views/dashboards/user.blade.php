@@ -223,7 +223,7 @@
         }];
         var avg_commits_conf = {
             label: 'Average commits per day',
-            decimal: 2,
+            decimal: 3,
             icon: 'octicon octicon-git-commit',
             iconbackground: '#009640',
             background: 'transparent'

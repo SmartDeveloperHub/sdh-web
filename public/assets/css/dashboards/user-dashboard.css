@@ -311,9 +311,11 @@ table.dataTable tbody tr .odd {
 }
 
 #userSkillTitle {
+    margin-bottom: 20px;
 }
 
 #userRepoTitle {
+    margin-bottom: 30px;
 }
 
 

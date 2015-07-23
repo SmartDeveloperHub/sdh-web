@@ -114,6 +114,10 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
     //Loading animation
     startLoading();
 
+    //Clear title and subtitle
+    setTitle("");
+    setSubtitle("");
+
     //Scroll to top
     window.scrollTo(0, 0);
 

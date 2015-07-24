@@ -204,7 +204,7 @@
             var rangeNv_metrics = [
                 {
                     id: 'repocommits',
-                    max: 24,
+                    max: 101,
                     aggr: 'avg',
                     from: moment(firstCommit).format("YYYY-MM-DD")
                 }

@@ -113,7 +113,7 @@
     <div class="row" id="UserRepoBox">
         <div class="row titleRow" id="userRepoTitle">
             <span id="repoIco" class="titleIcon octicon octicon-organization"></span>
-            <span class="titleLabel">Users</span>
+            <span class="titleLabel">Developers</span>
         </div>
         <div class="row">
             <div class="col-sm-9">
@@ -266,7 +266,7 @@
             label: 'Total developers',
             decimal: 0,
             icon: 'octicon octicon-organization',
-            iconbackground: 'rgb(231, 0, 131)',
+            iconbackground: 'rgb(247, 133, 60)',
             background: 'transparent'
         };
         var total_users = new framework.widgets.CounterBox(total_users_dom, total_users_metrics, [context4rangeChart, repoCtx], total_users_conf);
@@ -329,7 +329,7 @@
             label: 'Average time to fix',
             decimal: 2,
             icon: 'fa fa-line-chart',
-            iconbackground: 'rgb(247, 133, 60)',
+            iconbackground: 'rgb(231, 0, 131)',
             background: 'transparent',
             suffix: " h"
         };

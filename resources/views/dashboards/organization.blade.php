@@ -48,8 +48,8 @@
                                 Smart Developer Hub platform (a.k.a. SDH platform) standardizes the data access 
                                 mechanism as well as the data model (a.k.a. SDH vocabulary) and format used for 
                                 the exchange of the data within the platform, using the web as a platform and leveraging 
-                                standards such as the <a href="http://www.w3.org/TR/ldp/">LDP</a>, <a href="http://www.w3.org/TR/ldp/">RDF</a>, and <a href="http://www.w3.org/TR/ldp/">OWL</a> W3C recommendations and the 
-                                <a href="http://www.w3.org/TR/ldp/">OSLC</a> initiative from OASIS.
+                                standards such as the <a href="http://www.w3.org/TR/ldp/">LDP</a>, <a href="http://www.w3.org/TR/2014/REC-rdf11-mt-20140225/">RDF</a>, and <a href="http://www.w3.org/TR/owl-features/">OWL</a> W3C recommendations and the 
+                                <a href="http://www.w3.org/Submission/shapes/">OSLC</a> initiative from OASIS.
                             </p>
                         </div>
                     </div>
@@ -212,7 +212,7 @@
         label: 'Total developers',
         decimal: 0,
         icon: 'octicon octicon-organization',
-        iconbackground: '#E70083',
+        iconbackground: '#F7853C',
         background: 'transparent',
         labelcolor: '#000'
     };
@@ -348,7 +348,7 @@
         label: 'Average time to Fix',
         decimal: 1,
         icon: 'fa fa-line-chart',
-        iconbackground: '#f7853c',
+        iconbackground: '#E70083',
         background: 'transparent',
         labelcolor: '#000',
         suffix: " h"

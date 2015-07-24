@@ -129,7 +129,7 @@ span#percentBall {
     text-align: center;
     background-color: rgba(197, 197, 197, 0.24);
     display: inline-block;
-    width: 66px;
+    width: 90px;
 }
 
 #executions-info-percent .percentlabel {

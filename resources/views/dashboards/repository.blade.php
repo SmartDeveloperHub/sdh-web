@@ -61,14 +61,13 @@
         </div>
         <div class="row">
             <div id="solved-issues" class="boxCounter col-sm-4"></div>
+            <div id="broken-build-exec" class="boxCounter col-sm-4"></div>
             <div id="avg-commits" class="boxCounter col-sm-4"></div>
-            <div id="avg-time-to-fix" class="boxCounter col-sm-4"></div>
         </div>
         <div class="row">
-            <div class="boxCounter col-sm-2"></div>
+            <div id="avg-time-to-fix" class="boxCounter col-sm-4"></div>
             <div id="avg-build-time" class="boxCounter col-sm-4"></div>
             <div id="avg-broken-time" class="boxCounter col-sm-4"></div>
-            <div class="boxCounter col-sm-2"></div>
         </div>
     </div>
     <div class="row" id="devActivBox">
@@ -95,7 +94,7 @@
                     </div>
                     <div id="executions-info-percent">
                         <span id="percentBall">
-                            <span class="percentlabel" id="execPercent">0</span>
+                            <span class="percentlabel execPercent">0</span>
                             <span class="percentlabel">%</span>
                         </span>
                     </div>
@@ -287,6 +286,21 @@
         };
         var total_executions_issues = new framework.widgets.CounterBox(total_executions_dom, total_executions_metrics, [context4rangeChart, repoCtx], total_executions_conf);
 
+        // TOTAL EXECUTIONS
+        var broken_exec_dom = document.getElementById("broken-build-exec");
+        var broken_exec_metrics = [{
+            id: 'repofailedexecutions',
+            max: 1,
+            aggr: 'sum'
+        }];
+        var broken_exec_conf = {
+            label: 'Broken build executions',
+            decimal: 0,
+            icon: 'fa fa-thumbs-down',
+            iconbackground: '#e21b23',
+            background: 'transparent'
+        };
+        var broken_exec = new framework.widgets.CounterBox(broken_exec_dom, broken_exec_metrics, [context4rangeChart, repoCtx], broken_exec_conf); 
 
         // SUCCESSFUL EXECUTIONS
         var success_executions_dom = document.getElementById("solved-issues");
@@ -296,7 +310,7 @@
             aggr: 'sum'
         }];
         var success_executions_conf = {
-            label: 'Success build executions',
+            label: 'Successful build executions',
             decimal: 0,
             icon: 'fa fa-thumbs-up',
             iconbackground: 'rgb(6, 151, 68)',

@@ -384,7 +384,7 @@
             interpolate: 'monotone',
             height: 200,
             labelFormat: '%data.info.title%',
-            colors: ["#2876B8", "#C0485E"],
+            colors: ["#8D197B","#2876B8"],
             area: true,
             _demo: true // Only for demo
         };

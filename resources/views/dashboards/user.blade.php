@@ -395,7 +395,7 @@
         var table_configuration = {
             columns: [
                 {
-                    label: "Show",
+                    label: "",
                     link: {
                         img: "avatar", //or label
                         href: "repo-dashboard",
@@ -413,7 +413,7 @@
                     width: "40px"
                 },
                 {
-                    label: "Name",
+                    label: "",
                     property: "name"
                 }
             ],

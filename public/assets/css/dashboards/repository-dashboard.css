@@ -441,3 +441,9 @@ table.dataTable tbody tr .odd {
     font-size: 54px;
     vertical-align: middle;
 }
+.searchDevInput {
+    border-radius: 12px;
+    padding-left: 44px;
+    padding-right: 44px;
+    position: relative;
+}

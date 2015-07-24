@@ -94,7 +94,7 @@
                     </div>
                     <div id="executions-info-percent">
                         <span id="percentBall">
-                            <span class="percentlabel execPercent">0</span>
+                            <span class="percentlabel" id="execPercent">0</span>
                             <span class="percentlabel">%</span>
                         </span>
                     </div>

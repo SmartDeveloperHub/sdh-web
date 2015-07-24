@@ -95,7 +95,7 @@
                     </div>
                     <div id="executions-info-percent">
                         <span id="percentBall">
-                            <span class="percentlabel execPercent">0</span>
+                            <span class="percentlabel" id="execPercent">0</span>
                             <span class="percentlabel">%</span>
                         </span>
                     </div>
@@ -502,7 +502,7 @@
 
                 $("#successNum").text(success);
                 $("#brokenNum").text(broken);
-                $("#execPercent").text((total > 0 ? Math.round(broken*100/total) : 0));
+                $("#execPercent").text(total > 0 ? Math.round(success*100/total) : 0);
                 $("#totalNum").text(total);
 
 

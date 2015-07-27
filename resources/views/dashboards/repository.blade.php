@@ -495,7 +495,7 @@
                     label: "",
                     link: {
                         img: "avatar", //or icon or label
-                        href: "user-dashboard",
+                        href: "developer",
                         env: [
                             {
                                 property: "userid",

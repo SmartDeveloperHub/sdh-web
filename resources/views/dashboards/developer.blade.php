@@ -355,7 +355,7 @@
                     label: "",
                     link: {
                         img: "avatar", //or label
-                        href: "repo-dashboard",
+                        href: "repository",
                         env: [
                             {
                                 property: "repositoryid",

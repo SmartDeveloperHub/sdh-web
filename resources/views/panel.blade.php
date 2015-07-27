@@ -4,7 +4,7 @@
     @parent
     <script type="application/javascript">
         SDH_API_URL = "{{{ $_ENV['SDH_API'] }}}";
-        BASE_DASHBOARD = "organization-dashboard";
+        BASE_DASHBOARD = "organization";
         USER_ID = "u1";
     </script>
 @stop

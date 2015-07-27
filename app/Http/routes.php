@@ -19,19 +19,11 @@ Route::get('/', function(){
 
 Route::get('home', 'HomeController@index');
 
-
 // Dashboard templates
-Route::get('user-dashboard', function(){
-    return View::make('dashboards.user');
+Route::get('dashboard/{id}', function($id){
+    return View::make("dashboards.{$id}");
 });
 
-Route::get('repo-dashboard', function(){
-    return View::make('dashboards.repository');
-});
-
-Route::get('organization-dashboard', function(){
-    return View::make('dashboards.organization');
-});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

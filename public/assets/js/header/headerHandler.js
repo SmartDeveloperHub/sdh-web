@@ -137,6 +137,6 @@ var setTimeInfo, clearTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHead
         //Link to organization dashboard
         $("#myLogo").parent("a").click(function(event) {
             event.preventDefault();
-            framework.dashboard.changeTo('organization-dashboard', framework.dashboard.getEnv());
+            framework.dashboard.changeTo(BASE_DASHBOARD, framework.dashboard.getEnv());
         })
 	});

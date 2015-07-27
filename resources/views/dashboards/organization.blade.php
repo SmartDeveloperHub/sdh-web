@@ -453,7 +453,7 @@
                         var env = framework.dashboard.getEnv();
                         env['uid'] = user['userid'];
                         env['name'] = user['name'];
-                        framework.dashboard.changeTo('user-dashboard', env);
+                        framework.dashboard.changeTo('developer', env);
                     };
                 }])
                 .controller('ReposController', ['$scope', function ($scope) {
@@ -461,7 +461,7 @@
                         var env = framework.dashboard.getEnv();
                         env['rid'] = repo['repositoryid'];
                         env['name'] = repo['name'];
-                        framework.dashboard.changeTo('repo-dashboard', env);
+                        framework.dashboard.changeTo('repository', env);
                     };
                 }]);
 

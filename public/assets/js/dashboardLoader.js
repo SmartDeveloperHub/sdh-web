@@ -141,7 +141,11 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
         _this.goToPrevious();
     };
 
-    $.get(newDashboard, function( data ) {
+    // Create the url for the dashboard
+    var dashboardUrl = 'dashboard/' + newDashboard;
+
+    // Request the dashboard content
+    $.get(dashboardUrl, function( data ) {
 
         //Tell the framework that the new template was retrieved correctly and that the controller is ready to chane the dashboard
         typeof onSuccess === 'function' && onSuccess();
@@ -209,6 +213,7 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
         //Clear the cssMaps
         _this.cssRequirejsMaps = [];
 
+        // Load the new HTML
         try{
             $("#template-exec").html(data);
         } catch(e) {

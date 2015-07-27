@@ -389,7 +389,8 @@
             minRowsSelected: 1,
             maxRowsSelected: 6,
             filterControl: true,
-            initialSelectedRows: 5
+            initialSelectedRows: 5,
+            showHeader: false
         };
         var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, userCtx], table_configuration);
 

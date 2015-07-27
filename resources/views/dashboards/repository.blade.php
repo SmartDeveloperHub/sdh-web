@@ -532,7 +532,8 @@
             filterControl: true,
             initialSelectedRows: 5,
             keepSelectedByProperty: "userid",
-            orderByColumn: [[1, 'asc']]
+            orderByColumn: [[1, 'asc']],
+            showHeader: false
         };
         var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, repoCtx], table_configuration);
 

@@ -46,14 +46,14 @@
         <div id="total-commits" class="boxCounter col-sm-3"></div>
         <div id="avg-commitsday" class="boxCounter col-sm-3"></div>
         <div id="longest-streak" class="boxCounter col-sm-3"></div>
-        <div id="total-projects" class="boxCounter col-sm-3"></div>
+        <div id="total-repositories" class="boxCounter col-sm-3"></div>
     </div>
     <div class="row" id="devActivBox">
         <div class="row titleRow" id="devActivityTitle">
             <span id="devActIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
             <span class="titleLabel">Activity</span>
         </div>
-        <div class="row" id="commitChart"></div>
+        <div class="row" id="commits-lines"></div>
     </div>
     <div class="row" id="UserSkillBox">
         <div class="row titleRow" id="userSkillTitle">
@@ -78,17 +78,17 @@
             <div class="col-sm-9">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div id="projects-horizontal" class="widget"></div>
+                        <div id="repositories-commits-horizontal" class="widget"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <div id="projects-lines" class="widget"></div>
+                        <div id="repositories-commits-lines" class="widget"></div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-3">
-                <div id="projects-table" class="widget"></div>
+                <div id="repositories-table" class="widget"></div>
             </div>
         </div>
     </div>
@@ -96,14 +96,19 @@
 
 @section('script')
 /* <script> */
+
+    //Contexts used in this dashboard
+    var userCtx = "user-context";
+    var timeCtx = "time-context";
+    var reposTableCtx = "repository-table-context";
+
     //Show header chart and set titles
     setTitle("Developers");
     showHeaderChart();
 
     //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
-    var userCtx = "uid";
     var env = framework.dashboard.getEnv();
-    framework.data.updateContext('uid', {uid: (env['uid'] != null ? env['uid'] : USER_ID)}); //TODO: get the USER_ID from the env
+    framework.data.updateContext(userCtx, {uid: (env['uid'] != null ? env['uid'] : USER_ID)}); //TODO: get the USER_ID from the env
     if(env['name'] != null) {
         setSubtitle(env['name']);
     }
@@ -145,13 +150,10 @@
 
     $(".headbutton.mail").click(changeTheme);
 
-    var context4rangeChart = "context4rangeChart";
-
     // UPPER SELECTOR RANENV (NEEDS FIRST COMMIT)
     framework.data.observe(['userinfo'], function(event){
-        if(event.event === 'loading') {
-            //TODO
-        } else if(event.event === 'data') {
+
+        if(event.event === 'data') {
             var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
             var firstCommit = userinfo.firstCommit;
 
@@ -166,7 +168,7 @@
                     }
                 ];
                 var rangeNv_configuration = {
-                    ownContext: context4rangeChart,
+                    ownContext: timeCtx,
                     isArea: true,
                     showLegend: false,
                     interpolate: 'monotone',
@@ -194,6 +196,7 @@
             });
 
         }
+
     }, [userCtx]);
 
     var loadTimeDependentWidgets = function loadTimeDependentWidgets() {
@@ -212,7 +215,7 @@
             iconbackground: 'rgb(0, 75, 139)',
             background: 'transparent'
         };
-        var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [context4rangeChart, userCtx], total_commits_conf);
+        var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [timeCtx, userCtx], total_commits_conf);
 
         // AVG COMMITS PER DAY
         var avg_commits_dom = document.getElementById("avg-commitsday");
@@ -228,7 +231,7 @@
             iconbackground: 'rgb(192, 72, 94)',
             background: 'transparent'
         };
-        var total_commits = new framework.widgets.CounterBox(avg_commits_dom, avg_commits_metrics, [context4rangeChart, userCtx], avg_commits_conf);
+        var total_commits = new framework.widgets.CounterBox(avg_commits_dom, avg_commits_metrics, [timeCtx, userCtx], avg_commits_conf);
 
         // LONGEST STREAK
         var streak_dom = document.getElementById("longest-streak");
@@ -245,10 +248,10 @@
             background: 'transparent',
             suffix: " days"
         };
-        var streak = new framework.widgets.CounterBox(streak_dom, streak_metrics, [context4rangeChart, userCtx], streak_conf);
+        var streak = new framework.widgets.CounterBox(streak_dom, streak_metrics, [timeCtx, userCtx], streak_conf);
 
         // TOTAL PROJECTS
-        var total_projects_dom = document.getElementById("total-projects");
+        var total_projects_dom = document.getElementById("total-repositories");
         var total_projects_metrics = [{
             id: 'userrepositories',
             max: 1,
@@ -261,14 +264,12 @@
             iconbackground: 'rgb(159, 206, 35)',
             background: 'transparent'
         };
-        var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [context4rangeChart, userCtx], total_projects_conf);
+        var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [timeCtx, userCtx], total_projects_conf);
 
 
         // USER META INFO
         framework.data.observe(['userinfo'], function(event){
-            if(event.event === 'loading') {
-                //TODO
-            } else if(event.event === 'data') {
+            if(event.event === 'data') {
                 var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
                 //Set header subtitle
                 setSubtitle(userinfo['name']);
@@ -302,7 +303,7 @@
 
 
         // USER COMMITS LINE CHART
-        var userCC_dom = document.getElementById("commitChart");
+        var userCC_dom = document.getElementById("commits-lines");
         var userCC_metrics = [
             {
                 id: 'usercommits',
@@ -325,7 +326,7 @@
             _demo: true // Only for demo
         };
         var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
-                [context4rangeChart, userCtx], userCC_configuration);
+                [timeCtx, userCtx], userCC_configuration);
 
         // SKILLS STAR CHART
         var skills_star_dom = document.getElementById("skills-star");
@@ -354,7 +355,7 @@
             pointLabelFontSize: 12
         };
         var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
-                [context4rangeChart, userCtx], skills_star_configuration);
+                [timeCtx, userCtx], skills_star_configuration);
 
 
         // SKILLS LINES CHART
@@ -385,12 +386,11 @@
             colors: ["#FF7F0E", "#1F77B4", "#68B828"]
         };
         var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,
-                [context4rangeChart, userCtx], skills_lines_configuration);
+                [timeCtx, userCtx], skills_lines_configuration);
 
 
-        // USER PROJECTS TABLE
-        var repoCtx = "repository-table-context";
-        var table_dom = document.getElementById("projects-table");
+        // USER REPOSITORIES TABLE
+        var table_dom = document.getElementById("repositories-table");
         var table_metrics = ['userrepositoriestbd'];
         var table_configuration = {
             columns: [
@@ -419,7 +419,7 @@
             ],
             updateContexts: [
                 {
-                    id: repoCtx,
+                    id: reposTableCtx,
                     filter: [
                         {
                             property: "repositoryid",
@@ -434,15 +434,15 @@
             filterControl: true,
             initialSelectedRows: 5
         };
-        var table = new framework.widgets.Table(table_dom, table_metrics, [context4rangeChart, userCtx], table_configuration);
+        var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, userCtx], table_configuration);
 
-        // HORIZONTAL CONTRIBUTION TO PROJECTS
-        var multibar_projects_dom = document.getElementById("projects-horizontal");
-        var multibar_projects_metrics = [{
+        // HORIZONTAL CONTRIBUTION TO REPOSITORIES
+        var multibar_repositories_dom = document.getElementById("repositories-commits-horizontal");
+        var multibar_repositories_metrics = [{
             id: 'repousercommits',
             max: 1
         }];
-        var multibar_projects_configuration = {
+        var multibar_repositories_configuration = {
             labelFormat: "%data.info.rid.name%",
             stacked: true,
             showXAxis: false,
@@ -455,38 +455,26 @@
                 aggr: 'sum'
             }
         };
-        var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,
-                [context4rangeChart, userCtx, repoCtx], multibar_projects_configuration);
+        var multibar_projects = new framework.widgets.HorizontalBar(multibar_repositories_dom, multibar_repositories_metrics,
+                [timeCtx, userCtx, reposTableCtx], multibar_repositories_configuration);
 
-        // COMMITS PER PROJECT AND USER
-        var user_project_commits_dom = document.getElementById("projects-lines");
-        var user_project_commits_metrics = [{
+        // COMMITS PER REPOSITORY AND USER
+        var user_repositories_commits_dom = document.getElementById("repositories-commits-lines");
+        var user_repositories_commits_metrics = [{
             id: 'repousercommits',
             max: 100
         }];
-        var user_project_commits_conf = {
+        var user_repositories_commits_conf = {
             xlabel: '',
             ylabel: '',
             labelFormat: "%data.info.rid.name%",
             interpolate: 'monotone',
             area: true
         };
-        var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
-                [context4rangeChart, userCtx, repoCtx], user_project_commits_conf);
+        var user_project_commits = new framework.widgets.LinesChart(user_repositories_commits_dom, user_repositories_commits_metrics,
+                [timeCtx, userCtx, reposTableCtx], user_repositories_commits_conf);
 
-        //LANGUAGES WIDGET
-        /*var user_project_languages_dom = document.getElementById("projects-languages");
-         var user_project_languages_conf = {
-         horiz: {
-         stacked: true,
-         showControls: false,
-         showXAxis: false
-         },
-         pie: {}
-         };
-         var user_project_languages = new framework.widgets.Languages(user_project_languages_dom,
-         [context4rangeChart, userCtx, repoCtx], user_project_languages_conf);*/
 
-    }
+    };
 
 @stop

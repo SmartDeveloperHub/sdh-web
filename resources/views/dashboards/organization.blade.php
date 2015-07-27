@@ -112,7 +112,7 @@
             </div>
             <div class="row row-centered">
                 <div id="orgtimetofix" class="col-sm-4 col-centered"></div>
-                <div id="orgexectime" class="col-sm-4 col-centered"></div>
+                <div id="orgbuildtime" class="col-sm-4 col-centered"></div>
                 <div id="orgbrokentime" class="col-sm-4 col-centered"></div>
             </div>
         </div>
@@ -179,9 +179,7 @@
 
 @section('script')
 /* <script> */
-    //Show header chart and set titles
-    setTitle("");
-    setSubtitle("");
+    //Hide header chart
     hideHeaderChart();
 
     // TOTAL COMMITS
@@ -356,7 +354,7 @@
     var orgtimetofix = new framework.widgets.CounterBox(orgtimetofix_dom, orgtimetofix_metrics, null, orgtimetofix_conf);
 
     // BUILD EXECUTION TIME
-    var organizationexectime_dom = document.getElementById("orgexectime");
+    var organizationexectime_dom = document.getElementById("orgbuildtime");
     var organizationexectime_metrics = [{
         id: 'orgbuildtimetbd'
     }];
@@ -474,9 +472,8 @@
 
     //USER LIST
     framework.data.observe(['userlist'], function(event){
-        if(event.event === 'loading') {
-            //TODO
-        } else if(event.event === 'data') {
+
+        if(event.event === 'data') {
             var users = event.data['userlist'][Object.keys(event.data['userlist'])[0]]['data'];
 
             $scope = angular.element($(".main-content")).scope();
@@ -490,9 +487,8 @@
 
     //REPO LIST
     framework.data.observe(['repolist'], function(event){
-        if(event.event === 'loading') {
-            //TODO
-        } else if(event.event === 'data') {
+
+        if(event.event === 'data') {
             var repos = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
 
             $scope = angular.element($(".main-content")).scope();

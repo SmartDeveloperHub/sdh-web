@@ -342,7 +342,7 @@ table.dataTable tbody tr .odd {
     fill: #2876B8;
 }
 
-#commitChart .nvd3 .nv-axis, #commitChart .nvd3 .nv-legend .nv-series {
+#commits-lines .nvd3 .nv-axis, #commits-lines .nvd3 .nv-legend .nv-series {
     fill: #002A4D;
 }
 

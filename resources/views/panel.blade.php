@@ -36,8 +36,7 @@
                 <div id="headerright" class="headcomp">
                     <div class="control">
                         <div id="buttonbox" class="headcomp">
-                            <a class="headbutton mail fa-moon-o"></a>
-                            <a class="headbutton settings fa-cog"></a>
+                            <a class="headbutton fa-cog"></a>
                         </div>
                         <div id="avatarbox" class="headcomp">
                             <a class="useravatar fa-user-secret"></a>
@@ -48,7 +47,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </header>

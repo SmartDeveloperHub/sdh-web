@@ -158,49 +158,10 @@
         setSubtitle(env['name']);
     }
 
-    // light or dark theme?. Default is light
-    var lightTheme = true;
-    var setRangeChart = null;
-    var rangeNv = null;
-    var themebutton = $(".headbutton.mail");
-    var setLightTheme = function setLightTheme() {
-        if (!lightTheme) {
-            lightTheme = true;
-            rangeNv && rangeNv.delete();
-            setRangeChart && setRangeChart();
-            themebutton.removeClass("fa-sun-o");
-            themebutton.addClass("fa-moon-o");
-        }
-        $('body').addClass('light');
-    };
-    var setDarkTheme = function setDarkTheme() {
-        if (lightTheme) {
-            lightTheme = false;
-            rangeNv && rangeNv.delete();
-            setRangeChart && setRangeChart();
-            themebutton.removeClass("fa-moon-o");
-            themebutton.addClass("fa-sun-o");
-        }
-        $('body').removeClass('light');
-    };
-    var changeTheme = function changeTheme() {
-        if (lightTheme == false) {
-            setLightTheme();
-        } else {
-            setDarkTheme();
-        }
-    };
-    // Change theme
-    setLightTheme();
-
-    $(".headbutton.mail").click(changeTheme);
-
-
     // UPPER SELECTOR RANGENV (NEEDS FIRST COMMIT)
     framework.data.observe(['repoinfo'], function(event){
-        if(event.event === 'loading') {
-            //TODO
-        } else if(event.event === 'data') {
+
+        if(event.event === 'data') {
             var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
             var firstCommit = repoinfo['firstCommit'];
 
@@ -224,10 +185,6 @@
                 colors: ["#004C8B"],
                 axisColor: "#004C8B"
             };
-            if (!lightTheme) {
-                rangeNv_configuration['axisColor'] = "#BFE5E3";
-                rangeNv_configuration['colors'] = ["#FFC10E"];
-            }
 
             var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
             $(rangeNv).on("CONTEXT_UPDATED", function() {

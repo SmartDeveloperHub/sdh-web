@@ -113,80 +113,37 @@
         setSubtitle(env['name']);
     }
 
-    // light or dark theme?. Default is light
-    var lightTheme = true;
-    var setRangeChart = null;
-    var rangeNv = null;
-    var themebutton = $(".headbutton.mail");
-    var setLightTheme = function setLightTheme() {
-        if (!lightTheme) {
-            lightTheme = true;
-            rangeNv && rangeNv.delete();
-            setRangeChart && setRangeChart();
-            themebutton.removeClass("fa-sun-o");
-            themebutton.addClass("fa-moon-o");
-        }
-        $('body').addClass('light');
-    };
-    var setDarkTheme = function setDarkTheme() {
-        if (lightTheme) {
-            lightTheme = false;
-            rangeNv && rangeNv.delete();
-            setRangeChart && setRangeChart();
-            themebutton.removeClass("fa-moon-o");
-            themebutton.addClass("fa-sun-o");
-        }
-        $('body').removeClass('light');
-    };
-    var changeTheme = function changeTheme() {
-        if (lightTheme == false) {
-            setLightTheme();
-        } else {
-            setDarkTheme();
-        }
-    };
-    // Change theme
-    setLightTheme();
-
-    $(".headbutton.mail").click(changeTheme);
-
     // UPPER SELECTOR RANENV (NEEDS FIRST COMMIT)
     framework.data.observe(['userinfo'], function(event){
 
         if(event.event === 'data') {
             var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
-            var firstCommit = userinfo.firstCommit;
+            var firstCommit = userinfo['firstCommit'];
 
-            var setRangeChart = function() {
-                var rangeNv_dom = document.getElementById("fixed-chart");
-                var rangeNv_metrics = [
-                    {
-                        id: 'usercommits',
-                        aggr: 'avg',
-                        from: moment(firstCommit).format("YYYY-MM-DD"),
-                        max: 101
-                    }
-                ];
-                var rangeNv_configuration = {
-                    ownContext: timeCtx,
-                    isArea: true,
-                    showLegend: false,
-                    interpolate: 'monotone',
-                    showFocus: false,
-                    height: 140,
-                    duration: 500,
-                    colors: ["#004C8B"],
-                    axisColor: "#004C8B"
-                };
-                if (!lightTheme) {
-                    rangeNv_configuration['axisColor'] = "#BFE5E3";
-                    rangeNv_configuration['colors'] = ["#FFC10E"];
+            var rangeNv_dom = document.getElementById("fixed-chart");
+            var rangeNv_metrics = [
+                {
+                    id: 'usercommits',
+                    aggr: 'avg',
+                    from: moment(firstCommit).format("YYYY-MM-DD"),
+                    max: 101
                 }
-                return new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [userCtx], rangeNv_configuration);
+            ];
+            var rangeNv_configuration = {
+                ownContext: timeCtx,
+                isArea: true,
+                showLegend: false,
+                interpolate: 'monotone',
+                showFocus: false,
+                height: 140,
+                duration: 500,
+                colors: ["#004C8B"],
+                axisColor: "#004C8B"
             };
 
-            rangeNv = setRangeChart();
+            var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [userCtx], rangeNv_configuration);
 
+            // Wait for the event of context updated to load the rest of the widgets
             $(rangeNv).on("CONTEXT_UPDATED", function() {
                 $(rangeNv).off("CONTEXT_UPDATED");
                 loadTimeDependentWidgets();

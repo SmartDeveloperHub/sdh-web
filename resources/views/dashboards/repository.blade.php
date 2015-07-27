@@ -388,7 +388,11 @@
             interpolate: 'monotone',
             height: 200,
             labelFormat: '%data.info.title%',
-            colors: ["#004B8B", "#DB0013", "#0A8931"]
+            colors: {
+                repoexecutions: "#004B8B",
+                repofailedexecutions: "#DB0013",
+                repopassedexecutions: "#0A8931"
+            }
         };
         var ci_lines = new framework.widgets.LinesChart(ci_dom, ci_metrics,
                 [timeCtx, repoCtx], ci_configuration);
@@ -450,7 +454,10 @@
             labelFormat: "%data.info.title%",
             showControls: false,
             height: 250,
-            color: ["#DB0013", "#0A8931"]
+            color: {
+                repopassedexecutions: "#0A8931",
+                repofailedexecutions: "#DB0013"
+            }
         };
         var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
                 [timeCtx, repoCtx], executions_conf);

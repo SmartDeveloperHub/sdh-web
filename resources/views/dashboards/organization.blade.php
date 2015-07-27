@@ -400,7 +400,7 @@
         interpolate: 'monotone',
         height: 250,
         labelFormat: '%data.info.title%',
-        colors: ["#FF7F0E", "#1F77B4", "#68B828"],
+        colors: ["#FF7F0E"],
         area: true
     };
     var skills_lines = new framework.widgets.LinesChart(dev_lines_dom, dev_lines_metrics,
@@ -431,7 +431,11 @@
         interpolate: 'monotone',
         height: 250,
         labelFormat: '%data.info.title%',
-        colors: ["#FF7F0E", "#1F77B4", "#68B828"]
+        colors: {
+            orgexecutions: "#1F77B4",
+            orgpassedexecutions: "#68B828",
+            orgfailedexecutions: "#FF7F0E"
+        }
     };
     var ex_lines = new framework.widgets.LinesChart(ex_lines_dom, ex_lines_metrics,
             null, ex_lines_configuration);

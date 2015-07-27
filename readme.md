@@ -1,5 +1,8 @@
 ## Smart Developer Hub Web
 
+# How to add dashboards
+To add a new dashboard, create a new file inside "/resources/views/dashboards/" directory with ".blade.php" extension.
+The "/resources/views/empty.blade.php" file explains how this file must be filled and can be used as a template.
 
 # How to execute it
 

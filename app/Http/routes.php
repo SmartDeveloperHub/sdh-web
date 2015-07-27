@@ -33,10 +33,6 @@ Route::get('organization-dashboard', function(){
     return View::make('dashboards.organization');
 });
 
-Route::get('test-template', function(){
-    return View::make('dashboards.test-template');
-});
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

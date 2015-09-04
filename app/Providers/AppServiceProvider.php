@@ -1,5 +1,6 @@
 <?php namespace SdhWeb\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider {
@@ -11,7 +12,11 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		//
+		//Extend authentication with the SDH API authentication
+		Auth::extend('SdhApi', function($app)
+		{
+			return new \SdhWeb\Extensions\SdhApiAuthProvider();
+		});
 	}
 
 	/**

@@ -5,7 +5,7 @@
     <script type="application/javascript">
         SDH_API_URL = "{{{ $_ENV['SDH_API'] }}}";
         BASE_DASHBOARD = "organization";
-        USER_ID = "u1";
+        USER_ID = "{{ Auth::user()->id }}";
     </script>
 @stop
 
@@ -37,13 +37,14 @@
                     <div class="control">
                         <div id="buttonbox" class="headcomp">
                             <a class="headbutton fa-cog"></a>
+                            <a class="headbutton fa-sign-out" href="/auth/logout"></a>
                         </div>
                         <div id="avatarbox" class="headcomp">
                             <a class="useravatar fa-user-secret"></a>
                         </div>
                         <div id="userinfobox" class="headcomp">
-                            <span id="usernick">fserena</span>
-                            <span id="username">Fernando Serena</span>
+                            <span id="usernick">{{ Auth::user()->username }}</span>
+                            <span id="username">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>
                         </div>
                     </div>
                 </div>

@@ -125,7 +125,7 @@
 }
 
 #buttonbox {
-	margin-top: 19px;
+	margin-top: 3px;
 	margin-right: 2px;
 	margin-left: 12px;
 	float: right;
@@ -697,6 +697,7 @@ div#floatingRow .panel.panel-default {
   	box-shadow: 0px 0px 3px 0px #004C8B;
   	background-color: rgba(213, 213, 213, 0.34);
   	color: #004C8B;
+	margin-left: 2px;
 }
 
 .page-body.light .settings-pane {

@@ -13,16 +13,10 @@
 
 //Route::get('/', 'WelcomeController@index');
 
-Route::get('/', function(){
-    return View::make('panel');
-});
+Route::get('/', 'DashboardController@panel');
+Route::get('dashboard/{id}', 'DashboardController@dashboard');
 
 Route::get('home', 'HomeController@index');
-
-// Dashboard templates
-Route::get('dashboard/{id}', function($id){
-    return View::make("dashboards.{$id}");
-});
 
 
 Route::controllers([

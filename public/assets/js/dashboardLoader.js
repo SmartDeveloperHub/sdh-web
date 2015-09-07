@@ -275,12 +275,16 @@ define(function(require, exports, module) {
 
             if(BASE_DASHBOARD != null) {
 
-                //Show the page container
-                $(".page-container").show();
-                $("footer.footer-container").show();
+                $(document).ready(function() {
 
-                // Load the initial dashboard
-                dashboardController.changeTo(BASE_DASHBOARD);
+                    //Show the page container
+                    $(".page-container").show();
+                    $("footer.footer-container").show();
+
+                    // Load the initial dashboard
+                    dashboardController.changeTo(BASE_DASHBOARD);
+
+                });
 
             } else {
                 console.error("BASE_DASHBOARD is not defined.");

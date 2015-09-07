@@ -23,7 +23,7 @@ class SdhApiAuthProvider implements UserProvider
      */
     public function retrieveById($identifier)
     {
-        $res = Session::get('LdapUser');
+        $res = Session::get('User');
 
         return new GenericUser((array) $res);
     }
@@ -65,7 +65,7 @@ class SdhApiAuthProvider implements UserProvider
         $password = $credentials['password'];
 
         if($this->authenticateWithApi($username, $password)) {
-            return new GenericUser((array) Session::get('LdapUser'));
+            return new GenericUser((array) Session::get('User'));
         }
 
     }
@@ -118,8 +118,8 @@ class SdhApiAuthProvider implements UserProvider
 
                     //Fill the user array with the corresponding property of the ldap user
                     foreach($matchups as $ldapProp => $localProp) {
-                        if(isset($response[$ldapProp])) {
-                            $user[$localProp] = $response[$ldapProp];
+                        if(isset($response['user'][$ldapProp])) {
+                            $user[$localProp] = $response['user'][$ldapProp];
                         }
                     }
 

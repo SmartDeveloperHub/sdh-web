@@ -5,7 +5,6 @@ namespace SdhWeb\Extensions;
 
 use Barryvdh\Debugbar\Facade as Debugbar;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Exception\ServerException;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;

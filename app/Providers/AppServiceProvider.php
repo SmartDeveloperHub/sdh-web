@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use Barryvdh\Debugbar\Facade as Debugbar;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -17,6 +18,10 @@ class AppServiceProvider extends ServiceProvider {
 		{
 			return new \SdhWeb\Extensions\SdhApiAuthProvider();
 		});
+
+		if(isset($_ENV['APP_DEBUG_BAR']) && $_ENV['APP_DEBUG_BAR'] == 'false') {
+			Debugbar::disable();
+		}
 	}
 
 	/**

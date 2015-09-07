@@ -90,7 +90,8 @@ class SdhApiAuthProvider implements UserProvider
         $client = new GuzzleClient();
         try {
 
-            $res = $client->post('http://10.0.2.1:8080/auth/login/', [
+            $sdhApiUrl = ends_with($_ENV['SDH_API_INTERNAL'], '/') ? substr($_ENV['SDH_API_INTERNAL'], 0, -1) : $_ENV['SDH_API_INTERNAL'];
+            $res = $client->post($sdhApiUrl.'/auth/login/', [
                 'form_params' => [
                     'username' => $username,
                     'password' => $password
@@ -103,16 +104,32 @@ class SdhApiAuthProvider implements UserProvider
                 $response = $array = json_decode($res->getBody()->getContents(), true);
 
                 if($response != null) {
+
+                    $user = array();
+
+                    //Matches the ldap property with the local user property
+                    $matchups = array(
+                        'uidNumber' => 'id',
+                        'uid' => 'username',
+                        'givenName' => 'name',
+                        'sn' => 'surname',
+                    );
+
                     Debugbar::info($response);
-                    //Define the id to use
-                    $response['user']['id'] = (isset($response['user']['id']) ?  $response['user']['id'] : $response['user']['uidNumber']);
-                    $response['user']['name'] = (isset($response['user']['name']) ?  $response['user']['name'] : $response['user']['cn']);
 
+                    //Fill the user array with the corresponding property of the ldap user
+                    foreach($matchups as $ldapProp => $localProp) {
+                        if(isset($response[$ldapProp])) {
+                            $user[$localProp] = $response[$ldapProp];
+                        }
+                    }
 
+                    //Store in session
                     Session::put('SdhApiToken', $response['token']);
-                    Session::put('LdapUser', $response['user']);
+                    Session::put('User', $user);
 
                     return true;
+
                 } else {
                     Log::error('Invalid JSON received from SDH API.');
                     Debugbar::warning('Invalid JSON received from SDH API.');

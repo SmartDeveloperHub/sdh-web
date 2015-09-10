@@ -4,6 +4,7 @@
     @parent
     <script type="application/javascript">
         SDH_API_URL = "{{{ $_ENV['SDH_API'] }}}";
+        SDH_API_KEY = "{{ Session::get('SdhApiToken') }}";
         BASE_DASHBOARD = "organization";
         USER_ID = "{{ Auth::user()->id }}";
     </script>

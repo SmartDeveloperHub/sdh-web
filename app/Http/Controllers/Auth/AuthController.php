@@ -1,5 +1,6 @@
 <?php namespace SdhWeb\Http\Controllers\Auth;
 
+use SdhWeb\Extensions\SdhApi;
 use SdhWeb\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
@@ -41,6 +42,20 @@ class AuthController extends Controller {
 			->withErrors([
 				'username' => $this->getFailedLoginMesssage(),
 			]);
+	}
+
+	/**
+	 * Log the user out of the application.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function getLogout()
+	{
+		$this->auth->logout();
+
+		SdhApi::logout();
+
+		return redirect('/');
 	}
 
 	/**

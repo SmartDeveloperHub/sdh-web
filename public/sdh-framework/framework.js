@@ -33,6 +33,9 @@
     //Path to the SDH-API server without the trailing slash
     var _serverUrl;
 
+    // SDH API key
+    var _serverKey;
+
     // Array with the information about the different resources of the API
     var _resourcesInfo;
 
@@ -97,9 +100,27 @@
             maxRetries = 2; //So up to 3 times will be requested
         }
 
-        $.getJSON( _serverUrl + path, queryParams, callback).fail( function(d, textStatus, e) {
+        $.ajax({
+            dataType: "json",
+            url: _serverUrl + path,
+            data: queryParams,
+            success: callback,
+            method: "GET",
+            beforeSend: function( xhr ) {
+                xhr.setRequestHeader("Authorization", "Bearer " + _serverKey);
+            }
+        }).fail( function(jqxhr, textStatus, e) {
             error("Framework getJSON request failed\nStatus: " + textStatus + " \nError: "+ (e ? e : '-') + "\nRequested url: '"+
-            path+"'\nParameters: " + JSON.stringify(queryParams));
+                path+"'\nParameters: " + JSON.stringify(queryParams));
+
+            // Handle authentication error
+            if(jqxhr.statusCode() == 401) {
+                if(_dashboardController != null && _dashboardController['authenticationError'] != null) {
+                    _dashboardController.authenticationError();
+                }
+                console.log("Authentication error");
+                return;
+            }
 
             //Retry the request
             if (maxRetries > 0 && textStatus === "timeout") {
@@ -1171,6 +1192,7 @@
         }
 
         _serverUrl = SDH_API_URL.trim();
+        _serverKey = SDH_API_KEY.trim();
 
         if(_serverUrl.length === 0) {
             error("SDH_API_URL global variable must be set with a valid url to the SDH-API server.");

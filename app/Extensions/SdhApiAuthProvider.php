@@ -86,59 +86,38 @@ class SdhApiAuthProvider implements UserProvider
     private function authenticateWithApi($username, $password)
     {
 
-        $client = new GuzzleClient();
-        try {
+        $response = SdhApi::login($username, $password);
 
-            $sdhApiUrl = ends_with($_ENV['SDH_API_INTERNAL'], '/') ? substr($_ENV['SDH_API_INTERNAL'], 0, -1) : $_ENV['SDH_API_INTERNAL'];
-            $res = $client->post($sdhApiUrl.'/auth/login/', [
-                'form_params' => [
-                    'username' => $username,
-                    'password' => $password
-                ],
-                'http_errors' => false
-            ]);
+        if($response != null) {
 
-            if($res->getStatusCode() == 200) {
+            $user = array();
 
-                $response = $array = json_decode($res->getBody()->getContents(), true);
+            //Matches the ldap property with the local user property
+            $matchups = array(
+                'uidNumber' => 'id',
+                'uid' => 'username',
+                'givenName' => 'name',
+                'sn' => 'surname',
+            );
 
-                if($response != null) {
+            Debugbar::info($response);
 
-                    $user = array();
-
-                    //Matches the ldap property with the local user property
-                    $matchups = array(
-                        'uidNumber' => 'id',
-                        'uid' => 'username',
-                        'givenName' => 'name',
-                        'sn' => 'surname',
-                    );
-
-                    Debugbar::info($response);
-
-                    //Fill the user array with the corresponding property of the ldap user
-                    foreach($matchups as $ldapProp => $localProp) {
-                        if(isset($response['user'][$ldapProp])) {
-                            $user[$localProp] = $response['user'][$ldapProp];
-                        }
-                    }
-
-                    //Store in session
-                    Session::put('SdhApiToken', $response['token']);
-                    Session::put('User', $user);
-
-                    return true;
-
-                } else {
-                    Log::error('Invalid JSON received from SDH API.');
-                    Debugbar::warning('Invalid JSON received from SDH API.');
+            //Fill the user array with the corresponding property of the ldap user
+            foreach($matchups as $ldapProp => $localProp) {
+                if(isset($response['user'][$ldapProp])) {
+                    $user[$localProp] = $response['user'][$ldapProp];
                 }
-
             }
 
-        } catch(RequestException $e) {
-            Log::error('Unable to connect to SDH API.');
-            Debugbar::addException($e);
+            //Store in session
+            Session::put('SdhApiToken', $response['token']);
+            Session::put('User', $user);
+
+            return true;
+
+        } else {
+            Log::error('Invalid JSON received from SDH API.');
+            Debugbar::warning('Invalid JSON received from SDH API.');
         }
 
         return false;

@@ -97,6 +97,10 @@ var DashboardController = function DashboardController() {
     }.bind(this);
 };
 
+DashboardController.prototype.authenticationError = function authenticationError() {
+    document.location.href = "/auth/logout";
+};
+
 DashboardController.prototype.registerWidget = function registerWidget(widget) {
     this.widgets.push(widget);
 };

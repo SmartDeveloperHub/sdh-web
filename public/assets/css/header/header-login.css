@@ -1,0 +1,366 @@
+/*
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  This file is part of the Smart Developer Hub Project:
+    http://www.smartdeveloperhub.org
+  Center for Open Middleware
+        http://www.centeropenmiddleware.com/
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  Copyright (C) 2015 Center for Open Middleware.
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+            http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+*/
+
+.header-fixed {
+    background-color: #354A5B;
+    margin: 0;
+    z-index: 101;
+    min-height: 0px;
+    font-family: "Roboto";
+    color: #EDEDED;
+	box-sizing: border-box;
+	top:0px;
+	-webkit-transition:all 0.3s;
+	transition:all 0.3s;
+	width: 100%;
+	padding: 10px 12px;
+	height: 81px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: fixed;
+}
+
+.header-fixed .header-limiter {
+	max-width: 1900px;
+	text-align: center;
+	height: 80px;
+	margin: 0 auto;
+	width: 100%;
+}
+
+/*	The header placeholder. It is displayed when the header is fixed to the top of the
+	browser window, in order to prevent the content of the page from jumping up. */
+
+.header-fixed-placeholder{
+	height: 80px;
+	display: none;
+}
+
+#headerright {
+    display: inline-block;
+    padding: 0;
+    text-align: center;
+    float: left;
+    width: 30%;
+}
+
+button#loginButton {
+    position: absolute;
+    margin-top: 12px;
+    right: 20px;
+}
+
+#headermid {
+    text-align: center;
+    float: left;
+    width: 40%;
+    margin-top: 14px;
+}
+
+#hsubtitle {
+    display: block;
+    font-size: 20px;
+    line-height: 35px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+	-webkit-transition:all 0.3s;
+	transition:all 0.3s;
+}
+
+#htitle {
+	display: block;
+	font-size: 31px;
+	line-height: 38px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+/* Logo */
+#headerleft {
+	text-align: left;
+    float: left;
+    width: 30%;
+	white-space: nowrap;
+}
+
+#headerleft a.logo {
+    display: inline-block;
+}
+
+#myLogo {
+	background-image: url("../../images/sdh_blanco_400ppp_RGB.png");
+	margin: -2px 20px 2px 10px;
+	width: 163px;
+	height: 64px;
+    background-size: contain;
+    -webkit-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.header-first-bar{
+	height: 71px;
+	box-sizing: border-box;
+}
+
+
+/* Fixed version of the header */
+body.fixed .header-fixed {
+	padding: 10px 12px;
+	height: 41px;
+	position: fixed;
+	width: 100%;
+	top: 0;
+}
+
+body.fixed .settings-pane {
+	top: 41px;
+}
+
+body.hidd .header-fixed {
+	top: -110px;
+}
+
+body.hidd .settings-pane {
+	top: -190px;
+}
+
+body.fixed .header-fixed .header-limiter {
+	height: 60px;
+}
+
+body.fixed .header-fixed-placeholder {
+	display: block;
+	height: 60px;
+}
+
+body.fixed #hsubtitle {
+	display: none;
+	font-size: 20px;
+}
+
+body.fixed #htitle {
+	font-size: 21px;
+	line-height: 25px;
+}
+
+body.fixed #myLogo {
+	margin: -4px 20px 2px 8px;
+	width: 28px;
+	height: 28px;
+}
+
+body.fixed #usernick {
+	font-size: 19px;
+	line-height: 22px;
+	margin-top: 1px;
+}
+
+body.fixed #username {
+	font-size: 13px;
+	line-height: 23px;
+	display: none;
+}
+
+body.fixed #avatarbox {
+	width: 30px;
+	height: 30px;
+	margin-top: -4px;
+	margin-left: 16px;
+}
+
+body.fixed #buttonbox {
+	margin-top: 1px;
+	margin-right: 7px;
+	white-space: nowrap;
+	display: inline-block;
+}
+
+body.fixed #avatarbox .useravatar {
+	font-size: 19px;
+	margin-top: 6px;
+	margin-left: 3px;
+}
+
+body.fixed .headbutton {
+	font-size: 12px;
+	width: 21px;
+	height: 21px;
+	display: inline-block !important;
+}
+
+body.fixed .headbutton.mail {
+	padding-left: 1px;
+}
+
+body.fixed .headbutton.settings {
+	margin-left: 7px;
+}
+
+body.fixed .control {
+	height: 30px;
+	overflow: visible;
+}
+
+/* Making the header responsive */
+/* Large desktop */
+@media (min-width: 1200px) {
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+}
+ 
+/* Landscape phone to portrait tablet */
+@media all and (max-width: 768px) {
+	#myLogo {
+		height: 56px;
+		margin-top: 1px;
+		margin-left: 10px;
+	}
+	#htitle {
+		display: block;
+		font-size: 20px;
+		line-height: 28px;
+	}
+	#hsubtitle {
+		font-size: 15px;
+	}
+	#usernick {
+		display: none;
+	}
+	#username {
+		display: none;
+	}
+	#avatarbox {
+		width: 56px;
+  		height: 56px;
+  		margin-top: 2px;
+	}
+	#avatarbox .useravatar {
+		font-size: 40px;
+	}
+	.headbutton {
+		width: 22px;
+		height: 22px;
+		font-size: 12px;
+	}
+	#buttonbox {
+		margin-top: 5px;
+	}
+	#userinfobox{
+		margin-top: 16px;
+	}
+	body.fixed #myLogo {
+	}
+	body.fixed #usernick {
+		font-size: 11px;
+	}
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	#headerleft {
+	    width: 22%;
+	}
+	#headermid {
+		display: none;
+	}
+	#headerright {
+	}
+	#myLogo {
+		height: 45px;
+	}
+	body.fixed #buttonbox {
+		margin-top: -1px;
+		margin-right: -7px;
+		margin-left: 8px;
+  	}
+	#hsubtitle {
+		font-size: 13px;
+	}
+	#htitle {
+		font-size: 14px;
+	}
+	#buttonbox {
+		margin-left: 5px;
+		margin-right: -6px;
+	}
+	body.fixed #myLogo {
+		width: 118px;
+	}
+	body.fixed #htitle {
+		font-size: 17px;
+	}
+	body.fixed .headbutton.mail {
+	}
+	body.fixed .headbutton {
+	}
+	body.fixed #avatarbox {
+		margin-left: 0px;
+	}
+	body.fixed #avatarbox .useravatar {
+		margin-left: 1px;
+	}
+}
+
+/* light style */
+.page-body.light .header-fixed {
+	color: #666;
+	background-color: #FFF;
+}
+
+.page-body.light #hsubtitle {
+	font-size: 18px;
+	line-height: 23px;
+	color: #004C8B;
+	font-style: italic;
+	font-weight: lighter;
+}
+
+.page-body.light .page-container {
+	background-color: rgba(213, 213, 213, 0.34);
+}
+
+.page-body.light #myLogo {
+	background-image: url("../../images/sdh_400ppp_RGB.png");
+	box-shadow: none;
+	background-repeat: no-repeat;
+}
+
+.page-body.light .headbutton {
+  	box-shadow: 0px 0px 3px 0px #004C8B;
+  	background-color: rgba(213, 213, 213, 0.34);
+  	color: #004C8B;
+	margin-left: 2px;
+}
+
+.page-body.light #username {
+	color: #004C8B;
+}
+

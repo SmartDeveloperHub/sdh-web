@@ -1,0 +1,97 @@
+/*
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  This file is part of the Smart Developer Hub Project:
+    http://www.smartdeveloperhub.org
+  Center for Open Middleware
+        http://www.centeropenmiddleware.com/
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  Copyright (C) 2015 Center for Open Middleware.
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+            http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+*/
+#html {
+    font-family: Roboto;
+}
+
+#loginContainer {
+    padding-top: 81px;
+}
+
+.panel-default {
+    border-color: rgba(0, 76, 139, 0.6);
+    color: #666;
+    margin-top: 30px;
+}
+
+.panel-default > .panel-heading {
+    color: #666;
+    background-color: #F1F1F1;
+    border-color: rgba(0, 76, 139, 0.6);
+}
+
+.section {
+    padding: 4rem;
+    text-align: center;
+}
+
+.section-shadow {
+    -webkit-box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
+    -moz-box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
+    box-shadow: inset 1px -35px 68px -27px rgba(0,0,0,0.5);
+    background: rgba(0, 76, 139, 1);
+    color: #FFF;
+}
+
+h2.h1.page-title {
+    font-size: 35px;
+}
+
+p.h4.page-title-content {
+    font-size: 14px;
+}
+
+.initial-section {
+    width: 100%;
+    padding-top: 10px;
+}
+
+.initial-section-content{
+    max-width: 75em;
+    text-align: center;
+}
+
+/* arq section */
+
+#arqPanel .arqTitle {
+    font-size: 32px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.63);
+    font-family: Roboto;
+    width: 75%;
+    display: inline-block;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+#arqPanel .parr {
+    padding: 6px;
+    display: inline-block;
+    text-align: justify;
+    color: #3F3F3F;
+    font-family: Roboto;
+    width: 85%;
+    line-height: 24px;
+}
+
+#arqPanel .parr .first {
+    padding-bottom: 20px;
+}

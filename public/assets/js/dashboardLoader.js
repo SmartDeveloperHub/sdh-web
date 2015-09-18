@@ -24,20 +24,20 @@ require.config({
     //enforceDefine: true,
     map: {
         '*': {
-            'css': 'assets/js/requirejs/css.min' // or whatever the path to require-css is
+            'css': '/assets/js/requirejs/css.min' // or whatever the path to require-css is
         }
     },
     paths: {
-        'bootstrap': "assets/js/bootstrap/bootstrap.min",
-        'jquery': 'sdh-framework/lib/jquery/jquery-2.1.3.min',
-        'd3': "sdh-framework/lib/d3/d3.min",
-        'nvd3': "sdh-framework/lib/nvd3/nv.d3.min",
-        'joinable': "sdh-framework/lib/joinable/joinable",
-        'moment': "sdh-framework/lib/moment/moment",
-        'framework': "sdh-framework/framework",
-        'headerHandler': "assets/js/header/headerHandler",
-        'datatables' : 'sdh-framework/lib/jquery/datatables/js/jquery.dataTables',
-        'widgetCommon': 'sdh-framework/framework.widget.common'
+        'bootstrap': "/assets/js/bootstrap/bootstrap.min",
+        'jquery': '/sdh-framework/lib/jquery/jquery-2.1.3.min',
+        'd3': "/sdh-framework/lib/d3/d3.min",
+        'nvd3': "/sdh-framework/lib/nvd3/nv.d3.min",
+        'joinable': "/sdh-framework/lib/joinable/joinable",
+        'moment': "/sdh-framework/lib/moment/moment",
+        'framework': "/sdh-framework/framework",
+        'headerHandler': "/assets/js/header/headerHandler",
+        'datatables' : '/sdh-framework/lib/jquery/datatables/js/jquery.dataTables',
+        'widgetCommon': '/sdh-framework/framework.widget.common'
     },
     shim : {
         'bootstrap' : {

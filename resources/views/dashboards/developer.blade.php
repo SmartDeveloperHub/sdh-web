@@ -11,7 +11,6 @@
     "sdh-framework/framework.widget.linesChart",
     "sdh-framework/framework.widget.rangeNv",
     "sdh-framework/framework.widget.radarchart",
-    "assets/js/widget.languages",
     "css!assets/css/dashboards/developer-dashboard"
     ]
 @stop

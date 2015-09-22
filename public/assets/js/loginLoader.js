@@ -69,16 +69,11 @@ require.config({
 
 define(function(require, exports, module) {
 
-    document.getElementById("loading").className = "";
-
-    require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler", "widgetCommon"], function() {
+    require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "widgetCommon"], function() {
 
         framework.ready(function() {
-            
+            // TODO new widget instantations
         });
-
 
     });
 });
-
-

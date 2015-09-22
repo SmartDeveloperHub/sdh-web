@@ -1,4 +1,4 @@
-@extends('layouts.framework')
+@extends('layouts.baselogin')
 
 @section('css')
 @parent
@@ -166,13 +166,11 @@
 
 @section('scripts')
 	@parent
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	    <script type="application/javascript">
 			$(document).ready(function(){
-				$("#loginButton").click(function() {
+				/*$("#loginButton").click(function() {
 					//$("#myModal").modal({"backdrop": "static"});
-			    });
+			    });*/
 				console.log("SDH Welcome Ready!");
 			});
 	    </script>

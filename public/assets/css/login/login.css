@@ -35,6 +35,7 @@
 .panel-default > .panel-heading {
     color: #000;
     border-color: rgba(0, 76, 139, 0.6);
+    margin-bottom: 16px;
     padding-bottom: 2px;
 }
 

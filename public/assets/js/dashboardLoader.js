@@ -24,7 +24,7 @@ require.config({
     //enforceDefine: true,
     map: {
         '*': {
-            'css': '/assets/js/requirejs/css.min' // or whatever the path to require-css is
+            'css': '/assets/js/requirejs/css.min.js' // or whatever the path to require-css is
         }
     },
     paths: {

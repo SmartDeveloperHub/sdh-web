@@ -14,7 +14,7 @@
 //Route::get('/', 'WelcomeController@index');
 
 Route::get('/', 'DashboardController@panel');
-Route::get('dashboard/{id}', 'DashboardController@dashboard');
+Route::get('dashboard/{name}/{env}', 'DashboardController@dashboard'); //Optional query param: ?<cat>=<rank>
 
 Route::get('home', 'HomeController@index');
 

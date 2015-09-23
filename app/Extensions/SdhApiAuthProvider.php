@@ -93,7 +93,7 @@ class SdhApiAuthProvider implements UserProvider
             $user = array();
 
             //Matches the ldap property with the local user property
-            $matchups = array(
+            $toRename = array(
                 'uidNumber' => 'id',
                 'uid' => 'username',
                 'givenName' => 'name',
@@ -102,12 +102,20 @@ class SdhApiAuthProvider implements UserProvider
 
             Debugbar::info($response);
 
-            //Fill the user array with the corresponding property of the ldap user
-            foreach($matchups as $ldapProp => $localProp) {
+            //Fill the user array with the ldap user renamin the required properties
+            foreach($response['user'] as $ldapProp => $value) {
+                if(isset($toRename[$ldapProp])) {
+                    $localProp = $toRename[$ldapProp];
+                    $user[$localProp] = $value;
+                } else {
+                    $user[$ldapProp] = $value;
+                }
+            }
+            /*foreach($toRename as $ldapProp => $localProp) {
                 if(isset($response['user'][$ldapProp])) {
                     $user[$localProp] = $response['user'][$ldapProp];
                 }
-            }
+            }*/
 
             //Store in session
             Session::put('SdhApiToken', $response['token']);

@@ -113,7 +113,7 @@ DashboardController.prototype.goToPrevious = function goToPrevious() {
 
 };
 
-DashboardController.prototype.changeTo = function changeTo(newDashboard, onSuccess) {
+DashboardController.prototype.changeTo = function changeTo(newDashboard, view, onSuccess) {
 
     //Loading animation
     startLoading();
@@ -146,7 +146,14 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, onSucce
     };
 
     // Create the url for the dashboard
-    var dashboardUrl = 'dashboard/' + newDashboard;
+    var encEnv = encodeURIComponent(JSON.stringify(framework.dashboard.getEnv()));
+    var dashboardUrl = 'dashboard/' + newDashboard + '/' + encEnv;
+
+    //Add rank (role or position) if specified
+    if(view != null) {
+        dashboardUrl += '/' + view; //View is the rank, used to return a dashboard adapted to the role/position
+    }
+
 
     // Request the dashboard content
     $.get(dashboardUrl, function( data ) {

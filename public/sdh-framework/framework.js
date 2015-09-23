@@ -107,7 +107,10 @@
             success: callback,
             method: "GET",
             beforeSend: function( xhr ) {
-                xhr.setRequestHeader("Authorization", "Bearer " + _serverKey);
+                if(_serverKey != null) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + _serverKey);
+                }
+
             }
         }).fail( function(jqxhr, textStatus, e) {
             error("Framework getJSON request failed\nStatus: " + textStatus + " \nError: "+ (e ? e : '-') + "\nRequested url: '"+
@@ -1111,13 +1114,14 @@
      * Changes the current dashboard
      * @param newDashboard Id of the new dashboard to visualize.
      * @param env Environment object. This contains all the information of the environment that the new dashboard will need.
+     * @param view View selection info. This optional parameter allows to have different views for a dashboard.
      */
-    _self.dashboard.changeTo = function changeTo(newDashboard, env) {
+    _self.dashboard.changeTo = function changeTo(newDashboard, env, view) {
 
         if(_dashboardController != null && _dashboardController.changeTo != null) {
 
             //Ask the dashboard controller to change the dashboard
-            _dashboardController.changeTo(newDashboard, function() {
+            _dashboardController.changeTo(newDashboard, view, function() {
 
                 //Dashboard controller is now ready to change the dashboard, so we need to change the env
                 _dashboardEnv = ( typeof env === 'object' ? env : {} );
@@ -1192,7 +1196,13 @@
         }
 
         _serverUrl = SDH_API_URL.trim();
-        _serverKey = SDH_API_KEY.trim();
+
+        if(SDH_API_KEY != null) {
+            _serverKey = SDH_API_KEY.trim();
+        } else {
+            _serverKey = null;
+            warn("SDH Framework is working without an SDH API KEY!");
+        }
 
         if(_serverUrl.length === 0) {
             error("SDH_API_URL global variable must be set with a valid url to the SDH-API server.");

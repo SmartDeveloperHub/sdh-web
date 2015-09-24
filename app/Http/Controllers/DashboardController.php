@@ -44,7 +44,11 @@ class DashboardController extends Controller {
 	 *
 	 * @param $name String Dashboard id.
 	 * @param $env String Json with the environment info
-	 * @return Response
+	 * @param query Object In the query param you can specify a category->rank pair so that you can force to obtain a
+	 * 			dashboard as that rank for that category. This can be used if the user has multiple ranks. If the user
+	 * 			does not belong to the requested rank, then a 404 error will be returned. If there is no dashboard
+	 * 			defined for the requested rank, the default be returned if possible.
+	 * @return Response Dashboard code
 	 */
 	public function dashboard($name, $env) {
 

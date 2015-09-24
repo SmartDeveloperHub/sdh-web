@@ -11,13 +11,8 @@
 |
 */
 
-//Route::get('/', 'WelcomeController@index');
-
 Route::get('/', 'DashboardController@panel');
 Route::get('dashboard/{name}/{env}', 'DashboardController@dashboard'); //Optional query param: ?<cat>=<rank>
-
-Route::get('home', 'HomeController@index');
-
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

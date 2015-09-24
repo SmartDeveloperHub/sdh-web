@@ -7,6 +7,7 @@
         SDH_API_KEY = "{{ Session::get('SdhApiToken') }}";
         BASE_DASHBOARD = "organization";
         USER_ID = "{{ Auth::user()->id }}";
+        ORGANIZATION_ID = "{{ array_keys(Auth::user()->positions)[0] }}";
     </script>
 @stop
 

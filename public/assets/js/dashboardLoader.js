@@ -91,7 +91,7 @@ var DashboardController = function DashboardController() {
             this.historyOwnIndex = event.state.index;
 
             //Set the new environment
-            framework.dashboard.changeTo(event.state.dashboard, event.state.env);
+            framework.dashboard.changeTo(event.state.dashboard, event.state.env, event.state.categoryInfo);
 
         }
     }.bind(this);
@@ -113,7 +113,7 @@ DashboardController.prototype.goToPrevious = function goToPrevious() {
 
 };
 
-DashboardController.prototype.changeTo = function changeTo(newDashboard, view, onSuccess) {
+DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv, categoryInfo, onSuccess) {
 
     //Loading animation
     startLoading();
@@ -145,13 +145,18 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, view, o
         _this.goToPrevious();
     };
 
+    // Always add the organization id to the request
+    if(newEnv['oid'] == null) {
+        newEnv['oid'] = ORGANIZATION_ID;
+    }
+
     // Create the url for the dashboard
-    var encEnv = encodeURIComponent(JSON.stringify(framework.dashboard.getEnv()));
+    var encEnv = encodeURIComponent(JSON.stringify(newEnv));
     var dashboardUrl = 'dashboard/' + newDashboard + '/' + encEnv;
 
-    //Add rank (role or position) if specified
-    if(view != null) {
-        dashboardUrl += '/' + view; //View is the rank, used to return a dashboard adapted to the role/position
+    // Specify a category
+    if(categoryInfo != null) {
+        dashboardUrl += '?' + categoryInfo.category + "=" + categoryInfo.value;
     }
 
 
@@ -171,6 +176,7 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, view, o
                 history.replaceState({
                     dashboard: newDashboard,
                     env: framework.dashboard.getEnv(),
+                    categoryInfo: categoryInfo,
                     index: _this.historyOwnIndex
                 }, "");
 
@@ -179,6 +185,7 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, view, o
                 history.pushState({
                     dashboard: newDashboard,
                     env: framework.dashboard.getEnv(),
+                    categoryInfo: categoryInfo,
                     index: ++_this.historyOwnIndex
                 }, "");
 
@@ -293,7 +300,7 @@ define(function(require, exports, module) {
                     $("footer.footer-container").show();
 
                     // Load the initial dashboard
-                    dashboardController.changeTo(BASE_DASHBOARD);
+                    framework.dashboard.changeTo(BASE_DASHBOARD);
 
                 });
 

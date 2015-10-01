@@ -141,445 +141,446 @@
 @section('script')
 /* <script> */
 
-    //Contexts used in this dashboard
-    var repoCtx = "repository-context";
-    var timeCtx = "time-context";
-    var usersTableCtx = "user-table-context";
+    function _() {
+        //Contexts used in this dashboard
+        var repoCtx = "repository-context";
+        var timeCtx = "time-context";
+        var usersTableCtx = "user-table-context";
 
-    //Show header chart and set titles
-    setTitle("Repositories");
-    showHeaderChart();
+        //Show header chart and set titles
+        setTitle("Repositories");
+        showHeaderChart();
 
-    //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
-    var env = framework.dashboard.getEnv();
-    framework.data.updateContext(repoCtx, {rid: env['rid']});
-    if(env['name'] != null) {
-        setSubtitle(env['name']);
-    }
-
-    // UPPER SELECTOR RANGENV (NEEDS FIRST COMMIT)
-    framework.data.observe(['repoinfo'], function(event){
-
-        if(event.event === 'data') {
-            var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
-            var firstCommit = repoinfo['firstCommit'];
-
-            var rangeNv_dom = document.getElementById("fixed-chart");
-            var rangeNv_metrics = [
-                {
-                    id: 'repocommits',
-                    max: 101,
-                    aggr: 'avg',
-                    from: moment(firstCommit).format("YYYY-MM-DD")
-                }
-            ];
-            var rangeNv_configuration = {
-                ownContext: timeCtx,
-                isArea: true,
-                showLegend: false,
-                interpolate: 'monotone',
-                showFocus: false,
-                height: 140,
-                duration: 500,
-                colors: ["#004C8B"],
-                axisColor: "#004C8B"
-            };
-
-            var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
-            $(rangeNv).on("CONTEXT_UPDATED", function() {
-                $(rangeNv).off("CONTEXT_UPDATED");
-                loadTimeDependentWidgets();
-
-                // Hide the loading animation
-                finishLoading();
-            });
+        //TODO: improve get env and set env. Return copies instead of the object and allow to get and set only one element.
+        var env = framework.dashboard.getEnv();
+        framework.data.updateContext(repoCtx, {rid: env['rid']});
+        if (env['name'] != null) {
+            setSubtitle(env['name']);
         }
-    }, [repoCtx]);
 
-    var loadTimeDependentWidgets = function loadTimeDependentWidgets() {
+        // UPPER SELECTOR RANGENV (NEEDS FIRST COMMIT)
+        framework.data.observe(['repoinfo'], function (event) {
 
-        // TOTAL COMMITS
-        var total_commits_dom = document.getElementById("total-commits");
-        var total_commits_metrics = [{
-            id: 'repocommits',
-            max: 1,
-            aggr: 'sum'
-        }];
-        var total_commits_conf = {
-            label: 'Total commits',
-            decimal: 0,
-            icon: 'octicon octicon-git-commit',
-            iconbackground: 'rgb(0, 75, 139)',
-            background: 'transparent'
-        };
-        var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [timeCtx, repoCtx], total_commits_conf);
-
-        // TOTAL DEVELOPERS
-        var total_users_dom = document.getElementById("total-developers");
-        var total_users_metrics = [{
-            id: 'repodevelopers',
-            max: 1,
-            aggr: 'sum'
-        }];
-        var total_users_conf = {
-            label: 'Total developers',
-            decimal: 0,
-            icon: 'octicon octicon-organization',
-            iconbackground: 'rgb(247, 133, 60)',
-            background: 'transparent'
-        };
-        var total_users = new framework.widgets.CounterBox(total_users_dom, total_users_metrics, [timeCtx, repoCtx], total_users_conf);
-
-        // TOTAL EXECUTIONS
-        var total_executions_dom = document.getElementById("total-executions");
-        var total_executions_metrics = [{
-            id: 'repoexecutions',
-            max: 1,
-            aggr: 'sum'
-        }];
-        var total_executions_conf = {
-            label: 'Total build executions',
-            decimal: 0,
-            icon: 'fa fa-terminal',
-            iconbackground: 'rgb(42, 42, 42)',
-            background: 'transparent'
-        };
-        var total_executions_issues = new framework.widgets.CounterBox(total_executions_dom, total_executions_metrics, [timeCtx, repoCtx], total_executions_conf);
-
-        // TOTAL EXECUTIONS
-        var broken_exec_dom = document.getElementById("broken-build-exec");
-        var broken_exec_metrics = [{
-            id: 'repofailedexecutions',
-            max: 1,
-            aggr: 'sum'
-        }];
-        var broken_exec_conf = {
-            label: 'Broken build executions',
-            decimal: 0,
-            icon: 'fa fa-thumbs-down',
-            iconbackground: '#e21b23',
-            background: 'transparent'
-        };
-        var broken_exec = new framework.widgets.CounterBox(broken_exec_dom, broken_exec_metrics, [timeCtx, repoCtx], broken_exec_conf);
-
-        // SUCCESSFUL EXECUTIONS
-        var success_executions_dom = document.getElementById("passed-build-exec");
-        var success_executions_metrics = [{
-            id: 'repopassedexecutions',
-            max: 1,
-            aggr: 'sum'
-        }];
-        var success_executions_conf = {
-            label: 'Successful build executions',
-            decimal: 0,
-            icon: 'fa fa-thumbs-up',
-            iconbackground: 'rgb(6, 151, 68)',
-            background: 'transparent'
-        };
-        var success_executions_issues = new framework.widgets.CounterBox(success_executions_dom, success_executions_metrics, [timeCtx, repoCtx], success_executions_conf);
-
-        // AVG COMMITS
-        var avg_commits_dom = document.getElementById("avg-commits");
-        var avg_commits_metrics = [{
-            id: 'repocommits',
-            max: 1,
-            aggr: 'avg'
-        }];
-        var avg_commits_conf = {
-            label: 'Average commits per day',
-            decimal: 2,
-            icon: 'octicon octicon-git-merge',
-            iconbackground: 'rgb(192, 72, 94)',
-            background: 'transparent'
-        };
-        var avg_commits = new framework.widgets.CounterBox(avg_commits_dom, avg_commits_metrics, [timeCtx, repoCtx], avg_commits_conf);
-
-        // AVG TIME TO FIX
-        var avg_time_to_fix_dom = document.getElementById("avg-time-to-fix");
-        var avg_time_to_fix_metrics = [{
-            id: 'repotimetofixtbd'
-        }];
-        var avg_time_to_fix_conf = {
-            label: 'Average time to fix',
-            decimal: 2,
-            icon: 'fa fa-line-chart',
-            iconbackground: 'rgb(231, 0, 131)',
-            background: 'transparent',
-            suffix: " h"
-        };
-        var avg_time_to_fix = new framework.widgets.CounterBox(avg_time_to_fix_dom, avg_time_to_fix_metrics, [timeCtx, repoCtx], avg_time_to_fix_conf);
-
-        // AVG BUILD TIME
-        var avg_build_time_dom = document.getElementById("avg-build-time");
-        var avg_build_time_metrics = [{
-            id: 'repobuildtimetbd'
-        }];
-        var avg_build_time_conf = {
-            label: 'Build execution time',
-            decimal: 2,
-            icon: 'fa fa-history',
-            iconbackground: 'rgb(141, 25, 123)',
-            background: 'transparent',
-            suffix: " h"
-        };
-        var avg_build_time = new framework.widgets.CounterBox(avg_build_time_dom, avg_build_time_metrics, [timeCtx, repoCtx], avg_build_time_conf);
-
-        // AVG BROKEN TIME
-        var avg_broken_time_dom = document.getElementById("avg-broken-time");
-        var avg_broken_time_metrics = [{
-            id: 'repobrokentimetbd'
-        }];
-        var avg_broken_time_conf = {
-            label: 'Build broken time',
-            decimal: 2,
-            icon: 'fa fa-history',
-            iconbackground: 'rgb(124, 69, 207)',
-            background: 'transparent',
-            suffix: " d"
-        };
-        var avg_broken_time = new framework.widgets.CounterBox(avg_broken_time_dom, avg_broken_time_metrics, [timeCtx, repoCtx], avg_broken_time_conf);
-
-        // ACTIVITY LINE CHART
-        var activity_dom = document.getElementById("activityChart");
-        var activity_metrics = [
-            {
-                id: 'repocommits',
-                max: 30
-            },
-            {
-                id: 'repocommits',
-                max: 30,
-                aggr: "avg"
-            }
-        ];
-        var activity_configuration = {
-            xlabel: '',
-            ylabel: '',
-            interpolate: 'monotone',
-            height: 200,
-            labelFormat: '%data.info.title%',
-            colors: ["#8D197B","#2876B8"],
-            area: true,
-            _demo: true // Only for demo
-        };
-        var activity = new framework.widgets.LinesChart(activity_dom, activity_metrics,
-                [timeCtx, repoCtx], activity_configuration);
-
-        // CI LINE CHART
-        var ci_dom = document.getElementById("execChart");
-        var ci_metrics = [
-            {
-                id: 'repoexecutions',
-                max: 30
-            },
-            {
-                id: 'repofailedexecutions',
-                max: 30
-            },
-            {
-                id: 'repopassedexecutions',
-                max: 30
-            }
-        ];
-        var ci_configuration = {
-            xlabel: '',
-            ylabel: '',
-            interpolate: 'monotone',
-            height: 200,
-            labelFormat: '%data.info.title%',
-            colors: {
-                repoexecutions: "#004B8B",
-                repofailedexecutions: "#DB0013",
-                repopassedexecutions: "#0A8931"
-            }
-        };
-        var ci_lines = new framework.widgets.LinesChart(ci_dom, ci_metrics,
-                [timeCtx, repoCtx], ci_configuration);
-
-
-        // REPOSITORY META INFO
-        framework.data.observe(['repoinfo'], function(event){
-            if(event.event === 'loading') {
-                //TODO
-            } else if(event.event === 'data') {
+            if (event.event === 'data') {
                 var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
-                //Set header subtitle
-                setSubtitle(repoinfo['name']);
+                var firstCommit = repoinfo['firstCommit'];
 
-                //Set data
-                var creation = document.getElementById('repo-created');
-                var rbuildstatus = document.getElementById('repo-buildstatus');
-                var rfirstc = document.getElementById('repo-first');
-                var rlastc = document.getElementById('repo-last');
-                var repostatus = document.getElementById('repo-status');
-                creation.innerHTML = moment(new Date(repoinfo['creation'])).format('MMMM Do YYYY');
-                rfirstc.innerHTML = moment(new Date(repoinfo['firstCommit'])).format('MMMM Do YYYY');
-                rlastc.innerHTML = moment(new Date(repoinfo['lastCommit'])).format('MMMM Do YYYY');
-                rbuildstatus.innerHTML = (repoinfo['buildStatus'] ?
-                        '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i><span class="passedLabel">(Passed)</span>' :
-                        '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i><span class="errorLabel">(Error)</span>');
-                repostatus.innerHTML = (repoinfo['public'] ?
-                        '<i title="Public" class="fa fa-eye publicIco"></i><span class="publicLabel">(Public)</span>' :
-                        '<i title="Private" class="octicon octicon-loc privateIco"></i><span class="privateLabel">(Private)</span>');
+                var rangeNv_dom = document.getElementById("fixed-chart");
+                var rangeNv_metrics = [
+                    {
+                        id: 'repocommits',
+                        max: 101,
+                        aggr: 'avg',
+                        from: moment(firstCommit).format("YYYY-MM-DD")
+                    }
+                ];
+                var rangeNv_configuration = {
+                    ownContext: timeCtx,
+                    isArea: true,
+                    showLegend: false,
+                    interpolate: 'monotone',
+                    showFocus: false,
+                    height: 140,
+                    duration: 500,
+                    colors: ["#004C8B"],
+                    axisColor: "#004C8B"
+                };
 
-                $(creation).removeClass('blurado');
-                $(rfirstc).removeClass('blurado');
-                $(rlastc).removeClass('blurado');
-                $(rbuildstatus).removeClass('blurado');
-                $(repostatus).removeClass('blurado');
-                $("#avatar").removeClass('octicon octicon-repo');
+                var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
+                $(rangeNv).on("CONTEXT_UPDATED", function () {
+                    $(rangeNv).off("CONTEXT_UPDATED");
+                    loadTimeDependentWidgets();
 
-                if(repoinfo['avatar'] !== undefined && repoinfo['avatar'] !== null && repoinfo['avatar'] !== "" && repoinfo['avatar'] !== "http://avatarURL") {
-                    $("#avatar").css("background-image", "url("+repoinfo['avatar']+")");
-                } else {
-                    $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
-                }
+                    // Hide the loading animation
+                    finishLoading();
+                });
             }
         }, [repoCtx]);
 
-        // EXECUTIONS MULTIBAR
-        var executions_dom = document.getElementById("executions-stacked");
-        var executions_metrics = [
-            {
-                id: 'repopassedexecutions',
-                max: 30
-            },
-            {
-                id: 'repofailedexecutions',
-                max: 30
+        var loadTimeDependentWidgets = function loadTimeDependentWidgets() {
+
+            // TOTAL COMMITS
+            var total_commits_dom = document.getElementById("total-commits");
+            var total_commits_metrics = [{
+                id: 'repocommits',
+                max: 1,
+                aggr: 'sum'
             }];
-        var executions_conf = {
-            stacked: true,
-            labelFormat: "%data.info.title%",
-            showControls: false,
-            height: 250,
-            color: {
-                repopassedexecutions: "#0A8931",
-                repofailedexecutions: "#DB0013"
-            }
-        };
-        var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
-                [timeCtx, repoCtx], executions_conf);
+            var total_commits_conf = {
+                label: 'Total commits',
+                decimal: 0,
+                icon: 'octicon octicon-git-commit',
+                iconbackground: 'rgb(0, 75, 139)',
+                background: 'transparent'
+            };
+            var total_commits = new framework.widgets.CounterBox(total_commits_dom, total_commits_metrics, [timeCtx, repoCtx], total_commits_conf);
 
+            // TOTAL DEVELOPERS
+            var total_users_dom = document.getElementById("total-developers");
+            var total_users_metrics = [{
+                id: 'repodevelopers',
+                max: 1,
+                aggr: 'sum'
+            }];
+            var total_users_conf = {
+                label: 'Total developers',
+                decimal: 0,
+                icon: 'octicon octicon-organization',
+                iconbackground: 'rgb(247, 133, 60)',
+                background: 'transparent'
+            };
+            var total_users = new framework.widgets.CounterBox(total_users_dom, total_users_metrics, [timeCtx, repoCtx], total_users_conf);
 
-        // EXECUTIONS
-        var executions_info = [
-            {
-                id: 'repopassedexecutions',
-                aggr: 'sum',
-                max: 1
-            },
-            {
+            // TOTAL EXECUTIONS
+            var total_executions_dom = document.getElementById("total-executions");
+            var total_executions_metrics = [{
+                id: 'repoexecutions',
+                max: 1,
+                aggr: 'sum'
+            }];
+            var total_executions_conf = {
+                label: 'Total build executions',
+                decimal: 0,
+                icon: 'fa fa-terminal',
+                iconbackground: 'rgb(42, 42, 42)',
+                background: 'transparent'
+            };
+            var total_executions_issues = new framework.widgets.CounterBox(total_executions_dom, total_executions_metrics, [timeCtx, repoCtx], total_executions_conf);
+
+            // TOTAL EXECUTIONS
+            var broken_exec_dom = document.getElementById("broken-build-exec");
+            var broken_exec_metrics = [{
                 id: 'repofailedexecutions',
-                aggr: 'sum',
-                max: 1
-            }
-        ];
-        var display_executions_info = function(event) {
-            if(event.event === 'data') {
-                var success = event.data['repopassedexecutions'][Object.keys(event.data['repopassedexecutions'])[0]]['data']['values'][0];
-                var broken = event.data['repofailedexecutions'][Object.keys(event.data['repofailedexecutions'])[0]]['data']['values'][0];
-                var total = broken + success;
+                max: 1,
+                aggr: 'sum'
+            }];
+            var broken_exec_conf = {
+                label: 'Broken build executions',
+                decimal: 0,
+                icon: 'fa fa-thumbs-down',
+                iconbackground: '#e21b23',
+                background: 'transparent'
+            };
+            var broken_exec = new framework.widgets.CounterBox(broken_exec_dom, broken_exec_metrics, [timeCtx, repoCtx], broken_exec_conf);
 
-                $("#successNum").text(success);
-                $("#brokenNum").text(broken);
-                $("#execPercent").text(total > 0 ? Math.round(success*100/total) : 0);
-                $("#totalNum").text(total);
+            // SUCCESSFUL EXECUTIONS
+            var success_executions_dom = document.getElementById("passed-build-exec");
+            var success_executions_metrics = [{
+                id: 'repopassedexecutions',
+                max: 1,
+                aggr: 'sum'
+            }];
+            var success_executions_conf = {
+                label: 'Successful build executions',
+                decimal: 0,
+                icon: 'fa fa-thumbs-up',
+                iconbackground: 'rgb(6, 151, 68)',
+                background: 'transparent'
+            };
+            var success_executions_issues = new framework.widgets.CounterBox(success_executions_dom, success_executions_metrics, [timeCtx, repoCtx], success_executions_conf);
 
+            // AVG COMMITS
+            var avg_commits_dom = document.getElementById("avg-commits");
+            var avg_commits_metrics = [{
+                id: 'repocommits',
+                max: 1,
+                aggr: 'avg'
+            }];
+            var avg_commits_conf = {
+                label: 'Average commits per day',
+                decimal: 2,
+                icon: 'octicon octicon-git-merge',
+                iconbackground: 'rgb(192, 72, 94)',
+                background: 'transparent'
+            };
+            var avg_commits = new framework.widgets.CounterBox(avg_commits_dom, avg_commits_metrics, [timeCtx, repoCtx], avg_commits_conf);
 
-            }
-        };
-        framework.data.observe(executions_info, display_executions_info, [timeCtx, repoCtx]);
+            // AVG TIME TO FIX
+            var avg_time_to_fix_dom = document.getElementById("avg-time-to-fix");
+            var avg_time_to_fix_metrics = [{
+                id: 'repotimetofixtbd'
+            }];
+            var avg_time_to_fix_conf = {
+                label: 'Average time to fix',
+                decimal: 2,
+                icon: 'fa fa-line-chart',
+                iconbackground: 'rgb(231, 0, 131)',
+                background: 'transparent',
+                suffix: " h"
+            };
+            var avg_time_to_fix = new framework.widgets.CounterBox(avg_time_to_fix_dom, avg_time_to_fix_metrics, [timeCtx, repoCtx], avg_time_to_fix_conf);
 
+            // AVG BUILD TIME
+            var avg_build_time_dom = document.getElementById("avg-build-time");
+            var avg_build_time_metrics = [{
+                id: 'repobuildtimetbd'
+            }];
+            var avg_build_time_conf = {
+                label: 'Build execution time',
+                decimal: 2,
+                icon: 'fa fa-history',
+                iconbackground: 'rgb(141, 25, 123)',
+                background: 'transparent',
+                suffix: " h"
+            };
+            var avg_build_time = new framework.widgets.CounterBox(avg_build_time_dom, avg_build_time_metrics, [timeCtx, repoCtx], avg_build_time_conf);
 
-        // REPOSITORY USERS TABLE
-        var table_dom = document.getElementById("users-table");
-        var table_metrics = ['repodeveloperstbd'];
-        var table_configuration = {
-            columns: [
+            // AVG BROKEN TIME
+            var avg_broken_time_dom = document.getElementById("avg-broken-time");
+            var avg_broken_time_metrics = [{
+                id: 'repobrokentimetbd'
+            }];
+            var avg_broken_time_conf = {
+                label: 'Build broken time',
+                decimal: 2,
+                icon: 'fa fa-history',
+                iconbackground: 'rgb(124, 69, 207)',
+                background: 'transparent',
+                suffix: " d"
+            };
+            var avg_broken_time = new framework.widgets.CounterBox(avg_broken_time_dom, avg_broken_time_metrics, [timeCtx, repoCtx], avg_broken_time_conf);
+
+            // ACTIVITY LINE CHART
+            var activity_dom = document.getElementById("activityChart");
+            var activity_metrics = [
                 {
-                    label: "",
-                    link: {
-                        img: "avatar", //or icon or label
-                        href: "developer",
-                        env: [
+                    id: 'repocommits',
+                    max: 30
+                },
+                {
+                    id: 'repocommits',
+                    max: 30,
+                    aggr: "avg"
+                }
+            ];
+            var activity_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 200,
+                labelFormat: '%data.info.title%',
+                colors: ["#8D197B", "#2876B8"],
+                area: true,
+                _demo: true // Only for demo
+            };
+            var activity = new framework.widgets.LinesChart(activity_dom, activity_metrics,
+                    [timeCtx, repoCtx], activity_configuration);
+
+            // CI LINE CHART
+            var ci_dom = document.getElementById("execChart");
+            var ci_metrics = [
+                {
+                    id: 'repoexecutions',
+                    max: 30
+                },
+                {
+                    id: 'repofailedexecutions',
+                    max: 30
+                },
+                {
+                    id: 'repopassedexecutions',
+                    max: 30
+                }
+            ];
+            var ci_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 200,
+                labelFormat: '%data.info.title%',
+                colors: {
+                    repoexecutions: "#004B8B",
+                    repofailedexecutions: "#DB0013",
+                    repopassedexecutions: "#0A8931"
+                }
+            };
+            var ci_lines = new framework.widgets.LinesChart(ci_dom, ci_metrics,
+                    [timeCtx, repoCtx], ci_configuration);
+
+
+            // REPOSITORY META INFO
+            framework.data.observe(['repoinfo'], function (event) {
+                if (event.event === 'loading') {
+                    //TODO
+                } else if (event.event === 'data') {
+                    var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
+                    //Set header subtitle
+                    setSubtitle(repoinfo['name']);
+
+                    //Set data
+                    var creation = document.getElementById('repo-created');
+                    var rbuildstatus = document.getElementById('repo-buildstatus');
+                    var rfirstc = document.getElementById('repo-first');
+                    var rlastc = document.getElementById('repo-last');
+                    var repostatus = document.getElementById('repo-status');
+                    creation.innerHTML = moment(new Date(repoinfo['creation'])).format('MMMM Do YYYY');
+                    rfirstc.innerHTML = moment(new Date(repoinfo['firstCommit'])).format('MMMM Do YYYY');
+                    rlastc.innerHTML = moment(new Date(repoinfo['lastCommit'])).format('MMMM Do YYYY');
+                    rbuildstatus.innerHTML = (repoinfo['buildStatus'] ?
+                            '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i><span class="passedLabel">(Passed)</span>' :
+                            '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i><span class="errorLabel">(Error)</span>');
+                    repostatus.innerHTML = (repoinfo['public'] ?
+                            '<i title="Public" class="fa fa-eye publicIco"></i><span class="publicLabel">(Public)</span>' :
+                            '<i title="Private" class="octicon octicon-loc privateIco"></i><span class="privateLabel">(Private)</span>');
+
+                    $(creation).removeClass('blurado');
+                    $(rfirstc).removeClass('blurado');
+                    $(rlastc).removeClass('blurado');
+                    $(rbuildstatus).removeClass('blurado');
+                    $(repostatus).removeClass('blurado');
+                    $("#avatar").removeClass('octicon octicon-repo');
+
+                    if (repoinfo['avatar'] !== undefined && repoinfo['avatar'] !== null && repoinfo['avatar'] !== "" && repoinfo['avatar'] !== "http://avatarURL") {
+                        $("#avatar").css("background-image", "url(" + repoinfo['avatar'] + ")");
+                    } else {
+                        $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
+                    }
+                }
+            }, [repoCtx]);
+
+            // EXECUTIONS MULTIBAR
+            var executions_dom = document.getElementById("executions-stacked");
+            var executions_metrics = [
+                {
+                    id: 'repopassedexecutions',
+                    max: 30
+                },
+                {
+                    id: 'repofailedexecutions',
+                    max: 30
+                }];
+            var executions_conf = {
+                stacked: true,
+                labelFormat: "%data.info.title%",
+                showControls: false,
+                height: 250,
+                color: {
+                    repopassedexecutions: "#0A8931",
+                    repofailedexecutions: "#DB0013"
+                }
+            };
+            var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
+                    [timeCtx, repoCtx], executions_conf);
+
+
+            // EXECUTIONS
+            var executions_info = [
+                {
+                    id: 'repopassedexecutions',
+                    aggr: 'sum',
+                    max: 1
+                },
+                {
+                    id: 'repofailedexecutions',
+                    aggr: 'sum',
+                    max: 1
+                }
+            ];
+            var display_executions_info = function (event) {
+                if (event.event === 'data') {
+                    var success = event.data['repopassedexecutions'][Object.keys(event.data['repopassedexecutions'])[0]]['data']['values'][0];
+                    var broken = event.data['repofailedexecutions'][Object.keys(event.data['repofailedexecutions'])[0]]['data']['values'][0];
+                    var total = broken + success;
+
+                    $("#successNum").text(success);
+                    $("#brokenNum").text(broken);
+                    $("#execPercent").text(total > 0 ? Math.round(success * 100 / total) : 0);
+                    $("#totalNum").text(total);
+
+
+                }
+            };
+            framework.data.observe(executions_info, display_executions_info, [timeCtx, repoCtx]);
+
+
+            // REPOSITORY USERS TABLE
+            var table_dom = document.getElementById("users-table");
+            var table_metrics = ['repodeveloperstbd'];
+            var table_configuration = {
+                columns: [
+                    {
+                        label: "",
+                        link: {
+                            img: "avatar", //or icon or label
+                            href: "developer",
+                            env: [
+                                {
+                                    property: "userid",
+                                    as: "uid"
+                                },
+                                {
+                                    property: "name",
+                                    as: "name"
+                                }
+                            ]
+                        },
+                        width: "40px"
+                    },
+                    {
+                        label: "",
+                        property: "name"
+                    }
+
+                ],
+                updateContexts: [
+                    {
+                        id: usersTableCtx,
+                        filter: [
                             {
                                 property: "userid",
                                 as: "uid"
-                            },
-                            {
-                                property: "name",
-                                as: "name"
                             }
                         ]
-                    },
-                    width: "40px"
-                },
-                {
-                    label: "",
-                    property: "name"
-                }
+                    }
+                ],
+                selectable: true,
+                minRowsSelected: 1,
+                maxRowsSelected: 8,
+                filterControl: true,
+                initialSelectedRows: 5,
+                keepSelectedByProperty: "userid",
+                orderByColumn: [[1, 'asc']],
+                showHeader: false
+            };
+            var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, repoCtx], table_configuration);
 
-            ],
-            updateContexts: [
-                {
-                    id: usersTableCtx,
-                    filter: [
-                        {
-                            property: "userid",
-                            as: "uid"
-                        }
-                    ]
-                }
-            ],
-            selectable: true,
-            minRowsSelected: 1,
-            maxRowsSelected: 8,
-            filterControl: true,
-            initialSelectedRows: 5,
-            keepSelectedByProperty: "userid",
-            orderByColumn: [[1, 'asc']],
-            showHeader: false
-        };
-        var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, repoCtx], table_configuration);
-
-        // HORIZONTAL CONTRIBUTION TO PROJECTS
-        var multibar_projects_dom = document.getElementById("user-commits-horizontal");
-        var multibar_projects_metrics = [{
-            id: 'repousercommits',
-            max: 1
-        }];
-        var multibar_projects_configuration = {
-            labelFormat: "%data.info.uid.name%",
-            stacked: true,
-            showXAxis: false,
-            showControls: false,
-            yAxisTicks: 8,
-            height: 155,
-            total: {
-                id: 'repocommits',
+            // HORIZONTAL CONTRIBUTION TO PROJECTS
+            var multibar_projects_dom = document.getElementById("user-commits-horizontal");
+            var multibar_projects_metrics = [{
+                id: 'repousercommits',
                 max: 1
-            }
+            }];
+            var multibar_projects_configuration = {
+                labelFormat: "%data.info.uid.name%",
+                stacked: true,
+                showXAxis: false,
+                showControls: false,
+                yAxisTicks: 8,
+                height: 155,
+                total: {
+                    id: 'repocommits',
+                    max: 1
+                }
+            };
+            var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,
+                    [timeCtx, usersTableCtx, repoCtx], multibar_projects_configuration);
+
+            // COMMITS PER PROJECT AND USER
+            var user_project_commits_dom = document.getElementById("user-commits-lines");
+            var user_project_commits_metrics = [{
+                id: 'repousercommits',
+                max: 100
+            }];
+            var user_project_commits_conf = {
+                xlabel: '',
+                ylabel: 'Commits',
+                labelFormat: '%data.info.uid.name%',
+                interpolate: 'monotone'
+            };
+            var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
+                    [timeCtx, usersTableCtx, repoCtx], user_project_commits_conf);
+
         };
-        var multibar_projects = new framework.widgets.HorizontalBar(multibar_projects_dom, multibar_projects_metrics,
-                [timeCtx, usersTableCtx, repoCtx], multibar_projects_configuration);
-
-        // COMMITS PER PROJECT AND USER
-        var user_project_commits_dom = document.getElementById("user-commits-lines");
-        var user_project_commits_metrics = [{
-            id: 'repousercommits',
-            max: 100
-        }];
-        var user_project_commits_conf = {
-            xlabel: '',
-            ylabel: 'Commits',
-            labelFormat: '%data.info.uid.name%',
-            interpolate: 'monotone'
-        };
-        var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,
-                [timeCtx, usersTableCtx, repoCtx], user_project_commits_conf);
-
-    };
-
+    }
 
 @stop

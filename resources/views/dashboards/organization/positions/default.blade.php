@@ -179,333 +179,334 @@
 
 @section('script')
 /* <script> */
-    //Hide header chart
-    hideHeaderChart();
+    function _() {
+        //Hide header chart
+        hideHeaderChart();
 
-    // TOTAL COMMITS
-    var orgcommits_dom = document.getElementById("orgcommits");
-    var orgcommits_metrics = [{
-        id: 'orgcommits',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var orgcommits_conf = {
-        label: 'Total commits',
-        decimal: 0,
-        icon: 'octicon octicon-git-commit',
-        iconbackground: '#004B8B',
-        background: 'transparent',
-        labelcolor: '#000'
-    };
-    var orgcommits = new framework.widgets.CounterBox(orgcommits_dom, orgcommits_metrics, null, orgcommits_conf);
+        // TOTAL COMMITS
+        var orgcommits_dom = document.getElementById("orgcommits");
+        var orgcommits_metrics = [{
+            id: 'orgcommits',
+            max: 1,
+            aggr: 'sum'
+        }];
+        var orgcommits_conf = {
+            label: 'Total commits',
+            decimal: 0,
+            icon: 'octicon octicon-git-commit',
+            iconbackground: '#004B8B',
+            background: 'transparent',
+            labelcolor: '#000'
+        };
+        var orgcommits = new framework.widgets.CounterBox(orgcommits_dom, orgcommits_metrics, null, orgcommits_conf);
 
-    // TOTAL DEVELOPERS
-    var orgdevelopers_dom = document.getElementById("orgdevelopers");
-    var orgdevelopers_metrics = [{
-        id: 'orgdevelopers',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var orgdevelopers_conf = {
-        label: 'Total developers',
-        decimal: 0,
-        icon: 'octicon octicon-organization',
-        iconbackground: '#F7853C',
-        background: 'transparent',
-        labelcolor: '#000'
-    };
-    var orgdevelopers = new framework.widgets.CounterBox(orgdevelopers_dom, orgdevelopers_metrics, null, orgdevelopers_conf);
-
-    // TOTAL REPOSITORIES
-    var orgrepositories_dom = document.getElementById("orgrepositories");
-    var orgrepositories_metrics = [{
-        id: 'orgrepositories',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var orgrepositories_conf = {
-        label: 'Total repositories',
-        decimal: 0,
-        icon: 'octicon octicon-repo',
-        iconbackground: '#9FCE23',
-        background: 'transparent',
-        labelcolor: '#000'
-    };
-    var orgrepositories = new framework.widgets.CounterBox(orgrepositories_dom, orgrepositories_metrics, null, orgrepositories_conf);
-
-    // TOTAL BUILDS
-    var orgbuilds_dom = document.getElementById("orgbuilds");
-    var orgbuilds_metrics = [{
-        id: 'orgbuilds',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var orgbuilds_conf = {
-        label: 'Total builds',
-        decimal: 0,
-        icon: 'fa fa-cogs',
-        iconbackground: '#2a2a2a',
-        background: 'transparent',
-        labelcolor: '#000'
-    };
-    var orgbuilds = new framework.widgets.CounterBox(orgbuilds_dom, orgbuilds_metrics, null, orgbuilds_conf);
-
-   // TOTAL CURRENT SUCCESS BUILDS
-    var currentbuilds_dom = document.getElementById("orgcurrentsuccessbuilds");
-    var currentbuilds_metrics = [{
-        id: 'orgpassedbuilds',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var currentbuilds_conf = {
-        label: 'Current Successful Builds',
-        decimal: 0,
-        icon: 'fa-sort-amount-asc',
-        iconbackground: '#069744',
-        background: 'transparent',
-        labelcolor: '#000'
-    };
-    var currentbuilds = new framework.widgets.CounterBox(currentbuilds_dom, currentbuilds_metrics, null, currentbuilds_conf);
-
-   // TOTAL CURRENT BROKEN BUILDS
-    var currentFbuilds_dom = document.getElementById("orgcurrentbrokenbuilds");
-    var currentFbuilds_metrics = [{
-        id: 'orgfailedbuilds',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var currentFbuilds_conf = {
-        label: 'Current Broken Builds',
-        decimal: 0,
-        icon: 'fa-sort-amount-desc',
-        iconbackground: '#e21b23',
-        background: 'transparent',
-        labelcolor: '#000'
-    };
-    var currentFbuilds = new framework.widgets.CounterBox(currentFbuilds_dom, currentFbuilds_metrics, null, currentFbuilds_conf);
-
-    // TOTAL EXECUTIONS
-    var organizationexec_dom = document.getElementById("organizationexec");
-    var organizationexec_metrics = [{
-        id: 'orgexecutions',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var organizationexec_conf = {
-        label: 'Total Executions',
-        decimal: 0,
-        icon: 'fa fa-terminal',
-        iconbackground: '#2A2A2A',
-        background: 'transparent',
-        labelcolor: '#000'
-    };
-    var organizationexec = new framework.widgets.CounterBox(organizationexec_dom, organizationexec_metrics, null, organizationexec_conf);
-
-
-    // TOTAL SUCCESSFUL EXECUTIONS
-    var organizationsuccessexec_dom = document.getElementById("organizationsuccessexec");
-    var organizationsuccessexec_metrics = [{
-        id: 'orgpassedexecutions',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var organizationsuccessexec_conf = {
-        label: 'Total successful Executions',
-        decimal: 0,
-        icon: 'fa fa-thumbs-up',
-        iconbackground: '#069744',
-        background: 'transparent',
-        labelcolor: '#000'
-    };
-    var organizationsuccessexec = new framework.widgets.CounterBox(organizationsuccessexec_dom, organizationsuccessexec_metrics, null, organizationsuccessexec_conf);
-
-
-    // TOTAL BROKEN EXECUTIONS
-    var organizationbrokenexec_dom = document.getElementById("organizationbrokenexec");
-    var organizationbrokenexec_metrics = [{
-        id: 'orgfailedexecutions',
-        max: 1,
-        aggr: 'sum'
-    }];
-    var organizationbrokenexec_conf = {
-        label: 'Total broken Executions',
-        decimal: 0,
-        icon: 'fa fa-thumbs-down',
-        iconbackground: '#e21b23',
-        background: 'transparent',
-        labelcolor: '#000'
-    };
-    var organizationbrokenexec = new framework.widgets.CounterBox(organizationbrokenexec_dom, organizationbrokenexec_metrics, null, organizationbrokenexec_conf);
-
-    // TIME TO FIX
-    var orgtimetofix_dom = document.getElementById("orgtimetofix");
-    var orgtimetofix_metrics = [{
-        id: 'orgtimetofixtbd'
-    }];
-    var orgtimetofix_conf = {
-        label: 'Average time to Fix',
-        decimal: 1,
-        icon: 'fa fa-line-chart',
-        iconbackground: '#E70083',
-        background: 'transparent',
-        labelcolor: '#000',
-        suffix: " h"
-    };
-    var orgtimetofix = new framework.widgets.CounterBox(orgtimetofix_dom, orgtimetofix_metrics, null, orgtimetofix_conf);
-
-    // BUILD EXECUTION TIME
-    var organizationexectime_dom = document.getElementById("orgbuildtime");
-    var organizationexectime_metrics = [{
-        id: 'orgbuildtimetbd'
-    }];
-    var organizationexectime_conf = {
-        label: 'Build execution time',
-        decimal: 1,
-        icon: 'fa fa-history',
-        iconbackground: '#8d197b',
-        background: 'transparent',
-        labelcolor: '#000',
-        suffix: " h"
-    };
-    var organizationexectime = new framework.widgets.CounterBox(organizationexectime_dom, organizationexectime_metrics, null, organizationexectime_conf);
-
-    // BUILD BROKEN TIME
-    var organizationbrokentime_dom = document.getElementById("orgbrokentime");
-    var organizationbrokentime_metrics = [{
-        id: 'orgbrokentimetbd'
-    }];
-    var organizationbrokentime_conf = {
-        label: 'Build broken time',
-        decimal: 1,
-        icon: 'fa fa-history',
-        iconbackground: '#7C45CF',
-        background: 'transparent',
-        labelcolor: '#000',
-        suffix: " d"
-    };
-    var organizationbrokentime = new framework.widgets.CounterBox(organizationbrokentime_dom, organizationbrokentime_metrics, null, organizationbrokentime_conf);
-
-    // DEVELOPERS LINES CHART
-    var dev_lines_dom = document.getElementById("dev-lines");
-    var dev_lines_metrics = [
-        {
+        // TOTAL DEVELOPERS
+        var orgdevelopers_dom = document.getElementById("orgdevelopers");
+        var orgdevelopers_metrics = [{
             id: 'orgdevelopers',
-            max: 100,
+            max: 1,
             aggr: 'sum'
-        }
-    ];
-    var dev_lines_configuration = {
-        xlabel: '',
-        ylabel: '',
-        interpolate: 'monotone',
-        height: 250,
-        labelFormat: '%data.info.title%',
-        colors: ["#FF7F0E"],
-        area: true
-    };
-    var skills_lines = new framework.widgets.LinesChart(dev_lines_dom, dev_lines_metrics,
-            null, dev_lines_configuration);
+        }];
+        var orgdevelopers_conf = {
+            label: 'Total developers',
+            decimal: 0,
+            icon: 'octicon octicon-organization',
+            iconbackground: '#F7853C',
+            background: 'transparent',
+            labelcolor: '#000'
+        };
+        var orgdevelopers = new framework.widgets.CounterBox(orgdevelopers_dom, orgdevelopers_metrics, null, orgdevelopers_conf);
 
-    // EXECUTIONS LINES CHART
-    var ex_lines_dom = document.getElementById("execs-lines");
-    var ex_lines_metrics = [
-        {
+        // TOTAL REPOSITORIES
+        var orgrepositories_dom = document.getElementById("orgrepositories");
+        var orgrepositories_metrics = [{
+            id: 'orgrepositories',
+            max: 1,
+            aggr: 'sum'
+        }];
+        var orgrepositories_conf = {
+            label: 'Total repositories',
+            decimal: 0,
+            icon: 'octicon octicon-repo',
+            iconbackground: '#9FCE23',
+            background: 'transparent',
+            labelcolor: '#000'
+        };
+        var orgrepositories = new framework.widgets.CounterBox(orgrepositories_dom, orgrepositories_metrics, null, orgrepositories_conf);
+
+        // TOTAL BUILDS
+        var orgbuilds_dom = document.getElementById("orgbuilds");
+        var orgbuilds_metrics = [{
+            id: 'orgbuilds',
+            max: 1,
+            aggr: 'sum'
+        }];
+        var orgbuilds_conf = {
+            label: 'Total builds',
+            decimal: 0,
+            icon: 'fa fa-cogs',
+            iconbackground: '#2a2a2a',
+            background: 'transparent',
+            labelcolor: '#000'
+        };
+        var orgbuilds = new framework.widgets.CounterBox(orgbuilds_dom, orgbuilds_metrics, null, orgbuilds_conf);
+
+        // TOTAL CURRENT SUCCESS BUILDS
+        var currentbuilds_dom = document.getElementById("orgcurrentsuccessbuilds");
+        var currentbuilds_metrics = [{
+            id: 'orgpassedbuilds',
+            max: 1,
+            aggr: 'sum'
+        }];
+        var currentbuilds_conf = {
+            label: 'Current Successful Builds',
+            decimal: 0,
+            icon: 'fa-sort-amount-asc',
+            iconbackground: '#069744',
+            background: 'transparent',
+            labelcolor: '#000'
+        };
+        var currentbuilds = new framework.widgets.CounterBox(currentbuilds_dom, currentbuilds_metrics, null, currentbuilds_conf);
+
+        // TOTAL CURRENT BROKEN BUILDS
+        var currentFbuilds_dom = document.getElementById("orgcurrentbrokenbuilds");
+        var currentFbuilds_metrics = [{
+            id: 'orgfailedbuilds',
+            max: 1,
+            aggr: 'sum'
+        }];
+        var currentFbuilds_conf = {
+            label: 'Current Broken Builds',
+            decimal: 0,
+            icon: 'fa-sort-amount-desc',
+            iconbackground: '#e21b23',
+            background: 'transparent',
+            labelcolor: '#000'
+        };
+        var currentFbuilds = new framework.widgets.CounterBox(currentFbuilds_dom, currentFbuilds_metrics, null, currentFbuilds_conf);
+
+        // TOTAL EXECUTIONS
+        var organizationexec_dom = document.getElementById("organizationexec");
+        var organizationexec_metrics = [{
             id: 'orgexecutions',
-            max: 100,
+            max: 1,
             aggr: 'sum'
-        },
-        {
+        }];
+        var organizationexec_conf = {
+            label: 'Total Executions',
+            decimal: 0,
+            icon: 'fa fa-terminal',
+            iconbackground: '#2A2A2A',
+            background: 'transparent',
+            labelcolor: '#000'
+        };
+        var organizationexec = new framework.widgets.CounterBox(organizationexec_dom, organizationexec_metrics, null, organizationexec_conf);
+
+
+        // TOTAL SUCCESSFUL EXECUTIONS
+        var organizationsuccessexec_dom = document.getElementById("organizationsuccessexec");
+        var organizationsuccessexec_metrics = [{
             id: 'orgpassedexecutions',
-            max: 100,
+            max: 1,
             aggr: 'sum'
-        },
-        {
+        }];
+        var organizationsuccessexec_conf = {
+            label: 'Total successful Executions',
+            decimal: 0,
+            icon: 'fa fa-thumbs-up',
+            iconbackground: '#069744',
+            background: 'transparent',
+            labelcolor: '#000'
+        };
+        var organizationsuccessexec = new framework.widgets.CounterBox(organizationsuccessexec_dom, organizationsuccessexec_metrics, null, organizationsuccessexec_conf);
+
+
+        // TOTAL BROKEN EXECUTIONS
+        var organizationbrokenexec_dom = document.getElementById("organizationbrokenexec");
+        var organizationbrokenexec_metrics = [{
             id: 'orgfailedexecutions',
-            max: 100,
+            max: 1,
             aggr: 'sum'
+        }];
+        var organizationbrokenexec_conf = {
+            label: 'Total broken Executions',
+            decimal: 0,
+            icon: 'fa fa-thumbs-down',
+            iconbackground: '#e21b23',
+            background: 'transparent',
+            labelcolor: '#000'
+        };
+        var organizationbrokenexec = new framework.widgets.CounterBox(organizationbrokenexec_dom, organizationbrokenexec_metrics, null, organizationbrokenexec_conf);
+
+        // TIME TO FIX
+        var orgtimetofix_dom = document.getElementById("orgtimetofix");
+        var orgtimetofix_metrics = [{
+            id: 'orgtimetofixtbd'
+        }];
+        var orgtimetofix_conf = {
+            label: 'Average time to Fix',
+            decimal: 1,
+            icon: 'fa fa-line-chart',
+            iconbackground: '#E70083',
+            background: 'transparent',
+            labelcolor: '#000',
+            suffix: " h"
+        };
+        var orgtimetofix = new framework.widgets.CounterBox(orgtimetofix_dom, orgtimetofix_metrics, null, orgtimetofix_conf);
+
+        // BUILD EXECUTION TIME
+        var organizationexectime_dom = document.getElementById("orgbuildtime");
+        var organizationexectime_metrics = [{
+            id: 'orgbuildtimetbd'
+        }];
+        var organizationexectime_conf = {
+            label: 'Build execution time',
+            decimal: 1,
+            icon: 'fa fa-history',
+            iconbackground: '#8d197b',
+            background: 'transparent',
+            labelcolor: '#000',
+            suffix: " h"
+        };
+        var organizationexectime = new framework.widgets.CounterBox(organizationexectime_dom, organizationexectime_metrics, null, organizationexectime_conf);
+
+        // BUILD BROKEN TIME
+        var organizationbrokentime_dom = document.getElementById("orgbrokentime");
+        var organizationbrokentime_metrics = [{
+            id: 'orgbrokentimetbd'
+        }];
+        var organizationbrokentime_conf = {
+            label: 'Build broken time',
+            decimal: 1,
+            icon: 'fa fa-history',
+            iconbackground: '#7C45CF',
+            background: 'transparent',
+            labelcolor: '#000',
+            suffix: " d"
+        };
+        var organizationbrokentime = new framework.widgets.CounterBox(organizationbrokentime_dom, organizationbrokentime_metrics, null, organizationbrokentime_conf);
+
+        // DEVELOPERS LINES CHART
+        var dev_lines_dom = document.getElementById("dev-lines");
+        var dev_lines_metrics = [
+            {
+                id: 'orgdevelopers',
+                max: 100,
+                aggr: 'sum'
+            }
+        ];
+        var dev_lines_configuration = {
+            xlabel: '',
+            ylabel: '',
+            interpolate: 'monotone',
+            height: 250,
+            labelFormat: '%data.info.title%',
+            colors: ["#FF7F0E"],
+            area: true
+        };
+        var skills_lines = new framework.widgets.LinesChart(dev_lines_dom, dev_lines_metrics,
+                null, dev_lines_configuration);
+
+        // EXECUTIONS LINES CHART
+        var ex_lines_dom = document.getElementById("execs-lines");
+        var ex_lines_metrics = [
+            {
+                id: 'orgexecutions',
+                max: 100,
+                aggr: 'sum'
+            },
+            {
+                id: 'orgpassedexecutions',
+                max: 100,
+                aggr: 'sum'
+            },
+            {
+                id: 'orgfailedexecutions',
+                max: 100,
+                aggr: 'sum'
+            }
+        ];
+        var ex_lines_configuration = {
+            xlabel: '',
+            ylabel: '',
+            interpolate: 'monotone',
+            height: 250,
+            labelFormat: '%data.info.title%',
+            colors: {
+                orgexecutions: "#1F77B4",
+                orgpassedexecutions: "#68B828",
+                orgfailedexecutions: "#FF7F0E"
+            }
+        };
+        var ex_lines = new framework.widgets.LinesChart(ex_lines_dom, ex_lines_metrics,
+                null, ex_lines_configuration);
+
+        //ANGULAR INITIALIZATION
+        try {
+            angular.module('OrganizationDashboard');
+            angular.element(document).injector().invoke(function ($compile) {
+                var content = $(".main-content");
+                var scope = angular.element(content).scope();
+                $compile(content)(scope);
+            });
+
+        } catch (e) { //Module not initialized
+
+            angular.module('OrganizationDashboard', [])
+                    .controller('UsersController', ['$scope', function ($scope) {
+                        $scope.changeToUserDashboard = function (user) {
+                            var env = framework.dashboard.getEnv();
+                            env['uid'] = user['userid'];
+                            env['name'] = user['name'];
+                            framework.dashboard.changeTo('developer', env);
+                        };
+                    }])
+                    .controller('ReposController', ['$scope', function ($scope) {
+                        $scope.changeToRepoDashboard = function (repo) {
+                            var env = framework.dashboard.getEnv();
+                            env['rid'] = repo['repositoryid'];
+                            env['name'] = repo['name'];
+                            framework.dashboard.changeTo('repository', env);
+                        };
+                    }]);
+
+            angular.element(document).ready(function () {
+                angular.bootstrap(document, ['OrganizationDashboard']);
+            });
         }
-    ];
-    var ex_lines_configuration = {
-        xlabel: '',
-        ylabel: '',
-        interpolate: 'monotone',
-        height: 250,
-        labelFormat: '%data.info.title%',
-        colors: {
-            orgexecutions: "#1F77B4",
-            orgpassedexecutions: "#68B828",
-            orgfailedexecutions: "#FF7F0E"
-        }
-    };
-    var ex_lines = new framework.widgets.LinesChart(ex_lines_dom, ex_lines_metrics,
-            null, ex_lines_configuration);
 
-    //ANGULAR INITIALIZATION
-    try {
-        angular.module('OrganizationDashboard');
-        angular.element(document).injector().invoke(function($compile) {
-            var content = $(".main-content");
-            var scope = angular.element(content).scope();
-            $compile(content)(scope);
-        });
+        //USER LIST
+        framework.data.observe(['userlist'], function (event) {
 
-    } catch(e) { //Module not initialized
+            if (event.event === 'data') {
+                var users = event.data['userlist'][Object.keys(event.data['userlist'])[0]]['data'];
 
-        angular.module('OrganizationDashboard', [])
-                .controller('UsersController', ['$scope', function ($scope) {
-                    $scope.changeToUserDashboard = function(user) {
-                        var env = framework.dashboard.getEnv();
-                        env['uid'] = user['userid'];
-                        env['name'] = user['name'];
-                        framework.dashboard.changeTo('developer', env);
-                    };
-                }])
-                .controller('ReposController', ['$scope', function ($scope) {
-                    $scope.changeToRepoDashboard = function(repo) {
-                        var env = framework.dashboard.getEnv();
-                        env['rid'] = repo['repositoryid'];
-                        env['name'] = repo['name'];
-                        framework.dashboard.changeTo('repository', env);
-                    };
-                }]);
+                $scope = angular.element($(".main-content")).scope();
 
-        angular.element(document).ready(function() {
-            angular.bootstrap(document, ['OrganizationDashboard']);
-        });
+                $scope.$apply(function () {
+                    $scope.users = users;
+                });
+
+            }
+        }, []);
+
+        //REPO LIST
+        framework.data.observe(['repolist'], function (event) {
+
+            if (event.event === 'data') {
+                var repos = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
+
+                $scope = angular.element($(".main-content")).scope();
+
+                $scope.$apply(function () {
+                    $scope.repos = repos;
+                });
+
+            }
+        }, []);
+
+        // Hide the loading animation
+        finishLoading();
     }
-
-    //USER LIST
-    framework.data.observe(['userlist'], function(event){
-
-        if(event.event === 'data') {
-            var users = event.data['userlist'][Object.keys(event.data['userlist'])[0]]['data'];
-
-            $scope = angular.element($(".main-content")).scope();
-
-            $scope.$apply(function () {
-                $scope.users = users;
-            });
-
-        }
-    }, []);
-
-    //REPO LIST
-    framework.data.observe(['repolist'], function(event){
-
-        if(event.event === 'data') {
-            var repos = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
-
-            $scope = angular.element($(".main-content")).scope();
-
-            $scope.$apply(function () {
-                $scope.repos = repos;
-            });
-
-        }
-    }, []);
-
-    // Hide the loading animation
-    finishLoading();
-
 
 @stop

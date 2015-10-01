@@ -37,7 +37,11 @@ require.config({
         'framework': "/sdh-framework/framework",
         'headerHandler': "/assets/js/header/headerHandler",
         'datatables' : '/sdh-framework/lib/jquery/datatables/js/jquery.dataTables',
-        'widgetCommon': '/sdh-framework/framework.widget.common'
+        'widgetCommon': '/sdh-framework/framework.widget.common',
+        'lodash': '/sdh-framework/lib/lodash/lodash.min',
+        'backbone': '/sdh-framework/lib/backbone/backbone-min',
+        'joint': '/sdh-framework/lib/joint/joint.min',
+        'underscore': '/sdh-framework/lib/underscore/underscore-min'
     },
     shim : {
         'bootstrap' : {
@@ -63,6 +67,12 @@ require.config({
         },
         'widgetCommon': {
             deps: ['framework']
+        },
+        'backbone': {
+            deps: ['underscore']
+        },
+        'joint': {
+            deps: ['jquery', 'lodash', 'backbone']
         }
     }
 });

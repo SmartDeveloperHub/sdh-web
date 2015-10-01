@@ -23,8 +23,10 @@
 @stop
 
 @section('script')
-    /*
-        Write your Javascript code here.
-        Note: do not add the HTML script tags.
-    */
+    function _() {
+        /*
+            Write your Javascript code here.
+            Note: do not add the HTML script tags.
+        */
+    }
 @stop

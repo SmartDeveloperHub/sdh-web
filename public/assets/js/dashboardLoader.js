@@ -41,7 +41,11 @@ require.config({
         'lodash': '/sdh-framework/lib/lodash/lodash.min',
         'backbone': '/sdh-framework/lib/backbone/backbone-min',
         'joint': '/sdh-framework/lib/joint/joint.min',
-        'underscore': '/sdh-framework/lib/underscore/underscore-min'
+        'underscore': '/sdh-framework/lib/underscore/underscore-min',
+        'cytoscape': '/sdh-framework/lib/cytoscape/cytoscape.min',
+        'cytoscape-qtip': '/sdh-framework/lib/cytoscapeQTip/cytoscape-qtip',
+        'jquery-qtip': '/sdh-framework/lib/QTip/jquery.qtip'
+        
     },
     shim : {
         'bootstrap' : {
@@ -73,7 +77,18 @@ require.config({
         },
         'joint': {
             deps: ['jquery', 'lodash', 'backbone']
-        }
+        },
+        'jquery-qtip': {
+            deps: ['jquery']
+        },
+        'cytoscape': {
+            exports: 'cytoscape',
+            deps: ['jquery']
+        },
+        'cytoscape-qtip': {
+            exports: 'cytoscape-qtip',
+            deps: ['jquery', 'jquery-qtip', 'cytoscape']
+        },
     }
 });
 

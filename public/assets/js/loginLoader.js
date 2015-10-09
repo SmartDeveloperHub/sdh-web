@@ -71,6 +71,10 @@ define(function(require, exports, module) {
 
     require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "widgetCommon"], function() {
 
+        $(document).ready(function(){
+            console.log("SDH Welcome Ready!");
+        });
+
         framework.ready(function() {
             // TODO new widget instantations
         });

@@ -163,15 +163,3 @@
 		  	</div>
 		</div>
 @stop
-
-@section('scripts')
-	@parent
-	    <script type="application/javascript">
-			$(document).ready(function(){
-				/*$("#loginButton").click(function() {
-					//$("#myModal").modal({"backdrop": "static"});
-			    });*/
-				console.log("SDH Welcome Ready!");
-			});
-	    </script>
-@stop

@@ -11,6 +11,7 @@
     "sdh-framework/framework.widget.table",
     "sdh-framework/framework.widget.linesChart",
     "sdh-framework/framework.widget.liquidgauge",
+    "sdh-framework/framework.widget.piechart",
     "css!assets/css/dashboards/repository-dashboard"
     ]
 @stop
@@ -69,6 +70,14 @@
         <div class="row">
             <div class="col-sm-12">
                 <div id="team-members-lines" class="widget"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <div id="team-members-pie" class="widget"></div>
+            </div>
+            <div class="col-sm-4">
+                <div id="team-members-table" class="widget"></div>
             </div>
         </div>
     </div>
@@ -364,6 +373,85 @@
             };
             var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
                     [orgCtx, timeCtx], team_members_lines_configuration);
+
+            // SKILLS STAR CHART
+            var team_members_pie_dom = document.getElementById("team-members-pie");
+            var team_members_pie_metrics = [
+                {
+                    id: 'orgcommits',
+                    max: 1,
+                    aggr: "sum"
+                },
+                {
+                    id: 'orgcommits',
+                    max: 1,
+                    aggr: "sum"
+                },
+                {
+                    id: 'orgcommits',
+                    max: 1,
+                    aggr: "sum"
+                },
+                {
+                    id: 'orgcommits',
+                    max: 1,
+                    aggr: "sum"
+                }];
+            var team_members_pie_configuration = {
+                height: 300,
+                labelFormat: "%resourceId%"
+            };
+            var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,
+                    [orgCtx, timeCtx], team_members_pie_configuration);
+
+
+            //  ------------------------------ PRODUCT MANAGERS TABLE --------------------------------------
+            var team_members_table_dom = document.getElementById("team-members-table");
+            var team_members_table_metrics = ['repolist']; //TODO: choose resource
+            var team_members_table_configuration = {
+                columns: [
+                    {
+                        label: "",
+                        /*link: {
+                         img: "avatar", //or label
+                         href: "repository",
+                         env: [
+                         {
+                         property: "repositoryid",
+                         as: "rid"
+                         },
+                         {
+                         property: "name",
+                         as: "name"
+                         }
+                         ]
+                         },*/
+                        width: "40px"
+                    },
+                    {
+                        label: "",
+                        property: "name"
+                    }
+                ],
+                updateContexts: [
+                    {
+                        id: productsCtx,
+                        filter: [
+                            {
+                                property: "repositoryid", //TODO
+                                as: "rid"
+                            }
+                        ]
+                    }
+                ],
+                selectable: true,
+                minRowsSelected: 1,
+                maxRowsSelected: 6,
+                filterControl: true,
+                initialSelectedRows: 5,
+                showHeader: false
+            };
+            var team_members_table = new framework.widgets.Table(team_members_table_dom, team_members_table_metrics, [orgCtx, timeCtx], team_members_table_configuration);
 
 
             //TODO: use the liquid gauge

@@ -10,6 +10,7 @@
     "sdh-framework/framework.widget.scatter",
     "sdh-framework/framework.widget.table",
     "sdh-framework/framework.widget.linesChart",
+    "sdh-framework/framework.widget.liquidgauge",
     "css!assets/css/dashboards/repository-dashboard"
     ]
 @stop
@@ -75,7 +76,7 @@
 @stop
 
 @section('script')
-/* <script> */
+/* <script>*/
 
     function _() {
 
@@ -86,6 +87,7 @@
 
         //Show header chart and set titles
         setTitle("Home");
+        setSubtitle("Director");
         showHeaderChart();
 
         var env = framework.dashboard.getEnv();
@@ -253,7 +255,7 @@
                     return color(Math.random());
                 },
                 size: function(data) {
-                    return Math.random() * 50 /*data['repodevelopers']['values'][0]*/;
+                    return Math.random();
                 },
                 shape: function(data) {
                     return 'circle';
@@ -267,6 +269,7 @@
                     //return (data['repopassedexecutions']['values'][0] > data['repopassedexecutions']['values'][0]/10 ? 100 : data['repopassedexecutions']['values'][0]);
                     return Math.random();
                 },
+                xAxisTicks: 3,
                 yAxisLabel: "Quality",
                 height: 500,
                 groupBy: 'rid',
@@ -361,6 +364,23 @@
             };
             var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
                     [orgCtx, timeCtx], team_members_lines_configuration);
+
+
+            //TODO: use the liquid gauge
+            /*var test_dom = document.getElementById("releases-chart");
+            var test_metrics = [
+                {
+                    id: 'orgcommits',
+                    max: 1
+                }
+            ];
+            var test_configuration = {
+                minValue: 0,
+                maxValue: 30000
+            };
+            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
+                    [orgCtx, timeCtx], test_configuration);
+            */
 
 
         };

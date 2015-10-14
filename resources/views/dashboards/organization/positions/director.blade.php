@@ -7,6 +7,8 @@
     [
     "sdh-framework/framework.widget.rangeNv",
     "sdh-framework/framework.widget.counterbox",
+    "sdh-framework/framework.widget.bigcounterbox",
+    "css!sdh-framework/framework.widget.bigcounterbox.css",
     "sdh-framework/framework.widget.scatter",
     "sdh-framework/framework.widget.table",
     "sdh-framework/framework.widget.linesChart",
@@ -18,20 +20,28 @@
 
 @section('html')
     <div id="metricsSect" class="row">
-        <div class="row titleRow">
+        <div id="metTitRow" class="row titleRow">
             <span id="metricsTitIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
             <span id="metricsTitLabel" class="titleLabel">Metrics</span>
         </div>
-        <div class="row">
-            <div id="team-members-ctr" class="boxCounter col-sm-3"></div>
-            <div id="products-ctr" class="boxCounter col-sm-3"></div>
-            <div id="some1-ctr" class="boxCounter col-sm-3"></div>
-            <div id="some2-ctr" class="boxCounter col-sm-3"></div>
+        <div id="metricBoxes"class="row">
+            <div class="row">
+                <div id="products-ctr" class="boxCounter col-sm-3"></div>
+                <div id="team-members-ctr" class="boxCounter col-sm-3"></div>
+                <div id="releases-ctr" class="boxCounter col-sm-3"></div>
+                <div id="personnel-cost-ctr" class="boxCounter col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div class="boxCounter col-sm-3"></div>
+                <div id="contributors-ctr" class="boxCounter col-sm-3"></div>
+                <div id="companies-ctr" class="boxCounter col-sm-3"></div>
+                <div class="boxCounter col-sm-3"></div>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="row titleRow">
+    <div id="productsSect" class="row">
+        <div id="prodTitRow" class="row titleRow">
             <span id="productsTitIco" class="titleIcon titleIcon fa fa-gift"></span>
             <span id="productsTitLabel" class="titleLabel">Products</span>
         </div>
@@ -63,7 +73,7 @@
     </div>
 
     <div class="row">
-        <div class="row titleRow">
+        <div id="peplTitRow" class="row titleRow">
             <span id="peopleTitIco" class="titleIcon titleIcon fa fa-users"></span>
             <span id="peopleTitIco" class="titleLabel">Team members</span>
         </div>
@@ -139,69 +149,101 @@
 
         var loadTimeDependentWidgets = function loadTimeDependentWidgets() {
 
-            // ------------------------------------ TEAM MEMBERS -------------------------------------------
-            var team_members_dom = document.getElementById("team-members-ctr");
-            var team_members_metrics = [{
-                id: 'orgcommits', //TODO: implement team members
-                max: 1,
-                aggr: 'sum'
-            }];
-            var team_members_conf = {
-                label: 'Team members',
-                decimal: 0,
-                icon: 'octicon octicon-git-commit',
-                iconbackground: 'rgb(0, 75, 139)',
-                background: 'transparent'
-            };
-            var team_members = new framework.widgets.CounterBox(team_members_dom, team_members_metrics, [orgCtx, timeCtx], team_members_conf);
-
             // --------------------------------------- PRODUCTS --------------------------------------------
             var products_dom = document.getElementById("products-ctr");
             var products_metrics = [{
-                id: 'orgcommits',  //TODO: implement products
+                id: 'orgcommits',  //TODO: Total Products
                 max: 1,
                 aggr: 'sum'
             }];
             var products_conf = {
                 label: 'Products',
                 decimal: 0,
-                icon: 'octicon octicon-git-commit',
-                iconbackground: 'rgb(0, 75, 139)',
+                icon: 'fa fa-gift',
+                iconbackground: '#F75333',
                 background: 'transparent'
             };
             var products = new framework.widgets.CounterBox(products_dom, products_metrics, [orgCtx, timeCtx], products_conf);
 
-            // ---------------------------------------- SOMETHING 1 -------------------------------------------
-            var some1_dom = document.getElementById("some1-ctr");
+            // ------------------------------------ TEAM MEMBERS -------------------------------------------
+            var team_members_dom = document.getElementById("team-members-ctr");
+            var team_members_metrics = [{
+                id: 'orgcommits', //TODO: Total Team Members
+                max: 1,
+                aggr: 'sum'
+            }];
+            var team_members_conf = {
+                label: 'Team members',
+                decimal: 0,
+                icon: 'octicon octicon-organization',
+                iconbackground: '#019640',
+                background: 'transparent'
+            };
+            var team_members = new framework.widgets.CounterBox(team_members_dom, team_members_metrics, [orgCtx, timeCtx], team_members_conf);
+
+            // ---------------------------------------- RELEASES -------------------------------------------
+            var some1_dom = document.getElementById("releases-ctr");
             var some1_metrics = [{
-                id: 'orgcommits',  //TODO: choose metric
+                id: 'orgcommits',  //TODO: Nº Releases: total builds passed in master branch
                 max: 1,
                 aggr: 'sum'
             }];
             var some1_conf = {
-                label: 'Todo',
+                label: 'Releases',
                 decimal: 0,
-                icon: 'octicon octicon-git-commit',
-                iconbackground: 'rgb(0, 75, 139)',
+                icon: 'fa-flag-checkered',
+                iconbackground: '#8A1978',
                 background: 'transparent'
             };
             var some1 = new framework.widgets.CounterBox(some1_dom, some1_metrics, [orgCtx, timeCtx], some1_conf);
 
-            // ------------------------------------------ SOMETHING 2 ----------------------------------------
-            var some2_dom = document.getElementById("some2-ctr");
+            // ------------------------------------------ PERSONEL COST ----------------------------------------
+            var some2_dom = document.getElementById("personnel-cost-ctr");
             var some2_metrics = [{
-                id: 'orgcommits',  //TODO: choose metric
+                id: 'orgcommits',  //TODO: Total de coste por team member 25*nºmembers * (dias del rango seleccionado)
                 max: 1,
                 aggr: 'sum'
             }];
             var some2_conf = {
-                label: 'Todo',
+                label: 'Personnel Cost',
                 decimal: 0,
-                icon: 'octicon octicon-git-commit',
-                iconbackground: 'rgb(0, 75, 139)',
+                icon: 'fa-eur',
+                iconbackground: '#EE7529',
                 background: 'transparent'
             };
             var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
+
+            // ------------------------------------------ CONTRIBUTORS ----------------------------------------
+            var some2_dom = document.getElementById("contributors-ctr");
+            var some2_metrics = [{
+                id: 'orgcommits',  //TODO: Número de externos (contributors) o  % externos
+                max: 1,
+                aggr: 'sum'
+            }];
+            var some2_conf = {
+                label: 'External Contributors',
+                decimal: 0,
+                icon: 'fa-users',
+                iconbackground: '#737373',
+                background: 'transparent'
+            };
+            var some2 = new framework.widgets.BigCounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
+
+            // --------------------------------- EXTERNAL COMPANIES --------------------------------
+            var some2_dom = document.getElementById("companies-ctr");
+            var some2_metrics = [{
+                id: 'orgcommits',  //TODO: Número de externos (contributors) o  % externos
+                max: 1,
+                aggr: 'sum'
+            }];
+            var some2_conf = {
+                label: 'External Companies',
+                decimal: 0,
+                icon: 'fa-globe',
+                iconbackground: 'rgb(0, 75, 139)',
+                background: 'transparent'
+            };
+            var some2 = new framework.widgets.BigCounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
 
             // ----------------------------------------- AVERAGE METRIC 1 -------------------------------------
             var avg_metric1_dom = document.getElementById("avg-metric1-ctr");

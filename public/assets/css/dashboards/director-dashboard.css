@@ -28,7 +28,9 @@
     padding-top: 25px;
 }
 
+/**********/
 /* titles */
+/**********/
 
 .titleRow {
     margin-bottom: 8px;
@@ -55,8 +57,12 @@
 }
 
 /* metrics secction*/
+#metTitRow {
+    margin-top: 18px;
+    margin-bottom: 0px;
+}
+
 #metricsSect {
-    margin-top: 10px;
     background-color: #FFF;
     margin-top: 84px;
     margin-left: -2px;
@@ -69,7 +75,21 @@
 #metricsTitLabel {
 }
 
+#metricBoxes .com-widget.com-counter {
+    margin-bottom: 5px;
+}
+
 /* products secction*/
+#productsSect {
+    margin-top: 0px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+#prodTitRow {
+    margin-bottom: 34px;
+}
+
 #productsTitIco {
     color: #F75333;
 }
@@ -78,9 +98,49 @@
 }
 
 /* team members secction*/
+#peplTitRow {
+    margin-top: 35px;
+    margin-bottom: 25px;
+}
+
 #peopleTitIco {
     color: #9FCE23;
 }
 
 #peopleTitLabel {
 }
+
+/***********/
+/* widgets */
+/***********/
+
+/* metrics secction*/
+.com-widget.com-counter .com-label .num {
+    font-size: 38px;
+    font-family: Roboto;
+    white-space: nowrap;
+}
+
+.com-widget.com-counter .com-label span {
+    font-size: 16px;
+    font-family: Roboto;
+    min-width: 125px;
+}
+
+#team-members-ctr {
+}
+
+#products-ctr {
+}
+
+#personnel-cost-ctr {
+}
+
+#releases-ctr {
+}
+
+/* products secction*/
+#scatter-plot {
+}
+
+/* team members secction*/

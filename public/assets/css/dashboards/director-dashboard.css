@@ -1,0 +1,86 @@
+/*
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  This file is part of the Smart Developer Hub Project:
+    http://www.smartdeveloperhub.org
+  Center for Open Middleware
+        http://www.centeropenmiddleware.com/
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  Copyright (C) 2015 Center for Open Middleware.
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+            http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+*/
+.page-container .main-content {
+    padding: 0;
+    overflow: hidden;
+}
+
+.page-body.light .page-container {
+    background-color: #FFF;
+    padding-top: 25px;
+}
+
+/* titles */
+
+.titleRow {
+    margin-bottom: 8px;
+    text-align: center;
+    margin-top: 35px;
+}
+
+.titleCol {
+    text-align: center;
+    height: 95px;
+}
+
+.titleIcon {
+    font-size: 54px;
+    vertical-align: middle;
+}
+
+.titleLabel {
+    font-size: 32px;
+    margin-left: 20px;
+    color: #5A5858;
+    vertical-align: middle;
+    font-family: Roboto;
+}
+
+/* metrics secction*/
+#metricsSect {
+    margin-top: 10px;
+    background-color: #FFF;
+    margin-top: 84px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+#metricsTitIco {
+    color: #004C8B;
+}
+
+#metricsTitLabel {
+}
+
+/* products secction*/
+#productsTitIco {
+    color: #F75333;
+}
+
+#productsTitLabel {
+}
+
+/* team members secction*/
+#peopleTitIco {
+    color: #9FCE23;
+}
+
+#peopleTitLabel {
+}

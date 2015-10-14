@@ -12,15 +12,15 @@
     "sdh-framework/framework.widget.linesChart",
     "sdh-framework/framework.widget.liquidgauge",
     "sdh-framework/framework.widget.piechart",
-    "css!assets/css/dashboards/repository-dashboard"
+    "css!assets/css/dashboards/director-dashboard"
     ]
 @stop
 
 @section('html')
-    <div class="row">
+    <div id="metricsSect" class="row">
         <div class="row titleRow">
-            <span class="titleIcon titleIcon octicon octicon-dashboard"></span>
-            <span class="titleLabel">Metrics</span>
+            <span id="metricsTitIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
+            <span id="metricsTitLabel" class="titleLabel">Metrics</span>
         </div>
         <div class="row">
             <div id="team-members-ctr" class="boxCounter col-sm-3"></div>
@@ -32,8 +32,8 @@
 
     <div class="row">
         <div class="row titleRow">
-            <span class="titleIcon titleIcon fa fa-gift"></span>
-            <span class="titleLabel">Products</span>
+            <span id="productsTitIco" class="titleIcon titleIcon fa fa-gift"></span>
+            <span id="productsTitLabel" class="titleLabel">Products</span>
         </div>
         <div class="row">
             <div class="row" id="managers-graph"></div>
@@ -64,8 +64,8 @@
 
     <div class="row">
         <div class="row titleRow">
-            <span class="titleIcon titleIcon fa fa-users"></span>
-            <span class="titleLabel">Team members</span>
+            <span id="peopleTitIco" class="titleIcon titleIcon fa fa-users"></span>
+            <span id="peopleTitIco" class="titleLabel">Team members</span>
         </div>
         <div class="row">
             <div class="col-sm-12">

@@ -355,3 +355,10 @@
 #arqPanel .parr .first {
     padding-bottom: 20px;
 }
+
+/* test new charts */
+#cytograph1, #cytograph2, #cytograph3 {
+    height: 300px;
+    min-width: 325px;
+
+}

@@ -7,11 +7,10 @@
     [
     "sdh-framework/framework.widget.rangeNv",
     "sdh-framework/framework.widget.counterbox",
-    "sdh-framework/framework.widget.bigcounterbox",
-    "css!sdh-framework/framework.widget.bigcounterbox.css",
     "sdh-framework/framework.widget.scatter",
     "sdh-framework/framework.widget.table",
     "sdh-framework/framework.widget.linesChart",
+    "css!sdh-framework/framework.widget.linesChart.css",
     "sdh-framework/framework.widget.liquidgauge",
     "sdh-framework/framework.widget.piechart",
     "css!assets/css/dashboards/director-dashboard"
@@ -21,7 +20,7 @@
 @section('html')
     <div id="metricsSect" class="row">
         <div id="metTitRow" class="row titleRow">
-            <span id="metricsTitIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
+            <span id="metricsTitIco" class="titleIcon octicon octicon-dashboard"></span>
             <span id="metricsTitLabel" class="titleLabel">Metrics</span>
         </div>
         <div id="metricBoxes"class="row">
@@ -42,23 +41,17 @@
 
     <div id="productsSect" class="row">
         <div id="prodTitRow" class="row titleRow">
-            <span id="productsTitIco" class="titleIcon titleIcon fa fa-gift"></span>
+            <span id="productsTitIco" class="titleIcon fa fa-industry"></span>
             <span id="productsTitLabel" class="titleLabel">Products</span>
         </div>
         <div class="row">
             <div class="row" id="managers-graph"></div>
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="row">
-                        <div id="avg-metric1-ctr" class="boxCounter col-sm-12"></div>
-                    </div>
-                    <div class="row">
-                        <div id="avg-metric2-ctr" class="boxCounter col-sm-12"></div>
-                    </div>
-                </div>
-                <div class="col-sm-9">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
                     <div id="scatter-plot" class="widget"></div>
                 </div>
+                <div class="col-sm-10"></div>
             </div>
             <!-- ADD -->
         </div>
@@ -74,7 +67,7 @@
 
     <div class="row">
         <div id="peplTitRow" class="row titleRow">
-            <span id="peopleTitIco" class="titleIcon titleIcon fa fa-users"></span>
+            <span id="peopleTitIco" class="titleIcon fa fa-users"></span>
             <span id="peopleTitIco" class="titleLabel">Team members</span>
         </div>
         <div class="row">
@@ -159,7 +152,7 @@
             var products_conf = {
                 label: 'Products',
                 decimal: 0,
-                icon: 'fa fa-gift',
+                icon: 'fa fa-industry',
                 iconbackground: '#F75333',
                 background: 'transparent'
             };
@@ -271,7 +264,7 @@
             var avghealth_conf = {
                 label: 'Health Per Product',
                 decimal: 0,
-                icon: 'octicon octicon-organization',
+                icon: 'fa-heart',
                 iconbackground: '#29BB67',
                 background: 'transparent'
             };
@@ -322,7 +315,7 @@
                 },
                 xAxisTicks: 3,
                 yAxisLabel: "Quality",
-                height: 500,
+                height: 390,
                 groupBy: 'rid',
                 labelFormat: '¬_D.repocommits.info.rid.name¬',
                 showDistX: false,
@@ -390,6 +383,27 @@
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx], table_configuration);
 
+            //  ----------------------------------- RELEASES LINES WIDGET ------------------------------------------
+            var releasesLines_dom = document.getElementById("releases-chart");
+
+            var releasesLines_metrics = [{
+                id: 'repocommits',
+                max: 100
+            }];
+
+            var releasesLines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 300,
+                labelFormat: '%data.info.title%',
+                colors: ["#2876B8", "#C0485E"],
+                area: false,
+                showPoints: true,
+                showLines: false
+            };
+            var releasesLines = new framework.widgets.LinesChart(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
+
             // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
             var team_members_lines_dom = document.getElementById("team-members-lines");
             var team_members_lines_metrics = [
@@ -397,11 +411,11 @@
                     id: 'orgcommits',
                     max: 30
                 },
-                /*{
-                    id: 'usercommits',
+                {
+                    id: 'orgcommits',
                     max: 30,
                     aggr: "avg"
-                }*/
+                }
             ];
             var team_members_lines_configuration = {
                 xlabel: '',
@@ -415,6 +429,7 @@
             };
             var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
                     [orgCtx, timeCtx], team_members_lines_configuration);
+
 
             // SKILLS STAR CHART
             var team_members_pie_dom = document.getElementById("team-members-pie");

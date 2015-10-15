@@ -253,10 +253,10 @@
                 aggr: 'sum'
             }];
             var avgteam_conf = {
-                label: 'Team Members per Product',
+                label: 'Team Members Per Product',
                 decimal: 0,
                 icon: 'fa-users',
-                iconbackground: '#F75333',
+                iconbackground: '#6895BA',
                 background: 'transparent'
             };
             var avgTeam = new framework.widgets.CounterBox(avgteam_dom, avgteam_metrics, [orgCtx, timeCtx], avgteam_conf);
@@ -269,10 +269,10 @@
                 aggr: 'sum'
             }];
             var avghealth_conf = {
-                label: 'Team members',
+                label: 'Health Per Product',
                 decimal: 0,
                 icon: 'octicon octicon-organization',
-                iconbackground: '#019640',
+                iconbackground: '#29BB67',
                 background: 'transparent'
             };
             var avgHealth = new framework.widgets.CounterBox(avghealth_dom, avghealth_metrics, [orgCtx, timeCtx], avghealth_conf);

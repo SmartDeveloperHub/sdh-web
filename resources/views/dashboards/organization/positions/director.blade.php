@@ -28,14 +28,14 @@
             <div class="row">
                 <div id="products-ctr" class="boxCounter col-sm-3"></div>
                 <div id="team-members-ctr" class="boxCounter col-sm-3"></div>
-                <div id="releases-ctr" class="boxCounter col-sm-3"></div>
                 <div id="personnel-cost-ctr" class="boxCounter col-sm-3"></div>
+                <div id="releases-ctr" class="boxCounter col-sm-3"></div>
             </div>
             <div class="row">
-                <div class="boxCounter col-sm-3"></div>
+                <div id="avg-health-ctr" class="boxCounter col-sm-3"></div>
+                <div id="avg-team-ctr" class="boxCounter col-sm-3"></div>
                 <div id="contributors-ctr" class="boxCounter col-sm-3"></div>
                 <div id="companies-ctr" class="boxCounter col-sm-3"></div>
-                <div class="boxCounter col-sm-3"></div>
             </div>
         </div>
     </div>
@@ -223,11 +223,11 @@
             var some2_conf = {
                 label: 'External Contributors',
                 decimal: 0,
-                icon: 'fa-users',
+                icon: 'fa-user',
                 iconbackground: '#737373',
                 background: 'transparent'
             };
-            var some2 = new framework.widgets.BigCounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
+            var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
 
             // --------------------------------- EXTERNAL COMPANIES --------------------------------
             var some2_dom = document.getElementById("companies-ctr");
@@ -243,39 +243,39 @@
                 iconbackground: 'rgb(0, 75, 139)',
                 background: 'transparent'
             };
-            var some2 = new framework.widgets.BigCounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
+            var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
 
-            // ----------------------------------------- AVERAGE METRIC 1 -------------------------------------
-            var avg_metric1_dom = document.getElementById("avg-metric1-ctr");
-            var avg_metric1_metrics = [{
-                id: 'orgcommits',  //TODO: choose metric
+            // ------------------------------- AVG TEAM MEMBERS PER PRODUCT-------------------------------------
+            var avgteam_dom = document.getElementById("avg-team-ctr");
+            var avgteam_metrics = [{
+                id: 'orgcommits',  //TODO: Total Products
                 max: 1,
                 aggr: 'sum'
             }];
-            var avg_metric1_conf = {
-                label: 'Todo',
+            var avgteam_conf = {
+                label: 'Team Members per Product',
                 decimal: 0,
-                icon: 'octicon octicon-git-commit',
-                iconbackground: 'rgb(0, 75, 139)',
+                icon: 'fa-users',
+                iconbackground: '#F75333',
                 background: 'transparent'
             };
-            var avg_metric1 = new framework.widgets.CounterBox(avg_metric1_dom, avg_metric1_metrics, [orgCtx, timeCtx], avg_metric1_conf);
+            var avgTeam = new framework.widgets.CounterBox(avgteam_dom, avgteam_metrics, [orgCtx, timeCtx], avgteam_conf);
 
-            // ----------------------------------------- AVERAGE METRIC 1 ---------------------------------------
-            var avg_metric2_dom = document.getElementById("avg-metric2-ctr");
-            var avg_metric2_metrics = [{
-                id: 'orgcommits',  //TODO: choose metric
+            // ------------------------------------ AVG HEALTH PER PRODUCT -------------------------------------------
+            var avghealth_dom = document.getElementById("avg-health-ctr");
+            var avghealth_metrics = [{
+                id: 'orgcommits', //TODO: Total Team Members
                 max: 1,
                 aggr: 'sum'
             }];
-            var avg_metric2_conf = {
-                label: 'Todo',
+            var avghealth_conf = {
+                label: 'Team members',
                 decimal: 0,
-                icon: 'octicon octicon-git-commit',
-                iconbackground: 'rgb(0, 75, 139)',
+                icon: 'octicon octicon-organization',
+                iconbackground: '#019640',
                 background: 'transparent'
             };
-            var avg_metric2 = new framework.widgets.CounterBox(avg_metric2_dom, avg_metric2_metrics, [orgCtx, timeCtx], avg_metric2_conf);
+            var avgHealth = new framework.widgets.CounterBox(avghealth_dom, avghealth_metrics, [orgCtx, timeCtx], avghealth_conf);
 
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
             var scatter_dom = document.getElementById("scatter-plot");

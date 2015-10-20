@@ -24,7 +24,7 @@ require.config({
     //enforceDefine: true,
     map: {
         '*': {
-            'css': '/assets/js/requirejs/css.min.js' // or whatever the path to require-css is
+            'css': 'require-css' // or whatever the path to require-css is
         }
     },
     paths: {
@@ -44,7 +44,8 @@ require.config({
         'underscore': '/sdh-framework/lib/underscore/underscore-min',
         'cytoscape': '/sdh-framework/lib/cytoscape/cytoscape.min',
         'cytoscape-qtip': '/sdh-framework/lib/cytoscapeQTip/cytoscape-qtip',
-        'jquery-qtip': '/sdh-framework/lib/QTip/jquery.qtip'
+        'jquery-qtip': '/sdh-framework/lib/QTip/jquery.qtip',
+        'require-css': '/assets/js/requirejs/css.min'
         
     },
     shim : {
@@ -70,7 +71,7 @@ require.config({
             deps: ['jquery']
         },
         'widgetCommon': {
-            deps: ['framework']
+            deps: ['framework', 'css!sdh-framework/framework.widget.common.css']
         },
         'backbone': {
             deps: ['underscore']
@@ -287,7 +288,7 @@ var finishLoading = function() {
 define(function(require, exports, module) {
 
     document.getElementById("loading").className = "";
-
+    requirejs.onResourceLoad = function(a,b,c,d) {console.log(a,b,c,d)}; //TODO: remove
     require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler", "widgetCommon"], function() {
 
         framework.ready(function() {

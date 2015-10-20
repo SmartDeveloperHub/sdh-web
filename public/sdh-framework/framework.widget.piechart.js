@@ -21,45 +21,55 @@
 
 (function() {
 
-    var normalizeConfig = function normalizeConfig(configuration) {
-        if (configuration == null) {
-            configuration = {};
+    var defaultConfig = {
+        height: {
+            type: ['number'],
+            default: 240
+        },
+        donut: {
+            type: ['boolean'],
+            default: false
+        },
+        growOnHover: {
+            type: ['boolean'],
+            default: false
+        },
+        cornerRadius: {
+            type: ['number'],
+            default: 4
+        },
+        padAngle: {
+            type: ['number'],
+            default: 0.05
+        },
+        showLegend: {
+            type: ['boolean'],
+            default: true
+        },
+        showLabels: {
+            type: ['boolean'],
+            default: true
+        },
+        donutRatio: {
+            type: ['number'],
+            default: 0.5
+        },
+        duration: {
+            type: ['number'],
+            default: 250
+        },
+        labelFormat: {
+            type: ['string'],
+            default: "%resourceId%"
+        },
+        labelsOutside: {
+            type: ['boolean'],
+            default: true
+        },
+        maxDecimals: {
+            type: ['number'],
+            default: 2
         }
-        if (typeof configuration.donut != "boolean") {
-            configuration.donut = false;
-        }
-        if (typeof configuration.growOnHover != "boolean") {
-            configuration.growOnHover = false;
-        }
-        if (typeof configuration.cornerRadius != "number") {
-            configuration.cornerRadius = 4;
-        }
-        if (typeof configuration.padAngle != "number") {
-            configuration.padAngle = 0.05;
-        }
-        if (typeof configuration.showLegend != "boolean") {
-            configuration.showLegend = true;
-        }
-        if (typeof configuration.showLabels != "boolean") {
-            configuration.showLabels = true;
-        }
-        if (typeof configuration.donutRatio != "number") {
-            configuration.donutRatio = 0.5;
-        }
-        if (typeof configuration.duration != "number") {
-            configuration.duration = 250;
-        }
-        if (typeof configuration.labelFormat != "string") {
-            configuration.labelFormat = "%mid%";
-        }
-        if (typeof configuration.labelsOutside != "boolean") {
-            configuration.labelsOutside = true;
-        }
-        if (typeof configuration.maxDecimals != "number") {
-            configuration.maxDecimals = 2;
-        }
-
-        return configuration;
     };
 
     /* PieChart constructor
@@ -112,7 +122,7 @@
         framework.widgets.CommonWidget.call(this, false, this.element.get(0));
 
         // Configuration
-        this.configuration = normalizeConfig(configuration);
+        this.configuration = this.normalizeConfig(defaultConfig, configuration);
 
         this.observeCallback = this.commonObserveCallback.bind(this);
 
@@ -221,12 +231,10 @@
 
         this.element.append('<svg class="blurable"></svg>');
         this.svg = this.element.children("svg");
+        this.svg.get(0).style.minHeight = this.configuration.height + "px";
 
         nv.addGraph({
             generate: function() {
-
-                var width = this.element.get(0).getBoundingClientRect().width,
-                    height = this.element.get(0).getBoundingClientRect().height;
 
                 this.chart = nv.models.pieChart()
                     .x(function(d) {
@@ -240,17 +248,10 @@
                             d.value = Math.floor(d.value * pow) / pow;
                         }
 
-                        if (d.value >= 1000 || d.value <= -1000) {
-                            return Math.abs(d.value/1000) + " K";
-                        } else {
-                            return Math.abs(d.value);
-                        }
-
                         return d.value;
                     }.bind(this))
                     .donut(this.configuration.donut)
-                    .width(width)
-                    .height(height)
+                    .height(this.configuration.height)
                     .padAngle(this.configuration.padAngle)
                     .cornerRadius(this.configuration.cornerRadius)
                     .growOnHover(this.configuration.growOnHover)
@@ -266,22 +267,10 @@
                     .transition().duration(0)
                     .call(this.chart);
 
+                nv.utils.windowResize(this.chart.update);
+
                 return this.chart;
 
-            }.bind(this),
-            callback: function(graph) {
-                nv.utils.windowResize(function() {
-                    var width = this.element.get(0).getBoundingClientRect().width;
-                    var height = this.element.get(0).getBoundingClientRect().height;
-                    graph.width(width).height(height);
-
-                    d3.select(this.svg.get(0))
-                        .attr('width', width)
-                        .attr('height', height)
-                        .transition().duration(0)
-                        .call(graph);
-
-                }.bind(this));
             }.bind(this)
         });
 

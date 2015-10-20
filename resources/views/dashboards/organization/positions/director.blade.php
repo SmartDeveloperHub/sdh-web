@@ -13,7 +13,11 @@
     "css!sdh-framework/framework.widget.linesChart.css",
     "sdh-framework/framework.widget.liquidgauge",
     "sdh-framework/framework.widget.piechart",
-    "css!assets/css/dashboards/director-dashboard"
+    "sdh-framework/lib/cytoscape/arbor",
+    "sdh-framework/framework.widget.cytoChart2",
+    "css!sdh-framework/framework.widget.cytoChart2.css",
+    "css!assets/css/dashboards/director-dashboard",
+    "http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"
     ]
 @stop
 
@@ -43,6 +47,11 @@
         <div id="prodTitRow" class="row titleRow">
             <span id="productsTitIco" class="titleIcon fa fa-industry"></span>
             <span id="productsTitLabel" class="titleLabel">Products</span>
+        </div>
+        <div class="row treeChartBox">
+            <div id="cytograph1" class="col-sm-4 col-centered"></div>
+            <div id="cytograph2" class="col-sm-4 col-centered"></div>
+            <div id="cytograph3" class="col-sm-4 col-centered"></div>
         </div>
         <div class="row">
             <div class="row" id="managers-graph"></div>
@@ -269,6 +278,156 @@
                 background: 'transparent'
             };
             var avgHealth = new framework.widgets.CounterBox(avghealth_dom, avghealth_metrics, [orgCtx, timeCtx], avghealth_conf);
+
+
+            function getRandomGravatar(size) {
+                return "https://secure.gravatar.com/avatar/"+CryptoJS.MD5(""+Math.random())+"?d=identicon&s="+size;
+            }
+
+            // CYTOCHART1 INITIALIZATION
+            var cytograph1_dom = document.getElementById("cytograph1");
+            // TODO add ~productManager metrics
+            var cytograph1_metrics = [
+                {
+                    id: 'orgdevelopers',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgcommits',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgbranches',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgrepositories',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgbuilds',
+                    max: 1,
+                    aggr: 'sum'
+                },
+            ];
+            var cytograph1_configuration = {
+                nodes:[
+                    { 'id': 'PManager', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgdevelopers"},
+                    { 'id': 'product1', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgcommits"},
+                    { 'id': 'product2', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgbranches"},
+                    { 'id': 'product3', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgrepositories"}
+                ],
+                edges: [
+                    { source: 'PManager', target: 'product1' },
+                    { source: 'PManager', target: 'product2' },
+                    { source: 'PManager', target: 'product3' }
+                ],
+                mainNode: 'PManager',
+            };
+            var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
+                    null, cytograph1_configuration);
+
+            // CYTOCHART2 INITIALIZATION
+            var cytograph2_dom = document.getElementById("cytograph2");
+            // TODO add ~productManager metrics
+            var cytograph2_metrics = [
+                {
+                    id: 'orgdevelopers',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgcommits',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgbranches',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgrepositories',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgbuilds',
+                    max: 1,
+                    aggr: 'sum'
+                },
+            ];
+            var cytograph2_configuration = {
+                nodes:[
+                    { 'id': 'PManager', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgdevelopers"},
+                    { 'id': 'product1', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgcommits"},
+                    { 'id': 'product2', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgbranches"},
+                    { 'id': 'product3', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgrepositories"},
+                    { 'id': 'product4', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgbuilds"}
+                ],
+                edges: [
+                    { source: 'PManager', target: 'product1' },
+                    { source: 'PManager', target: 'product2' },
+                    { source: 'PManager', target: 'product3' },
+                    { source: 'PManager', target: 'product4' }
+                ],
+                mainNode: 'PManager',
+            };
+            var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
+                    null, cytograph2_configuration);
+
+            // CYTOCHART3 INITIALIZATION
+            var cytograph3_dom = document.getElementById("cytograph3");
+            // TODO add ~productManager metrics
+            var cytograph3_metrics = [
+                {
+                    id: 'orgdevelopers',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgcommits',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgbranches',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgrepositories',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'orgbuilds',
+                    max: 1,
+                    aggr: 'sum'
+                },
+            ];
+            var cytograph3_configuration = {
+                nodes:[
+                    { 'id': 'PManager', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgdevelopers"},
+                    { 'id': 'product1', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgcommits"},
+                    { 'id': 'product2', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgbranches"},
+                    { 'id': 'product3', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgrepositories"},
+                    { 'id': 'product4', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgbuilds"}
+                ],
+                edges: [
+                    { source: 'PManager', target: 'product1' },
+                    { source: 'PManager', target: 'product2' },
+                    { source: 'PManager', target: 'product3' },
+                    { source: 'PManager', target: 'product4' }
+                ],
+                mainNode: 'PManager',
+            };
+            var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
+                    null, cytograph3_configuration);
 
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
             var scatter_dom = document.getElementById("scatter-plot");

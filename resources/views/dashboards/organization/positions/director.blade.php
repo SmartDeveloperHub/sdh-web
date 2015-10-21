@@ -14,6 +14,7 @@
     "css!sdh-framework/framework.widget.linesChart.css",
     "sdh-framework/framework.widget.liquidgauge",
     "sdh-framework/framework.widget.piechart",
+    "sdh-framework/framework.widget.timebar",
     "sdh-framework/lib/cytoscape/arbor",
     "sdh-framework/framework.widget.cytoChart2",
     "css!sdh-framework/framework.widget.cytoChart2.css",
@@ -552,17 +553,15 @@
             }];
 
             var releasesLines_configuration = {
-                xlabel: '',
-                ylabel: '',
-                interpolate: 'monotone',
-                height: 300,
-                labelFormat: '%data.info.title%',
-                colors: ["#2876B8", "#C0485E"],
-                area: false,
-                showPoints: true,
-                showLines: false
+                height: 100,
+                color: function(val) {
+                    var color = d3.scale.linear()
+                            .domain([0, 0.5, 1])
+                            .range(["red", "yellow", "green"]);
+                    return color(val);
+                }
             };
-            var releasesLines = new framework.widgets.LinesChart(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
+            var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 
             // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
             var team_members_lines_dom = document.getElementById("team-members-lines");

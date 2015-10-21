@@ -9,6 +9,7 @@
     "sdh-framework/framework.widget.counterbox",
     "sdh-framework/framework.widget.scatter",
     "sdh-framework/framework.widget.table",
+    "css!sdh-framework/lib/QTip/jquery.qtip.css",
     "sdh-framework/framework.widget.linesChart",
     "css!sdh-framework/framework.widget.linesChart.css",
     "sdh-framework/framework.widget.liquidgauge",

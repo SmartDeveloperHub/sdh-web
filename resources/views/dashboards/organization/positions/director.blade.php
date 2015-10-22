@@ -331,7 +331,7 @@
                 mainNode: 'PManager',
             };
             var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
-                    null, cytograph1_configuration);
+                    [orgCtx, timeCtx], cytograph1_configuration);
 
             // CYTOCHART2 INITIALIZATION
             var cytograph2_dom = document.getElementById("cytograph2");
@@ -380,7 +380,7 @@
                 mainNode: 'PManager',
             };
             var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
-                    null, cytograph2_configuration);
+                    [orgCtx, timeCtx], cytograph2_configuration);
 
             // CYTOCHART3 INITIALIZATION
             var cytograph3_dom = document.getElementById("cytograph3");
@@ -429,7 +429,7 @@
                 mainNode: 'PManager',
             };
             var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
-                    null, cytograph3_configuration);
+                    [orgCtx, timeCtx], cytograph3_configuration);
 
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
             var scatter_dom = document.getElementById("scatter-plot");

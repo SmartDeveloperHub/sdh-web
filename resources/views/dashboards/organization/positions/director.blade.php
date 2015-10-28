@@ -547,7 +547,7 @@
                 columns: [
                     {
                         label: "",
-                        /*link: {
+                        link: {
                             img: "avatar", //or label
                             href: "repository",
                             env: [
@@ -560,7 +560,7 @@
                                     as: "name"
                                 }
                             ]
-                        },*/
+                        },
                         width: "40px"
                     },
                     {
@@ -675,7 +675,7 @@
                 columns: [
                     {
                         label: "",
-                        /*link: {
+                        link: {
                          img: "avatar", //or label
                          href: "repository",
                          env: [
@@ -688,7 +688,7 @@
                          as: "name"
                          }
                          ]
-                         },*/
+                         },
                         width: "40px"
                     },
                     {

@@ -276,8 +276,6 @@ table.dataTable, table.dataTable thead th, table.dataTable thead td {
 }
 .table-search label {
     width: 100%;
-    text-align: center;
-    margin-left: 10px;
 }
 .table-search .dataTables_filter {
     width: 100%;
@@ -290,17 +288,20 @@ table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
 }
 
 .dataTables_filter input[type="search"] {
-    margin-left: 0 !important;
-    width: 190px;
-    border-radius: 10px;
-    padding-left: 20px;
+    margin-left: 0 !important;    padding-left: 44px;    padding-right: 44px;    position: relative;                
+    display: block;    
+    width: 60%;    height: 34px;    padding: 6px 12px;    font-size: 14px;    line-height: 1.42857143;    color: #555;    background-color: #fff;    background-image: none;    border: 1px solid #ccc;    
+    border-radius: 12px;    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.dataTables_filter label {
+  text-align: center;
 }
 .dataTables_filter input[type="search"]:focus {
     outline-style: none;
 }
 
 table.dataTable tbody tr.selected {
-    background-color: rgb(240, 240, 240) !important;
+    background-color: transparent !important;
 }
 
 table.dataTable tbody tr .odd {
@@ -308,4 +309,24 @@ table.dataTable tbody tr .odd {
     border-top: 0;
     border-left: 0;
     border-right: 0;
+}
+
+.dashboardLink img {
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+}
+
+.dataTable td {
+    vertical-align: middle;
+}
+
+.dataTable tr td:nth-child(2) {
+    cursor: pointer;
+}
+div.dataTables_filter input{
+    border-radius: 12px;
+    padding-left: 44px;
+    padding-right: 44px;
+    position: relative;
 }

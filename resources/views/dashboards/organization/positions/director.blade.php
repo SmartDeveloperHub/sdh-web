@@ -81,11 +81,31 @@
             </div>
             <div class="col-sm-8">
                 <div id="releases-chart-subtitle" class="row subtitleRow">
-                    <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                    <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
                     <span id="releases-chart-stitle-label" class="subtitleLabel">Releases History</span>
                 </div>
                 <div class="row">
                     <div id="releases-chart" class="widget"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div id="liquid1-chart-subtitle" class="row subtitleRow">
+                            <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-link"></span>
+                            <span id="liquid1-chart-stitle-label" class="subtitleLabel">Success Time</span>
+                        </div>
+                        <div class="row">
+                            <div id="liquid-1-chart" class="widget"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div id="liquid2-chart-subtitle" class="row subtitleRow">
+                            <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                            <span id="liquid2-chart-stitle-label" class="subtitleLabel">Broken Time</span>
+                        </div>
+                        <div class="row">
+                            <div id="liquid-2-chart" class="widget"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -609,6 +629,46 @@
                 legend: ['Broken', 'Success']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
+
+            //  ----------------------------------- LIQUID GAUGE 1 ------------------------------------------
+            var test_dom = document.getElementById("liquid-1-chart");
+            var test_metrics = [
+                {
+                    id: 'orgcommits',
+                    max: 1
+                }
+            ];
+            var test_configuration = {
+                height: 200,
+                minValue: 0,
+                maxValue: 100,
+                waveColor: '#8ACA17',
+                textColor: '#4BAD06',
+                circleColor: '#4BAD06',
+                waveTextColor:'#DBF1B4'
+            };
+            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
+                    [orgCtx, timeCtx], test_configuration);
+
+            //  ----------------------------------- LIQUID GAUGE 2 ------------------------------------------
+            var test_dom = document.getElementById("liquid-2-chart");
+            var test_metrics = [
+                {
+                    id: 'orgcommits',
+                    max: 1
+                }
+            ];
+            var test_configuration = {
+                height: 200,
+                minValue: 0,
+                maxValue: 100,
+                waveColor: '#E65538',
+                textColor: '#8C1700',
+                circleColor: '#8C1700',
+                waveTextColor: '#FFC5B9'
+            };
+            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
+                    [orgCtx, timeCtx], test_configuration);
 
             // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
             var team_members_lines_dom = document.getElementById("team-members-lines");

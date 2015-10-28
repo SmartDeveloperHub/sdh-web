@@ -289,18 +289,57 @@
                 return "https://secure.gravatar.com/avatar/"+CryptoJS.MD5(""+Math.random())+"?d=identicon&s="+size;
             }
 
+            // CYTOCHART CONFIG FOR PRODUCT MANAGER
+            function configPManagerCytoChart(productsAux, theProductManagerId, edges) {
+                var cytograph1_metrics = [];
+                // Add edges
+                var cytograph1_configuration = {
+                    'nodes': [],
+                    'edges': edges
+                };
+                for (var prId in productsAux) {
+                    // Add Metric
+                    var aux = {
+                        max: 1,
+                        aggr: 'sum',
+                        prid: prId
+                    };
+                    var productMetricId = framework.utils.resourceHash('produsers', aux);
+                    if (prId == theProductManagerId) {
+                        productMetricId = "_static_";
+                    }
+                    aux['id']= 'produsers';
+                    cytograph1_metrics.push(aux);
+                    // Add Node
+                    cytograph1_configuration.nodes.push(
+                        {
+                            id: productsAux[prId].name,
+                            avatar:productsAux[prId].avatar,
+                            shape:"ellipse",
+                            volume: productMetricId,
+                            tooltip:""
+                        }
+                    )
+                }
+                return {'config': cytograph1_configuration, 'metrics': cytograph1_metrics};
+            };
+
             // CYTOCHART1 INITIALIZATION
             // TODO get
             // product managers del director
             // mejores products de los  3 mejores P.Managers
             // Info de cada uno de los productos
             var cytograph1_dom = document.getElementById("cytograph1");
-            // TODO add ~productManager metrics
-            var theProductManagerId = 1; // id del usuario P.Manager?
-            var mainNode = 1;
+            var theProductManagerId = 1;
+            var edges = [
+                { source: 'P_ManagerA', target: 'Product_a' },
+                { source: 'P_ManagerA', target: 'Product_b' },
+                { source: 'P_ManagerA', target: 'Product_c' },
+                { source: 'P_ManagerA', target: 'Product_d' }
+            ];
             var productsAux = {
                 1:{
-                    'name': "P.ManagerA",
+                    'name': "P_ManagerA",
                     'avatar': getRandomGravatar(128)
                 },
                 2:{
@@ -320,144 +359,92 @@
                     'avatar': getRandomGravatar(128)
                 }
             };
-            var cytograph1_metrics = [];
-            // Add edges
-            var cytograph1_configuration = {
-                'nodes': [],
-                'edges': [
-                    { source: 'P.ManagerA', target: 'Product_a' },
-                    { source: 'P.ManagerA', target: 'Product_b' },
-                    { source: 'P.ManagerA', target: 'Product_c' },
-                    { source: 'P.ManagerA', target: 'Product_d' }
-                ],
-                "mainNode":"P.ManagerA"
-            };
-            for (var prId in productsAux) {
-                // Add Metric
-                var aux = {
-                    max: 1,
-                    aggr: 'sum',
-                    prid: prId
-                };
-                var productMetricId = framework.utils.resourceHash('produsers', aux);
-                if (prId == mainNode) {
-                    productMetricId = "_static_";
-                }
-                aux['id']= 'produsers';
-                cytograph1_metrics.push(aux);
-                // Add Node
-                cytograph1_configuration.nodes.push(
-                    {
-                        id: productsAux[prId].name,
-                        avatar:productsAux[prId].avatar,
-                        shape:"ellipse",
-                        volume: productMetricId,
-                        metric: 'produsers',
-                        tooltip:""
-                    }
-                )
-            }
-            //console.log("!!!cytograph testing!!!: " + JSON.stringify(cytograph1_configuration));
-            var cytograph1 = new framework.widgets.CytoChart_old(cytograph1_dom, cytograph1_metrics,
+
+            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
+            var cytograph1_metrics = configPM.metrics;
+            var cytograph1_configuration = configPM.config;
+
+            console.log("!!!cytograph testing!!!: " + JSON.stringify(cytograph1_configuration));
+            var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
                     [orgCtx, timeCtx], cytograph1_configuration);
 
             // CYTOCHART2 INITIALIZATION
             var cytograph2_dom = document.getElementById("cytograph2");
-            // TODO add ~productManager metrics
-            var cytograph2_metrics = [
-                {
-                    id: 'orgdevelopers',
-                    max: 1,
-                    aggr: 'sum'
-                },
-                {
-                    id: 'orgcommits',
-                    max: 1,
-                    aggr: 'sum'
-                },
-                {
-                    id: 'orgbranches',
-                    max: 1,
-                    aggr: 'sum'
-                },
-                {
-                    id: 'orgrepositories',
-                    max: 1,
-                    aggr: 'sum'
-                },
-                {
-                    id: 'orgbuilds',
-                    max: 1,
-                    aggr: 'sum'
-                },
+            var theProductManagerId = 1;
+            var edges = [
+                { source: 'P_ManagerA', target: 'Product_a' },
+                { source: 'P_ManagerA', target: 'Product_b' },
+                { source: 'P_ManagerA', target: 'Product_c' },
+                { source: 'P_ManagerA', target: 'Product_d' }
             ];
-            var cytograph2_configuration = {
-                nodes:[
-                    { 'id': 'PManager', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgdevelopers"},
-                    { 'id': 'product1', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgcommits"},
-                    { 'id': 'product2', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgbranches"},
-                    { 'id': 'product3', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgrepositories"},
-                    { 'id': 'product4', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgbuilds"}
-                ],
-                edges: [
-                    { source: 'PManager', target: 'product1' },
-                    { source: 'PManager', target: 'product2' },
-                    { source: 'PManager', target: 'product3' },
-                    { source: 'PManager', target: 'product4' }
-                ],
-                mainNode: 'PManager',
+            var productsAux = {
+                1:{
+                    'name': "P_ManagerA",
+                    'avatar': getRandomGravatar(128)
+                },
+                2:{
+                    'name': "Product_a",
+                    'avatar': getRandomGravatar(128)
+                },
+                3:{
+                    'name': "Product_b",
+                    'avatar': getRandomGravatar(128)
+                },
+                4:{
+                    'name': "Product_c",
+                    'avatar': getRandomGravatar(128)
+                },
+                5:{
+                    'name': "Product_d",
+                    'avatar': getRandomGravatar(128)
+                }
             };
-            //console.log("!!!cytograph testing 2 !!!: " + JSON.stringify(cytograph2_configuration));
-            var cytograph2 = new framework.widgets.CytoChart_old(cytograph2_dom, cytograph2_metrics,
+
+            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
+            var cytograph2_metrics = configPM.metrics;
+            var cytograph2_configuration = configPM.config;
+
+            console.log("!!!cytograph testing 2 !!!: " + JSON.stringify(cytograph2_configuration));
+            var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
                     [orgCtx, timeCtx], cytograph2_configuration);
 
             // CYTOCHART3 INITIALIZATION
             var cytograph3_dom = document.getElementById("cytograph3");
-            // TODO add ~productManager metrics
-            var cytograph3_metrics = [
-                {
-                    id: 'orgdevelopers',
-                    max: 1,
-                    aggr: 'sum'
-                },
-                {
-                    id: 'orgcommits',
-                    max: 1,
-                    aggr: 'sum'
-                },
-                {
-                    id: 'orgbranches',
-                    max: 1,
-                    aggr: 'sum'
-                },
-                {
-                    id: 'orgrepositories',
-                    max: 1,
-                    aggr: 'sum'
-                },
-                {
-                    id: 'orgbuilds',
-                    max: 1,
-                    aggr: 'sum'
-                },
+            var theProductManagerId = 1;
+            var edges = [
+                { source: 'P_ManagerA', target: 'Product_a' },
+                { source: 'P_ManagerA', target: 'Product_b' },
+                { source: 'P_ManagerA', target: 'Product_c' },
+                { source: 'P_ManagerA', target: 'Product_d' }
             ];
-            var cytograph3_configuration = {
-                nodes:[
-                    { 'id': 'PManager', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgdevelopers"},
-                    { 'id': 'product1', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgcommits"},
-                    { 'id': 'product2', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgbranches"},
-                    { 'id': 'product3', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgrepositories"},
-                    { 'id': 'product4', 'avatar':getRandomGravatar(128), 'shape': 'ellipse', metric:"orgbuilds"}
-                ],
-                edges: [
-                    { source: 'PManager', target: 'product1' },
-                    { source: 'PManager', target: 'product2' },
-                    { source: 'PManager', target: 'product3' },
-                    { source: 'PManager', target: 'product4' }
-                ],
-                mainNode: 'PManager',
+            var productsAux = {
+                1:{
+                    'name': "P_ManagerA",
+                    'avatar': getRandomGravatar(128)
+                },
+                2:{
+                    'name': "Product_a",
+                    'avatar': getRandomGravatar(128)
+                },
+                3:{
+                    'name': "Product_b",
+                    'avatar': getRandomGravatar(128)
+                },
+                4:{
+                    'name': "Product_c",
+                    'avatar': getRandomGravatar(128)
+                },
+                5:{
+                    'name': "Product_d",
+                    'avatar': getRandomGravatar(128)
+                }
             };
-            var cytograph3 = new framework.widgets.CytoChart_old(cytograph3_dom, cytograph3_metrics,
+
+            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
+            var cytograph3_metrics = configPM.metrics;
+            var cytograph3_configuration = configPM.config;
+
+            var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
                     [orgCtx, timeCtx], cytograph3_configuration);
 
             // ------------------------------------------ SCATTER PLOT -------------------------------------------

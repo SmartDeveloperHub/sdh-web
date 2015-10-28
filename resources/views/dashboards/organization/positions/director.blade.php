@@ -15,6 +15,7 @@
     "sdh-framework/framework.widget.liquidgauge",
     "sdh-framework/framework.widget.piechart",
     "sdh-framework/framework.widget.timebar",
+    "css!sdh-framework/framework.widget.timebar.css",
     "sdh-framework/lib/cytoscape/arbor",
     "sdh-framework/framework.widget.cytoChart2",
     "css!sdh-framework/framework.widget.cytoChart2.css",
@@ -559,7 +560,10 @@
                             .domain([0, 0.5, 1])
                             .range(["red", "yellow", "green"]);
                     return color(val);
-                }
+                },
+                tooltip: '<h3>Value: ¬Math.round(_E.value * 100)/100¬</h3>' +
+                         '<h3>Date: ¬moment(_E.time).toString()¬ </h3>',
+                legend: ['Broken', 'Success']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 

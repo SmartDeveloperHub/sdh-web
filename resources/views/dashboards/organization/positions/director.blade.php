@@ -20,6 +20,7 @@
     "sdh-framework/framework.widget.cytoChart2",
     "sdh-framework/framework.widget.cytoChart_old",
     "css!sdh-framework/framework.widget.cytoChart2.css",
+    "sdh-framework/framework.widget.multibar",
     "css!assets/css/dashboards/director-dashboard",
     "http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"
     ]
@@ -57,23 +58,35 @@
             <div id="cytograph2" class="col-sm-4 col-centered"></div>
             <div id="cytograph3" class="col-sm-4 col-centered"></div>
         </div>
-        <div class="row">
-            <div class="row" id="managers-graph"></div>
+        <div class="row scatterBox">
+            <div id="scatter-plot-subtitle" class="row subtitleRow">
+                <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
+                <span id="scatter-plot-stitle-label" class="subtitleLabel">Products analysis</span>
+            </div>
             <div class="row">
-                <div class="col-sm-1"></div>
+                <div class="col-sm-1 auxCol"></div>
                 <div class="col-sm-10">
                     <div id="scatter-plot" class="widget"></div>
                 </div>
-                <div class="col-sm-10"></div>
+                <div class="col-sm-1 auxCol"></div>
             </div>
-            <!-- ADD -->
         </div>
-        <div class="row">
+        <div class="row releasesBox">
             <div class="col-sm-4">
+                <div id="products-table-subtitle" class="row subtitleRow">
+                    <span id="products-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
+                    <span id="products-table-stitle-label" class="subtitleLabel">Product Selector</span>
+                </div>
                 <div id="products-table" class="widget"></div>
             </div>
             <div class="col-sm-8">
-                <div id="releases-chart" class="widget"></div>
+                <div id="releases-chart-subtitle" class="row subtitleRow">
+                    <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                    <span id="releases-chart-stitle-label" class="subtitleLabel">Releases History</span>
+                </div>
+                <div class="row">
+                    <div id="releases-chart" class="widget"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -90,9 +103,26 @@
         </div>
         <div class="row">
             <div class="col-sm-8">
-                <div id="team-members-pie" class="widget"></div>
+                <div class="row">
+                    <div id="team-multibar-subtitle" class="row subtitleRow">
+                        <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                        <span id="team-multibar-stitle-label" class="subtitleLabel">Manager Comparison</span>
+                    </div>
+                    <div id="projects-roles-multibar" class="widget"></div>
+                </div>
+                <div class="row">
+                    <div id="team-pie-subtitle" class="row subtitleRow">
+                        <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                        <span id="team-pie-stitle-label" class="subtitleLabel">Total Member Roles</span>
+                    </div>
+                    <div id="team-members-pie" class="widget"></div>
+                </div>
             </div>
             <div class="col-sm-4">
+                <div id="members-table-subtitle" class="row subtitleRow">
+                    <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
+                    <span id="members-table-stitle-label" class="subtitleLabel"> Manager Selector</span>
+                </div>
                 <div id="team-members-table" class="widget"></div>
             </div>
         </div>
@@ -340,23 +370,23 @@
             var productsAux = {
                 1:{
                     'name': "P_ManagerA",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/PManager1.jpg"
                 },
                 2:{
                     'name': "Product_a",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/bp1.png"
                 },
                 3:{
                     'name': "Product_b",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/bp2.png"
                 },
                 4:{
                     'name': "Product_c",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/bp3.png"
                 },
                 5:{
                     'name': "Product_d",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/bp4.png"
                 }
             };
 
@@ -364,7 +394,6 @@
             var cytograph1_metrics = configPM.metrics;
             var cytograph1_configuration = configPM.config;
 
-            console.log("!!!cytograph testing!!!: " + JSON.stringify(cytograph1_configuration));
             var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
                     [orgCtx, timeCtx], cytograph1_configuration);
 
@@ -374,29 +403,24 @@
             var edges = [
                 { source: 'P_ManagerA', target: 'Product_a' },
                 { source: 'P_ManagerA', target: 'Product_b' },
-                { source: 'P_ManagerA', target: 'Product_c' },
-                { source: 'P_ManagerA', target: 'Product_d' }
+                { source: 'P_ManagerA', target: 'Product_c' }
             ];
             var productsAux = {
                 1:{
                     'name': "P_ManagerA",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/PManager2.jpg"
                 },
                 2:{
                     'name': "Product_a",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/gp1.png"
                 },
                 3:{
                     'name': "Product_b",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/gp2.png"
                 },
                 4:{
                     'name': "Product_c",
-                    'avatar': getRandomGravatar(128)
-                },
-                5:{
-                    'name': "Product_d",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/gp3.png"
                 }
             };
 
@@ -404,7 +428,6 @@
             var cytograph2_metrics = configPM.metrics;
             var cytograph2_configuration = configPM.config;
 
-            console.log("!!!cytograph testing 2 !!!: " + JSON.stringify(cytograph2_configuration));
             var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
                     [orgCtx, timeCtx], cytograph2_configuration);
 
@@ -415,28 +438,33 @@
                 { source: 'P_ManagerA', target: 'Product_a' },
                 { source: 'P_ManagerA', target: 'Product_b' },
                 { source: 'P_ManagerA', target: 'Product_c' },
-                { source: 'P_ManagerA', target: 'Product_d' }
+                { source: 'P_ManagerA', target: 'Product_d' },
+                { source: 'P_ManagerA', target: 'Product_e' }
             ];
             var productsAux = {
                 1:{
                     'name': "P_ManagerA",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/PManager3.jpg"
                 },
                 2:{
                     'name': "Product_a",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/rp1.png"
                 },
                 3:{
                     'name': "Product_b",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/rp2.png"
                 },
                 4:{
                     'name': "Product_c",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/rp3.png"
                 },
                 5:{
                     'name': "Product_d",
-                    'avatar': getRandomGravatar(128)
+                    'avatar': "assets/images/CytoChartDemo/rp4.png"
+                },
+                6:{
+                    'name': "Product_e",
+                    'avatar': "assets/images/CytoChartDemo/rp5.png"
                 }
             };
 
@@ -705,7 +733,30 @@
                     [orgCtx, timeCtx], test_configuration);
             */
 
-
+            // --------------------------ROLES MULTIBAR ------------------------------------
+            var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");
+            var project_roles_multibar_metrics = [
+                {
+                    id: 'orgbrokenexec',
+                    max: 5
+                },
+                {
+                    id: 'orgsuccessexec',
+                    max: 5
+                },
+                {
+                    id: 'orgexec',
+                    max: 5
+                }
+            ];
+            var project_roles_multibar_conf = {
+                stacked: false,
+                labelFormat: "%data.info.title%",
+                showControls: false,
+                height: 250
+            };
+            var project_roles_multibar = new framework.widgets.MultiBar(project_roles_multibar_dom, project_roles_multibar_metrics,
+                    [orgCtx, timeCtx], project_roles_multibar_conf);
         };
     }
 

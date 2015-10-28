@@ -110,6 +110,98 @@
 #peopleTitLabel {
 }
 
+/*************/
+/* subtitles */
+/*************/
+
+.subtitleRow {
+    margin-bottom: 25px;
+    text-align: center;
+    margin-top: 35px;
+    margin-left: 50px;
+    margin-right: 0;
+    line-height: 30px;
+}
+
+.subtitleIcon {
+    font-size: 29px;
+    vertical-align: middle;
+}
+
+.subtitleLabel {
+    font-size: 24px;
+    margin-left: 20px;
+    color: #6F6C6C;
+    vertical-align: middle;
+    font-family: Roboto;
+}
+
+/* metrics secction*/
+
+/* products secction*/
+#scatter-plot-subtitle {
+}
+
+#scatter-plot-stitle-ico {
+    color: #94C11F;
+}
+
+#scatter-plot-stitle-label {
+}
+
+#products-table-subtitle {
+}
+
+#products-table-stitle-ico {
+    color: #94C11F;
+}
+
+#products-table-stitle-label {
+}
+
+#releases-chart-subtitle {
+}
+
+#releases-chart-stitle-ico {
+    color: #F75333;
+}
+
+#releases-chart-stitle-label {
+}
+
+/* team members secction*/
+#members-table-subtitle {
+}
+
+#members-table-stitle-ico {
+    color: #94C11F;
+}
+
+#members-table-stitle-label {
+}
+
+#team-multibar-subtitle {
+}
+
+#team-multibar-stitle-ico {
+    color: #F28A47;
+}
+
+#team-multibar-stitle-label {
+}
+
+#team-pie-subtitle {
+}
+
+#team-pie-stitle-ico {
+    color: #F28A47;
+}
+
+#team-pie-stitle-label {
+}
+
+
+
 /***********/
 /* widgets */
 /***********/
@@ -145,6 +237,11 @@
     min-width: 325px;
 }
 
+#products-table {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 #scatter-plot {
 }
 
@@ -153,3 +250,62 @@
 }
 
 /* team members secction*/
+#team-members-table {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
+/* Product and Team Member common widgets*/
+table.dataTable {
+    width: 100% !important;
+}
+table.dataTable thead {
+    background-color: transparent;
+}
+table.dataTable, table.dataTable thead th, table.dataTable thead td {
+    border: 0 !important;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background: #ffffff;
+}
+.table-search {
+    width: 100%;
+    padding: 0 10px 5px 10px;
+    border: 0;
+}
+.table-search label {
+    width: 100%;
+    text-align: center;
+    margin-left: 10px;
+}
+.table-search .dataTables_filter {
+    width: 100%;
+    float: none !important;
+}
+
+table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.dataTables_filter input[type="search"] {
+    margin-left: 0 !important;
+    width: 190px;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+.dataTables_filter input[type="search"]:focus {
+    outline-style: none;
+}
+
+table.dataTable tbody tr.selected {
+    background-color: rgb(240, 240, 240) !important;
+}
+
+table.dataTable tbody tr .odd {
+    border-bottom: solid 1px #808080;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}

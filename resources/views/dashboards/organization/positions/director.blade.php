@@ -18,7 +18,6 @@
     "css!sdh-framework/framework.widget.timebar.css",
     "sdh-framework/lib/cytoscape/arbor",
     "sdh-framework/framework.widget.cytoChart2",
-    "sdh-framework/framework.widget.cytoChart_old",
     "css!sdh-framework/framework.widget.cytoChart2.css",
     "sdh-framework/framework.widget.multibar",
     "css!assets/css/dashboards/director-dashboard",
@@ -159,6 +158,7 @@
         var orgCtx = "org-context";
         var timeCtx = "time-context";
         var productsCtx = "products-context";
+        var teamMembersCtx = "team-members-context";
 
         //Show header chart and set titles
         setTitle("Home");
@@ -612,7 +612,7 @@
             var releasesLines_dom = document.getElementById("releases-chart");
 
             var releasesLines_metrics = [{
-                id: 'repocommits',
+                id: 'productreleasestatus',
                 max: 100
             }];
 
@@ -697,7 +697,7 @@
                     [orgCtx, timeCtx], team_members_lines_configuration);
 
 
-            // SKILLS STAR CHART
+            // TEAM MEMBERS ROLES
             var team_members_pie_dom = document.getElementById("team-members-pie");
             var team_members_pie_metrics = [
                 {
@@ -706,26 +706,28 @@
                     aggr: "sum"
                 },
                 {
-                    id: 'orgcommits',
+                    id: 'orgdevelopers',
                     max: 1,
                     aggr: "sum"
                 },
                 {
-                    id: 'orgcommits',
+                    id: 'orgbranches',
                     max: 1,
                     aggr: "sum"
                 },
                 {
-                    id: 'orgcommits',
+                    id: 'orgexec',
                     max: 1,
                     aggr: "sum"
                 }];
             var team_members_pie_configuration = {
                 height: 300,
-                labelFormat: "%resourceId%"
+                labelFormat: "¬(_E.resource == 'orgcommits' ? 'Software developer' : " +
+                "(_E.resource == 'orgdevelopers' ? 'Software Arquitect' : " +
+                "(_E.resource == 'orgbranches' ? 'Project Manager' : 'Stakeholder')))¬"
             };
             var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,
-                    [orgCtx, timeCtx], team_members_pie_configuration);
+                    [orgCtx, timeCtx, teamMembersCtx], team_members_pie_configuration);
 
 
             //  ------------------------------ PRODUCT MANAGERS TABLE --------------------------------------
@@ -739,14 +741,14 @@
                          img: "avatar", //or label
                          href: "repository",
                          env: [
-                         {
-                         property: "repositoryid",
-                         as: "rid"
-                         },
-                         {
-                         property: "name",
-                         as: "name"
-                         }
+                             {
+                                 property: "repositoryid",
+                                 as: "rid"
+                             },
+                             {
+                                 property: "name",
+                                 as: "name"
+                             }
                          ]
                          },
                         width: "40px"
@@ -758,7 +760,7 @@
                 ],
                 updateContexts: [
                     {
-                        id: productsCtx,
+                        id: teamMembersCtx,
                         filter: [
                             {
                                 property: "repositoryid", //TODO
@@ -776,36 +778,19 @@
             };
             var team_members_table = new framework.widgets.Table(team_members_table_dom, team_members_table_metrics, [orgCtx, timeCtx], team_members_table_configuration);
 
-
-            //TODO: use the liquid gauge
-            /*var test_dom = document.getElementById("releases-chart");
-            var test_metrics = [
-                {
-                    id: 'orgcommits',
-                    max: 1
-                }
-            ];
-            var test_configuration = {
-                minValue: 0,
-                maxValue: 30000
-            };
-            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
-                    [orgCtx, timeCtx], test_configuration);
-            */
-
             // --------------------------ROLES MULTIBAR ------------------------------------
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");
             var project_roles_multibar_metrics = [
                 {
-                    id: 'orgbrokenexec',
+                    id: 'repobrokenexecutions',
                     max: 5
                 },
                 {
-                    id: 'orgsuccessexec',
+                    id: 'repopassedexecutions',
                     max: 5
                 },
                 {
-                    id: 'orgexec',
+                    id: 'repoexecutions',
                     max: 5
                 }
             ];
@@ -816,7 +801,7 @@
                 height: 250
             };
             var project_roles_multibar = new framework.widgets.MultiBar(project_roles_multibar_dom, project_roles_multibar_metrics,
-                    [orgCtx, timeCtx], project_roles_multibar_conf);
+                    [orgCtx, timeCtx, teamMembersCtx], project_roles_multibar_conf);
         };
     }
 

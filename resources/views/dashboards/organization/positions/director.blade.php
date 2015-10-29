@@ -612,8 +612,8 @@
             var releasesLines_dom = document.getElementById("releases-chart");
 
             var releasesLines_metrics = [{
-                id: 'productreleasestatus',
-                max: 100
+                id: 'reporeleasestatus',
+                max: 20
             }];
 
             var releasesLines_configuration = {

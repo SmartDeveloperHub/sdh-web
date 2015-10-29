@@ -330,7 +330,6 @@ table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
 }
 
 table.dataTable tbody tr.selected {
-    background-color: transparent !important;
 }
 
 table.dataTable tbody tr .odd {

@@ -675,7 +675,7 @@
             var team_members_lines_dom = document.getElementById("team-members-lines");
             var team_members_lines_metrics = [
                 {
-                    id: 'orgcommits',
+                    id: 'orgdevelopers',
                     max: 30
                 },
                 {
@@ -691,8 +691,7 @@
                 height: 200,
                 labelFormat: '%data.info.title%',
                 colors: ["#2876B8", "#C0485E"],
-                area: false,
-                _demo: true // Only for demo
+                area: false
             };
             var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
                     [orgCtx, timeCtx], team_members_lines_configuration);
@@ -783,23 +782,37 @@
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");
             var project_roles_multibar_metrics = [
                 {
-                    id: 'repobrokenexecutions',
-                    max: 5
+                    id: 'repodevelopers',
+                    max: 1
                 },
-                {
+                                {
                     id: 'repopassedexecutions',
-                    max: 5
+                    max: 1
                 },
                 {
-                    id: 'repoexecutions',
-                    max: 5
+                    id: 'repocommits',
+                    max: 1
+                },
+                {
+                    id: 'repobrokenexecutions',
+                    max: 1
                 }
             ];
+            var roles = {
+                'repodevelopers' : 'software developer', 
+                'repopassedexecutions': 'software architect', 
+                'repocommits': 'project manager', 
+                'repobrokenexecutions': 'stakeholder'
+            };
             var project_roles_multibar_conf = {
                 stacked: false,
-                labelFormat: "%data.info.title%",
+                labelFormat: "¬_D.data.info.rid.name¬",
                 showControls: false,
-                height: 250
+                height: 250,
+                showLegend: false,
+                x: function(metric, metricId, i) {
+                    return roles[metricId];
+                }
             };
             var project_roles_multibar = new framework.widgets.MultiBar(project_roles_multibar_dom, project_roles_multibar_metrics,
                     [orgCtx, timeCtx, teamMembersCtx], project_roles_multibar_conf);

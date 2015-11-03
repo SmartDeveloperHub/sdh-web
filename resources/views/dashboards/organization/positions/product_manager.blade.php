@@ -206,8 +206,8 @@
             var products_conf = {
                 label: 'Products',
                 decimal: 0,
-                icon: 'fa fa-gift',
-                iconbackground: 'rgb(0, 75, 139)',
+                icon: 'fa fa-industry',
+                iconbackground: '#F75333',
                 background: 'transparent'
             };
             var products = new framework.widgets.CounterBox(products_dom, products_metrics, [orgCtx, timeCtx], products_conf);
@@ -223,7 +223,7 @@
                 label: 'Projects',
                 decimal: 0,
                 icon: 'fa fa-cubes',
-                iconbackground: 'rgb(0, 75, 139)',
+                iconbackground: '#8A1978',
                 background: 'transparent'
             };
             var team_members = new framework.widgets.CounterBox(team_members_dom, team_members_metrics, [orgCtx, timeCtx], team_members_conf);
@@ -236,10 +236,10 @@
                 aggr: 'sum'
             }];
             var developers_conf = {
-                label: 'Developers',
+                label: 'Team members',
                 decimal: 0,
-                icon: 'fa fa-users',
-                iconbackground: 'rgb(0, 75, 139)',
+                icon: 'octicon octicon-organization',
+                iconbackground: '#019640',
                 background: 'transparent'
             };
             var developers = new framework.widgets.CounterBox(developers_dom, developers_metrics, [orgCtx, timeCtx], developers_conf);
@@ -254,8 +254,8 @@
             var avg_developers_conf = {
                 label: 'Developers / project',
                 decimal: 0,
-                icon: 'octicon octicon-git-commit',
-                iconbackground: 'rgb(0, 75, 139)',
+                icon: 'octicon octicon-organization',
+                iconbackground: '#EE7529',
                 background: 'transparent'
             };
             var avg_developers = new framework.widgets.CounterBox(avg_developers_dom, avg_developers_metrics, [orgCtx, timeCtx], avg_developers_conf);
@@ -286,8 +286,8 @@
             var avg_repositories_conf = {
                 label: 'Repositories / project',
                 decimal: 0,
-                icon: 'octicon octicon-git-commit',
-                iconbackground: 'rgb(0, 75, 139)',
+                icon: 'octicon octicon-repo',
+                iconbackground: '#EE7529',
                 background: 'transparent'
             };
             var avg_repositories = new framework.widgets.CounterBox(avg_repositories_dom, avg_repositories_metrics, [orgCtx, timeCtx], avg_repositories_conf);

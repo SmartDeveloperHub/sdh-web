@@ -9,11 +9,19 @@
     "sdh-framework/framework.widget.counterbox",
     "sdh-framework/framework.widget.scatter",
     "sdh-framework/framework.widget.table",
+    "css!sdh-framework/lib/QTip/jquery.qtip.css",
     "sdh-framework/framework.widget.linesChart",
+    "css!sdh-framework/framework.widget.linesChart.css",
     "sdh-framework/framework.widget.liquidgauge",
     "sdh-framework/framework.widget.piechart",
+    "sdh-framework/framework.widget.timebar",
+    "css!sdh-framework/framework.widget.timebar.css",
+    "sdh-framework/lib/cytoscape/arbor",
+    "sdh-framework/framework.widget.cytoChart2",
+    "css!sdh-framework/framework.widget.cytoChart2.css",
     "sdh-framework/framework.widget.multibar",
-    "css!assets/css/dashboards/repository-dashboard"
+    "css!assets/css/dashboards/product_manager-dashboard",
+    "http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"
     ]
 @stop
 

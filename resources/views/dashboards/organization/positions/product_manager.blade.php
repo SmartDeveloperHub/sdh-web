@@ -47,28 +47,60 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="row titleRow">
-            <span class="titleIcon titleIcon fa fa-gift"></span>
-            <span class="titleLabel">Products</span>
+    <div id="productsSect" class="row">
+        <div id="prodTitRow" class="row titleRow">
+            <span id="productsTitIco" class="titleIcon fa fa-industry"></span>
+            <span id="productsTitLabel" class="titleLabel">Products</span>
         </div>
-        <div class="row">
-            <div class="row">
-                <div id="managers-graph" class="widget"></div>
+        <div class="row scatterBox">
+            <div id="scatter-plot-subtitle" class="row subtitleRow">
+                <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
+                <span id="scatter-plot-stitle-label" class="subtitleLabel">Products analysis</span>
             </div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-1 auxCol"></div>
+                <div class="col-sm-10">
                     <div id="scatter-plot" class="widget"></div>
                 </div>
+                <div class="col-sm-1 auxCol"></div>
             </div>
-            <!-- ADD -->
         </div>
-        <div class="row">
+        <div class="row releasesBox">
             <div class="col-sm-4">
+                <div id="products-table-subtitle" class="row subtitleRow">
+                    <span id="products-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
+                    <span id="products-table-stitle-label" class="subtitleLabel">Product Selector</span>
+                </div>
                 <div id="products-table" class="widget"></div>
             </div>
             <div class="col-sm-8">
-                <div id="releases-chart" class="widget"></div>
+                <div id="releases-chart-subtitle" class="row subtitleRow">
+                    <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
+                    <span id="releases-chart-stitle-label" class="subtitleLabel">Releases History</span>
+                </div>
+                <div class="row">
+                    <div id="releases-chart" class="widget"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div id="liquid1-chart-subtitle" class="row subtitleRow">
+                            <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-link"></span>
+                            <span id="liquid1-chart-stitle-label" class="subtitleLabel">Success Time</span>
+                        </div>
+                        <div class="row">
+                            <div id="liquid-1-chart" class="widget"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div id="liquid2-chart-subtitle" class="row subtitleRow">
+                            <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                            <span id="liquid2-chart-stitle-label" class="subtitleLabel">Broken Time</span>
+                        </div>
+                        <div class="row">
+                            <div id="liquid-2-chart" class="widget"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

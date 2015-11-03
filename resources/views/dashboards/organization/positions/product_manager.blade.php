@@ -359,12 +359,12 @@
 
             //  ----------------------------------- PRODUCTS TABLE ------------------------------------------
             var table_dom = document.getElementById("products-table");
-            var table_metrics = ['repolist']; //TODO: choose resourcemonit
+            var table_metrics = ['repolist']; //TODO: choose resource
             var table_configuration = {
                 columns: [
                     {
                         label: "",
-                        /*link: {
+                        link: {
                             img: "avatar", //or label
                             href: "repository",
                             env: [
@@ -377,7 +377,7 @@
                                     as: "name"
                                 }
                             ]
-                        },*/
+                        },
                         width: "40px"
                     },
                     {
@@ -397,11 +397,12 @@
                     }
                 ],
                 selectable: true,
-                minRowsSelected: 1,
-                maxRowsSelected: 6,
+                minRowsSelected: 0,
+                maxRowsSelected: 1,
                 filterControl: true,
-                initialSelectedRows: 5,
-                showHeader: false
+                initialSelectedRows: 1,
+                showHeader: false,
+                alwaysOneSelected: true
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx], table_configuration);
 

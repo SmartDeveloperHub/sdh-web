@@ -78,6 +78,11 @@
             <span class="titleIcon titleIcon fa fa-users"></span>
             <span class="titleLabel">Team members</span>
         </div>
+        <div class="row treeChartBox">
+            <div id="cytograph1" class="col-sm-4 col-centered"></div>
+            <div id="cytograph2" class="col-sm-4 col-centered"></div>
+            <div id="cytograph3" class="col-sm-4 col-centered"></div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div id="team-members-lines" class="widget"></div>

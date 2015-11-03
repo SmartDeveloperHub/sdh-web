@@ -26,18 +26,24 @@
 @stop
 
 @section('html')
-    <div class="row">
-        <div class="row titleRow">
-            <span class="titleIcon titleIcon octicon octicon-dashboard"></span>
-            <span class="titleLabel">Metrics</span>
+    <div id="metricsSect" class="row">
+        <div id="metTitRow" class="row titleRow">
+            <span id="metricsTitIco" class="titleIcon octicon octicon-dashboard"></span>
+            <span id="metricsTitLabel" class="titleLabel">Metrics</span>
         </div>
-        <div class="row">
-            <div id="products-ctr" class="boxCounter col-sm-4"></div>
-            <div id="developers-ctr" class="boxCounter col-sm-4"></div>
-            <div id="repositories-ctr" class="boxCounter col-sm-4"></div>
-            <div id="projects-ctr" class="boxCounter col-sm-4"></div>
-            <div id="avg-developers-ctr" class="boxCounter col-sm-4"></div>
-            <div id="avg-repositories-ctr" class="boxCounter col-sm-4"></div>
+        <div id="metricBoxes"class="row">
+            <div class="row">
+                <div id="products-ctr" class="boxCounter col-sm-3"></div>
+                <div id="developers-ctr" class="boxCounter col-sm-3"></div>
+                <div id="repositories-ctr" class="boxCounter col-sm-3"></div>
+                <div id="projects-ctr" class="boxCounter col-sm-3"></div>
+            </div>
+            <div class="row">
+                <div id="empty-ctr1" class="boxCounter col-sm-3"></div>
+                <div id="avg-developers-ctr" class="boxCounter col-sm-3"></div>
+                <div id="avg-repositories-ctr" class="boxCounter col-sm-3"></div>
+                <div id="empty-ctr2" class="boxCounter col-sm-3"></div>
+            </div>
         </div>
     </div>
 

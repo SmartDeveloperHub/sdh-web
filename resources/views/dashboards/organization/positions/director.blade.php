@@ -809,7 +809,7 @@
                 labelFormat: "¬_D.data.info.rid.name¬",
                 showControls: false,
                 height: 250,
-                showLegend: false,
+                showLegend: true,
                 x: function(metric, metricId, i) {
                     return roles[metricId];
                 }

@@ -208,7 +208,7 @@
             // --------------------------------------- PRODUCTS --------------------------------------------
             var products_dom = document.getElementById("products-ctr");
             var products_metrics = [{
-                id: 'orgcommits',  //TODO: Total Products
+                id: 'orgcommits',  //TODO: director Products metric. userproducts con uid. Tengo que conseguir el uid del logueado
                 max: 1,
                 aggr: 'sum'
             }];
@@ -224,7 +224,7 @@
             // ------------------------------------ TEAM MEMBERS -------------------------------------------
             var team_members_dom = document.getElementById("team-members-ctr");
             var team_members_metrics = [{
-                id: 'orgcommits', //TODO: Total Team Members
+                id: 'orgcommits', //TODO: director users metric. userrsers con uid. Tengo que conseguir el uid del logueado
                 max: 1,
                 aggr: 'sum'
             }];
@@ -240,7 +240,7 @@
             // ---------------------------------------- RELEASES -------------------------------------------
             var some1_dom = document.getElementById("releases-ctr");
             var some1_metrics = [{
-                id: 'orgcommits',  //TODO: Nº Releases: total builds passed in master branch
+                id: 'orgcommits',  //TODO: Nº Releases: total builds passed in master branch. userReleases o userPassedBuilds o algo así
                 max: 1,
                 aggr: 'sum'
             }];
@@ -256,7 +256,7 @@
             // ------------------------------------------ PERSONEL COST ----------------------------------------
             var some2_dom = document.getElementById("personnel-cost-ctr");
             var some2_metrics = [{
-                id: 'orgcommits',  //TODO: Total de coste por team member 25*nºmembers * (dias del rango seleccionado)
+                id: 'orgcommits',  //TODO: Ad hoc? o userTeamCost?. Total de coste por team member 25*nºmembers * (dias del rango seleccionado)
                 max: 1,
                 aggr: 'sum'
             }];
@@ -272,7 +272,7 @@
             // ------------------------------------------ CONTRIBUTORS ----------------------------------------
             var some2_dom = document.getElementById("contributors-ctr");
             var some2_metrics = [{
-                id: 'orgcommits',  //TODO: Número de externos (contributors) o  % externos
+                id: 'orgcommits',  //TODO: AdHoc? userExternalContributors?. Número de externos (contributors) o  % externos
                 max: 1,
                 aggr: 'sum'
             }];
@@ -288,7 +288,7 @@
             // --------------------------------- EXTERNAL COMPANIES --------------------------------
             var some2_dom = document.getElementById("companies-ctr");
             var some2_metrics = [{
-                id: 'orgcommits',  //TODO: Número de externos (contributors) o  % externos
+                id: 'orgcommits',  //TODO: AdHoc? userExternalContributorCompanies? básicamente sacar del dominio del mail el nombre de  la empresa exerna.
                 max: 1,
                 aggr: 'sum'
             }];
@@ -304,7 +304,7 @@
             // ------------------------------- AVG TEAM MEMBERS PER PRODUCT-------------------------------------
             var avgteam_dom = document.getElementById("avg-team-ctr");
             var avgteam_metrics = [{
-                id: 'orgcommits',  //TODO: Total Products
+                id: 'orgcommits',  //TODO: userProductsMembers AVG
                 max: 1,
                 aggr: 'sum'
             }];
@@ -320,7 +320,7 @@
             // ------------------------------------ AVG HEALTH PER PRODUCT -------------------------------------------
             var avghealth_dom = document.getElementById("avg-health-ctr");
             var avghealth_metrics = [{
-                id: 'orgcommits', //TODO: Total Team Members
+                id: 'orgcommits', //TODO: userProductwHealth AVG
                 max: 1,
                 aggr: 'sum'
             }];

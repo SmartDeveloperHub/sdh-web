@@ -659,14 +659,64 @@
                     [orgCtx, timeCtx], team_members_lines_configuration);
 
             //  --------------------------- PRODUCT / PROJECTS TABLE ---------------------------------
+
+            var superContextData = {};
+            var widgetList = [];
+
+            // This method combines different contexts into a supercontext
+            var superContextHandler = function(data, changes, contextId) {
+
+                // Update the changed data
+                superContextData[contextId] = data;
+
+                // Simple merge of the data from all the contexts...combines arrays with an union of the elements
+                var mergedData = {};
+                for(var context in superContextData) {
+
+                    for(var prop in superContextData[context]) {
+                        if(mergedData[prop] != null && mergedData[prop] instanceof Array && superContextData[context][prop] instanceof Array) {
+                            for(var i = 0; i < superContextData[context][prop].length; i++) {
+                                if(mergedData[prop].indexOf(superContextData[context][prop][i]) == -1)
+                                    mergedData[prop].push(superContextData[context][prop][i]);
+                            }
+                        } else {
+                            mergedData[prop] = superContextData[context][prop];
+                        }
+                    }
+
+                }
+
+                // Update the super context
+                framework.data.updateContext(productByProjectCtx, mergedData);
+
+            };
+
             framework.data.observe(['repolist'], function (event) { //Change repos with products
 
                 if (event.event === 'data') {
+
+                    // Stop the observer of the context of previous widgets
+                    framework.data.stopObserve(superContextHandler);
+
+                    // Destroy previous widgets
+                    var removeWidget;
+                    while((removeWidget = widgetList.pop()) != null) {
+                        removeWidget.delete();
+                    }
+
+                    // Remove table rows
+                    $("#product-projects-table").empty();
+
+                    // Now we can start adding things
                     var products = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
 
                     for(var x = 0; x < products.length; x++) {
                         var name = products[x]['name'];
                         var productId = products[x]['repositoryid'];
+                        var context = "product-projects-table-" + Math.floor(Math.random() * 100000000);
+
+                        // Observe the context to handle changes in any of the subtables and actualize the super-context
+                        framework.data.observeContext(context, superContextHandler);
 
                         // Create a new row in the HTML table
                         var newRowHeader = $("<tr class='tableProductRow'><td class='tableProductLabel'>" + name + "</td></tr>");
@@ -680,7 +730,7 @@
                         var product_projects_table_metrics = [
                             {
                                 id: 'repolist', //TODO: change resource
-                                //force the product id
+                                //TODO: force the product id
                             }
                         ];
                         var product_projects_table_configuration = {
@@ -710,7 +760,7 @@
                             ],
                             updateContexts: [
                                 {
-                                    id: productByProjectCtx,
+                                    id: context,
                                     filter: [
                                         {
                                             property: "repositoryid", //TODO
@@ -727,10 +777,15 @@
                             showHeader: false,
                             filterControl: false
                         };
-                        new framework.widgets.Table(product_projects_table_dom, product_projects_table_metrics, [orgCtx, timeCtx], product_projects_table_configuration);
+
+                        //Create the widget
+                        var widget = new framework.widgets.Table(product_projects_table_dom, product_projects_table_metrics, [orgCtx, timeCtx], product_projects_table_configuration);
+
+                        // Add the widget to the widget list to then be able to destroy all the widgets in case of context change
+                        widgetList.push(widget);
                     }
                 }
-            }, []);
+            }, [timeCtx]);
 
             // --------------------------ROLES MULTIBAR ------------------------------------
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");

@@ -288,7 +288,7 @@ var finishLoading = function() {
 define(function(require, exports, module) {
 
     document.getElementById("loading").className = "";
-    requirejs.onResourceLoad = function(a,b,c,d) {console.log(a,b,c,d)}; //TODO: remove
+
     require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler", "widgetCommon"], function() {
 
         framework.ready(function() {

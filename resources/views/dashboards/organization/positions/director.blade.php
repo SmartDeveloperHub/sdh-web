@@ -627,7 +627,7 @@
                 },
                 tooltip: '<h3>Value: ¬Math.round(_E.value * 100)/100¬</h3>' +
                          '<h3>Date: ¬moment(_E.time).toString()¬ </h3>',
-                legend: ['Broken', 'Success']
+                legend: ['Success', 'Broken']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 

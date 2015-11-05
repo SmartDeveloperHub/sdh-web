@@ -106,7 +106,7 @@
     </div>
 
     <div class="row">
-        <div class="row titleRow">
+        <div id="peplTitRow" class="row titleRow">
             <span class="titleIcon titleIcon fa fa-users"></span>
             <span class="titleLabel">Team members</span>
         </div>
@@ -123,18 +123,26 @@
         <div class="row">
             <div class="col-sm-8">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div id="projects-roles-pie" class="widget"></div>
+                    <div id="team-multibar-subtitle" class="row subtitleRow">
+                        <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                        <span id="team-multibar-stitle-label" class="subtitleLabel">Teams Comparison</span>
                     </div>
+                    <div id="projects-roles-multibar" class="widget"></div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div id="projects-roles-multibar" class="widget"></div>
+                    <div id="team-pie-subtitle" class="row subtitleRow">
+                        <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                        <span id="team-pie-stitle-label" class="subtitleLabel">Total Member Roles</span>
                     </div>
+                    <div id="team-members-pie" class="widget"></div>
                 </div>
             </div>
             <div class="col-sm-4">
-                <table id="product-projects-table" class="widget"></table>
+                <div id="members-table-subtitle" class="row subtitleRow">
+                    <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
+                    <span id="members-table-stitle-label" class="subtitleLabel"> Projects Selector</span>
+                </div>
+                <div id="product-projects-table" class="widget"></div>
             </div>
         </div>
     </div>

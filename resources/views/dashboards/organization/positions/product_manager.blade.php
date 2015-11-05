@@ -345,7 +345,7 @@
                 },
                 xAxisTicks: 3,
                 yAxisLabel: "Quality",
-                height: 500,
+                height: 390,
                 groupBy: 'rid',
                 labelFormat: '¬_D.repocommits.info.rid.name¬',
                 showDistX: false,

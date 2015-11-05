@@ -669,7 +669,7 @@
                         var productId = products[x]['repositoryid'];
 
                         // Create a new row in the HTML table
-                        var newRowHeader = $("<tr><th>" + name + "</th></tr>");
+                        var newRowHeader = $("<tr class='tableProductRow'><td class='tableProductLabel'>" + name + "</td></tr>");
                         var newRowTable = $("<tr><td></td></tr>");
                         $("#product-projects-table").append(newRowHeader);
                         $("#product-projects-table").append(newRowTable);
@@ -687,20 +687,20 @@
                             columns: [
                                 {
                                     label: "",
-                                    /*link: {
-                                     img: "avatar", //or label
-                                     href: "repository",
-                                     env: [
-                                     {
-                                     property: "repositoryid",
-                                     as: "rid"
+                                    link: {
+                                         img: "avatar", //or label
+                                         href: "repository",
+                                         env: [
+                                             {
+                                                 property: "repositoryid",
+                                                 as: "rid"
+                                             },
+                                             {
+                                                 property: "name",
+                                                 as: "name"
+                                             }
+                                         ]
                                      },
-                                     {
-                                     property: "name",
-                                     as: "name"
-                                     }
-                                     ]
-                                     },*/
                                     width: "40px"
                                 },
                                 {
@@ -721,79 +721,88 @@
                             ],
                             selectable: true,
                             minRowsSelected: 1,
-                            maxRowsSelected: 6,
+                            maxRowsSelected: 8,
                             filterControl: true,
-                            initialSelectedRows: 5,
+                            initialSelectedRows: 3,
                             showHeader: false,
                             filterControl: false
                         };
                         new framework.widgets.Table(product_projects_table_dom, product_projects_table_metrics, [orgCtx, timeCtx], product_projects_table_configuration);
-
-
-
                     }
                 }
             }, []);
-
-
-            // PROJECTS CHART
-            var projects_pie_dom = document.getElementById("projects-roles-pie");
-            var projects_pie_metrics = [
-                {
-                    id: 'orgcommits',
-                    max: 1,
-                    aggr: "sum"
-                },
-                {
-                    id: 'orgcommits',
-                    max: 1,
-                    aggr: "sum"
-                },
-                {
-                    id: 'orgcommits',
-                    max: 1,
-                    aggr: "sum"
-                },
-                {
-                    id: 'orgcommits',
-                    max: 1,
-                    aggr: "sum"
-                }];
-            var projects_pie_configuration = {
-                height: 300,
-                labelFormat: "%resourceId%"
-            };
-            var projects_pie = new framework.widgets.PieChart(projects_pie_dom, projects_pie_metrics,
-                    [orgCtx, timeCtx, productByProjectCtx], projects_pie_configuration);
-
 
             // --------------------------ROLES MULTIBAR ------------------------------------
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");
             var project_roles_multibar_metrics = [
                 {
-                    id: 'orgfailedbuilds',
-                    max: 30
+                    id: 'repodevelopers',
+                    max: 1
+                },
+                                {
+                    id: 'repopassedexecutions',
+                    max: 1
                 },
                 {
-                    id: 'orgpassedexecutions',
-                    max: 30
-                }];
+                    id: 'repocommits',
+                    max: 1
+                },
+                {
+                    id: 'repobrokenexecutions',
+                    max: 1
+                }
+            ];
+            var roles = {
+                'repodevelopers' : 'software developer', 
+                'repopassedexecutions': 'software architect', 
+                'repocommits': 'project manager', 
+                'repobrokenexecutions': 'stakeholder'
+            };
             var project_roles_multibar_conf = {
                 stacked: false,
-                labelFormat: "%data.info.title%",
+                labelFormat: "¬_D.data.info.rid.name¬",
                 showControls: false,
                 height: 250,
-                color: {
-                    orgfailedbuilds: "#0A8931",
-                    orgpassedexecutions: "#DB0013"
+                showLegend: true,
+                x: function(metric, metricId, i) {
+                    return roles[metricId];
                 }
             };
             var project_roles_multibar = new framework.widgets.MultiBar(project_roles_multibar_dom, project_roles_multibar_metrics,
-                    [orgCtx, timeCtx], project_roles_multibar_conf);
-
-
-
+                    [orgCtx, timeCtx, productByProjectCtx], project_roles_multibar_conf);
         };
+
+            // TEAM MEMBERS ROLES
+            var team_members_pie_dom = document.getElementById("team-members-pie");
+            var team_members_pie_metrics = [
+                {
+                    id: 'orgcommits',
+                    max: 1,
+                    aggr: "sum"
+                },
+                {
+                    id: 'orgdevelopers',
+                    max: 1,
+                    aggr: "sum"
+                },
+                {
+                    id: 'orgbranches',
+                    max: 1,
+                    aggr: "sum"
+                },
+                {
+                    id: 'orgexec',
+                    max: 1,
+                    aggr: "sum"
+                }];
+            var team_members_pie_configuration = {
+                height: 300,
+                labelFormat: "¬(_E.resource == 'orgcommits' ? 'Software developer' : " +
+                "(_E.resource == 'orgdevelopers' ? 'Software Arquitect' : " +
+                "(_E.resource == 'orgbranches' ? 'Project Manager' : 'Stakeholder')))¬"
+            };
+            var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,
+                    [orgCtx, timeCtx, productByProjectCtx], team_members_pie_configuration);
     }
 
 @stop

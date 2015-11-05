@@ -280,9 +280,23 @@
 }
 
 /* team members secction*/
-#team-members-table {
+#product-projects-table {
     margin-left: 20px;
     margin-right: 20px;
+    width: 100%;
+    display: inline-table;
+}
+
+#product-projects-table .tableProductRow {
+    font-size: 23px;
+    font-family: Roboto;
+    color: #FFF;
+    background: #6F6C6C;
+    padding: 4px;
+}
+
+#product-projects-table .tableProductLabel {
+
 }
 
 

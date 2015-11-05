@@ -658,22 +658,6 @@
             var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
                     [orgCtx, timeCtx], team_members_lines_configuration);
 
-
-            /*var test_dom = document.getElementById("releases-chart");
-            var test_metrics = [
-                {
-                    id: 'orgcommits',
-                    max: 1
-                }
-            ];
-            var test_configuration = {
-                minValue: 0,
-                maxValue: 30000
-            };
-            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
-                    [orgCtx, timeCtx], test_configuration); */
-
-
             //  --------------------------- PRODUCT / PROJECTS TABLE ---------------------------------
             framework.data.observe(['repolist'], function (event) { //Change repos with products
 

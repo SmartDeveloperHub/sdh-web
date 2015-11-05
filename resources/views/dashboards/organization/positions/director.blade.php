@@ -52,11 +52,6 @@
             <span id="productsTitIco" class="titleIcon fa fa-industry"></span>
             <span id="productsTitLabel" class="titleLabel">Products</span>
         </div>
-        <div class="row treeChartBox">
-            <div id="cytograph1" class="col-sm-4 col-centered"></div>
-            <div id="cytograph2" class="col-sm-4 col-centered"></div>
-            <div id="cytograph3" class="col-sm-4 col-centered"></div>
-        </div>
         <div class="row scatterBox">
             <div id="scatter-plot-subtitle" class="row subtitleRow">
                 <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
@@ -115,12 +110,24 @@
             <span id="peopleTitIco" class="titleIcon fa fa-users"></span>
             <span id="peopleTitIco" class="titleLabel">Team members</span>
         </div>
+        <div class="row treeChartBox">
+            <div id="cytograph1" class="col-sm-4 col-centered"></div>
+            <div id="cytograph2" class="col-sm-4 col-centered"></div>
+            <div id="cytograph3" class="col-sm-4 col-centered"></div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div id="team-members-lines" class="widget"></div>
             </div>
         </div>
         <div class="row">
+            <div class="col-sm-4">
+                <div id="members-table-subtitle" class="row subtitleRow">
+                    <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
+                    <span id="members-table-stitle-label" class="subtitleLabel"> Manager Selector</span>
+                </div>
+                <div id="team-members-table" class="widget"></div>
+            </div>
             <div class="col-sm-8">
                 <div class="row">
                     <div id="team-multibar-subtitle" class="row subtitleRow">
@@ -136,13 +143,6 @@
                     </div>
                     <div id="team-members-pie" class="widget"></div>
                 </div>
-            </div>
-            <div class="col-sm-4">
-                <div id="members-table-subtitle" class="row subtitleRow">
-                    <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
-                    <span id="members-table-stitle-label" class="subtitleLabel"> Manager Selector</span>
-                </div>
-                <div id="team-members-table" class="widget"></div>
             </div>
         </div>
     </div>
@@ -339,8 +339,8 @@
                 return "https://secure.gravatar.com/avatar/"+CryptoJS.MD5(""+Math.random())+"?d=identicon&s="+size;
             }
 
-            // CYTOCHART CONFIG FOR PRODUCT MANAGER
-            function configPManagerCytoChart(productsAux, theProductManagerId, edges) {
+            // CYTOCHART CONFIG FOR DIRECTOR
+            function configDirectorCytoChart(productsAux, theProductManagerId, edges) {
                 var cytograph1_metrics = [];
                 // Add edges
                 var cytograph1_configuration = {
@@ -410,7 +410,7 @@
                 }
             };
 
-            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
+            var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
             var cytograph1_metrics = configPM.metrics;
             var cytograph1_configuration = configPM.config;
 
@@ -444,7 +444,7 @@
                 }
             };
 
-            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
+            var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
             var cytograph2_metrics = configPM.metrics;
             var cytograph2_configuration = configPM.config;
 
@@ -488,7 +488,7 @@
                 }
             };
 
-            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
+            var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
             var cytograph3_metrics = configPM.metrics;
             var cytograph3_configuration = configPM.config;
 
@@ -649,7 +649,7 @@
                 waveTextColor:'#DBF1B4'
             };
             var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
-                    [orgCtx, timeCtx], test_configuration);
+                    [orgCtx, timeCtx, productsCtx], test_configuration);
 
             //  ----------------------------------- LIQUID GAUGE 2 ------------------------------------------
             var test_dom = document.getElementById("liquid-2-chart");
@@ -669,7 +669,7 @@
                 waveTextColor: '#FFC5B9'
             };
             var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
-                    [orgCtx, timeCtx], test_configuration);
+                    [orgCtx, timeCtx, productsCtx], test_configuration);
 
             // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
             var team_members_lines_dom = document.getElementById("team-members-lines");
@@ -729,7 +729,6 @@
             var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,
                     [orgCtx, timeCtx, teamMembersCtx], team_members_pie_configuration);
 
-
             //  ------------------------------ PRODUCT MANAGERS TABLE --------------------------------------
             var team_members_table_dom = document.getElementById("team-members-table");
             var team_members_table_metrics = ['repolist']; //TODO: choose resource
@@ -771,9 +770,9 @@
                 ],
                 selectable: true,
                 minRowsSelected: 1,
-                maxRowsSelected: 6,
+                maxRowsSelected: 8,
                 filterControl: true,
-                initialSelectedRows: 5,
+                initialSelectedRows: 3,
                 showHeader: false
             };
             var team_members_table = new framework.widgets.Table(team_members_table_dom, team_members_table_metrics, [orgCtx, timeCtx], team_members_table_configuration);

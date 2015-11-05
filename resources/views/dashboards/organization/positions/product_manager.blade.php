@@ -414,6 +414,224 @@
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx], table_configuration);
 
+            //  ----------------------------------- RELEASES LINES WIDGET ------------------------------------------
+            var releasesLines_dom = document.getElementById("releases-chart");
+
+            var releasesLines_metrics = [{
+                id: 'reporeleasestatus',
+                max: 20
+            }];
+
+            var releasesLines_configuration = {
+                height: 100,
+                color: function(val) {
+                    var color = d3.scale.linear()
+                            .domain([0, 0.5, 1])
+                            .range(["red", "yellow", "green"]);
+                    return color(val);
+                },
+                tooltip: '<h3>Value: ¬Math.round(_E.value * 100)/100¬</h3>' +
+                         '<h3>Date: ¬moment(_E.time).toString()¬ </h3>',
+                legend: ['Broken', 'Success']
+            };
+            var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
+
+            //  ----------------------------------- LIQUID GAUGE 1 ------------------------------------------
+            var test_dom = document.getElementById("liquid-1-chart");
+            var test_metrics = [
+                {
+                    id: 'orgcommits',
+                    max: 1
+                }
+            ];
+            var test_configuration = {
+                height: 200,
+                minValue: 0,
+                maxValue: 100,
+                waveColor: '#8ACA17',
+                textColor: '#4BAD06',
+                circleColor: '#4BAD06',
+                waveTextColor:'#DBF1B4'
+            };
+            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
+                    [orgCtx, timeCtx], test_configuration);
+
+            //  ----------------------------------- LIQUID GAUGE 2 ------------------------------------------
+            var test_dom = document.getElementById("liquid-2-chart");
+            var test_metrics = [
+                {
+                    id: 'orgcommits',
+                    max: 1
+                }
+            ];
+            var test_configuration = {
+                height: 200,
+                minValue: 0,
+                maxValue: 100,
+                waveColor: '#E65538',
+                textColor: '#8C1700',
+                circleColor: '#8C1700',
+                waveTextColor: '#FFC5B9'
+            };
+            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
+                    [orgCtx, timeCtx], test_configuration);
+
+            // CYTOCHART CONFIG FOR PRODUCT MANAGER
+            function configPManagerCytoChart(productsAux, theProductManagerId, edges) {
+                var cytograph1_metrics = [];
+                // Add edges
+                var cytograph1_configuration = {
+                    'nodes': [],
+                    'edges': edges
+                };
+                for (var prId in productsAux) {
+                    // Add Metric
+                    var aux = {
+                        max: 1,
+                        aggr: 'sum',
+                        prid: prId
+                    };
+                    var productMetricId = framework.utils.resourceHash('produsers', aux);
+                    if (prId == theProductManagerId) {
+                        productMetricId = "_static_";
+                    }
+                    aux['id']= 'produsers';
+                    cytograph1_metrics.push(aux);
+                    // Add Node
+                    cytograph1_configuration.nodes.push(
+                        {
+                            id: productsAux[prId].name,
+                            avatar:productsAux[prId].avatar,
+                            shape:"ellipse",
+                            volume: productMetricId,
+                            tooltip:""
+                        }
+                    )
+                }
+                return {'config': cytograph1_configuration, 'metrics': cytograph1_metrics};
+            };
+
+            // CYTOCHART1 INITIALIZATION
+            // TODO get
+            // product managers del director
+            // mejores products de los  3 mejores P.Managers
+            // Info de cada uno de los productos
+            var cytograph1_dom = document.getElementById("cytograph1");
+            var theProductManagerId = 1;
+            var edges = [
+                { source: 'ProductA', target: 'Project1' },
+                { source: 'ProductA', target: 'Project2' },
+                { source: 'ProductA', target: 'Project3' },
+                { source: 'ProductA', target: 'Project4' },
+                { source: 'ProductA', target: 'Project5' }
+            ];
+            var productsAux = {
+                1:{
+                    'name': "ProductA",
+                    'avatar': "assets/images/logo_bg.png"
+                },
+                2:{
+                    'name': "Project1",
+                    'avatar': "assets/images/CytoChartDemo/bp1.png"
+                },
+                3:{
+                    'name': "Project2",
+                    'avatar': "assets/images/CytoChartDemo/bp2.png"
+                },
+                4:{
+                    'name': "Project3",
+                    'avatar': "assets/images/CytoChartDemo/bp3.png"
+                },
+                5:{
+                    'name': "Project4",
+                    'avatar': "assets/images/CytoChartDemo/bp4.png"
+                },
+                6:{
+                    'name': "Project5",
+                    'avatar': "assets/images/CytoChartDemo/bp5.png"
+                }
+            };
+
+            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
+            var cytograph1_metrics = configPM.metrics;
+            var cytograph1_configuration = configPM.config;
+
+            var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
+                    [orgCtx, timeCtx], cytograph1_configuration);
+
+            // CYTOCHART2 INITIALIZATION
+            var cytograph2_dom = document.getElementById("cytograph2");
+            var theProductManagerId = 1;
+            var edges = [
+                { source: 'ProductA', target: 'Project1' },
+                { source: 'ProductA', target: 'Project2' },
+                { source: 'ProductA', target: 'Project3' }
+            ];
+            var productsAux = {
+                1:{
+                    'name': "ProductA",
+                    'avatar': "assets/images/logo_bg.png"
+                },
+                2:{
+                    'name': "Project1",
+                    'avatar': "assets/images/CytoChartDemo/bp1.png"
+                },
+                3:{
+                    'name': "Project2",
+                    'avatar': "assets/images/CytoChartDemo/bp2.png"
+                },
+                4:{
+                    'name': "Project3",
+                    'avatar': "assets/images/CytoChartDemo/bp3.png"
+                }
+            };
+
+            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
+            var cytograph2_metrics = configPM.metrics;
+            var cytograph2_configuration = configPM.config;
+
+            var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
+                    [orgCtx, timeCtx], cytograph2_configuration);
+
+            // CYTOCHART3 INITIALIZATION
+            var cytograph3_dom = document.getElementById("cytograph3");
+            var theProductManagerId = 1;
+            var edges = [
+                { source: 'ProductA', target: 'Project1' },
+                { source: 'ProductA', target: 'Project2' },
+                { source: 'ProductA', target: 'Project3' },
+                { source: 'ProductA', target: 'Project4' }
+            ];
+            var productsAux = {
+                1:{
+                    'name': "ProductA",
+                    'avatar': "assets/images/logo_bg.png"
+                },
+                2:{
+                    'name': "Project1",
+                    'avatar': "assets/images/CytoChartDemo/bp1.png"
+                },
+                3:{
+                    'name': "Project2",
+                    'avatar': "assets/images/CytoChartDemo/bp2.png"
+                },
+                4:{
+                    'name': "Project3",
+                    'avatar': "assets/images/CytoChartDemo/bp3.png"
+                },
+                5:{
+                    'name': "Project4",
+                    'avatar': "assets/images/CytoChartDemo/bp4.png"
+                }
+            };
+
+            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
+            var cytograph3_metrics = configPM.metrics;
+            var cytograph3_configuration = configPM.config;
+
+            var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
+                    [orgCtx, timeCtx], cytograph3_configuration);
+
             // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
             var team_members_lines_dom = document.getElementById("team-members-lines");
             var team_members_lines_metrics = [

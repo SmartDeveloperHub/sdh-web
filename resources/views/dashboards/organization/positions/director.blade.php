@@ -626,7 +626,7 @@
                     return color(val);
                 },
                 tooltip: '<h3>Value: ¬Math.round(_E.value * 100)/100¬</h3>' +
-                         '<h3>Date: ¬moment(_E.time).toString()¬ </h3>',
+                         '<h3>Date: ¬Widget.format.date(_E.time)¬ </h3>',
                 legend: ['Success', 'Broken']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
@@ -689,7 +689,7 @@
                 ylabel: '',
                 interpolate: 'monotone',
                 height: 200,
-                labelFormat: '%data.info.title%',
+                labelFormat: '¬_D.data.info.title¬',
                 colors: ["#2876B8", "#C0485E"],
                 area: false
             };
@@ -809,8 +809,8 @@
                 showControls: false,
                 height: 250,
                 showLegend: true,
-                x: function(metric, metricId, i) {
-                    return roles[metricId];
+                x: function(metric, extra) {
+                    return roles[extra.resource];
                 }
             };
             var project_roles_multibar = new framework.widgets.MultiBar(project_roles_multibar_dom, project_roles_multibar_metrics,

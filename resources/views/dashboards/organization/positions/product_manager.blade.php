@@ -650,7 +650,7 @@
                 ylabel: '',
                 interpolate: 'monotone',
                 height: 200,
-                labelFormat: '%data.info.title%',
+                labelFormat: '¬_D.data.info.title¬',
                 colors: ["#2876B8", "#C0485E"],
                 area: false,
                 _demo: true // Only for demo

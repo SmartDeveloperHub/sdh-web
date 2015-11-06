@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'DashboardController@panel');
+Route::get('/editor', 'DashboardEditorController@editor');
 Route::get('dashboard/{name}/{env}', 'DashboardController@dashboard'); //Optional query param: ?<cat>=<rank>
 
 Route::controllers([

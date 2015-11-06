@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/assets/css/bootstrap.css">
         <link rel="stylesheet" href="/assets/css/core.css">
         @yield('css')
-        <script data-main="/assets/js/dashboardLoader" src="/assets/js/requirejs/require.js"></script>
+        <script data-main="{{$requirejsMain}}" src="/assets/js/requirejs/require.js"></script>
     </head>
     <body class="page-body light hidd">
         @yield('header')

@@ -28,7 +28,7 @@ require.config({
         }
     },
     paths: {
-        'require-css': '/assets/js/requirejs/css.min',
+        'require-css': '/assets/vendor/require-css/css.min',
         'framework': "/sdh-framework/framework",
         'headerHandler': "/assets/js/header/headerHandler",
         'widgetCommon': '/sdh-framework/framework.widget.common',

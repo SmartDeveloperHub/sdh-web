@@ -5,7 +5,7 @@
         <title></title>
         <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
 
-        <link rel="stylesheet" href="/assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/assets/vendor/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/assets/css/core.css">
         @yield('css')
         <script data-main="{{$requirejsMain}}" src="/assets/js/requirejs/require.js"></script>

@@ -18,73 +18,29 @@
   limitations under the License.
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
-require.config({
-    baseUrl: "/",
-    //enforceDefine: true,
-    map: {
-        '*': {
-            'css': '/assets/js/requirejs/css.min.js' // or whatever the path to require-css is
-        }
-    },
-    paths: {
-        'bootstrap': "/assets/js/bootstrap/bootstrap.min",
-        'jquery': '/sdh-framework/lib/jquery/jquery-2.1.3.min',
-        'd3': "/sdh-framework/lib/d3/d3.min",
-        'nvd3': "/sdh-framework/lib/nvd3/nv.d3.min",
-        'joinable': "/sdh-framework/lib/joinable/joinable",
-        'moment': "/sdh-framework/lib/moment/moment",
-        'framework': "/sdh-framework/framework",
-        'headerHandler': "/assets/js/header/headerHandler",
-        'datatables' : '/sdh-framework/lib/jquery/datatables/js/jquery.dataTables',
-        'widgetCommon': '/sdh-framework/framework.widget.common',
-        'gridstack': '/assets/libs/gridstack/gridstack.min',
-        'lodash': '/assets/libs/lodash/lodash.min',
-        'jquery-ui': '/assets/libs/jquery-ui'
-    },
-    shim : {
-        'bootstrap' : {
-            exports: "jQuery.fn.popover",
-            deps : ['jquery']
-        },
-        'framework': {
-            deps :['jquery']
-        },
-        'd3': {
-            exports: 'd3',
-            deps: ['jquery']
-        },
-        'joinable': {
-            deps: ['jquery']
-        },
-        'nvd3': {
-            exports: 'nv',
-            deps: ['d3']
-        },
-        'headerHandler': {
-            deps: ['jquery']
-        },
-        'widgetCommon': {
-            deps: ['framework']
-        }
-    }
-});
 
 define(function(require, exports, module) {
 
-    require(["jquery", 'gridstack', 'css!/assets/libs/gridstack/gridstack.min.css'], function() {
+    // Load require configuration
+    require(["/assets/js/require-config.js"], function() {
 
-        $(document).ready(function() {
+        // Load all the modules needed
+        require(["jquery", 'gridstack', 'css!/assets/vendor/gridstack/dist/gridstack.min.css'], function() {
 
-            //Show the page container
-            $('body').removeClass('hidd');
-            $(".page-container").show();
-            $("footer.footer-container").show();
+            $(document).ready(function() {
 
-            var options = {
-                cell_height: 80,
-                vertical_margin: 10
-            };
-            $('.grid-stack').gridstack(options);
+                //Show the page container
+                $('body').removeClass('hidd');
+                $(".page-container").show();
+                $("footer.footer-container").show();
+
+                var options = {
+                    cell_height: 80,
+                    vertical_margin: 10
+                };
+                $('.grid-stack').gridstack(options);
+
+            });
 
         });
 

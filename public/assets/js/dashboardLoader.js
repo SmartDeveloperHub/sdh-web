@@ -19,80 +19,6 @@
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
-require.config({
-    baseUrl: "/",
-    //enforceDefine: true,
-    map: {
-        '*': {
-            'css': 'require-css' // or whatever the path to require-css is
-        }
-    },
-    paths: {
-        'bootstrap': "/assets/js/bootstrap/bootstrap.min",
-        'jquery': '/sdh-framework/lib/jquery/jquery-2.1.3.min',
-        'd3': "/sdh-framework/lib/d3/d3.min",
-        'nvd3': "/sdh-framework/lib/nvd3/nv.d3.min",
-        'joinable': "/sdh-framework/lib/joinable/joinable",
-        'moment': "/sdh-framework/lib/moment/moment",
-        'framework': "/sdh-framework/framework",
-        'headerHandler': "/assets/js/header/headerHandler",
-        'datatables' : '/sdh-framework/lib/jquery/datatables/js/jquery.dataTables',
-        'widgetCommon': '/sdh-framework/framework.widget.common',
-        'lodash': '/sdh-framework/lib/lodash/lodash.min',
-        'backbone': '/sdh-framework/lib/backbone/backbone-min',
-        'joint': '/sdh-framework/lib/joint/joint.min',
-        'underscore': '/sdh-framework/lib/underscore/underscore-min',
-        'cytoscape': '/sdh-framework/lib/cytoscape/cytoscape.min',
-        'cytoscape-qtip': '/sdh-framework/lib/cytoscapeQTip/cytoscape-qtip',
-        'jquery-qtip': '/sdh-framework/lib/QTip/jquery.qtip',
-        'require-css': '/assets/js/requirejs/css.min'
-        
-    },
-    shim : {
-        'bootstrap' : {
-            exports: "jQuery.fn.popover",
-            deps : ['jquery']
-        },
-        'framework': {
-            deps :['jquery']
-        },
-        'd3': {
-            exports: 'd3',
-            deps: ['jquery']
-        },
-        'joinable': {
-            deps: ['jquery']
-        },
-        'nvd3': {
-            exports: 'nv',
-            deps: ['d3']
-        },
-        'headerHandler': {
-            deps: ['jquery']
-        },
-        'widgetCommon': {
-            deps: ['framework', 'css!sdh-framework/framework.widget.common.css']
-        },
-        'backbone': {
-            deps: ['underscore']
-        },
-        'joint': {
-            deps: ['jquery', 'lodash', 'backbone']
-        },
-        'jquery-qtip': {
-            deps: ['jquery']
-        },
-        'cytoscape': {
-            exports: 'cytoscape',
-            deps: ['jquery']
-        },
-        'cytoscape-qtip': {
-            exports: 'cytoscape-qtip',
-            deps: ['jquery', 'jquery-qtip', 'cytoscape']
-        },
-    }
-});
-
 // Some polyfills
 if (!String.prototype.startsWith) {
     String.prototype.startsWith = function(searchString, position) {
@@ -289,55 +215,63 @@ define(function(require, exports, module) {
 
     document.getElementById("loading").className = "";
 
-    require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler", "widgetCommon"], function() {
+    // Load require configuration
+    require(["/assets/js/require-config.js"], function() {
 
-        framework.ready(function() {
-            console.log("Framework ready");
+        // Load all the modules needed
+        require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler", "widgetCommon"], function() {
 
-            var dashboardController = new DashboardController();
+            framework.ready(function() {
+                console.log("Framework ready");
 
-            //Set an error handler for require js
-            requirejs.onError = function (err) {
-                console.error(err);
-                alert("Oups! There were some problems trying to download all the dependencies of the dashboard." +
-                " If problems persist, check your Internet connection. \n\nReturning to the previous dashboard...");
-                this.goToPrevious();
-                //throw err; //Should I throw it?
-            }.bind(dashboardController);
+                var dashboardController = new DashboardController();
 
-            //Set a load handler to add the load maps to the dashboard controller
-            requirejs.onResourceLoad = function(context, map)
-            {
-                dashboardController.cssRequirejsMaps.push(map);
-            };
+                //Set an error handler for require js
+                requirejs.onError = function (err) {
+                    console.error(err);
+                    alert("Oups! There were some problems trying to download all the dependencies of the dashboard." +
+                        " If problems persist, check your Internet connection. \n\nReturning to the previous dashboard...");
+                    this.goToPrevious();
+                    //throw err; //Should I throw it?
+                }.bind(dashboardController);
 
-            //Tell the framework this is the Dashboard Controller
-            framework.dashboard.setDashboardController(dashboardController);
+                //Set a load handler to add the load maps to the dashboard controller
+                requirejs.onResourceLoad = function(context, map)
+                {
+                    dashboardController.cssRequirejsMaps.push(map);
+                };
 
-            //Show header
-            $('body').removeClass('hidd');
+                //Tell the framework this is the Dashboard Controller
+                framework.dashboard.setDashboardController(dashboardController);
 
-            if(BASE_DASHBOARD != null) {
+                //Show header
+                $('body').removeClass('hidd');
 
-                $(document).ready(function() {
+                if(BASE_DASHBOARD != null) {
 
-                    //Show the page container
-                    $(".page-container").show();
-                    $("footer.footer-container").show();
+                    $(document).ready(function() {
 
-                    // Load the initial dashboard
-                    framework.dashboard.changeTo(BASE_DASHBOARD);
+                        //Show the page container
+                        $(".page-container").show();
+                        $("footer.footer-container").show();
 
-                });
+                        // Load the initial dashboard
+                        framework.dashboard.changeTo(BASE_DASHBOARD);
 
-            } else {
-                console.error("BASE_DASHBOARD is not defined.");
-            }
+                    });
+
+                } else {
+                    console.error("BASE_DASHBOARD is not defined.");
+                }
+
+            });
+
 
         });
 
-
     });
+
+
 });
 
 

@@ -1,0 +1,7 @@
+{
+  "name": "sdh-web",
+  "dependencies": {
+    "gridstack": "*",
+    "bootstrap": "3.3.4"
+  }
+}

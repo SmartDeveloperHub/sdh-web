@@ -4,6 +4,10 @@
     "gridstack": "*",
     "bootstrap": "3.3.4",
     "requirejs": "2.1.17",
-    "require-css": "0.1.8"
+    "require-css": "0.1.8",
+    "sdh-framework": "*"
+  },
+  "resolutions": {
+    "jquery": "2.1.x"
   }
 }

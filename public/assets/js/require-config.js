@@ -28,26 +28,26 @@ require.config({
         }
     },
     paths: {
-        'require-css': '/assets/vendor/require-css/css.min',
-        'framework': "/sdh-framework/framework",
+        'require-css': '/vendor/require-css/css.min',
+        'framework': "/vendor/sdh-framework/framework",
         'headerHandler': "/assets/js/header/headerHandler",
-        'widgetCommon': '/sdh-framework/framework.widget.common',
-        'bootstrap': "/assets/vendor/bootstrap/dist/js/bootstrap.min",
-        'backbone': '/sdh-framework/lib/backbone/backbone-min',
-        'underscore': '/sdh-framework/lib/underscore/underscore-min',
-        'd3': "/sdh-framework/lib/d3/d3.min",
-        'nvd3': "/sdh-framework/lib/nvd3/nv.d3.min",
-        'jquery': '/sdh-framework/lib/jquery/jquery-2.1.3.min',
-        'jquery-ui': '/assets/vendor/jquery-ui/ui',
-        'jquery-qtip': '/sdh-framework/lib/QTip/jquery.qtip',
-        'joinable': "/sdh-framework/lib/joinable/joinable",
-        'moment': "/sdh-framework/lib/moment/moment",
-        'datatables' : '/sdh-framework/lib/jquery/datatables/js/jquery.dataTables',
-        'lodash': '/assets/vendor/lodash/lodash.min',
-        'gridstack': '/assets/vendor/gridstack/dist/gridstack.min',
-        'joint': '/sdh-framework/lib/joint/joint.min',
-        'cytoscape': '/sdh-framework/lib/cytoscape/cytoscape.min',
-        'cytoscape-qtip': '/sdh-framework/lib/cytoscapeQTip/cytoscape-qtip',
+        'widgetCommon': '/vendor/sdh-framework/framework.widget.common',
+        'bootstrap': "/vendor/bootstrap/dist/js/bootstrap.min",
+        'backbone': '/vendor/backbone/backbone-min',
+        'underscore': '/vendor/underscore/underscore-min',
+        'd3': "/vendor/d3/d3.min",
+        'nvd3': "/vendor/nvd3/build/nv.d3.min",
+        'jquery': '/vendor/jquery/dist/jquery.min',
+        'jquery-ui': '/vendor/jquery-ui/ui',
+        'jquery-qtip': '/vendor/qtip2/jquery.qtip.min',
+        'joinable': "/vendor/sdh-framework/lib/joinable/joinable",
+        'moment': "/vendor/moment/moment",
+        'datatables' : '/vendor/datatables/media/js/jquery.dataTables.min',
+        'lodash': '/vendor/lodash/lodash.min',
+        'gridstack': '/vendor/gridstack/dist/gridstack.min',
+        'joint': '/vendor/dist/joint/joint.min',
+        'cytoscape': '/vendor/cytoscape/dist/cytoscape.min',
+        'cytoscape-qtip': '/vendor/cytoscape-qtip/cytoscape-qtip',
 
     },
     shim : {
@@ -73,7 +73,7 @@ require.config({
             deps: ['jquery']
         },
         'widgetCommon': {
-            deps: ['framework', 'css!sdh-framework/framework.widget.common.css']
+            deps: ['framework', 'css!vendor/sdh-framework/framework.widget.common.css']
         },
         'backbone': {
             deps: ['underscore']

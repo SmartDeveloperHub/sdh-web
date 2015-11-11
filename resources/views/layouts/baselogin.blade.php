@@ -7,13 +7,13 @@
 
         <link rel="stylesheet" href="/assets/vendor/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/assets/css/core.css">
-        <link rel="stylesheet" href="/sdh-framework/lib/nvd3/nv.d3.min.css">
-        <link rel="stylesheet" href="/sdh-framework/style/components.css">
-        <link rel="stylesheet" href="/sdh-framework/fonts/fontawesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/sdh-framework/fonts/linecons/css/linecons.css">
-        <link rel="stylesheet" href="/sdh-framework/fonts/octicons/css/octicons.css">
+        <link rel="stylesheet" href="/vendor/nvd3/build/nv.d3.min.css">
+        <link rel="stylesheet" href="/vendor/sdh-framework/style/components.css">
+        <link rel="stylesheet" href="/vendor/sdh-framework/fonts/fontawesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/vendor/sdh-framework/fonts/linecons/css/linecons.css">
+        <link rel="stylesheet" href="/vendor/sdh-framework/fonts/octicons/css/octicons.css">
         @yield('css')
-        <script data-main="/assets/js/loginLoader" src="/assets/js/requirejs/require.js"></script>
+        <script data-main="/assets/js/loginLoader" src="/vendor/requirejs/require.js"></script>
     </head>
     <body class="page-body light hidd">
         @yield('header')

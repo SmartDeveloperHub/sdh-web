@@ -5,7 +5,7 @@
         <title></title>
         <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
 
-        <link rel="stylesheet" href="/assets/vendor/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/assets/css/core.css">
         <link rel="stylesheet" href="/vendor/nvd3/build/nv.d3.min.css">
         <link rel="stylesheet" href="/vendor/sdh-framework/style/components.css">

@@ -18,6 +18,15 @@
   limitations under the License.
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
+html, body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .page-container .main-content {
     padding: 0;
     overflow: hidden;
@@ -26,6 +35,11 @@
 .page-body.light .page-container {
     background-color: #FFF;
     padding-top: 25px;
+}
+
+/* Main Counter Widgets container */
+#metricBoxes {
+    padding-left: 4%;
 }
 
 /**********/
@@ -118,7 +132,7 @@
     margin-bottom: 25px;
     text-align: center;
     margin-top: 35px;
-    margin-left: 50px;
+    margin-left: 0;
     margin-right: 0;
     line-height: 30px;
 }
@@ -260,30 +274,59 @@
 }
 
 #products-table {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 16%;
+    margin-right: 16%;
+    overflow: hidden;
+    height: 480px;
 }
 
 #scatter-plot {
+    font-family: Roboto;
+}
+
+#scatter-plot .nvd3 .nv-axislabel{
+    font-size: 18px;
+    fill: #6F6C6C;
+    font-family: Roboto;
+}
+
+#scatter-plot .nvd3 .nv-axis path {
+    stroke-opacity: 1;
+}
+
+#scatter-plot .nvd3 .nv-x.nv-axis path {
+    stroke: url('#gradX');
+    stroke-width: 4px;
+}
+
+#scatter-plot .nvd3 .nv-y.nv-axis path {
+    stroke: url('#gradY');
+    stroke-width: 4px;
+}
+
+#scatter-plot .nvd3 .nv-axis .tick text {
+    visibility: hidden;
+}
+
+#scatter-plot .nvd3 .nv-axis text {
 }
 
 #releases-chart {
     height: 200px;
-    margin-left: 20px;
-    margin-right: 35px;
+    margin-left: 2%;
+    margin-right: 9%;
 }
 
 #liquid-1-chart, #liquid-2-chart {
     text-align: center;
-    height: 200px;
+    height: 120px;
 }
 
 /* team members secction*/
 #team-members-table {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 12%;
+    margin-right: 2%;
 }
-
 
 /* Product and Team Member common widgets*/
 table.dataTable {
@@ -317,19 +360,47 @@ table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
 }
 
 .dataTables_filter input[type="search"] {
-    margin-left: 0 !important;    padding-left: 44px;    padding-right: 44px;    position: relative;                
-    display: block;    
-    width: 60%;    height: 34px;    padding: 6px 12px;    font-size: 14px;    line-height: 1.42857143;    color: #555;    background-color: #fff;    background-image: none;    border: 1px solid #ccc;    
-    border-radius: 12px;    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    margin-left: 0 !important;
+    max-width: 172px;
+    min-width: 42%;
+    padding-left: 5%;
+    padding-right: 4%;
+    position: relative;
+    height: 34px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 .dataTables_filter label {
-  text-align: center;
+    text-align: center;
 }
 .dataTables_filter input[type="search"]:focus {
     outline-style: none;
 }
 
 table.dataTable tbody tr.selected {
+    /*-webkit-box-shadow: inset 0px 0px 13px 1px #615C61;
+    -moz-box-shadow: inset 0px 0px 13px 1px rgba(97,92,97,1);
+    box-shadow: inset 0px 0px 13px 1px #615C61;*/
+    /*border-image: linear-gradient(#fff, #615C61) 14% stretch;*/
+    background-color: #F9F9FF !important;
+    box-shadow: inset 0px 11px 8px -10px #CCC, inset 0px -11px 8px -10px #CCC;
+    border: 1px #CCC solid;
+}
+
+table.dataTable tbody tr {
+    background-color: #FFF !important;
+    display: block;
+    min-width: 100%;
 }
 
 table.dataTable tbody tr .odd {
@@ -339,22 +410,97 @@ table.dataTable tbody tr .odd {
     border-right: 0;
 }
 
+.dashboardLink {
+    text-align: right;
+    width: 90%;
+    line-height: 65px;
+}
+
 .dashboardLink img {
     cursor: pointer;
-    height: 40px;
-    width: 40px;
+    height: 50px;
+    width: 50px;
+    -webkit-transition: all ease-in-out .25s;
+    -o-transition: all ease-in-out .25s;
+    transition: all ease-in-out .25s;
 }
 
 .dataTable td {
     vertical-align: middle;
+    -webkit-transition: all ease-in-out .25s;
+    -o-transition: all ease-in-out .25s;
+    transition: all ease-in-out .25s;
 }
 
 .dataTable tr td:nth-child(2) {
     cursor: pointer;
+    font-family: Roboto;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0;
+    font-size: 20px;
+    width: 100%;
 }
-div.dataTables_filter input{
+
+.dataTable td:hover .dashboardLink img, table.dataTable tbody tr.selected td .dashboardLink img {
+    height: 60px;
+    width: 60px;
+}
+
+.dataTable tr td:nth-child(2):hover, table.dataTable tbody tr.selected td:nth-child(2) {
+    font-size: 23px;
+    width: 100%;
+}
+
+div.dataTables_filter input {
     border-radius: 12px;
     padding-left: 44px;
     padding-right: 44px;
     position: relative;
+}
+
+.dataTables_wrapper {
+    height: 450px;
+}
+
+.scroll-table {
+    overflow: hidden;
+    white-space: nowrap;
+    height: inherit;
+}
+
+.upPTableButton, .downPTableButton {
+    box-shadow: 2px 2px 2px #888;
+    z-index: 100;
+    font-size: 28px;
+    box-sizing: content-box;
+    border: solid 2px #4E4E4E;
+    color: #FFF;
+    cursor: pointer;
+    background: #4E4E4E;
+    border-radius: 19px;
+    height: 27px;
+    width: 27px;
+    text-align: center;
+    -webkit-transition: all ease-in-out .30s;
+    -o-transition: all ease-in-out .30s;
+    transition: all ease-in-out .30s;
+}
+
+.upPTableButton:hover, .downPTableButton:hover {
+    color: #4E4E4E;
+    border: solid 2px #4E4E4E;
+    background: #FFF;
+}
+
+.upPTableButton {
+    position: absolute;
+    top: 123px;
+    left: 67px;;
+}
+
+.downPTableButton {
+    position: absolute;
+    bottom: 0px;
+    left: 67px;
 }

@@ -28,6 +28,11 @@
     padding-top: 25px;
 }
 
+/* Main Counter Widgets container */
+#metricBoxes {
+    padding-left: 4%;
+}
+
 /**********/
 /* titles */
 /**********/
@@ -266,12 +271,19 @@
 }
 
 #scatter-plot {
+    font-family: Roboto;
 }
 
-#releases-chart {
-    height: 200px;
-    margin-left: 20px;
-    margin-right: 35px;
+#scatter-plot .nvd3 .nv-axislabel{
+    font-size: 18px;
+    fill: #6F6C6C;
+    font-family: Roboto;
+}
+
+#scatter-plot .nvd3 .nv-axis path {
+    stroke: #353535;
+    stroke-width: 2px;
+    stroke-opacity: 1;
 }
 
 #liquid-1-chart, #liquid-2-chart {
@@ -292,11 +304,11 @@
     font-family: Roboto;
     color: #FFF;
     background: #6F6C6C;
-    padding: 4px;
+    
 }
 
 #product-projects-table .tableProductLabel {
-
+    padding: 4px;
 }
 
 

@@ -71,12 +71,14 @@
                     <span id="products-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
                     <span id="products-table-stitle-label" class="subtitleLabel">Product Selector</span>
                 </div>
+                <div id='upProductTableButton' class="upPTableButton fa-angle-double-up"></div>
                 <div id="products-table" class="widget"></div>
+                <div id='downProductTableButton' class="downPTableButton fa-angle-double-down"></div>
             </div>
             <div class="col-sm-8">
                 <div id="releases-chart-subtitle" class="row subtitleRow">
                     <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
-                    <span id="releases-chart-stitle-label" class="subtitleLabel">Releases History</span>
+                    <span id="releases-chart-stitle-label" class="subtitleLabel">Status History</span>
                 </div>
                 <div class="row">
                     <div id="releases-chart" class="widget"></div>
@@ -539,6 +541,7 @@
                     return Math.random();
                 },
                 xAxisTicks: 3,
+                yAxisTicks: 3,
                 yAxisLabel: "Quality",
                 height: 390,
                 groupBy: 'rid',
@@ -555,7 +558,11 @@
                 "<h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4>" +
                 "<h4>Time to market: ¬_D.x¬</h4>" +
                 "</div>",
-                image: "¬_D.data.repocommits.info.rid.avatar¬"
+                image: "¬_D.data.repocommits.info.rid.avatar¬",
+                xAxisGradient: ['red', 'orange', 'yellow', 'green'],
+                yAxisGradient: ['green', 'yellow', 'orange', 'red'],
+                showLegend: false,
+                showMaxMin: false
             };
 
             var scatter = new framework.widgets.Scatter(scatter_dom, scatter_metrics, [orgCtx, timeCtx, scatter_test_cntx], scatter_conf);
@@ -605,7 +612,9 @@
                 filterControl: true,
                 initialSelectedRows: 1,
                 showHeader: false,
-                alwaysOneSelected: true
+                alwaysOneSelected: true,
+                scrollUpButton: $('#upProductTableButton'),
+                scrollDownButton: $('#downProductTableButton')
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx], table_configuration);
 
@@ -640,7 +649,7 @@
                 }
             ];
             var test_configuration = {
-                height: 200,
+                height: 110,
                 minValue: 0,
                 maxValue: 100,
                 waveColor: '#8ACA17',
@@ -660,7 +669,7 @@
                 }
             ];
             var test_configuration = {
-                height: 200,
+                height: 110,
                 minValue: 0,
                 maxValue: 100,
                 waveColor: '#E65538',
@@ -773,7 +782,8 @@
                 maxRowsSelected: 8,
                 filterControl: true,
                 initialSelectedRows: 3,
-                showHeader: false
+                showHeader: false,
+                filterControl: false
             };
             var team_members_table = new framework.widgets.Table(team_members_table_dom, team_members_table_metrics, [orgCtx, timeCtx], team_members_table_configuration);
 

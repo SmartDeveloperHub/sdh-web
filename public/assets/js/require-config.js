@@ -46,9 +46,9 @@ require.config({
         'lodash': '/vendor/lodash/lodash.min',
         'gridstack': '/vendor/gridstack/dist/gridstack.min',
         'joint': '/vendor/dist/joint/joint.min',
-        'cytoscape': '/vendor/cytoscape/dist/cytoscape.min',
+        'cytoscape': '/vendor/cytoscape/dist/cytoscape',
         'cytoscape-qtip': '/vendor/cytoscape-qtip/cytoscape-qtip',
-
+        'cola': '/vendor/cytoscape/lib/cola.v3.min'
     },
     shim : {
         'bootstrap' : {
@@ -91,6 +91,9 @@ require.config({
         'cytoscape-qtip': {
             exports: 'cytoscape-qtip',
             deps: ['jquery', 'jquery-qtip', 'cytoscape']
+        },
+        'cola': {
+            exports: 'cola'
         }
     }
 });

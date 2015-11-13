@@ -358,7 +358,7 @@
                 ylabel: '',
                 interpolate: 'monotone',
                 height: 200,
-                labelFormat: '%data.info.title%',
+                labelFormat: '¬_D.data.info.title¬',
                 colors: ["#8D197B", "#2876B8"],
                 area: true,
                 _demo: true // Only for demo
@@ -387,7 +387,7 @@
                 ylabel: '',
                 interpolate: 'monotone',
                 height: 200,
-                labelFormat: '%data.info.title%',
+                labelFormat: '¬_D.data.info.title¬',
                 colors: {
                     repoexecutions: "#004B8B",
                     repofailedexecutions: "#DB0013",
@@ -451,7 +451,7 @@
                 }];
             var executions_conf = {
                 stacked: true,
-                labelFormat: "%data.info.title%",
+                labelFormat: "¬_D.data.info.title¬",
                 showControls: false,
                 height: 250,
                 color: {
@@ -551,7 +551,7 @@
                 max: 1
             }];
             var multibar_projects_configuration = {
-                labelFormat: "%data.info.uid.name%",
+                labelFormat: "¬(_D.data.info.uid != null ? _D.data.info.uid.name : 'Others')¬",
                 stacked: true,
                 showXAxis: false,
                 showControls: false,
@@ -574,7 +574,7 @@
             var user_project_commits_conf = {
                 xlabel: '',
                 ylabel: 'Commits',
-                labelFormat: '%data.info.uid.name%',
+                labelFormat: '¬_D.data.info.uid.name¬',
                 interpolate: 'monotone'
             };
             var user_project_commits = new framework.widgets.LinesChart(user_project_commits_dom, user_project_commits_metrics,

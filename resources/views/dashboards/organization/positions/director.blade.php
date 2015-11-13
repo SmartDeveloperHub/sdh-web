@@ -16,7 +16,6 @@
     "vendor/sdh-framework/framework.widget.piechart",
     "vendor/sdh-framework/framework.widget.timebar",
     "css!vendor/sdh-framework/framework.widget.timebar.css",
-    "vendor/cytoscape/lib/arbor",
     "vendor/sdh-framework/framework.widget.cytoChart2",
     "css!vendor/sdh-framework/framework.widget.cytoChart2.css",
     "vendor/sdh-framework/framework.widget.multibar",
@@ -362,6 +361,9 @@
                     }
                     aux['id']= 'produsers';
                     cytograph1_metrics.push(aux);
+
+                    cytograph1_configuration.tooltip = "Staff: ¬_D.data.values[0]¬";
+
                     // Add Node
                     cytograph1_configuration.nodes.push(
                         {
@@ -369,7 +371,7 @@
                             avatar:productsAux[prId].avatar,
                             shape:"ellipse",
                             volume: productMetricId,
-                            tooltip:""
+                            tooltip: productsAux[prId].tooltip || ""
                         }
                     )
                 }
@@ -392,7 +394,8 @@
             var productsAux = {
                 1:{
                     'name': "P_ManagerA",
-                    'avatar': "assets/images/CytoChartDemo/PManager1.jpg"
+                    'avatar': "assets/images/CytoChartDemo/PManager1.jpg",
+                    tooltip: "I'm the main circle on the left"
                 },
                 2:{
                     'name': "Product_a",
@@ -430,7 +433,8 @@
             var productsAux = {
                 1:{
                     'name': "P_ManagerA",
-                    'avatar': "assets/images/CytoChartDemo/PManager2.jpg"
+                    'avatar': "assets/images/CytoChartDemo/PManager2.jpg",
+                    tooltip: "I'm the main circle on the center"
                 },
                 2:{
                     'name': "Product_a",
@@ -466,7 +470,8 @@
             var productsAux = {
                 1:{
                     'name': "P_ManagerA",
-                    'avatar': "assets/images/CytoChartDemo/PManager3.jpg"
+                    'avatar': "assets/images/CytoChartDemo/PManager3.jpg",
+                    tooltip: "I'm the main circle on the right"
                 },
                 2:{
                     'name': "Product_a",

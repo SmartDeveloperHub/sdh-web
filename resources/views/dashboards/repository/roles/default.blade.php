@@ -551,7 +551,7 @@
                 max: 1
             }];
             var multibar_projects_configuration = {
-                labelFormat: "¬(_D.data.info.uid != null ? _D.data.info.uid.name : 'Others')¬",
+                labelFormat: "¬(_D.data.info.uid != null ? _D.data.info.uid.name : '')¬",
                 stacked: true,
                 showXAxis: false,
                 showControls: false,

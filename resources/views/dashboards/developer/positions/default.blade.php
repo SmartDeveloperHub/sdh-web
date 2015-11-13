@@ -275,7 +275,7 @@
                 ylabel: '',
                 interpolate: 'monotone',
                 height: 200,
-                labelFormat: '%data.info.title%',
+                labelFormat: '¬_D.data.info.title¬',
                 colors: ["#2876B8", "#C0485E"],
                 area: true,
                 _demo: true // Only for demo
@@ -337,7 +337,7 @@
                 ylabel: '',
                 interpolate: 'monotone',
                 height: 205,
-                labelFormat: '%data.info.title%',
+                labelFormat: '¬_D.data.info.title¬',
                 colors: ["#FF7F0E", "#1F77B4", "#68B828"]
             };
             var skills_lines = new framework.widgets.LinesChart(skills_lines_dom, skills_lines_metrics,
@@ -383,6 +383,7 @@
                         ]
                     }
                 ],
+                keepSelectedByProperty: "repositoryid",
                 selectable: true,
                 minRowsSelected: 1,
                 maxRowsSelected: 6,
@@ -399,7 +400,7 @@
                 max: 1
             }];
             var multibar_repositories_configuration = {
-                labelFormat: "%data.info.rid.name%",
+                labelFormat: "¬(_D.data.info.rid != null ? _D.data.info.rid.name : '')¬",
                 stacked: true,
                 showXAxis: false,
                 showControls: false,
@@ -423,7 +424,7 @@
             var user_repositories_commits_conf = {
                 xlabel: '',
                 ylabel: '',
-                labelFormat: "%data.info.rid.name%",
+                labelFormat: "¬_D.data.info.rid.name¬",
                 interpolate: 'monotone',
                 area: true
             };

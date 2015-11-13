@@ -403,6 +403,7 @@
                         ]
                     }
                 ],
+                keepSelectedByProperty: "repositoryid",
                 selectable: true,
                 minRowsSelected: 0,
                 maxRowsSelected: 1,
@@ -774,6 +775,7 @@
                                     ]
                                 }
                             ],
+                            keepSelectedByProperty: "repositoryid",
                             selectable: true,
                             minRowsSelected: 1,
                             maxRowsSelected: 8,

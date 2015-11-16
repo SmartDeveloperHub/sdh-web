@@ -150,6 +150,25 @@ html, body {
     font-family: Roboto;
 }
 
+.subtitleHelp {
+    font-size: 29px;
+    vertical-align: middle;
+    color: #004C8B;
+    opacity: 0;
+    margin-top: 4px;
+    margin-left: 20px;
+    -webkit-transition: all ease-in-out 2s;
+    -o-transition: all ease-in-out 2s;
+    transition: all ease-in-out 2s;
+    z-index: 9999;
+}
+
+.subtitleRow:hover .subtitleHelp {
+    opacity: 1;
+    -webkit-transition: all ease-in-out .20s;
+    -o-transition: all ease-in-out .20s;
+    transition: all ease-in-out .20s;
+}
 /* metrics secction*/
 
 /* products secction*/
@@ -183,8 +202,21 @@ html, body {
 #releases-chart-stitle-label {
 }
 
+#radar-product-subtitle {
+    margin-left: -11px;
+    margin-bottom: 0;
+}
+
+#radar-product-stitle-ico {
+    color: #94C11F;
+}
+
+#radar-product-stitle-label {
+}
+
 #liquid1-chart-subtitle {
     margin-left: -11px;
+    margin-bottom: 0;
 }
 
 #liquid1-chart-stitle-ico {
@@ -196,6 +228,7 @@ html, body {
 
 #liquid2-chart-subtitle {
     margin-left: -11px;
+    margin-bottom: 0;
 }
 
 #liquid2-chart-stitle-ico {
@@ -206,6 +239,25 @@ html, body {
 }
 
 /* team members secction*/
+#managers-stitle-ico {
+    color: #8A1978;
+}
+
+#managers-stitle-help {
+}
+
+#positions-subtitle {
+    margin-left: -11px;
+    margin-bottom: 20px;
+}
+
+#positions-stitle-ico {
+    color: #BD1F00;
+}
+
+#positions-stitle-help {
+}
+
 #members-table-subtitle {
 }
 
@@ -214,6 +266,9 @@ html, body {
 }
 
 #members-table-stitle-label {
+}
+
+#members-table-stitle-help {
 }
 
 #team-multibar-subtitle {
@@ -226,6 +281,10 @@ html, body {
 #team-multibar-stitle-label {
 }
 
+#team-multibar-stitle-help {
+}
+
+
 #team-pie-subtitle {
 }
 
@@ -236,7 +295,8 @@ html, body {
 #team-pie-stitle-label {
 }
 
-
+#team-pie-stitle-help {
+}
 
 /***********/
 /* widgets */

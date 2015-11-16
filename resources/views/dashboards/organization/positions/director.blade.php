@@ -13,6 +13,7 @@
     "css!vendor/qtip2/jquery.qtip.min.css",
     "vendor/sdh-framework/framework.widget.linesChart",
     "css!vendor/sdh-framework/framework.widget.linesChart.css",
+    "vendor/sdh-framework/framework.widget.radarchart",
     "vendor/sdh-framework/framework.widget.liquidgauge",
     "vendor/sdh-framework/framework.widget.piechart",
     "vendor/sdh-framework/framework.widget.timebar",
@@ -85,6 +86,16 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
+                        <div id="radar-product-subtitle" class="row subtitleRow">
+                            <span id="radar-product-stitle-ico" class="subtitleIcon fa fa-line-chart"></span>
+                            <span id="radar-product-stitle-label" class="subtitleLabel"></span>
+                            <span id="radar-product-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                        </div>
+                        <div class="row">
+                            <div id="radar-product-chart" class="widget"></div>
+                        </div>
+                    </div>
+                    <div id="liquidBox" class="col-sm-6">
                         <div id="liquid1-chart-subtitle" class="row subtitleRow">
                             <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-link"></span>
                             <span id="liquid1-chart-stitle-label" class="subtitleLabel">Success Time</span>
@@ -92,8 +103,6 @@
                         <div class="row">
                             <div id="liquid-1-chart" class="widget"></div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
                         <div id="liquid2-chart-subtitle" class="row subtitleRow">
                             <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                             <span id="liquid2-chart-stitle-label" class="subtitleLabel">Broken Time</span>
@@ -646,6 +655,81 @@
                 legend: ['Success', 'Broken']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
+
+            // PRODUCT STAR CHART
+            var skills_star_dom = document.getElementById("radar-product-chart");
+            var skills_star_metrics = [
+                {
+                    id: 'productactivity',
+                    max: 1
+                },
+                {
+                    id: 'productcost',
+                    max: 1
+                },
+                {
+                    id: 'productmembers',
+                    max: 1
+                },
+                {
+                    id: 'producthealth',
+                    max: 1
+                },
+                {
+                    id: 'productquality',
+                    max: 1
+                },
+                {
+                    id: 'producttimetomarket',
+                    max: 1
+                },
+                {
+                    id: 'productreleases',
+                    max: 1
+                }
+            ];
+            /* TODO add average skills in this chart
+            var skills_star_metrics2 = [
+                {
+                    id: 'userproductactivity',
+                    max: 1
+                },
+                {
+                    id: 'userproductcost',
+                    max: 1
+                },
+                {
+                    id: 'userproductmembers',
+                    max: 1
+                },
+                {
+                    id: 'userproducthealth',
+                    max: 1
+                },
+                {
+                    id: 'userproductquality',
+                    max: 1
+                },
+                {
+                    id: 'userproducttimetomarket',
+                    max: 1
+                },
+                {
+                    id: 'userproductreleases',
+                    max: 1
+                }
+            ];*/
+            var skills_star_configuration = {
+                height: 200,
+                radius: 180,
+                labels: ["Activity", "Cost", "Members", 'Health', 'Quality', 'Time To Market', 'Releases'],
+                fillColor: "rgba(1, 150, 64, 0.4)",
+                strokeColor: "#019640",
+                pointLabelFontColor: "#2876B8",
+                pointLabelFontSize: 12
+            };
+            var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
+                    [orgCtx, timeCtx, productsCtx], skills_star_configuration);
 
             //  ----------------------------------- LIQUID GAUGE 1 ------------------------------------------
             var test_dom = document.getElementById("liquid-1-chart");

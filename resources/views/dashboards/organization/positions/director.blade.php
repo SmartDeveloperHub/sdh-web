@@ -57,6 +57,7 @@
             <div id="scatter-plot-subtitle" class="row subtitleRow">
                 <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
                 <span id="scatter-plot-stitle-label" class="subtitleLabel">Products analysis</span>
+                <span id="scatter-plot-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
             <div class="row">
                 <div class="col-sm-1 auxCol"></div>
@@ -71,6 +72,7 @@
                 <div id="products-table-subtitle" class="row subtitleRow">
                     <span id="products-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
                     <span id="products-table-stitle-label" class="subtitleLabel">Product Selector</span>
+                    <span id="products-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                 </div>
                 <div id='upProductTableButton' class="upPTableButton fa-angle-double-up"></div>
                 <div id="products-table" class="widget"></div>
@@ -80,6 +82,7 @@
                 <div id="releases-chart-subtitle" class="row subtitleRow">
                     <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
                     <span id="releases-chart-stitle-label" class="subtitleLabel">Status History</span>
+                    <span id="releases-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                 </div>
                 <div class="row">
                     <div id="releases-chart" class="widget"></div>
@@ -99,6 +102,7 @@
                         <div id="liquid1-chart-subtitle" class="row subtitleRow">
                             <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-link"></span>
                             <span id="liquid1-chart-stitle-label" class="subtitleLabel">Success Time</span>
+                            <span id="liquid1-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
                             <div id="liquid-1-chart" class="widget"></div>
@@ -106,6 +110,7 @@
                         <div id="liquid2-chart-subtitle" class="row subtitleRow">
                             <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                             <span id="liquid2-chart-stitle-label" class="subtitleLabel">Broken Time</span>
+                            <span id="liquid2-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
                             <div id="liquid-2-chart" class="widget"></div>
@@ -136,6 +141,7 @@
                 <div id="members-table-subtitle" class="row subtitleRow">
                     <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
                     <span id="members-table-stitle-label" class="subtitleLabel"> Manager Selector</span>
+                    <span id="members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                 </div>
                 <div id="team-members-table" class="widget"></div>
             </div>
@@ -144,6 +150,7 @@
                     <div id="team-multibar-subtitle" class="row subtitleRow">
                         <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                         <span id="team-multibar-stitle-label" class="subtitleLabel">Manager Comparison</span>
+                        <span id="team-multibar-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                     </div>
                     <div id="projects-roles-multibar" class="widget"></div>
                 </div>
@@ -151,6 +158,7 @@
                     <div id="team-pie-subtitle" class="row subtitleRow">
                         <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                         <span id="team-pie-stitle-label" class="subtitleLabel">Total Member Roles</span>
+                        <span id="team-pie-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                     </div>
                     <div id="team-members-pie" class="widget"></div>
                 </div>

@@ -783,16 +783,22 @@
                     [orgCtx, timeCtx, productsCtx], test_configuration);
 
             // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
-            var team_members_lines_dom = document.getElementById("team-members-lines");
+            var team_members_lines_dom = document.getElementById("position-members-lines");
             var team_members_lines_metrics = [
                 {
-                    id: 'orgdevelopers',
-                    max: 30
+                    id: 'directormanagers',
+                    max: 40,
+                    uid: 1
                 },
                 {
-                    id: 'orgcommits',
-                    max: 30,
-                    aggr: "avg"
+                    id: 'directorarchitects',
+                    max: 40,
+                    uid: 1
+                },
+                {
+                    id: 'directordevelopers',
+                    max: 40,
+                    uid: 1
                 }
             ];
             var team_members_lines_configuration = {
@@ -801,8 +807,7 @@
                 interpolate: 'monotone',
                 height: 200,
                 labelFormat: '¬_D.data.info.title¬',
-                colors: ["#2876B8", "#C0485E"],
-                area: false
+                area: true
             };
             var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
                     [orgCtx, timeCtx], team_members_lines_configuration);

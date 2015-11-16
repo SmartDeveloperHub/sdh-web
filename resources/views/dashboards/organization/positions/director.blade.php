@@ -245,7 +245,7 @@
         var statusHistory = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Analyze the releases status history.</span></div>';
         addQTip($('#releases-chart-stitle-help'), "prodStatusTool", statusHistory);
         // Product radar
-        var radarInfo = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Compare the selected product to</span><span class="toolRow">the average of all other products.</span></div>';
+        var radarInfo = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Compare the selected product to</span></div><div><span class="toolRow">the average of all other products.</span></div>';
         addQTip($('#radar-product-stitle-help'), "prodRadarTool", radarInfo);
         // Success Time
         var liquidSuccess = '<div><span class="toolTitle"><p>Releases status.</p></span></div><div><span class="toolRow">Success Percent.</span></div>';

@@ -453,7 +453,20 @@ html, body {
 
 /* team members secction*/
 #team-members-table {
-    margin-left: 12%;
-    margin-right: 2%;
+    margin-left: 16%;
+    margin-right: 16%;
+    overflow: hidden;
+    height: 620px;
 }
 
+#team-members-table .scroll-table {
+    height: 579px;
+}
+
+#upTeamTableButton {
+    top: 88px;
+}
+
+#downTeamTableButton {
+    bottom: 37px;
+}

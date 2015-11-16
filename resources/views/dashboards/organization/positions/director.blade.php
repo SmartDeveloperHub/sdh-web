@@ -74,9 +74,9 @@
                     <span id="products-table-stitle-label" class="subtitleLabel">Product Selector</span>
                     <span id="products-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                 </div>
-                <div id='upProductTableButton' class="upPTableButton fa-angle-double-up"></div>
+                <div id='upProductTableButton' class="upTableButton fa-angle-double-up"></div>
                 <div id="products-table" class="widget"></div>
-                <div id='downProductTableButton' class="downPTableButton fa-angle-double-down"></div>
+                <div id='downProductTableButton' class="downTableButton fa-angle-double-down"></div>
             </div>
             <div class="col-sm-8">
                 <div id="releases-chart-subtitle" class="row subtitleRow">
@@ -155,7 +155,9 @@
                     <span id="members-table-stitle-label" class="subtitleLabel"> Manager Selector</span>
                     <span id="members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                 </div>
+                <div id='upTeamTableButton' class="upTableButton fa-angle-double-up"></div>
                 <div id="team-members-table" class="widget"></div>
+                <div id='downTeamTableButton' class="downTableButton fa-angle-double-down"></div>
             </div>
             <div class="col-sm-8">
                 <div class="row">
@@ -975,7 +977,10 @@
                 filterControl: true,
                 initialSelectedRows: 3,
                 showHeader: false,
-                filterControl: false
+                filterControl: false,
+                scrollUpButton: $('#upTeamTableButton'),
+                scrollDownButton: $('#downTeamTableButton'),
+                height: 620
             };
             var team_members_table = new framework.widgets.Table(team_members_table_dom, team_members_table_metrics, [orgCtx, timeCtx], team_members_table_configuration);
 

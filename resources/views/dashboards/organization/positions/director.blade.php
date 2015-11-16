@@ -593,18 +593,18 @@
 
             //  ----------------------------------- PRODUCTS TABLE ------------------------------------------
             var table_dom = document.getElementById("products-table");
-            var table_metrics = ['repolist']; //TODO: choose resource
+            var table_metrics = ['productlist']; //TODO: choose resource
             var table_configuration = {
                 columns: [
                     {
                         label: "",
                         link: {
                             img: "avatar", //or label
-                            href: "repository",
+                            href: "product",
                             env: [
                                 {
-                                    property: "repositoryid",
-                                    as: "rid"
+                                    property: "productid",
+                                    as: "prid"
                                 },
                                 {
                                     property: "name",
@@ -624,13 +624,13 @@
                         id: productsCtx,
                         filter: [
                             {
-                                property: "repositoryid", //TODO
-                                as: "rid"
+                                property: "productid", //TODO
+                                as: "prid"
                             }
                         ]
                     }
                 ],
-                keepSelectedByProperty: "repositoryid",
+                keepSelectedByProperty: "productid",
                 selectable: true,
                 minRowsSelected: 0,
                 maxRowsSelected: 1,
@@ -647,12 +647,12 @@
             var releasesLines_dom = document.getElementById("releases-chart");
 
             var releasesLines_metrics = [{
-                id: 'reporeleasestatus',
+                id: 'productreleasestatus',
                 max: 20
             }];
 
             var releasesLines_configuration = {
-                height: 100,
+                height: 65,
                 color: function(val) {
                     var color = d3.scale.linear()
                             .domain([0, 0.5, 1])
@@ -744,7 +744,7 @@
             var test_dom = document.getElementById("liquid-1-chart");
             var test_metrics = [
                 {
-                    id: 'orgcommits',
+                    id: 'productreleasestatus',
                     max: 1
                 }
             ];

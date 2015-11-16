@@ -755,7 +755,8 @@
                 waveColor: '#8ACA17',
                 textColor: '#4BAD06',
                 circleColor: '#4BAD06',
-                waveTextColor:'#DBF1B4'
+                waveTextColor:'#DBF1B4',
+                radius: 45
             };
             var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
                     [orgCtx, timeCtx, productsCtx], test_configuration);
@@ -764,7 +765,7 @@
             var test_dom = document.getElementById("liquid-2-chart");
             var test_metrics = [
                 {
-                    id: 'orgcommits',
+                    id: 'producthealth',
                     max: 1
                 }
             ];
@@ -775,7 +776,8 @@
                 waveColor: '#E65538',
                 textColor: '#8C1700',
                 circleColor: '#8C1700',
-                waveTextColor: '#FFC5B9'
+                waveTextColor: '#FFC5B9',
+                radius: 45
             };
             var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
                     [orgCtx, timeCtx, productsCtx], test_configuration);

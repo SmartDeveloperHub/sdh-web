@@ -9,6 +9,7 @@
     "vendor/sdh-framework/framework.widget.counterbox",
     "vendor/sdh-framework/framework.widget.scatter",
     "vendor/sdh-framework/framework.widget.table",
+    "css!vendor/sdh-framework/framework.widget.table.css",
     "css!vendor/qtip2/jquery.qtip.min.css",
     "vendor/sdh-framework/framework.widget.linesChart",
     "css!vendor/sdh-framework/framework.widget.linesChart.css",

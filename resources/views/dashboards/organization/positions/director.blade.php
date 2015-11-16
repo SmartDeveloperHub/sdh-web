@@ -126,14 +126,26 @@
             <span id="peopleTitIco" class="titleIcon fa fa-users"></span>
             <span id="peopleTitIco" class="titleLabel">Team members</span>
         </div>
+        <div id="managers-subtitle" class="row subtitleRow">
+            <span id="managers-stitle-ico" class="subtitleIcon fa fa-sitemap"></span>
+            <span id="managers-stitle-label" class="subtitleLabel">Managers</span>
+            <span id="managers-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+        </div>
         <div class="row treeChartBox">
             <div id="cytograph1" class="col-sm-4 col-centered"></div>
             <div id="cytograph2" class="col-sm-4 col-centered"></div>
             <div id="cytograph3" class="col-sm-4 col-centered"></div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
-                <div id="team-members-lines" class="widget"></div>
+            <div id="positions-subtitle" class="row subtitleRow">
+                <span id="positions-stitle-ico" class="subtitleIcon fa fa-graduation-cap"></span>
+                <span id="positions-stitle-label" class="subtitleLabel">Positions</span>
+                <span id="positions-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div id="position-members-lines" class="widget"></div>
+                </div>
             </div>
         </div>
         <div class="row">

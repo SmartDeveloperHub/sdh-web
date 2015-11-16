@@ -429,9 +429,21 @@ html, body {
 }
 
 #releases-chart {
-    height: 200px;
+    height: 126px;
     margin-left: 2%;
     margin-right: 9%;
+}
+
+#radar-product-chart {
+    height: 289px;
+    margin-left: 5%;
+    margin-right: 5%;
+    overflow: hidden;
+    text-align: center;
+}
+#radar-product-chart .blurable canvas {
+    margin-bottom: -135px;
+    margin-top: -32px;
 }
 
 #liquid-1-chart, #liquid-2-chart {

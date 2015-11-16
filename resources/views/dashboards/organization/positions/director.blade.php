@@ -176,6 +176,15 @@
         setSubtitle("Director");
         showHeaderChart();
 
+        //change Product subtitle in start chart
+        framework.data.observe(['productinfo'], function (event) {
+
+            if (event.event === 'data') {
+                var productInfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
+                $('#radar-product-stitle-label').text(productInfo.name);
+            }
+
+        }, [productsCtx]);
         var env = framework.dashboard.getEnv();
         console.log(env);
         framework.data.updateContext(orgCtx, {oid: env['oid']});

@@ -169,6 +169,59 @@ html, body {
     -o-transition: all ease-in-out .20s;
     transition: all ease-in-out .20s;
 }
+
+.DirectorQTip {
+    max-width: 450px;
+}
+
+.subtitleTooltip {
+    font-family: Roboto;
+    font-size: 16px;
+}
+
+.subtitleTooltip .toolTitle {
+    font-size: 19px;
+}
+
+.subtitleTooltip .toolTitle p{
+    color: #545353;
+}
+
+.subtitleTooltip .toolRow {
+    white-space: nowrap;
+    color: #868686;
+}
+
+.subtitleTooltip .toolRow .red {
+    color: #DC0C15;
+}
+
+.subtitleTooltip .toolRow .green {
+    color: #019640;
+}
+
+.subtitleTooltip .toolRow .blue {
+    color: #019640;
+}
+
+.subtitleTooltip .toolRow .orange {
+    color: #ED7225;
+}
+
+.subtitleTooltip .toolRow .violet {
+    color: #8A1978;
+}
+
+.subtitleTooltip .toolRow .yellow {
+    color: #FFED00;
+}
+
+.subtitleTooltip .toolRow .ico {
+    font-family: FontAwesome;
+    width: 32px;
+    text-align: center;
+}
+
 /* metrics secction*/
 
 /* products secction*/

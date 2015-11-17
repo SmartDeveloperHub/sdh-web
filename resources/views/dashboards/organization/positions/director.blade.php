@@ -874,17 +874,17 @@
                 {
                     id: 'directormanagers',
                     max: 40,
-                    uid: 1
+                    uid: 1001
                 },
                 {
                     id: 'directorarchitects',
                     max: 40,
-                    uid: 1
+                    uid: 1001
                 },
                 {
                     id: 'directordevelopers',
                     max: 40,
-                    uid: 1
+                    uid: 1001
                 }
             ];
             var team_members_lines_configuration = {

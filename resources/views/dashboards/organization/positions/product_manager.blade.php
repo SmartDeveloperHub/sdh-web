@@ -135,10 +135,10 @@
             <span class="titleLabel">Team Members</span>
         </div>
         <div class="row">
-            <div id="positions-subtitle" class="row subtitleRow">
-                <span id="positions-stitle-ico" class="subtitleIcon fa fa-graduation-cap"></span>
-                <span id="positions-stitle-label" class="subtitleLabel">Roles</span>
-                <span id="positions-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            <div id="roles-subtitle" class="row subtitleRow">
+                <span id="roles-stitle-ico" class="subtitleIcon fa fa-graduation-cap"></span>
+                <span id="roles-stitle-label" class="subtitleLabel">Roles</span>
+                <span id="roles-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
             <div class="row ">
                 <div class="col-sm-12">
@@ -256,7 +256,7 @@
         addQTip($('#products-stitle-help'), "prodManagersTool", managerCyto);
         // Positions Lines
         var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">Analyze the historical number of members by position.</span></div>';
-        addQTip($('#positions-stitle-help'), "positionsLineTool", positionLine);
+        addQTip($('#roles-stitle-help'), "positionsLineTool", positionLine);
         // Manager Selector
         var teamSelect = '<div><span class="toolTitle"><p>Most significant Teams.</p></span></div><div><span class="toolRow">Select for comparison.</span></div>';
         addQTip($('#members-table-stitle-help'), "teamSelectTool", teamSelect);

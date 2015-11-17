@@ -18,6 +18,15 @@
   limitations under the License.
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
+html, body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 .page-container .main-content {
     padding: 0;
     overflow: hidden;
@@ -123,7 +132,7 @@
     margin-bottom: 25px;
     text-align: center;
     margin-top: 35px;
-    margin-left: 50px;
+    margin-left: 0;
     margin-right: 0;
     line-height: 30px;
 }
@@ -141,11 +150,82 @@
     font-family: Roboto;
 }
 
+.subtitleHelp {
+    font-size: 29px;
+    vertical-align: middle;
+    color: #004C8B;
+    opacity: 0;
+    margin-top: 4px;
+    margin-left: 20px;
+    -webkit-transition: all ease-in-out 2s;
+    -o-transition: all ease-in-out 2s;
+    transition: all ease-in-out 2s;
+    z-index: 9999;
+}
+
+.subtitleRow:hover .subtitleHelp {
+    opacity: 1;
+    -webkit-transition: all ease-in-out .20s;
+    -o-transition: all ease-in-out .20s;
+    transition: all ease-in-out .20s;
+}
+
+.DirectorQTip {
+    max-width: 450px;
+}
+
+.subtitleTooltip {
+    font-family: Roboto;
+    font-size: 16px;
+}
+
+.subtitleTooltip .toolTitle {
+    font-size: 19px;
+}
+
+.subtitleTooltip .toolTitle p{
+    color: #545353;
+}
+
+.subtitleTooltip .toolRow {
+    white-space: nowrap;
+    color: #868686;
+}
+
+.subtitleTooltip .toolRow .red {
+    color: #DC0C15;
+}
+
+.subtitleTooltip .toolRow .green {
+    color: #019640;
+}
+
+.subtitleTooltip .toolRow .blue {
+    color: #019640;
+}
+
+.subtitleTooltip .toolRow .orange {
+    color: #ED7225;
+}
+
+.subtitleTooltip .toolRow .violet {
+    color: #8A1978;
+}
+
+.subtitleTooltip .toolRow .yellow {
+    color: #FFED00;
+}
+
+.subtitleTooltip .toolRow .ico {
+    font-family: FontAwesome;
+    width: 32px;
+    text-align: center;
+}
+
 /* metrics secction*/
 
 /* products secction*/
 #scatter-plot-subtitle {
-    margin-left: 0;
 }
 
 #scatter-plot-stitle-ico {
@@ -175,8 +255,21 @@
 #releases-chart-stitle-label {
 }
 
+#radar-product-subtitle {
+    margin-left: -11px;
+    margin-bottom: 0;
+}
+
+#radar-product-stitle-ico {
+    color: #94C11F;
+}
+
+#radar-product-stitle-label {
+}
+
 #liquid1-chart-subtitle {
     margin-left: -11px;
+    margin-bottom: 0;
 }
 
 #liquid1-chart-stitle-ico {
@@ -188,6 +281,7 @@
 
 #liquid2-chart-subtitle {
     margin-left: -11px;
+    margin-bottom: 0;
 }
 
 #liquid2-chart-stitle-ico {
@@ -198,6 +292,30 @@
 }
 
 /* team members secction*/
+
+#products-subtitle {
+    margin-bottom: 20px;
+}
+
+#products-stitle-ico {
+    color: #BD1F00;
+}
+
+#products-stitle-help {
+}
+
+#roles-subtitle {
+    margin-left: -11px;
+    margin-bottom: 20px;
+}
+
+#roles-stitle-ico {
+    color: #BD1F00;
+}
+
+#roles-stitle-help {
+}
+
 #members-table-subtitle {
 }
 
@@ -206,6 +324,9 @@
 }
 
 #members-table-stitle-label {
+}
+
+#members-table-stitle-help {
 }
 
 #team-multibar-subtitle {
@@ -218,6 +339,10 @@
 #team-multibar-stitle-label {
 }
 
+#team-multibar-stitle-help {
+}
+
+
 #team-pie-subtitle {
 }
 
@@ -228,7 +353,8 @@
 #team-pie-stitle-label {
 }
 
-
+#team-pie-stitle-help {
+}
 
 /***********/
 /* widgets */
@@ -266,8 +392,10 @@
 }
 
 #products-table {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 16%;
+    margin-right: 16%;
+    overflow: hidden;
+    height: 480px;
 }
 
 #scatter-plot {
@@ -281,107 +409,69 @@
 }
 
 #scatter-plot .nvd3 .nv-axis path {
-    stroke: #353535;
-    stroke-width: 2px;
     stroke-opacity: 1;
+}
+
+#scatter-plot .nvd3 .nv-x.nv-axis path {
+    stroke: url('#gradX');
+    stroke-width: 4px;
+}
+
+#scatter-plot .nvd3 .nv-y.nv-axis path {
+    stroke: url('#gradY');
+    stroke-width: 4px;
+}
+
+#scatter-plot .nvd3 .nv-axis .tick text {
+    visibility: hidden;
+}
+
+#scatter-plot .nvd3 .nv-axis text {
+}
+
+#liquidBox {
+    text-align: center;
+}
+
+#releases-chart {
+    height: 126px;
+    margin-left: 2%;
+    margin-right: 9%;
+}
+
+#radar-product-chart {
+    height: 289px;
+    margin-left: 5%;
+    margin-right: 5%;
+    overflow: hidden;
+    text-align: center;
+}
+#radar-product-chart .blurable canvas {
+    margin-bottom: -135px;
+    margin-top: -32px;
 }
 
 #liquid-1-chart, #liquid-2-chart {
     text-align: center;
-    height: 200px;
+    display: inline-block;
 }
 
 /* team members secction*/
 #product-projects-table {
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 100%;
-    display: inline-table;
-}
-
-#product-projects-table .tableProductRow {
-    font-size: 23px;
-    font-family: Roboto;
-    color: #FFF;
-    background: #6F6C6C;
-    
-}
-
-#product-projects-table .tableProductLabel {
-    padding: 4px;
-}
-
-
-/* Product and Team Member common widgets*/
-table.dataTable {
-    width: 100% !important;
-}
-table.dataTable thead {
-    background-color: transparent;
-}
-table.dataTable, table.dataTable thead th, table.dataTable thead td {
-    border: 0 !important;
-}
-.table-striped > tbody > tr:nth-of-type(odd) {
-    background: #ffffff;
-}
-.table-search {
-    width: 100%;
-    padding: 0 10px 5px 10px;
-    border: 0;
-}
-.table-search label {
-    width: 100%;
-}
-.table-search .dataTables_filter {
-    width: 100%;
-    float: none !important;
-}
-
-table.dataTable .sorting_disabled, table.dataTable .sorting_asc {
+    margin-left: 16%;
+    margin-right: 16%;
     overflow: hidden;
-    white-space: nowrap;
+    height: 620px;
 }
 
-.dataTables_filter input[type="search"] {
-    margin-left: 0 !important;    padding-left: 44px;    padding-right: 44px;    position: relative;                
-    display: block;    
-    width: 60%;    height: 34px;    padding: 6px 12px;    font-size: 14px;    line-height: 1.42857143;    color: #555;    background-color: #fff;    background-image: none;    border: 1px solid #ccc;    
-    border-radius: 12px;    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-}
-.dataTables_filter label {
-  text-align: center;
-}
-.dataTables_filter input[type="search"]:focus {
-    outline-style: none;
+#product-projects-table .scroll-table {
+    height: 579px;
 }
 
-table.dataTable tbody tr.selected {
+#upTeamTableButton {
+    top: 88px;
 }
 
-table.dataTable tbody tr .odd {
-    border-bottom: solid 1px #808080;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-}
-
-.dashboardLink img {
-    cursor: pointer;
-    height: 40px;
-    width: 40px;
-}
-
-.dataTable td {
-    vertical-align: middle;
-}
-
-.dataTable tr td:nth-child(2) {
-    cursor: pointer;
-}
-div.dataTables_filter input{
-    border-radius: 12px;
-    padding-left: 44px;
-    padding-right: 44px;
-    position: relative;
+#downTeamTableButton {
+    bottom: 37px;
 }

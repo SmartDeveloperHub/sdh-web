@@ -833,14 +833,25 @@
             var team_members_lines_dom = document.getElementById("team-members-lines");
             var team_members_lines_metrics = [
                 {
-                    id: 'orgcommits',
-                    max: 30
+                    id: 'managerstakeholders',
+                    max: 40,
+                    uid: 1001
                 },
-                /*{
-                    id: 'usercommits',
-                    max: 30,
-                    aggr: "avg"
-                }*/
+                {
+                    id: 'managerdevelopers',
+                    max: 40,
+                    uid: 1001
+                },
+                {
+                    id: 'managermanagers',
+                    max: 40,
+                    uid: 1001
+                },
+                {
+                    id: 'managerarchitects',
+                    max: 40,
+                    uid: 1001
+                }
             ];
             var team_members_lines_configuration = {
                 xlabel: '',
@@ -848,9 +859,7 @@
                 interpolate: 'monotone',
                 height: 200,
                 labelFormat: '¬_D.data.info.title¬',
-                colors: ["#2876B8", "#C0485E"],
-                area: false,
-                _demo: true // Only for demo
+                area: true
             };
             var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
                     [orgCtx, timeCtx], team_members_lines_configuration);

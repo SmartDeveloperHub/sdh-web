@@ -901,24 +901,25 @@
 
             // TEAM MEMBERS ROLES
             var team_members_pie_dom = document.getElementById("team-members-pie");
+            // TODO Hay que sumar las metricas. Estudiar si se hace aquí, en el widget, en la API o en los servicios de sdh platform
             var team_members_pie_metrics = [
                 {
-                    id: 'orgcommits',
+                    id: 'directormanagers',
                     max: 1,
                     aggr: "sum"
                 },
                 {
-                    id: 'orgdevelopers',
+                    id: 'directormanagers',
                     max: 1,
                     aggr: "sum"
                 },
                 {
-                    id: 'orgbranches',
+                    id: 'directormanagers',
                     max: 1,
                     aggr: "sum"
                 },
                 {
-                    id: 'orgexec',
+                    id: 'directormanagers',
                     max: 1,
                     aggr: "sum"
                 }];

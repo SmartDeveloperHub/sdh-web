@@ -523,12 +523,12 @@
             var releasesLines_dom = document.getElementById("releases-chart");
 
             var releasesLines_metrics = [{
-                id: 'reporeleasestatus',
+                id: 'productreleasestatus',
                 max: 20
             }];
 
             var releasesLines_configuration = {
-                height: 100,
+                height: 65,
                 color: function(val) {
                     var color = d3.scale.linear()
                             .domain([0, 0.5, 1])
@@ -536,8 +536,8 @@
                     return color(val);
                 },
                 tooltip: '<h3>Value: ¬Math.round(_E.value * 100)/100¬</h3>' +
-                         '<h3>Date: ¬moment(_E.time).toString()¬ </h3>',
-                legend: ['Broken', 'Success']
+                         '<h3>Date: ¬Widget.format.date(_E.time)¬ </h3>',
+                legend: ['Success', 'Broken']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 

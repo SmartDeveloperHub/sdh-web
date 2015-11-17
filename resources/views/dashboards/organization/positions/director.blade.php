@@ -171,7 +171,7 @@
                 <div class="row">
                     <div id="team-pie-subtitle" class="row subtitleRow">
                         <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
-                        <span id="team-pie-stitle-label" class="subtitleLabel">Total Member Roles</span>
+                        <span id="team-pie-stitle-label" class="subtitleLabel">Roles Summary</span>
                         <span id="team-pie-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                     </div>
                     <div id="team-members-pie" class="widget"></div>

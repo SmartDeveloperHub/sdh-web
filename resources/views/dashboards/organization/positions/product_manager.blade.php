@@ -137,7 +137,7 @@
         <div class="row">
             <div id="positions-subtitle" class="row subtitleRow">
                 <span id="positions-stitle-ico" class="subtitleIcon fa fa-graduation-cap"></span>
-                <span id="positions-stitle-label" class="subtitleLabel">Positions</span>
+                <span id="positions-stitle-label" class="subtitleLabel">Roles</span>
                 <span id="positions-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
             <div class="row ">
@@ -149,7 +149,7 @@
             <div class="col-sm-4">
                 <div id="members-table-subtitle" class="row subtitleRow">
                     <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
-                    <span id="members-table-stitle-label" class="subtitleLabel">Projects Selector</span>
+                    <span id="members-table-stitle-label" class="subtitleLabel">Project Selector</span>
                     <span id="members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                 </div>
                 <div id='upTeamTableButton' class="upTableButton fa-angle-double-up"></div>
@@ -168,7 +168,7 @@
                 <div class="row">
                     <div id="team-pie-subtitle" class="row subtitleRow">
                         <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
-                        <span id="team-pie-stitle-label" class="subtitleLabel">Total Member Roles</span>
+                        <span id="team-pie-stitle-label" class="subtitleLabel">Roles Summary</span>
                         <span id="team-pie-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                     </div>
                     <div id="team-members-pie" class="widget"></div>
@@ -255,8 +255,8 @@
         var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">Analyze the historical number of members by position.</span></div>';
         addQTip($('#positions-stitle-help'), "positionsLineTool", positionLine);
         // Manager Selector
-        var managerSelect = '<div><span class="toolTitle"><p>Most significant Managers.</p></span></div><div><span class="toolRow">Select one to analyze it.</span></div>';
-        addQTip($('#members-table-stitle-help'), "managerSelectTool", managerSelect);
+        var teamSelect = '<div><span class="toolTitle"><p>Most significant Teams.</p></span></div><div><span class="toolRow">Select for comparison.</span></div>';
+        addQTip($('#members-table-stitle-help'), "teamSelectTool", teamSelect);
         // Manager Comparison
         var managerComp = '<div><span class="toolTitle"><p>Manager team roles comparison.</p></span></div><div><span class="toolRow">Compare the number of manager team roles.</span></div>';
         addQTip($('#team-multibar-stitle-help'), "managerCompTool", managerComp);

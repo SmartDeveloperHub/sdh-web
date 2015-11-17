@@ -102,6 +102,11 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
         newEnv['oid'] = ORGANIZATION_ID;
     }
 
+    //Also add the user id
+    if(newEnv['user_id'] == null) {
+        newEnv['user_id'] = USER_ID;
+    }
+
     // Create the url for the dashboard
     var encEnv = encodeURIComponent(JSON.stringify(newEnv));
     var dashboardUrl = 'dashboard/' + newDashboard + '/' + encEnv;

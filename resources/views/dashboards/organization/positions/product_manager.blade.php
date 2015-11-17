@@ -195,6 +195,75 @@
         setSubtitle("Product Manager");
         showHeaderChart();
 
+        //change Product subtitle in start chart
+        framework.data.observe(['productinfo'], function (event) {
+
+            if (event.event === 'data') {
+                var productInfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
+                $('#radar-product-stitle-label').text(productInfo.name);
+            }
+
+        }, [productsCtx]);
+
+        // Subtitles info
+        var addQTip = function addQTip(element, id, htmlText) {
+            element.qtip({
+                content: function(){
+                    return '<div id="' + id + '" class=subtitleTooltip>' + htmlText + '</div>';
+                },
+                show: {
+                    event: 'mouseover'
+                },
+                hide: {
+                    event: 'unfocus'
+                },
+                position: {
+                    my: 'top center',
+                    at: 'bottom center'
+                },
+                style: {
+                    classes: 'DirectorQTip qtip-bootstrap',
+                    tip: {
+                        width: 16,
+                        height: 6
+                    }
+                }
+            });
+        };
+        // Product analysis
+        var productAnalysis = '<div><span class="toolTitle"><p>This chart shows the most significant products.</p></span></div><div><span class="toolRow"><span class="fa fa-users blue"></span><strong>Team Size</strong>. Directly proportional to the size of the circles</span></div><div><span class="toolRow"><span class="ico fa fa-heartbeat orange"></span><strong>Health</strong>. Colour. <span class="red">Red-bad</span> <span class="green">Green-good</span></span></div><div><span class="toolRow"><span class="ico fa fa-balance-scale green"></span><strong>Quality</strong>. Y axis</span></div><div><span class="toolRow"><span class="ico fa fa-hourglass-start violet"></span><strong>Time To Market</strong>. X axis</span></div>';
+        addQTip($('#scatter-plot-stitle-help'), "prodAnalisisTool", productAnalysis);
+        // Product Selector
+        var productSelector = '<div><span class="toolTitle"><p>Most significant products.</p></span></div><div><span class="toolRow">Select one to analyze it.</span></div>';
+        addQTip($('#products-table-stitle-help'), "prodTableTool", productSelector);
+        // Status History
+        var statusHistory = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Analyze the releases status history.</span></div>';
+        addQTip($('#releases-chart-stitle-help'), "prodStatusTool", statusHistory);
+        // Product radar
+        var radarInfo = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Compare the selected product to</span></div><div><span class="toolRow">the average of all other products.</span></div>';
+        addQTip($('#radar-product-stitle-help'), "prodRadarTool", radarInfo);
+        // Success Time
+        var liquidSuccess = '<div><span class="toolTitle"><p>Releases status.</p></span></div><div><span class="toolRow">Success Percent.</span></div>';
+        addQTip($('#liquid2-chart-stitle-help'), "prodLiqSuccesTool", liquidSuccess);
+        // Broken Time
+        var liquidBroken = '<div><span class="toolTitle"><p>Releases status.</p></span></div><div><span class="toolRow">Broken Percent.</span></div>';
+        addQTip($('#liquid1-chart-stitle-help'), "prodLiqBrokenTool", liquidBroken);
+        // Managers Cytocharts
+        var managerCyto = '<div><span class="toolTitle"><p>Most significant Products and Projects.</p></span></div><div><span class="toolRow">Analyze the most important projects for each product.</span></div>';
+        addQTip($('#products-stitle-help'), "prodManagersTool", managerCyto);
+        // Positions Lines
+        var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">Analyze the historical number of members by position.</span></div>';
+        addQTip($('#positions-stitle-help'), "positionsLineTool", positionLine);
+        // Manager Selector
+        var managerSelect = '<div><span class="toolTitle"><p>Most significant Managers.</p></span></div><div><span class="toolRow">Select one to analyze it.</span></div>';
+        addQTip($('#members-table-stitle-help'), "managerSelectTool", managerSelect);
+        // Manager Comparison
+        var managerComp = '<div><span class="toolTitle"><p>Manager team roles comparison.</p></span></div><div><span class="toolRow">Compare the number of manager team roles.</span></div>';
+        addQTip($('#team-multibar-stitle-help'), "managerCompTool", managerComp);
+        // Total Member Roles
+        var memberRoles = '<div><span class="toolTitle"><p>Total members by role.</p></span></div><div><span class="toolRow">Accumulated number of team members by role.</span></div>';
+        addQTip($('#team-pie-stitle-help'), "memberRolesTool", memberRoles);
+
         var env = framework.dashboard.getEnv();
         framework.data.updateContext(orgCtx, {oid: env['oid']});
 

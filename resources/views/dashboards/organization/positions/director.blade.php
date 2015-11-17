@@ -192,6 +192,9 @@
         var timeCtx = "time-context";
         var productsCtx = "products-context";
         var teamMembersCtx = "team-members-context";
+        var currentUserCtx = "current-user-context";
+
+        framework.data.updateContext(currentUserCtx, {uid: framework.dashboard.getEnv()['user_id']});
 
         //Show header chart and set titles
         setTitle("Home");
@@ -753,17 +756,14 @@
 
             // PRODUCT STAR CHART
             var skills_star_dom = document.getElementById("radar-product-chart");
-            var skills_star_metrics = [
+            //Specific skills
+            var skills_star_metrics1 = [
                 {
                     id: 'productactivity',
                     max: 1
                 },
                 {
-                    id: 'productcost',
-                    max: 1
-                },
-                {
-                    id: 'productmembers',
+                    id: 'productpopularity',
                     max: 1
                 },
                 {
@@ -777,54 +777,65 @@
                 {
                     id: 'producttimetomarket',
                     max: 1
-                },
-                {
-                    id: 'productreleases',
-                    max: 1
                 }
             ];
-            /* TODO add average skills in this chart
+            //Average skills
             var skills_star_metrics2 = [
                 {
-                    id: 'userproductactivity',
-                    max: 1
+                    id: 'userproductsactivity',
+                    max: 1,
+                    aggr: 'avg'
                 },
                 {
-                    id: 'userproductcost',
-                    max: 1
+                    id: 'userproductspopularity',
+                    max: 1,
+                    aggr: 'avg'
                 },
                 {
-                    id: 'userproductmembers',
-                    max: 1
+                    id: 'userproductshealth',
+                    max: 1,
+                    aggr: 'avg'
                 },
                 {
-                    id: 'userproducthealth',
-                    max: 1
+                    id: 'userproductsquality',
+                    max: 1,
+                    aggr: 'avg'
                 },
                 {
-                    id: 'userproductquality',
-                    max: 1
-                },
-                {
-                    id: 'userproducttimetomarket',
-                    max: 1
-                },
-                {
-                    id: 'userproductreleases',
-                    max: 1
+                    id: 'userproductstimetomarket',
+                    max: 1,
+                    aggr: 'avg'
                 }
-            ];*/
+            ];
+
+            var skills_star_metrics = skills_star_metrics1.concat(skills_star_metrics2); //Merge all in one array
+
             var skills_star_configuration = {
                 height: 200,
                 radius: 180,
-                labels: ["Activity", "Cost", "Members", 'Health', 'Quality', 'Time To Market', 'Releases'],
-                fillColor: "rgba(1, 150, 64, 0.4)",
-                strokeColor: "#019640",
+                labelsAssoc: [{
+                    'userproductsactivity':      'Activity',
+                    'userproductspopularity':    'Popularity',
+                    'userproductshealth':        'Health',
+                    'userproductsquality':       'Quality',
+                    'userproductstimetomarket':  'Time To Market'
+                },
+                {
+                    'productactivity':          'Activity',
+                    'productpopularity':        'Popularity',
+                    'producthealth':            'Health',
+                    'productquality':           'Quality',
+                    'producttimetomarket':      'Time To Market'
+                }
+                ],
+                labels: ["Activity", "Popularity", 'Health', 'Quality', 'Time To Market'],
+                fillColor: ["rgba(30, 30, 30, 0.2)", "rgba(1, 150, 64, 0.4)"],
+                strokeColor: ["rgba(30, 30, 30, 0.3)", "#019640"],
                 pointLabelFontColor: "#2876B8",
                 pointLabelFontSize: 12
             };
             var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
-                    [orgCtx, timeCtx, productsCtx], skills_star_configuration);
+                    [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);
 
             //  ----------------------------------- LIQUID GAUGE 1 ------------------------------------------
             var test_dom = document.getElementById("liquid-1-chart");

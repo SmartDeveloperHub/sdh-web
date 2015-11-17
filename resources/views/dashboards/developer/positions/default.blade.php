@@ -304,6 +304,11 @@
             var skills_star_configuration = {
                 height: 300,
                 labels: ["Speed", "Collaboration", "Quality"],
+                labelsAssoc: [{
+                    'userspeed': 'Speed',
+                    'usercollaboration': 'Collaboration',
+                    'userquality': 'Quality'
+                }],
                 fillColor: "rgba(1, 150, 64, 0.4)",
                 strokeColor: "#019640",
                 pointLabelFontColor: "#2876B8",

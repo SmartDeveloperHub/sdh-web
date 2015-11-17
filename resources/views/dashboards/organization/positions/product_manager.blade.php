@@ -469,18 +469,18 @@
 
             //  ----------------------------------- PRODUCTS TABLE ------------------------------------------
             var table_dom = document.getElementById("products-table");
-            var table_metrics = ['repolist']; //TODO: choose resource
+            var table_metrics = ['productlist']; //TODO: choose resource
             var table_configuration = {
                 columns: [
                     {
                         label: "",
                         link: {
                             img: "avatar", //or label
-                            href: "repository",
+                            href: "product",
                             env: [
                                 {
-                                    property: "repositoryid",
-                                    as: "rid"
+                                    property: "productid",
+                                    as: "prid"
                                 },
                                 {
                                     property: "name",
@@ -500,20 +500,22 @@
                         id: productsCtx,
                         filter: [
                             {
-                                property: "repositoryid", //TODO
-                                as: "rid"
+                                property: "productid", //TODO
+                                as: "prid"
                             }
                         ]
                     }
                 ],
-                keepSelectedByProperty: "repositoryid",
+                keepSelectedByProperty: "productid",
                 selectable: true,
                 minRowsSelected: 0,
                 maxRowsSelected: 1,
                 filterControl: true,
                 initialSelectedRows: 1,
                 showHeader: false,
-                alwaysOneSelected: true
+                alwaysOneSelected: true,
+                scrollUpButton: $('#upProductTableButton'),
+                scrollDownButton: $('#downProductTableButton')
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx], table_configuration);
 

@@ -262,10 +262,10 @@
         var managerCyto = '<div><span class="toolTitle"><p>Most significant managers.</p></span></div><div><span class="toolRow">Analyze the most important products for each manager.</span></div>';
         addQTip($('#managers-stitle-help'), "prodManagersTool", managerCyto);
         // Positions Lines
-        var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">Analyze the historic number of members by position.</span></div>';
+        var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">Analyze the historical number of members by position.</span></div>';
         addQTip($('#positions-stitle-help'), "positionsLineTool", positionLine);
         // Manager Selector
-        var managerSelect = '<div><span class="toolTitle"><p>Most significant Managers.</p></span></div><div><span class="toolRow">Select one to analyze it.</span></div>';
+        var managerSelect = '<div><span class="toolTitle"><p>Most significant Managers.</p></span></div><div><span class="toolRow">Select for comparison.</span></div>';
         addQTip($('#members-table-stitle-help'), "managerSelectTool", managerSelect);
         // Manager Comparison
         var managerComp = '<div><span class="toolTitle"><p>Manager team roles comparison.</p></span></div><div><span class="toolRow">Compare the number of manager team roles.</span></div>';

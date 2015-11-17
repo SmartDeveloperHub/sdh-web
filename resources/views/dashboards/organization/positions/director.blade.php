@@ -124,7 +124,7 @@
     <div class="row">
         <div id="peplTitRow" class="row titleRow">
             <span id="peopleTitIco" class="titleIcon fa fa-users"></span>
-            <span id="peopleTitIco" class="titleLabel">Team members</span>
+            <span id="peopleTitLabel" class="titleLabel">Team Members</span>
         </div>
         <div id="managers-subtitle" class="row subtitleRow">
             <span id="managers-stitle-ico" class="subtitleIcon fa fa-sitemap"></span>

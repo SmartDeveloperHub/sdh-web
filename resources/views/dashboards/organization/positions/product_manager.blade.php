@@ -57,6 +57,7 @@
             <div id="scatter-plot-subtitle" class="row subtitleRow">
                 <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
                 <span id="scatter-plot-stitle-label" class="subtitleLabel">Products analysis</span>
+                <span id="scatter-plot-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
             <div class="row">
                 <div class="col-sm-1 auxCol"></div>
@@ -71,6 +72,7 @@
                 <div id="products-table-subtitle" class="row subtitleRow">
                     <span id="products-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
                     <span id="products-table-stitle-label" class="subtitleLabel">Product Selector</span>
+                    <span id="products-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                 </div>
                 <div id="products-table" class="widget"></div>
             </div>
@@ -78,24 +80,35 @@
                 <div id="releases-chart-subtitle" class="row subtitleRow">
                     <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
                     <span id="releases-chart-stitle-label" class="subtitleLabel">Releases History</span>
+                    <span id="releases-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                 </div>
                 <div class="row">
                     <div id="releases-chart" class="widget"></div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
+                        <div id="radar-product-subtitle" class="row subtitleRow">
+                            <span id="radar-product-stitle-ico" class="subtitleIcon fa fa-line-chart"></span>
+                            <span id="radar-product-stitle-label" class="subtitleLabel"></span>
+                            <span id="radar-product-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                        </div>
+                        <div class="row">
+                            <div id="radar-product-chart" class="widget"></div>
+                        </div>
+                    </div>
+                    <div id="liquidBox" class="col-sm-6">
                         <div id="liquid1-chart-subtitle" class="row subtitleRow">
                             <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-link"></span>
                             <span id="liquid1-chart-stitle-label" class="subtitleLabel">Success Time</span>
+                            <span id="liquid1-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
                             <div id="liquid-1-chart" class="widget"></div>
                         </div>
-                    </div>
-                    <div class="col-sm-6">
                         <div id="liquid2-chart-subtitle" class="row subtitleRow">
                             <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                             <span id="liquid2-chart-stitle-label" class="subtitleLabel">Broken Time</span>
+                            <span id="liquid2-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
                             <div id="liquid-2-chart" class="widget"></div>
@@ -103,30 +116,52 @@
                     </div>
                 </div>
             </div>
+            <div id="products-subtitle" class="row subtitleRow">
+                <span id="products-stitle-ico" class="subtitleIcon fa fa-sitemap"></span>
+                <span id="products-stitle-label" class="subtitleLabel">Products</span>
+                <span id="products-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+            <div class="row treeChartBox">
+                <div id="cytograph1" class="col-sm-4 col-centered"></div>
+                <div id="cytograph2" class="col-sm-4 col-centered"></div>
+                <div id="cytograph3" class="col-sm-4 col-centered"></div>
+            </div>
         </div>
     </div>
 
     <div class="row">
         <div id="peplTitRow" class="row titleRow">
             <span class="titleIcon titleIcon fa fa-users"></span>
-            <span class="titleLabel">Team members</span>
-        </div>
-        <div class="row treeChartBox">
-            <div id="cytograph1" class="col-sm-4 col-centered"></div>
-            <div id="cytograph2" class="col-sm-4 col-centered"></div>
-            <div id="cytograph3" class="col-sm-4 col-centered"></div>
+            <span class="titleLabel">Team Members</span>
         </div>
         <div class="row">
-            <div class="col-sm-12">
-                <div id="team-members-lines" class="widget"></div>
+            <div id="positions-subtitle" class="row subtitleRow">
+                <span id="positions-stitle-ico" class="subtitleIcon fa fa-graduation-cap"></span>
+                <span id="positions-stitle-label" class="subtitleLabel">Positions</span>
+                <span id="positions-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
-        </div>
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div id="team-members-lines" class="widget"></div>
+                </div>
+            </div>
         <div class="row">
+            <div class="col-sm-4">
+                <div id="members-table-subtitle" class="row subtitleRow">
+                    <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
+                    <span id="members-table-stitle-label" class="subtitleLabel">Projects Selector</span>
+                    <span id="members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                </div>
+                <div id='upTeamTableButton' class="upTableButton fa-angle-double-up"></div>
+                <div id="product-projects-table" class="widget"></div>
+                <div id='downTeamTableButton' class="downTableButton fa-angle-double-down"></div>
+            </div>
             <div class="col-sm-8">
                 <div class="row">
                     <div id="team-multibar-subtitle" class="row subtitleRow">
                         <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                         <span id="team-multibar-stitle-label" class="subtitleLabel">Teams Comparison</span>
+                        <span id="team-multibar-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                     </div>
                     <div id="projects-roles-multibar" class="widget"></div>
                 </div>
@@ -134,16 +169,10 @@
                     <div id="team-pie-subtitle" class="row subtitleRow">
                         <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                         <span id="team-pie-stitle-label" class="subtitleLabel">Total Member Roles</span>
+                        <span id="team-pie-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                     </div>
                     <div id="team-members-pie" class="widget"></div>
                 </div>
-            </div>
-            <div class="col-sm-4">
-                <div id="members-table-subtitle" class="row subtitleRow">
-                    <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
-                    <span id="members-table-stitle-label" class="subtitleLabel"> Projects Selector</span>
-                </div>
-                <div id="product-projects-table" class="widget"></div>
             </div>
         </div>
     </div>

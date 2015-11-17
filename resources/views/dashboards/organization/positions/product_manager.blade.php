@@ -189,6 +189,9 @@
         var timeCtx = "time-context";
         var productsCtx = "products-context";
         var productByProjectCtx = "products-projects-context";
+        var currentUserCtx = "current-user-context";
+
+        framework.data.updateContext(currentUserCtx, {uid: framework.dashboard.getEnv()['user_id']});
 
         //Show header chart and set titles
         setTitle("Home");

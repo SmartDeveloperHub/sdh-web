@@ -754,7 +754,7 @@
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 
-            // PRODUCT STAR CHART
+            //  ---------------------------------- PRODUCT STAR CHART ------------------------------------------
             var skills_star_dom = document.getElementById("radar-product-chart");
             //Specific skills
             var skills_star_metrics1 = [
@@ -909,8 +909,7 @@
             var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
                     [orgCtx, timeCtx], team_members_lines_configuration);
 
-
-            // TEAM MEMBERS ROLES
+            // ------------------------------- TEAM MEMBERS ROLES -------------------------------------
             var team_members_pie_dom = document.getElementById("team-members-pie");
             // TODO Hay que sumar las metricas. Estudiar si se hace aquí, en el widget, en la API o en los servicios de sdh platform
             var team_members_pie_metrics = [

@@ -615,11 +615,11 @@
                     'producttimetomarket':      'Time To Market'
                 }
                 ],
-                labels: ["Activity", "Popularity", 'Health', 'Quality', 'Time To Market'],
+                labels: ["Activity", "Popularity", 'Health', 'Time To Market', 'Quality'],
                 fillColor: ["rgba(30, 30, 30, 0.2)", "rgba(1, 150, 64, 0.4)"],
                 strokeColor: ["rgba(30, 30, 30, 0.3)", "#019640"],
                 pointLabelFontColor: "#2876B8",
-                pointLabelFontSize: 12
+                pointLabelFontSize: 14
             };
             var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
                     [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);

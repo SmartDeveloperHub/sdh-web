@@ -470,3 +470,8 @@ html, body {
 #downTeamTableButton {
     bottom: 37px;
 }
+
+.nv-axis text, .nv-label text {
+    font: 400 14px Roboto;
+    fill: #4a4a4a !important;
+}

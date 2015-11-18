@@ -100,16 +100,16 @@
                     </div>
                     <div id="liquidBox" class="col-sm-6">
                         <div id="liquid1-chart-subtitle" class="row subtitleRow">
-                            <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-link"></span>
-                            <span id="liquid1-chart-stitle-label" class="subtitleLabel">Success Time</span>
+                            <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-check-circle"></span>
+                            <span id="liquid1-chart-stitle-label" class="subtitleLabel"></span>
                             <span id="liquid1-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
                             <div id="liquid-1-chart" class="widget"></div>
                         </div>
                         <div id="liquid2-chart-subtitle" class="row subtitleRow">
-                            <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
-                            <span id="liquid2-chart-stitle-label" class="subtitleLabel">Broken Time</span>
+                            <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-heartbeat"></span>
+                            <span id="liquid2-chart-stitle-label" class="subtitleLabel"></span>
                             <span id="liquid2-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
@@ -207,6 +207,8 @@
             if (event.event === 'data') {
                 var productInfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
                 $('#radar-product-stitle-label').text(productInfo.name);
+                $('#liquid1-chart-stitle-label').text(productInfo.name + " Status");
+                $('#liquid2-chart-stitle-label').text(productInfo.name + " health");
             }
 
         }, [productsCtx]);
@@ -253,11 +255,11 @@
         var radarInfo = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Compare the selected product to</span></div><div><span class="toolRow">the average of all other products.</span></div>';
         addQTip($('#radar-product-stitle-help'), "prodRadarTool", radarInfo);
         // Success Time
-        var liquidSuccess = '<div><span class="toolTitle"><p>Releases status.</p></span></div><div><span class="toolRow">Success Percent.</span></div>';
-        addQTip($('#liquid2-chart-stitle-help'), "prodLiqSuccesTool", liquidSuccess);
+        var liquidStatus = '<div><span class="toolTitle"><p>Project status.</p></span></div><div><span class="toolRow">Percentage of successful builds.</span></div>';
+        addQTip($('#liquid2-chart-stitle-help'), "prodLiqSuccesTool", liquidStatus);
         // Broken Time
-        var liquidBroken = '<div><span class="toolTitle"><p>Releases status.</p></span></div><div><span class="toolRow">Broken Percent.</span></div>';
-        addQTip($('#liquid1-chart-stitle-help'), "prodLiqBrokenTool", liquidBroken);
+        var liquidHealth = '<div><span class="toolTitle"><p>Project health.</p></span></div><div><span class="toolRow">Health of the project.</span></div>';
+        addQTip($('#liquid1-chart-stitle-help'), "prodLiqBrokenTool", liquidHealth);
         // Managers Cytocharts
         var managerCyto = '<div><span class="toolTitle"><p>Most significant managers.</p></span></div><div><span class="toolRow">Analyze the most important products for each manager.</span></div>';
         addQTip($('#managers-stitle-help'), "prodManagersTool", managerCyto);
@@ -828,11 +830,11 @@
                     'producttimetomarket':      'Time To Market'
                 }
                 ],
-                labels: ["Activity", "Popularity", 'Health', 'Quality', 'Time To Market'],
+                labels: ["Activity", "Popularity", 'Health', 'Time To Market', 'Quality' ],
                 fillColor: ["rgba(30, 30, 30, 0.2)", "rgba(1, 150, 64, 0.4)"],
                 strokeColor: ["rgba(30, 30, 30, 0.3)", "#019640"],
                 pointLabelFontColor: "#2876B8",
-                pointLabelFontSize: 12
+                pointLabelFontSize: 14
             };
             var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
                     [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);
@@ -848,12 +850,13 @@
             var test_configuration = {
                 height: 110,
                 minValue: 0,
-                maxValue: 100,
-                waveColor: '#8ACA17',
-                textColor: '#4BAD06',
-                circleColor: '#4BAD06',
+                maxValue: 1,
+                waveColor: ['#E65538', '#8ACA17'],
+                textColor: ['#E65538', '#DBF1B4'],
+                circleColor: ['#8C1700', '#4BAD06'],
                 waveTextColor:'#DBF1B4',
-                radius: 45
+                radius: 45,
+                displayPercent: false
             };
             var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
                     [orgCtx, timeCtx, productsCtx], test_configuration);
@@ -870,10 +873,10 @@
                 height: 110,
                 minValue: 0,
                 maxValue: 100,
-                waveColor: '#E65538',
-                textColor: '#8C1700',
-                circleColor: '#8C1700',
-                waveTextColor: '#FFC5B9',
+                waveColor: ['#E65538', '#8ACA17'],
+                textColor: '#333333',
+                circleColor: ['#8C1700', '#4BAD06'],
+                waveTextColor: '#333333',
                 radius: 45
             };
             var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
@@ -916,25 +919,30 @@
                 {
                     id: 'directormanagers',
                     max: 1,
-                    aggr: "sum"
+                    aggr: "sum",
+                    uid: 1001 //TODO: temporal
                 },
                 {
                     id: 'directormanagers',
                     max: 1,
-                    aggr: "sum"
+                    aggr: "sum",
+                    uid: 1001 //TODO: temporal
                 },
                 {
                     id: 'directormanagers',
                     max: 1,
-                    aggr: "sum"
+                    aggr: "sum",
+                    uid: 1001 //TODO: temporal
                 },
                 {
                     id: 'directormanagers',
                     max: 1,
-                    aggr: "sum"
+                    aggr: "sum",
+                    uid: 1001 //TODO: temporal
                 }];
             var team_members_pie_configuration = {
-                height: 300,
+                height: 250,
+                showLegend: false,
                 labelFormat: "¬(_E.resource == 'orgcommits' ? 'Software developer' : " +
                 "(_E.resource == 'orgdevelopers' ? 'Software Arquitect' : " +
                 "(_E.resource == 'orgbranches' ? 'Project Manager' : 'Stakeholder')))¬"

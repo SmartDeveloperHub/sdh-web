@@ -615,20 +615,25 @@
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
             var scatter_dom = document.getElementById("scatter-plot");
             var scatter_test_cntx = "test_cntx";
-            framework.data.updateContext(scatter_test_cntx, {rid: [1,2,3,4,5]}); //TODO: this wont be needed
+            framework.data.updateContext(scatter_test_cntx, {prid: [1,2,3,4,5]}); //TODO: this wont be needed
             var scatter_metrics = [ //TODO: required metrics
                 {
-                    id: 'repocommits',
+                    id: 'productcost',
                     max: 1,
                     aggr: 'sum'
                 },
                 {
-                    id: 'repodevelopers',
+                    id: 'producthealth',
                     max: 1,
                     aggr: 'sum'
                 },
                 {
-                    id: 'repopassedexecutions',
+                    id: 'productquality',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'producttimetomarket',
                     max: 1,
                     aggr: 'sum'
                 }
@@ -659,8 +664,8 @@
                 yAxisTicks: 3,
                 yAxisLabel: "Quality",
                 height: 390,
-                groupBy: 'rid',
-                labelFormat: '¬_D.repocommits.info.rid.name¬',
+                groupBy: 'prid',
+                labelFormat: '¬_D.productcost.info.prid.name¬',
                 showDistX: false,
                 showDistY: false,
                 xDomain: [0,1],
@@ -668,12 +673,12 @@
                 pointDomain: [0,1],
                 clipEdge: true,
                 tooltip: "<div>" +
-                "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data.repocommits.info.rid.avatar¬\" />" +
-                "<h3>¬_D.data.repocommits.info.rid.name¬</h3>" +
+                "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data.productcost.info.prid.avatar¬\" />" +
+                "<h3>¬_D.data.productcost.info.prid.name¬</h3>" +
                 "<h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4>" +
                 "<h4>Time to market: ¬_D.x¬</h4>" +
                 "</div>",
-                image: "¬_D.data.repocommits.info.rid.avatar¬",
+                image: "¬_D.data.productcost.info.prid.avatar¬",
                 xAxisGradient: ['red', 'orange', 'yellow', 'green'],
                 yAxisGradient: ['green', 'yellow', 'orange', 'red'],
                 showLegend: false,
@@ -917,35 +922,37 @@
             // TODO Hay que sumar las metricas. Estudiar si se hace aquí, en el widget, en la API o en los servicios de sdh platform
             var team_members_pie_metrics = [
                 {
-                    id: 'directormanagers',
+                    id: 'managerstakeholders',
                     max: 1,
                     aggr: "sum",
-                    uid: 1001 //TODO: temporal
+                    post_aggr: 'sum',
+                    uid: [1001, 1002] //TODO: temporal
                 },
                 {
-                    id: 'directormanagers',
+                    id: 'managerdevelopers',
                     max: 1,
                     aggr: "sum",
-                    uid: 1001 //TODO: temporal
+                    post_aggr: 'sum',
+                    uid: [1001, 1002] //TODO: temporal
                 },
                 {
-                    id: 'directormanagers',
+                    id: 'managermanagers',
                     max: 1,
                     aggr: "sum",
-                    uid: 1001 //TODO: temporal
+                    post_aggr: 'sum',
+                    uid: [1001, 1002] //TODO: temporal
                 },
                 {
-                    id: 'directormanagers',
+                    id: 'managerarchitects',
                     max: 1,
                     aggr: "sum",
-                    uid: 1001 //TODO: temporal
+                    post_aggr: 'sum',
+                    uid: [1001, 1002] //TODO: temporal
                 }];
             var team_members_pie_configuration = {
                 height: 250,
                 showLegend: false,
-                labelFormat: "¬(_E.resource == 'orgcommits' ? 'Software developer' : " +
-                "(_E.resource == 'orgdevelopers' ? 'Software Arquitect' : " +
-                "(_E.resource == 'orgbranches' ? 'Project Manager' : 'Stakeholder')))¬"
+                labelFormat: "¬_D.data.info.title¬"
             };
             var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,
                     [orgCtx, timeCtx, teamMembersCtx], team_members_pie_configuration);

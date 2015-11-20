@@ -208,7 +208,7 @@
                 var productInfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
                 $('#radar-product-stitle-label').text(productInfo.name);
                 $('#liquid1-chart-stitle-label').text(productInfo.name + " Status");
-                $('#liquid2-chart-stitle-label').text(productInfo.name + " health");
+                $('#liquid2-chart-stitle-label').text(productInfo.name + " Health");
             }
 
         }, [productsCtx]);
@@ -254,11 +254,11 @@
         // Product radar
         var radarInfo = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Compare the selected product to</span></div><div><span class="toolRow">the average of all other products.</span></div>';
         addQTip($('#radar-product-stitle-help'), "prodRadarTool", radarInfo);
-        // Success Time
-        var liquidStatus = '<div><span class="toolTitle"><p>Project status.</p></span></div><div><span class="toolRow">Percentage of successful builds.</span></div>';
+        // Product status
+        var liquidStatus = '<div><span class="toolTitle"><p>Product status.</p></span></div><div><span class="toolRow">Percentage of successful builds for the product.</span></div>';
         addQTip($('#liquid2-chart-stitle-help'), "prodLiqSuccesTool", liquidStatus);
-        // Broken Time
-        var liquidHealth = '<div><span class="toolTitle"><p>Project health.</p></span></div><div><span class="toolRow">Health of the project.</span></div>';
+        // Product health
+        var liquidHealth = '<div><span class="toolTitle"><p>Product health.</p></span></div><div><span class="toolRow">Health of the product.</span></div>';
         addQTip($('#liquid1-chart-stitle-help'), "prodLiqBrokenTool", liquidHealth);
         // Managers Cytocharts
         var managerCyto = '<div><span class="toolTitle"><p>Most significant managers.</p></span></div><div><span class="toolRow">Analyze the most important products for each manager.</span></div>';
@@ -919,7 +919,6 @@
 
             // ------------------------------- TEAM MEMBERS ROLES -------------------------------------
             var team_members_pie_dom = document.getElementById("team-members-pie");
-            // TODO Hay que sumar las metricas. Estudiar si se hace aquí, en el widget, en la API o en los servicios de sdh platform
             var team_members_pie_metrics = [
                 {
                     id: 'managerstakeholders',

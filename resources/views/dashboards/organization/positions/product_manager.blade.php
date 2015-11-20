@@ -99,7 +99,7 @@
                     <div id="liquidBox" class="col-sm-6">
                         <div id="liquid1-chart-subtitle" class="row subtitleRow">
                             <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-link"></span>
-                            <span id="liquid1-chart-stitle-label" class="subtitleLabel">Success Time</span>
+                            <span id="liquid1-chart-stitle-label" class="subtitleLabel"></span>
                             <span id="liquid1-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
@@ -107,7 +107,7 @@
                         </div>
                         <div id="liquid2-chart-subtitle" class="row subtitleRow">
                             <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
-                            <span id="liquid2-chart-stitle-label" class="subtitleLabel">Broken Time</span>
+                            <span id="liquid2-chart-stitle-label" class="subtitleLabel"></span>
                             <span id="liquid2-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
@@ -204,6 +204,8 @@
             if (event.event === 'data') {
                 var productInfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
                 $('#radar-product-stitle-label').text(productInfo.name);
+                $('#liquid1-chart-stitle-label').text(productInfo.name + " Status");
+                $('#liquid2-chart-stitle-label').text(productInfo.name + " Health");
             }
 
         }, [productsCtx]);
@@ -245,12 +247,12 @@
         // Product radar
         var radarInfo = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Compare the selected product to</span></div><div><span class="toolRow">the average of all other products.</span></div>';
         addQTip($('#radar-product-stitle-help'), "prodRadarTool", radarInfo);
-        // Success Time
-        var liquidSuccess = '<div><span class="toolTitle"><p>Releases status.</p></span></div><div><span class="toolRow">Success Percent.</span></div>';
-        addQTip($('#liquid2-chart-stitle-help'), "prodLiqSuccesTool", liquidSuccess);
-        // Broken Time
-        var liquidBroken = '<div><span class="toolTitle"><p>Releases status.</p></span></div><div><span class="toolRow">Broken Percent.</span></div>';
-        addQTip($('#liquid1-chart-stitle-help'), "prodLiqBrokenTool", liquidBroken);
+        // Product status
+        var liquidStatus = '<div><span class="toolTitle"><p>Product status.</p></span></div><div><span class="toolRow">Percentage of successful builds for the product.</span></div>';
+        addQTip($('#liquid2-chart-stitle-help'), "prodLiqSuccesTool", liquidStatus);
+        // Product health
+        var liquidHealth = '<div><span class="toolTitle"><p>Product health.</p></span></div><div><span class="toolRow">Health of the product.</span></div>';
+        addQTip($('#liquid1-chart-stitle-help'), "prodLiqBrokenTool", liquidHealth);
         // Managers Cytocharts
         var managerCyto = '<div><span class="toolTitle"><p>Most significant Products and Projects.</p></span></div><div><span class="toolRow">Analyze the most important projects for each product.</span></div>';
         addQTip($('#products-stitle-help'), "prodManagersTool", managerCyto);
@@ -405,20 +407,25 @@
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
             var scatter_dom = document.getElementById("scatter-plot");
             var scatter_test_cntx = "test_cntx";
-            framework.data.updateContext(scatter_test_cntx, {rid: [1,2,3,4,5]}); //TODO: this wont be needed
+            framework.data.updateContext(scatter_test_cntx, {prid: [1,2,3,4,5]}); //TODO: this wont be needed
             var scatter_metrics = [ //TODO: required metrics
                 {
-                    id: 'repocommits',
+                    id: 'productcost',
                     max: 1,
                     aggr: 'sum'
                 },
                 {
-                    id: 'repodevelopers',
+                    id: 'producthealth',
                     max: 1,
                     aggr: 'sum'
                 },
                 {
-                    id: 'repopassedexecutions',
+                    id: 'productquality',
+                    max: 1,
+                    aggr: 'sum'
+                },
+                {
+                    id: 'producttimetomarket',
                     max: 1,
                     aggr: 'sum'
                 }
@@ -446,10 +453,11 @@
                     return Math.random();
                 },
                 xAxisTicks: 3,
+                yAxisTicks: 3,
                 yAxisLabel: "Quality",
                 height: 390,
-                groupBy: 'rid',
-                labelFormat: '¬_D.repocommits.info.rid.name¬',
+                groupBy: 'prid',
+                labelFormat: '¬_D.productcost.info.prid.name¬',
                 showDistX: false,
                 showDistY: false,
                 xDomain: [0,1],
@@ -457,12 +465,16 @@
                 pointDomain: [0,1],
                 clipEdge: true,
                 tooltip: "<div>" +
-                "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data.repocommits.info.rid.avatar¬\" />" +
-                "<h3>¬_D.data.repocommits.info.rid.name¬</h3>" +
+                "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data.productcost.info.prid.avatar¬\" />" +
+                "<h3>¬_D.data.productcost.info.prid.name¬</h3>" +
                 "<h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4>" +
                 "<h4>Time to market: ¬_D.x¬</h4>" +
                 "</div>",
-                image: "¬_D.data.repocommits.info.rid.avatar¬"
+                image: "¬_D.data.productcost.info.prid.avatar¬",
+                xAxisGradient: ['red', 'orange', 'yellow', 'green'],
+                yAxisGradient: ['green', 'yellow', 'orange', 'red'],
+                showLegend: false,
+                showMaxMin: false
             };
 
             var scatter = new framework.widgets.Scatter(scatter_dom, scatter_metrics, [orgCtx, timeCtx, scatter_test_cntx], scatter_conf);
@@ -1032,39 +1044,50 @@
             };
             var project_roles_multibar = new framework.widgets.MultiBar(project_roles_multibar_dom, project_roles_multibar_metrics,
                     [orgCtx, timeCtx, productByProjectCtx], project_roles_multibar_conf);
-        };
+
 
             // TEAM MEMBERS ROLES
             var team_members_pie_dom = document.getElementById("team-members-pie");
             var team_members_pie_metrics = [
-                {
-                    id: 'orgcommits',
-                    max: 1,
-                    aggr: "sum"
-                },
-                {
-                    id: 'orgdevelopers',
-                    max: 1,
-                    aggr: "sum"
-                },
-                {
-                    id: 'orgbranches',
-                    max: 1,
-                    aggr: "sum"
-                },
-                {
-                    id: 'orgexec',
-                    max: 1,
-                    aggr: "sum"
-                }];
+            {
+                id: 'projectstakeholders',
+                max: 1,
+                aggr: "sum",
+                post_aggr: 'sum',
+                pid: [1, 2] //TODO: temporal
+            },
+            {
+                id: 'projectdevelopers',
+                max: 1,
+                aggr: "sum",
+                post_aggr: 'sum',
+                pid: [1, 2] //TODO: temporal
+            },
+            {
+                id: 'projectmanagers',
+                max: 1,
+                aggr: "sum",
+                post_aggr: 'sum',
+                pid: [1, 2] //TODO: temporal
+            },
+            {
+                id: 'projectarchitects',
+                max: 1,
+                aggr: "sum",
+                post_aggr: 'sum',
+                pid: [1, 2] //TODO: temporal
+            }];
             var team_members_pie_configuration = {
-                height: 300,
-                labelFormat: "¬(_E.resource == 'orgcommits' ? 'Software developer' : " +
-                "(_E.resource == 'orgdevelopers' ? 'Software Arquitect' : " +
-                "(_E.resource == 'orgbranches' ? 'Project Manager' : 'Stakeholder')))¬"
+                height: 250,
+                showLegend: false,
+                labelFormat: "¬_D.data.info.title¬"
             };
             var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,
                     [orgCtx, timeCtx, productByProjectCtx], team_members_pie_configuration);
+
+
+        };
+
     }
 
 @stop

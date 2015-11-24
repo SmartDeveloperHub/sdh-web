@@ -438,6 +438,7 @@ html, body {
     height: 289px;
     margin-left: 5%;
     margin-right: 5%;
+    margin-top: 15px;
     overflow: hidden;
     text-align: center;
 }

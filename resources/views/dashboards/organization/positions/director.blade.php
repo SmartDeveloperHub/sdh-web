@@ -950,7 +950,8 @@
                 }];
             var team_members_pie_configuration = {
                 height: 250,
-                showLegend: false,
+                showLegend: true,
+                showLabels: false,
                 labelFormat: "¬_D.data.info.title¬"
             };
             var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,

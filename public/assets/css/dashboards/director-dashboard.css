@@ -188,7 +188,7 @@ html, body {
 }
 
 .subtitleTooltip .toolRow {
-    white-space: nowrap;
+    white-space: inherit;
     color: #868686;
 }
 

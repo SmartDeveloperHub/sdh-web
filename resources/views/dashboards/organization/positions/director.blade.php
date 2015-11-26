@@ -91,7 +91,7 @@
                     <div class="col-sm-6">
                         <div id="radar-product-subtitle" class="row subtitleRow">
                             <span id="radar-product-stitle-ico" class="subtitleIcon fa fa-line-chart"></span>
-                            <span id="radar-product-stitle-label" class="subtitleLabel"></span>
+                            <span id="radar-product-stitle-label" class="subtitleLabel">Product Profile</span>
                             <span id="radar-product-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
@@ -101,7 +101,7 @@
                     <div id="liquidBox" class="col-sm-6">
                         <div id="liquid1-chart-subtitle" class="row subtitleRow">
                             <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-check-circle"></span>
-                            <span id="liquid1-chart-stitle-label" class="subtitleLabel"></span>
+                            <span id="liquid1-chart-stitle-label" class="subtitleLabel">Product Status</span>
                             <span id="liquid1-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
@@ -109,7 +109,7 @@
                         </div>
                         <div id="liquid2-chart-subtitle" class="row subtitleRow">
                             <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-heartbeat"></span>
-                            <span id="liquid2-chart-stitle-label" class="subtitleLabel"></span>
+                            <span id="liquid2-chart-stitle-label" class="subtitleLabel">Product Health</span>
                             <span id="liquid2-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                         </div>
                         <div class="row">
@@ -163,7 +163,7 @@
                 <div class="row">
                     <div id="team-multibar-subtitle" class="row subtitleRow">
                         <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
-                        <span id="team-multibar-stitle-label" class="subtitleLabel">Manager Comparison</span>
+                        <span id="team-multibar-stitle-label" class="subtitleLabel">Roles breakdown</span>
                         <span id="team-multibar-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
                     </div>
                     <div id="projects-roles-multibar" class="widget"></div>
@@ -201,18 +201,6 @@
         setSubtitle("Director");
         showHeaderChart();
 
-        //change Product subtitle in start chart
-        framework.data.observe(['productinfo'], function (event) {
-
-            if (event.event === 'data') {
-                var productInfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
-                $('#radar-product-stitle-label').text(productInfo.name);
-                $('#liquid1-chart-stitle-label').text(productInfo.name + " Status");
-                $('#liquid2-chart-stitle-label').text(productInfo.name + " Health");
-            }
-
-        }, [productsCtx]);
-
         //Subtitles information trying to include touch mode
         /*$('.subtitleRow').on('click') {
             $('.subtitleRow').onhover.call(p);
@@ -243,34 +231,34 @@
             });
         };
         // Product analysis
-        var productAnalysis = '<div><span class="toolTitle"><p>This chart shows the most significant products.</p></span></div><div><span class="toolRow"><span class="ico fa fa-eur red"></span><strong>Cost</strong>. Directly proportional to the size of the circles</span></div><div><span class="toolRow"><span class="ico fa fa-heartbeat orange"></span><strong>Health</strong>. Colour. <span class="red">Red-bad</span> <span class="green">Green-good</span></span></div><div><span class="toolRow"><span class="ico fa fa-balance-scale green"></span><strong>Quality</strong>. Y axis</span></div><div><span class="toolRow"><span class="ico fa fa-hourglass-start violet"></span><strong>Time To Market</strong>. X axis</span></div>';
+        var productAnalysis = '<div><span class="toolTitle"><p>This chart shows the most significant products.</p></span></div><div><span class="toolRow"><span class="ico fa fa-eur red"></span><strong>Cost</strong>. Directly proportional to the size of the circles</span></div><div><span class="toolRow"><span class="ico fa fa-heartbeat orange"></span><strong>Health</strong>. Colour. <span class="red">Red-bad</span> <span class="green">Green-good</span></span></div><div><span class="toolRow"><span class="ico fa fa-balance-scale green"></span><strong>Quality</strong>. Y axis. Up is better.</span></div><div><span class="toolRow"><span class="ico fa fa-hourglass-start violet"></span><strong>Time To Market</strong>. X axis. Right is better.</span></div>';
         addQTip($('#scatter-plot-stitle-help'), "prodAnalisisTool", productAnalysis);
         // Product Selector
         var productSelector = '<div><span class="toolTitle"><p>Most significant products.</p></span></div><div><span class="toolRow">Select one to analyze it.</span></div>';
         addQTip($('#products-table-stitle-help'), "prodTableTool", productSelector);
         // Status History
-        var statusHistory = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Analyze the releases status history.</span></div>';
+        var statusHistory = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">This chart analyzes the build status history.</span></div>';
         addQTip($('#releases-chart-stitle-help'), "prodStatusTool", statusHistory);
         // Product radar
         var radarInfo = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Compare the selected product to</span></div><div><span class="toolRow">the average of all other products.</span></div>';
         addQTip($('#radar-product-stitle-help'), "prodRadarTool", radarInfo);
         // Product status
-        var liquidStatus = '<div><span class="toolTitle"><p>Product status.</p></span></div><div><span class="toolRow">Percentage of successful builds for the product.</span></div>';
-        addQTip($('#liquid2-chart-stitle-help'), "prodLiqSuccesTool", liquidStatus);
+        var liquidStatus = '<div><span class="toolTitle"><p>Product status.</p></span></div><div><span class="toolRow">Average value of the builds for the product.</span></div>';
+        addQTip($('#liquid1-chart-stitle-help'), "prodLiqSuccesTool", liquidStatus);
         // Product health
-        var liquidHealth = '<div><span class="toolTitle"><p>Product health.</p></span></div><div><span class="toolRow">Health of the product.</span></div>';
-        addQTip($('#liquid1-chart-stitle-help'), "prodLiqBrokenTool", liquidHealth);
+        var liquidHealth = '<div><span class="toolTitle"><p>Product health.</p></span></div><div><span class="toolRow">Percentage that represent the health of the product.</span></div>';
+        addQTip($('#liquid2-chart-stitle-help'), "prodLiqBrokenTool", liquidHealth);
         // Managers Cytocharts
-        var managerCyto = '<div><span class="toolTitle"><p>Most significant managers.</p></span></div><div><span class="toolRow">Analyze the most important products for each manager.</span></div>';
+        var managerCyto = '<div><span class="toolTitle"><p>Most significant managers.</p></span></div><div><span class="toolRow">This chart analyzes the most important products for each manager.</span></div><div><span class="toolRow">The center bubble represents a manager and he bubbles attached to it represent a product. The size of the product bubble depends on the number of members of the staff of that product.</span></div></div>';
         addQTip($('#managers-stitle-help'), "prodManagersTool", managerCyto);
         // Positions Lines
-        var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">Analyze the historical number of members by position.</span></div>';
+        var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">This chart analyzes the distribution of members by position during he selected period of time.</span></div>';
         addQTip($('#positions-stitle-help'), "positionsLineTool", positionLine);
         // Manager Selector
-        var managerSelect = '<div><span class="toolTitle"><p>Most significant Managers.</p></span></div><div><span class="toolRow">Select for comparison.</span></div>';
+        var managerSelect = '<div><span class="toolTitle"><p>List of Managers.</p></span></div><div><span class="toolRow">Select for comparison.</span></div>';
         addQTip($('#members-table-stitle-help'), "managerSelectTool", managerSelect);
         // Manager Comparison
-        var managerComp = '<div><span class="toolTitle"><p>Manager team roles comparison.</p></span></div><div><span class="toolRow">Compare the number of manager team roles.</span></div>';
+        var managerComp = '<div><span class="toolTitle"><p>Manager team roles comparison.</p></span></div><div><span class="toolRow">This chart compared the number of team members per role and manager.</span></div>';
         addQTip($('#team-multibar-stitle-help'), "managerCompTool", managerComp);
         // Total Member Roles
         var memberRoles = '<div><span class="toolTitle"><p>Total members by role.</p></span></div><div><span class="toolRow">Accumulated number of team members by role.</span></div>';

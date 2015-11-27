@@ -323,7 +323,7 @@
             // ------------------------------------ TEAM MEMBERS -------------------------------------------
             var team_members_dom = document.getElementById("team-members-ctr");
             var team_members_metrics = [{
-                id: 'orgcommits', //TODO: director users metric. userrsers con uid. Tengo que conseguir el uid del logueado
+                id: 'orgdevelopers', //TODO: director users metric. userrsers con uid. Tengo que conseguir el uid del logueado
                 max: 1,
                 aggr: 'sum'
             }];
@@ -339,7 +339,7 @@
             // ---------------------------------------- RELEASES -------------------------------------------
             var some1_dom = document.getElementById("releases-ctr");
             var some1_metrics = [{
-                id: 'orgcommits',  //TODO: Nº Releases: total builds passed in master branch. userReleases o userPassedBuilds o algo así
+                id: 'orgrepositories',  //TODO: Nº Releases: total builds passed in master branch. userReleases o userPassedBuilds o algo así
                 max: 1,
                 aggr: 'sum'
             }];
@@ -355,7 +355,7 @@
             // ------------------------------------------ PERSONEL COST ----------------------------------------
             var some2_dom = document.getElementById("personnel-cost-ctr");
             var some2_metrics = [{
-                id: 'orgcommits',  //TODO: Ad hoc? o userTeamCost?. Total de coste por team member 25*nºmembers * (dias del rango seleccionado)
+                id: 'orgbuilds',  //TODO: Ad hoc? o userTeamCost?. Total de coste por team member 25*nºmembers * (dias del rango seleccionado)
                 max: 1,
                 aggr: 'sum'
             }];
@@ -371,7 +371,7 @@
             // ------------------------------------------ CONTRIBUTORS ----------------------------------------
             var some2_dom = document.getElementById("contributors-ctr");
             var some2_metrics = [{
-                id: 'orgcommits',  //TODO: AdHoc? userExternalContributors?. Número de externos (contributors) o  % externos
+                id: 'orgbranches',  //TODO: AdHoc? userExternalContributors?. Número de externos (contributors) o  % externos
                 max: 1,
                 aggr: 'sum'
             }];
@@ -387,7 +387,7 @@
             // --------------------------------- EXTERNAL COMPANIES --------------------------------
             var some2_dom = document.getElementById("companies-ctr");
             var some2_metrics = [{
-                id: 'orgcommits',  //TODO: AdHoc? userExternalContributorCompanies? básicamente sacar del dominio del mail el nombre de  la empresa exerna.
+                id: 'orgexec',  //TODO: AdHoc? userExternalContributorCompanies? básicamente sacar del dominio del mail el nombre de  la empresa exerna.
                 max: 1,
                 aggr: 'sum'
             }];
@@ -403,7 +403,7 @@
             // ------------------------------- AVG TEAM MEMBERS PER PRODUCT-------------------------------------
             var avgteam_dom = document.getElementById("avg-team-ctr");
             var avgteam_metrics = [{
-                id: 'orgcommits',  //TODO: userProductsMembers AVG
+                id: 'orgbrokenexec',  //TODO: userProductsMembers AVG
                 max: 1,
                 aggr: 'sum'
             }];
@@ -419,7 +419,7 @@
             // ------------------------------------ AVG HEALTH PER PRODUCT -------------------------------------------
             var avghealth_dom = document.getElementById("avg-health-ctr");
             var avghealth_metrics = [{
-                id: 'orgcommits', //TODO: userProductwHealth AVG
+                id: 'orgbrokentime', //TODO: userProductwHealth AVG
                 max: 1,
                 aggr: 'sum'
             }];
@@ -492,8 +492,8 @@
             var productsAux = {
                 1:{
                     'name': "P_ManagerA",
-                    'avatar': "assets/images/CytoChartDemo/PManager1.jpg",
-                    tooltip: "I'm the main circle on the left"
+                    'avatar': "https://pbs.twimg.com/profile_images/1652209779/Foto_Jefe_Estudios.jpg",
+                    tooltip: "Francisco Javier Soriano"
                 },
                 2:{
                     'name': "Product_a",
@@ -531,8 +531,8 @@
             var productsAux = {
                 1:{
                     'name': "P_ManagerA",
-                    'avatar': "assets/images/CytoChartDemo/PManager2.jpg",
-                    tooltip: "I'm the main circle on the center"
+                    'avatar': "https://avatars3.githubusercontent.com/u/1067341?v=3&s=400",
+                    tooltip: "Óscar Corcho"
                 },
                 2:{
                     'name': "Product_a",
@@ -568,8 +568,8 @@
             var productsAux = {
                 1:{
                     'name': "P_ManagerA",
-                    'avatar': "assets/images/CytoChartDemo/PManager3.jpg",
-                    tooltip: "I'm the main circle on the right"
+                    'avatar': "https://pbs.twimg.com/profile_images/1554448422/asun_oeg_400x400.png",
+                    tooltip: "Asunción Gómez"
                 },
                 2:{
                     'name': "Product_a",
@@ -660,11 +660,11 @@
                 yDomain: [0,1],
                 pointDomain: [0,1],
                 clipEdge: true,
-                tooltip: "<div>" +
+                tooltip: "<div style='text-align: center;'>" +
                 "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data.productcost.info.prid.avatar¬\" />" +
                 "<h3>¬_D.data.productcost.info.prid.name¬</h3>" +
                 "<h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4>" +
-                "<h4>Time to market: ¬_D.x¬</h4>" +
+                "<h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4>" +
                 "</div>",
                 image: "¬_D.data.productcost.info.prid.avatar¬",
                 xAxisGradient: ['red', 'orange', 'yellow', 'green'],
@@ -947,18 +947,18 @@
 
             //  ------------------------------ PRODUCT MANAGERS TABLE --------------------------------------
             var team_members_table_dom = document.getElementById("team-members-table");
-            var team_members_table_metrics = ['repolist']; //TODO: choose resource
+            var team_members_table_metrics = ['userlist']; //TODO: choose resource
             var team_members_table_configuration = {
                 columns: [
                     {
                         label: "",
                         link: {
                          img: "avatar", //or label
-                         href: "repository",
+                         href: "user",
                          env: [
                              {
-                                 property: "repositoryid",
-                                 as: "rid"
+                                 property: "userid",
+                                 as: "uid"
                              },
                              {
                                  property: "name",
@@ -978,17 +978,16 @@
                         id: teamMembersCtx,
                         filter: [
                             {
-                                property: "repositoryid", //TODO
-                                as: "rid"
+                                property: "userid", //TODO
+                                as: "uid"
                             }
                         ]
                     }
                 ],
-                keepSelectedByProperty: "repositoryid",
+                keepSelectedByProperty: "uid",
                 selectable: true,
                 minRowsSelected: 1,
                 maxRowsSelected: 8,
-                filterControl: true,
                 initialSelectedRows: 3,
                 showHeader: false,
                 filterControl: false,
@@ -1002,31 +1001,31 @@
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");
             var project_roles_multibar_metrics = [
                 {
-                    id: 'repodevelopers',
+                    id: 'userrepositories',
                     max: 1
                 },
                                 {
-                    id: 'repopassedexecutions',
+                    id: 'userproducts',
                     max: 1
                 },
                 {
-                    id: 'repocommits',
+                    id: 'usercommits',
                     max: 1
                 },
                 {
-                    id: 'repobrokenexecutions',
+                    id: 'userusers',
                     max: 1
                 }
             ];
             var roles = {
-                'repodevelopers' : 'software developer', 
-                'repopassedexecutions': 'software architect', 
-                'repocommits': 'project manager', 
-                'repobrokenexecutions': 'stakeholder'
+                'userrepositories' : 'Software developer',
+                'userproducts': 'Software architect',
+                'usercommits': 'Project manager',
+                'userusers': 'Stakeholder'
             };
             var project_roles_multibar_conf = {
                 stacked: false,
-                labelFormat: "¬_D.data.info.rid.name¬",
+                labelFormat: "¬_D.data.info.uid.name¬",
                 showControls: false,
                 height: 250,
                 showLegend: true,

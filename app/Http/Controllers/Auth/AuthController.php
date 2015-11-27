@@ -22,6 +22,11 @@ class AuthController extends Controller {
 
 	use AuthenticatesAndRegistersUsers;
 
+	/*
+	 * Redirect path after login
+	 */
+	public $redirectPath = '/';
+
 	//Overwrite the postLogin method to se the username
 	public function postLogin(Request $request)
 	{
@@ -30,7 +35,6 @@ class AuthController extends Controller {
 		]);
 
 		$credentials = $request->only('username', 'password');
-
 
 		if ($this->auth->attempt($credentials, $request->has('remember')))
 		{

@@ -177,6 +177,12 @@
     width: inherit;
 }
 
+.page-container.grid-edition .grid-stack-item {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-style: dashed;
+    border: 1px dashed rgba(50,50,50,0.6);
+}
+
 
 body {
     padding: 0;

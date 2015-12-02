@@ -234,6 +234,7 @@ DashboardController.prototype.enableGrid = function enableGrid() {
     });
     this.gridEnabled = true;
     $("#activate-grid").addClass("activated");
+    $(".page-container").addClass("grid-edition");
 };
 
 DashboardController.prototype.disableGrid = function disableGrid() {
@@ -242,6 +243,7 @@ DashboardController.prototype.disableGrid = function disableGrid() {
     });
     this.gridEnabled = false;
     $("#activate-grid").removeClass("activated");
+    $(".page-container").removeClass("grid-edition");
 };
 
 //Display the loading animation

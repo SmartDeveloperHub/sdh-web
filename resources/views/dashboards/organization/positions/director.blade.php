@@ -784,8 +784,7 @@
                 initialSelectedRows: 1,
                 showHeader: false,
                 alwaysOneSelected: true,
-                scrollUpButton: $('#upProductTableButton'),
-                scrollDownButton: $('#downProductTableButton')
+                scrollButtons: true
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx], table_configuration);
 
@@ -1053,8 +1052,7 @@
                 initialSelectedRows: 3,
                 showHeader: false,
                 filterControl: false,
-                scrollUpButton: $('#upTeamTableButton'),
-                scrollDownButton: $('#downTeamTableButton'),
+                scrollButtons: true,
                 height: 620
             };
             var team_members_table = new framework.widgets.Table(team_members_table_dom, team_members_table_metrics, [orgCtx, timeCtx], team_members_table_configuration);

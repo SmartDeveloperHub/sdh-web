@@ -25,7 +25,7 @@ define(function(require, exports, module) {
     require(["/assets/js/require-config.js"], function() {
 
         // Load all the modules needed
-        require(["jquery", 'gridstack', 'css!/assets/vendor/gridstack/dist/gridstack.min.css'], function() {
+        require(["jquery", 'gridstack', 'css!/vendor/gridstack/dist/gridstack.min.css'], function() {
 
             $(document).ready(function() {
 

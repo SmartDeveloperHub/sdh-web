@@ -33,6 +33,7 @@ var DashboardController = function DashboardController() {
     this.isLoaderPage = true;
     this.onHistoryChange = false;
     this.historyOwnIndex = 0;
+    this.gridEnabled = false;
 
     window.onpopstate = function(event) {
 
@@ -47,6 +48,14 @@ var DashboardController = function DashboardController() {
 
         }
     }.bind(this);
+
+    $("#activate-grid").click(function() {
+        if(this.gridEnabled) {
+            this.disableGrid();
+        } else {
+            this.enableGrid();
+        }
+    }.bind(this));
 };
 
 DashboardController.prototype.authenticationError = function authenticationError() {
@@ -191,6 +200,22 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
         // Load the new HTML
         try{
             $("#template-exec").html(data);
+
+            var options = {
+                cell_height: 20,
+                height: 0,
+                width: 12,
+                animate: false,
+                float: true,
+                vertical_margin: 0
+            };
+
+            // Create the grid
+            $('.grid-stack').gridstack(options);
+
+            // The grid should start disabled
+            _this.disableGrid();
+
         } catch(e) {
             console.error(e);
             e.status = 0;
@@ -201,6 +226,22 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
 
     }).fail(onLoadError);
 
+};
+
+DashboardController.prototype.enableGrid = function enableGrid() {
+    $('.grid-stack').each(function() {
+        $(this).data('gridstack').enable();
+    });
+    this.gridEnabled = true;
+    $("#activate-grid").addClass("activated");
+};
+
+DashboardController.prototype.disableGrid = function disableGrid() {
+    $('.grid-stack').each(function() {
+        $(this).data('gridstack').disable();
+    });
+    this.gridEnabled = false;
+    $("#activate-grid").removeClass("activated");
 };
 
 //Display the loading animation
@@ -224,7 +265,8 @@ define(function(require, exports, module) {
     require(["/assets/js/require-config.js"], function() {
 
         // Load all the modules needed
-        require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler", "widgetCommon"], function() {
+        require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler",
+            "widgetCommon", 'gridstack', 'css!/vendor/gridstack/dist/gridstack.min.css'], function() {
 
             framework.ready(function() {
                 console.log("Framework ready");

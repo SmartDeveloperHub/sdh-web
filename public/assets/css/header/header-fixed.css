@@ -700,6 +700,11 @@ div#floatingRow .panel.panel-default {
 	margin-left: 2px;
 }
 
+.page-body.light .headbutton.activated {
+	box-shadow: 0px 0px 8px 0px #000000;
+	color: #009C9E;
+}
+
 .page-body.light .settings-pane {
 	height: 25px;
 }

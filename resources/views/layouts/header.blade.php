@@ -13,7 +13,7 @@
             <div id="headerright" class="headcomp">
                 <div class="control">
                     <div id="buttonbox" class="headcomp">
-                        <a class="headbutton fa-cog"></a>
+                        <a id="activate-grid" class="headbutton fa-pencil"></a>
                         <a class="headbutton fa-sign-out" href="/auth/logout"></a>
                     </div>
                     <div id="avatarbox" class="headcomp">

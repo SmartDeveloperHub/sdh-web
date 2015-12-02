@@ -71,11 +71,6 @@ html, body {
 }
 
 /* metrics secction*/
-#metTitRow {
-    margin-top: 18px;
-    margin-bottom: 0px;
-}
-
 #metricsSect {
     background-color: #FFF;
     margin-top: 84px;
@@ -100,10 +95,6 @@ html, body {
     margin-right: -2px;
 }
 
-#prodTitRow {
-    margin-bottom: 34px;
-}
-
 #productsTitIco {
     color: #F75333;
 }
@@ -112,11 +103,6 @@ html, body {
 }
 
 /* team members secction*/
-#peplTitRow {
-    margin-top: 35px;
-    margin-bottom: 25px;
-}
-
 #peopleTitIco {
     color: #9FCE23;
 }
@@ -299,11 +285,6 @@ html, body {
 #managers-stitle-help {
 }
 
-#positions-subtitle {
-    margin-left: -11px;
-    margin-bottom: 20px;
-}
-
 #positions-stitle-ico {
     color: #BD1F00;
 }
@@ -465,14 +446,20 @@ html, body {
 }
 
 #upTeamTableButton {
-    top: 88px;
+    top: 0px;
 }
 
 #downTeamTableButton {
-    bottom: 37px;
+    bottom: 15px;
 }
 
 .nv-axis text, .nv-label text {
     font: 400 14px Roboto;
     fill: #4a4a4a !important;
+}
+
+
+/* For gridstack */
+.grid-stack>.grid-stack-item>.grid-stack-item-content {
+    overflow-y: hidden;
 }

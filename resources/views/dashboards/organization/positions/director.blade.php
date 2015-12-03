@@ -208,9 +208,7 @@
 
         <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="36">
             <div class="grid-stack-item-content">
-                <div id='upTeamTableButton' class="upTableButton fa-angle-double-up"></div>
                 <div id="team-members-table" class="widget"></div>
-                <div id='downTeamTableButton' class="downTableButton fa-angle-double-down"></div>
             </div>
         </div>
 

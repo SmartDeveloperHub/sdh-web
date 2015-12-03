@@ -1338,3 +1338,8 @@ a:hover {
 .footer-img {
   margin-top: 25px;
 }
+
+/* For gridstack */
+.main-content .grid-stack>.grid-stack-item>.grid-stack-item-content {
+    overflow-y: hidden;
+}

@@ -100,21 +100,11 @@ html, body {
     margin-right: -2px;
 }
 
-#prodTitRow {
-    margin-bottom: 34px;
-}
-
 #productsTitIco {
     color: #F75333;
 }
 
 #productsTitLabel {
-}
-
-/* team members secction*/
-#peplTitRow {
-    margin-top: 35px;
-    margin-bottom: 25px;
 }
 
 #peopleTitIco {
@@ -129,9 +119,7 @@ html, body {
 /*************/
 
 .subtitleRow {
-    margin-bottom: 25px;
     text-align: center;
-    margin-top: 35px;
     margin-left: 0;
     margin-right: 0;
     line-height: 30px;
@@ -188,7 +176,7 @@ html, body {
 }
 
 .subtitleTooltip .toolRow {
-    white-space: nowrap;
+    white-space: inherit;
     color: #868686;
 }
 
@@ -293,10 +281,6 @@ html, body {
 
 /* team members secction*/
 
-#products-subtitle {
-    margin-bottom: 20px;
-}
-
 #products-stitle-ico {
     color: #BD1F00;
 }
@@ -304,10 +288,6 @@ html, body {
 #products-stitle-help {
 }
 
-#roles-subtitle {
-    margin-left: -11px;
-    margin-bottom: 20px;
-}
 
 #roles-stitle-ico {
     color: #BD1F00;
@@ -394,7 +374,6 @@ html, body {
 #products-table {
     margin-left: 16%;
     margin-right: 16%;
-    overflow: hidden;
     height: 480px;
 }
 
@@ -431,12 +410,6 @@ html, body {
 
 #liquidBox {
     text-align: center;
-}
-
-#releases-chart {
-    height: 126px;
-    margin-left: 2%;
-    margin-right: 9%;
 }
 
 #radar-product-chart {

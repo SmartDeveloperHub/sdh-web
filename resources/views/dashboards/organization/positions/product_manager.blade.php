@@ -28,153 +28,213 @@
 
 @section('html')
     <div id="metricsSect" class="row">
-        <div id="metTitRow" class="row titleRow">
-            <span id="metricsTitIco" class="titleIcon octicon octicon-dashboard"></span>
-            <span id="metricsTitLabel" class="titleLabel">Metrics</span>
-        </div>
-        <div id="metricBoxes"class="row">
-            <div class="row">
-                <div id="products-ctr" class="boxCounter col-sm-3"></div>
-                <div id="developers-ctr" class="boxCounter col-sm-3"></div>
-                <div id="repositories-ctr" class="boxCounter col-sm-3"></div>
-                <div id="projects-ctr" class="boxCounter col-sm-3"></div>
+        <div id="metricBoxes" class="grid-stack">
+            <div class="grid-stack-item" data-gs-width="11" data-gs-height="4" data-gs-x="0" data-gs-y="1">
+                <div id="metTitRow" class="titleRow grid-stack-item-content">
+                    <span id="metricsTitIco" class="titleIcon octicon octicon-dashboard"></span>
+                    <span id="metricsTitLabel" class="titleLabel">Metrics</span>
+                </div>
             </div>
-            <div class="row">
-                <div id="empty-ctr1" class="boxCounter col-sm-3"></div>
-                <div id="avg-developers-ctr" class="boxCounter col-sm-3"></div>
-                <div id="avg-repositories-ctr" class="boxCounter col-sm-3"></div>
-                <div id="empty-ctr2" class="boxCounter col-sm-3"></div>
+
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="0" data-gs-y="5">
+                <div id="products-ctr" class="boxCounter grid-stack-item-content"></div>
+            </div>
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="3" data-gs-y="5">
+                <div id="developers-ctr" class="boxCounter grid-stack-item-content"></div>
+            </div>
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="6" data-gs-y="5">
+                <div id="repositories-ctr" class="boxCounter grid-stack-item-content"></div>
+            </div>
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="9" data-gs-y="5">
+                <div id="projects-ctr" class="boxCounter grid-stack-item-content"></div>
+            </div>
+
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="0" data-gs-y="13">
+                <div id="empty-ctr1" class="boxCounter grid-stack-item-content"></div>
+            </div>
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="3" data-gs-y="13">
+                <div id="avg-developers-ctr" class="boxCounter grid-stack-item-content"></div>
+            </div>
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="6" data-gs-y="13">
+                <div id="avg-repositories-ctr" class="boxCounter grid-stack-item-content"></div>
+            </div>
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="9" data-gs-y="13">
+                <div id="empty-ctr2" class="boxCounter grid-stack-item-content"></div>
             </div>
         </div>
     </div>
 
-    <div id="productsSect" class="row">
-        <div id="prodTitRow" class="row titleRow">
-            <span id="productsTitIco" class="titleIcon fa fa-industry"></span>
-            <span id="productsTitLabel" class="titleLabel">Products</span>
+    <div id="productsSect" class="grid-stack">
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="4" data-gs-x="0" data-gs-y="0">
+            <div id="prodTitRow" class="titleRow grid-stack-item-content">
+                <span id="productsTitIco" class="titleIcon fa fa-industry"></span>
+                <span id="productsTitLabel" class="titleLabel">Products</span>
+            </div>
         </div>
-        <div class="row scatterBox">
-            <div id="scatter-plot-subtitle" class="row subtitleRow">
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="4">
+            <div id="scatter-plot-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
                 <span id="scatter-plot-stitle-label" class="subtitleLabel">Products analysis</span>
                 <span id="scatter-plot-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
-            <div class="row">
-                <div class="col-sm-1 auxCol"></div>
-                <div class="col-sm-10">
-                    <div id="scatter-plot" class="widget"></div>
-                </div>
-                <div class="col-sm-1 auxCol"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="10" data-gs-height="20" data-gs-x="1" data-gs-y="6">
+            <div id="scatter-plot" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <!-- Left table - Product selector -->
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="26">
+            <div id="products-table-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="products-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
+                <span id="products-table-stitle-label" class="subtitleLabel">Product Selector</span>
+                <span id="products-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
-        <div class="row releasesBox">
-            <div class="col-sm-4">
-                <div id="products-table-subtitle" class="row subtitleRow">
-                    <span id="products-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
-                    <span id="products-table-stitle-label" class="subtitleLabel">Product Selector</span>
-                    <span id="products-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
-                </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="24" data-gs-x="0" data-gs-y="29">
+            <div class="grid-stack-item-content">
                 <div id="products-table" class="widget"></div>
             </div>
-            <div class="col-sm-8">
-                <div id="releases-chart-subtitle" class="row subtitleRow">
-                    <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
-                    <span id="releases-chart-stitle-label" class="subtitleLabel">Releases History</span>
-                    <span id="releases-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
-                </div>
-                <div class="row">
-                    <div id="releases-chart" class="widget"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div id="radar-product-subtitle" class="row subtitleRow">
-                            <span id="radar-product-stitle-ico" class="subtitleIcon fa fa-line-chart"></span>
-                            <span id="radar-product-stitle-label" class="subtitleLabel"></span>
-                            <span id="radar-product-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
-                        </div>
-                        <div class="row">
-                            <div id="radar-product-chart" class="widget"></div>
-                        </div>
-                    </div>
-                    <div id="liquidBox" class="col-sm-6">
-                        <div id="liquid1-chart-subtitle" class="row subtitleRow">
-                            <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-link"></span>
-                            <span id="liquid1-chart-stitle-label" class="subtitleLabel"></span>
-                            <span id="liquid1-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
-                        </div>
-                        <div class="row">
-                            <div id="liquid-1-chart" class="widget"></div>
-                        </div>
-                        <div id="liquid2-chart-subtitle" class="row subtitleRow">
-                            <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
-                            <span id="liquid2-chart-stitle-label" class="subtitleLabel"></span>
-                            <span id="liquid2-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
-                        </div>
-                        <div class="row">
-                            <div id="liquid-2-chart" class="widget"></div>
-                        </div>
-                    </div>
-                </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="26">
+            <div id="releases-chart-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
+                <span id="releases-chart-stitle-label" class="subtitleLabel">Status History</span>
+                <span id="releases-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
-            <div id="products-subtitle" class="row subtitleRow">
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="8" data-gs-x="4" data-gs-y="28">
+            <div id="releases-chart" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="2" data-gs-x="5" data-gs-y="36">
+            <div id="radar-product-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="radar-product-stitle-ico" class="subtitleIcon fa fa-line-chart"></span>
+                <span id="radar-product-stitle-label" class="subtitleLabel">Product Profile</span>
+                <span id="radar-product-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="4" data-gs-y="38">
+            <div id="radar-product-chart" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="36">
+            <div id="liquid1-chart-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-check-circle"></span>
+                <span id="liquid1-chart-stitle-label" class="subtitleLabel">Product Status</span>
+                <span id="liquid1-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="6" data-gs-x="8" data-gs-y="38">
+            <div id="liquid-1-chart" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="44">
+            <div id="liquid2-chart-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-heartbeat"></span>
+                <span id="liquid2-chart-stitle-label" class="subtitleLabel">Product Health</span>
+                <span id="liquid2-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="6" data-gs-x="8" data-gs-y="46">
+            <div id="liquid-2-chart" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="53">
+            <div class="grid-stack-item-content subtitleRow">
                 <span id="products-stitle-ico" class="subtitleIcon fa fa-sitemap"></span>
                 <span id="products-stitle-label" class="subtitleLabel">Products</span>
                 <span id="products-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
-            <div class="row treeChartBox">
-                <div id="cytograph1" class="col-sm-4 col-centered"></div>
-                <div id="cytograph2" class="col-sm-4 col-centered"></div>
-                <div id="cytograph3" class="col-sm-4 col-centered"></div>
-            </div>
         </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="0" data-gs-y="55">
+            <div id="cytograph1" class="widget grid-stack-item-content"></div>
+        </div>
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="4" data-gs-y="55">
+            <div id="cytograph2" class="widget grid-stack-item-content"></div>
+        </div>
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="8" data-gs-y="55">
+            <div id="cytograph3" class="widget grid-stack-item-content"></div>
+        </div>
+
     </div>
 
-    <div class="row">
-        <div id="peplTitRow" class="row titleRow">
-            <span class="titleIcon titleIcon fa fa-users"></span>
-            <span class="titleLabel">Team Members</span>
+    <!-- Section: Team Members -->
+    <div class="grid-stack">
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="4" data-gs-x="0" data-gs-y="0">
+            <div class="grid-stack-item-content titleRow">
+                <span id="peopleTitIco" class="titleIcon fa fa-users"></span>
+                <span id="peopleTitLabel" class="titleLabel">Team Members</span>
+            </div>
         </div>
-        <div class="row">
-            <div id="roles-subtitle" class="row subtitleRow">
+
+        <!-- Subsection: Roles -->
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="4">
+            <div class="grid-stack-item-content subtitleRow">
                 <span id="roles-stitle-ico" class="subtitleIcon fa fa-graduation-cap"></span>
                 <span id="roles-stitle-label" class="subtitleLabel">Roles</span>
                 <span id="roles-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
-            <div class="row ">
-                <div class="col-sm-12">
-                    <div id="team-members-lines" class="widget"></div>
-                </div>
-            </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div id="members-table-subtitle" class="row subtitleRow">
-                    <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
-                    <span id="members-table-stitle-label" class="subtitleLabel">Project Selector</span>
-                    <span id="members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
-                </div>
-                <div id='upTeamTableButton' class="upTableButton fa-angle-double-up"></div>
-                <div id="product-projects-table" class="widget"></div>
-                <div id='downTeamTableButton' class="downTableButton fa-angle-double-down"></div>
-            </div>
-            <div class="col-sm-8">
-                <div class="row">
-                    <div id="team-multibar-subtitle" class="row subtitleRow">
-                        <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
-                        <span id="team-multibar-stitle-label" class="subtitleLabel">Teams Comparison</span>
-                        <span id="team-multibar-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
-                    </div>
-                    <div id="projects-roles-multibar" class="widget"></div>
-                </div>
-                <div class="row">
-                    <div id="team-pie-subtitle" class="row subtitleRow">
-                        <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
-                        <span id="team-pie-stitle-label" class="subtitleLabel">Roles Summary</span>
-                        <span id="team-pie-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
-                    </div>
-                    <div id="team-members-pie" class="widget"></div>
-                </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="10" data-gs-x="0" data-gs-y="6">
+            <div id="team-members-lines" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <!-- Subsection: Project Selector -->
+
+        <!-- Column -->
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="16">
+            <div class="grid-stack-item-content subtitleRow">
+                <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
+                <span id="members-table-stitle-label" class="subtitleLabel">Project Selector</span>
+                <span id="members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="19">
+            <div class="grid-stack-item-content">
+                <div id="product-projects-table" class="widget grid-stack-item-content"></div>
+            </div>
+        </div>
+
+        <!-- Column -->
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="16">
+            <div id="team-multibar-subtitle" class="row subtitleRow">
+                <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                <span id="team-multibar-stitle-label" class="subtitleLabel">Teams Comparison</span>
+                <span id="team-multibar-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="18">
+            <div id="projects-roles-multibar" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="31">
+            <div id="team-pie-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
+                <span id="team-pie-stitle-label" class="subtitleLabel">Roles Summary</span>
+                <span id="team-pie-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="33">
+            <div id="team-members-pie" class="widget grid-stack-item-content"></div>
+        </div>
+
+
     </div>
 
 @stop
@@ -220,7 +280,7 @@
                     event: 'mouseover'
                 },
                 hide: {
-                    event: 'unfocus'
+                    event: 'mouseout'
                 },
                 position: {
                     my: 'top center',
@@ -464,11 +524,11 @@
                 yDomain: [0,1],
                 pointDomain: [0,1],
                 clipEdge: true,
-                tooltip: "<div>" +
+                tooltip: "<div style='text-align: center;'>" +
                 "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data.productcost.info.prid.avatar¬\" />" +
                 "<h3>¬_D.data.productcost.info.prid.name¬</h3>" +
                 "<h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4>" +
-                "<h4>Time to market: ¬_D.x¬</h4>" +
+                "<h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4>" +
                 "</div>",
                 image: "¬_D.data.productcost.info.prid.avatar¬",
                 xAxisGradient: ['red', 'orange', 'yellow', 'green'],
@@ -526,8 +586,7 @@
                 initialSelectedRows: 1,
                 showHeader: false,
                 alwaysOneSelected: true,
-                scrollUpButton: $('#upProductTableButton'),
-                scrollDownButton: $('#downProductTableButton')
+                scrollButtons: true
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx], table_configuration);
 
@@ -1027,10 +1086,10 @@
                 }
             ];
             var roles = {
-                'repodevelopers' : 'software developer', 
-                'repopassedexecutions': 'software architect', 
-                'repocommits': 'project manager', 
-                'repobrokenexecutions': 'stakeholder'
+                'repodevelopers' : 'Software developer',
+                'repopassedexecutions': 'Software architect',
+                'repocommits': 'Project manager',
+                'repobrokenexecutions': 'Stakeholder'
             };
             var project_roles_multibar_conf = {
                 stacked: false,
@@ -1079,8 +1138,9 @@
             }];
             var team_members_pie_configuration = {
                 height: 250,
-                showLegend: false,
-                labelFormat: "¬_D.data.info.title¬"
+                showLegend: true,
+                labelFormat: "¬_D.data.info.title¬",
+                showLabels: false
             };
             var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,
                     [orgCtx, timeCtx, productByProjectCtx], team_members_pie_configuration);

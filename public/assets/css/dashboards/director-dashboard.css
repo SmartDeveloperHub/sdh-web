@@ -454,9 +454,3 @@ html, body {
     font: 400 14px Roboto;
     fill: #4a4a4a !important;
 }
-
-
-/* For gridstack */
-.grid-stack>.grid-stack-item>.grid-stack-item-content {
-    overflow-y: hidden;
-}

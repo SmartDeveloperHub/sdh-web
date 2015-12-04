@@ -8,14 +8,14 @@
 @stop
 
 @section('html')
-    <div id="usersPanel" class="section" ng-controller="ReposController">
+    <div id="usersPanel" class="section" ng-controller="ProjectsController">
         <div id="develHeader" class="row row-centered">
             <span id="headIcon" class="headIcon octicon octicon-organization"></span>
-            <span class="headTitle">Repositories</span>
+            <span class="headTitle">Projects</span>
         </div>
         <div class="row row-centered search">
             <div class="searchDevForm">
-                <input class="searchDevInput form-control input-lg hint" ng-model="repoQuery" placeholder="Repository name">
+                <input class="searchDevInput form-control input-lg hint" ng-model="projectQuery" placeholder="Project name">
             </div>
             <label for="filter-by" class="searchDevIcon">
                 <i class="fa fa-search"></i>
@@ -23,10 +23,10 @@
             <a href="#" class="fa fa-times searchDevClear"></a>
         </div>
         <div class="row row-centered card-list">
-            <div class="col-sm-3 col-centered card" ng-repeat="repo in repos | orderBy:'name'" ng-show="([repo.name, repo.avatar] | filter:repoQuery).length" ng-click="changeToRepoDashboard(repo)">
+            <div class="col-sm-3 col-centered card" ng-repeat="project in projects | orderBy:'name'" ng-show="([project.name, project.avatar] | filter:projectQuery).length" ng-click="changeToProjectDashboard(project)">
                 <span class="helper"></span>
-                <img class="card-avatar" ng-src="@{{ repo.avatar }}" alt="@{{ repo.name }}">
-                <span class="card-name">@{{ repo.name }}</span>
+                <img class="card-avatar" ng-src="@{{ project.avatar }}" alt="@{{ project.name }}">
+                <span class="card-name">@{{ project.name }}</span>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
     function _() {
 
         //Show header chart and set titles
-        setTitle("Project");
+        setTitle("Product");
         setSubtitle(framework.dashboard.getEnv('name'));
 
         //Hide header chart
@@ -48,12 +48,12 @@
         // TODO: add to documentation... This is the manual initialization of angular, with the difference that it is done
         // with .main-content instead of document. https://docs.angularjs.org/guide/bootstrap#manual-initialization
         angular.module('Dashboard', [])
-                .controller('ReposController', ['$scope', function ($scope) {
-                    $scope.changeToRepoDashboard = function (repo) {
+                .controller('ProjectsController', ['$scope', function ($scope) {
+                    $scope.changeToProjectDashboard = function (project) {
                         var env = framework.dashboard.getEnv();
-                        env['rid'] = repo['repositoryid'];
-                        env['name'] = repo['name'];
-                        framework.dashboard.changeTo('repository', env);
+                        env['pid'] = project['projectid'];
+                        env['name'] = project['name'];
+                        framework.dashboard.changeTo('project', env);
                     };
                 }]);
 
@@ -62,15 +62,15 @@
         });
 
         //USER LIST
-        framework.data.observe(['repolist'], function (event) {
+        framework.data.observe(['projectlist'], function (event) {
 
             if (event.event === 'data') {
-                var repos = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
+                var projects = event.data['projectlist'][Object.keys(event.data['projectlist'])[0]]['data'];
 
                 $scope = angular.element(".main-content").scope();
 
                 $scope.$apply(function () {
-                    $scope.repos = repos;
+                    $scope.projects = projects;
                 });
 
             }

@@ -442,38 +442,28 @@
                 null, ex_lines_configuration);
 
         //ANGULAR INITIALIZATION
-        try {
-            angular.module('OrganizationDashboard');
-            angular.element(document).injector().invoke(function ($compile) {
-                var content = $(".main-content");
-                var scope = angular.element(content).scope();
-                $compile(content)(scope);
-            });
 
-        } catch (e) { //Module not initialized
+        angular.module('Dashboard', [])
+                .controller('UsersController', ['$scope', function ($scope) {
+                    $scope.changeToUserDashboard = function (user) {
+                        var env = framework.dashboard.getEnv();
+                        env['uid'] = user['userid'];
+                        env['name'] = user['name'];
+                        framework.dashboard.changeTo('developer', env);
+                    };
+                }])
+                .controller('ReposController', ['$scope', function ($scope) {
+                    $scope.changeToRepoDashboard = function (repo) {
+                        var env = framework.dashboard.getEnv();
+                        env['rid'] = repo['repositoryid'];
+                        env['name'] = repo['name'];
+                        framework.dashboard.changeTo('repository', env);
+                    };
+                }]);
 
-            angular.module('OrganizationDashboard', [])
-                    .controller('UsersController', ['$scope', function ($scope) {
-                        $scope.changeToUserDashboard = function (user) {
-                            var env = framework.dashboard.getEnv();
-                            env['uid'] = user['userid'];
-                            env['name'] = user['name'];
-                            framework.dashboard.changeTo('developer', env);
-                        };
-                    }])
-                    .controller('ReposController', ['$scope', function ($scope) {
-                        $scope.changeToRepoDashboard = function (repo) {
-                            var env = framework.dashboard.getEnv();
-                            env['rid'] = repo['repositoryid'];
-                            env['name'] = repo['name'];
-                            framework.dashboard.changeTo('repository', env);
-                        };
-                    }]);
-
-            angular.element(document).ready(function () {
-                angular.bootstrap(document, ['OrganizationDashboard']);
-            });
-        }
+        angular.element(".main-content").ready(function () {
+            angular.bootstrap(".main-content", ['Dashboard']);
+        });
 
         //USER LIST
         framework.data.observe(['userlist'], function (event) {
@@ -481,7 +471,7 @@
             if (event.event === 'data') {
                 var users = event.data['userlist'][Object.keys(event.data['userlist'])[0]]['data'];
 
-                $scope = angular.element($(".main-content")).scope();
+                $scope = angular.element(".main-content").scope();
 
                 $scope.$apply(function () {
                     $scope.users = users;
@@ -496,7 +486,7 @@
             if (event.event === 'data') {
                 var repos = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
 
-                $scope = angular.element($(".main-content")).scope();
+                $scope = angular.element(".main-content").scope();
 
                 $scope.$apply(function () {
                     $scope.repos = repos;

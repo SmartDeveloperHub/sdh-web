@@ -99,6 +99,14 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
     // Tell the framework to clear itself (remove observers and context data)
     framework.data.clear();
 
+    // Clear angular scope if defined
+    if(typeof angular !== 'undefined') {
+        var scope = angular.element(".main-content").scope();
+        if(scope != null) {
+            scope.$destroy();
+        }
+    }
+
     var _this = this; //Closure
 
     var onLoadError = function(e) {
@@ -196,6 +204,9 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
 
         //Clear the cssMaps
         _this.cssRequirejsMaps = [];
+
+        $(".main-content").remove();
+        $(".page-container").append('<div class="main-content">');
 
         // Load the new HTML
         try{

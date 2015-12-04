@@ -453,3 +453,14 @@ html, body {
     font: 400 14px Roboto;
     fill: #4a4a4a !important;
 }
+
+.multitable-img-selector {
+    height: 40px;
+    width: 40px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.multitable-img-selector.selected {
+    box-shadow: 1px 1px 5px 1px #000000;
+}

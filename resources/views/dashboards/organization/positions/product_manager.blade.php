@@ -977,33 +977,72 @@
 
                     // Destroy previous widgets
                     var removeWidget;
+                    var selectedId;
                     while((removeWidget = widgetList.pop()) != null) {
                         removeWidget.delete();
                     }
 
+                    var multitable = $("#product-projects-table");
+
                     // Remove table rows
-                    $("#product-projects-table").empty();
+                    multitable.empty();
+
+                    // Multitable contains a selector (with images) and a container of tables
+                    var selector = $('<div class="multitable-selector"></div>');
+                    var container = $('<div class="multitable-container"></div>');
+
+                    multitable
+                        .empty()
+                        .append(selector)
+                        .append(container);
 
                     // Now we can start adding things
                     var products = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
 
+                    // Function to change the selected table
+                    var changeSelectedTable = function() {
+
+                        if(selectedId != null) { //Previous selected
+                            selector.find("img[data-id='"+selectedId+"']").removeClass("selected");
+                            container.find("div[data-id='"+selectedId+"']").hide();
+                        }
+
+                        var id = $(this).data('id');
+
+                        selector.find("img[data-id='"+id+"']").addClass("selected");
+                        container.find("div[data-id='"+id+"']").show();
+
+                        selectedId = id;
+                    };
+
                     for(var x = 0; x < products.length; x++) {
+
                         var name = products[x]['name'];
-                        var productId = products[x]['repositoryid'];
+                        var avatar = products[x]['avatar'];
+                        var id = products[x]['repositoryid'];
                         var context = "product-projects-table-" + Math.floor(Math.random() * 100000000);
+
+                        var avatarSelector = $('<img class="multitable-img-selector" src="'+avatar+'" alt="'+name+'" data-id="'+id+'"></img>')
+                                .click(changeSelectedTable);
+
+                        // Start with all the tables being hidden
+                        var tableContainer = $('<div data-id="'+id+'"></div>').hide();
+
+                        selector.append(avatarSelector);
+                        container.append(tableContainer);
+
+                        // First table is selected by default
+                        if(x == 0) {
+                            avatarSelector.addClass("selected");
+                            avatarSelector.click();
+                        }
 
                         // Observe the context to handle changes in any of the subtables and actualize the super-context
                         framework.data.observeContext(context, superContextHandler);
 
-                        // Create a new row in the HTML table
-                        var newRowHeader = $("<tr class='tableProductRow'><td class='tableProductLabel'>" + name + "</td></tr>");
-                        var newRowTable = $("<tr><td></td></tr>");
-                        $("#product-projects-table").append(newRowHeader);
-                        $("#product-projects-table").append(newRowTable);
-
 
                         // Create a new table widget inside that HTML table
-                        var product_projects_table_dom = newRowTable.find("td").get(0);
+                        var product_projects_table_dom = tableContainer.get(0);
                         var product_projects_table_metrics = [
                             {
                                 id: 'repolist', //TODO: change resource
@@ -1050,7 +1089,6 @@
                             selectable: true,
                             minRowsSelected: 1,
                             maxRowsSelected: 8,
-                            filterControl: true,
                             initialSelectedRows: 3,
                             showHeader: false,
                             filterControl: false
@@ -1062,6 +1100,7 @@
                         // Add the widget to the widget list to then be able to destroy all the widgets in case of context change
                         widgetList.push(widget);
                     }
+
                 }
             }, [timeCtx]);
 

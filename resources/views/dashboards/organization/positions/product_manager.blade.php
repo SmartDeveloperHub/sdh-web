@@ -302,28 +302,28 @@
         var productSelector = '<div><span class="toolTitle"><p>Most significant products.</p></span></div><div><span class="toolRow">Select one to analyze it.</span></div>';
         addQTip($('#products-table-stitle-help'), "prodTableTool", productSelector);
         // Status History
-        var statusHistory = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Analyze the releases status history.</span></div>';
+        var statusHistory = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">This chart analyzes the build status history.</span></div>';
         addQTip($('#releases-chart-stitle-help'), "prodStatusTool", statusHistory);
         // Product radar
         var radarInfo = '<div><span class="toolTitle"><p>Product information.</p></span></div><div><span class="toolRow">Compare the selected product to</span></div><div><span class="toolRow">the average of all other products.</span></div>';
         addQTip($('#radar-product-stitle-help'), "prodRadarTool", radarInfo);
         // Product status
-        var liquidStatus = '<div><span class="toolTitle"><p>Product status.</p></span></div><div><span class="toolRow">Percentage of successful builds for the product.</span></div>';
+        var liquidStatus = '<div><span class="toolTitle"><p>Product status.</p></span></div><div><span class="toolRow">Average value of the builds for the product.</span></div>';
         addQTip($('#liquid2-chart-stitle-help'), "prodLiqSuccesTool", liquidStatus);
         // Product health
-        var liquidHealth = '<div><span class="toolTitle"><p>Product health.</p></span></div><div><span class="toolRow">Health of the product.</span></div>';
+        var liquidHealth = '<div><span class="toolTitle"><p>Product health.</p></span></div><div><span class="toolRow">Percentage that represent the health of the product.</span></div>';
         addQTip($('#liquid1-chart-stitle-help'), "prodLiqBrokenTool", liquidHealth);
         // Managers Cytocharts
-        var managerCyto = '<div><span class="toolTitle"><p>Most significant Products and Projects.</p></span></div><div><span class="toolRow">Analyze the most important projects for each product.</span></div>';
+        var managerCyto = '<div><span class="toolTitle"><p>Most significant Products and Projects.</p></span></div><div><span class="toolRow">This chart analyzes the most important projects for each product.</span></div>';
         addQTip($('#products-stitle-help'), "prodManagersTool", managerCyto);
         // Positions Lines
-        var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">Analyze the historical number of members by position.</span></div>';
+        var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">This chart analyzes the distribution of members by position during the selected period of time.</span></div>';
         addQTip($('#roles-stitle-help'), "positionsLineTool", positionLine);
         // Manager Selector
         var teamSelect = '<div><span class="toolTitle"><p>Most significant Teams.</p></span></div><div><span class="toolRow">Select for comparison.</span></div>';
         addQTip($('#members-table-stitle-help'), "teamSelectTool", teamSelect);
         // Manager Comparison
-        var managerComp = '<div><span class="toolTitle"><p>Manager team roles comparison.</p></span></div><div><span class="toolRow">Compare the number of manager team roles.</span></div>';
+        var managerComp = '<div><span class="toolTitle"><p>Manager team roles comparison.</p></span></div><div><span class="toolRow">This chart compares the number of team members per role and manager.</span></div>';
         addQTip($('#team-multibar-stitle-help'), "managerCompTool", managerComp);
         // Total Member Roles
         var memberRoles = '<div><span class="toolTitle"><p>Total members by role.</p></span></div><div><span class="toolRow">Accumulated number of team members by role.</span></div>';

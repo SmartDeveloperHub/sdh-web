@@ -312,13 +312,13 @@
         var managerCyto = '<div><span class="toolTitle"><p>Most significant managers.</p></span></div><div><span class="toolRow">This chart analyzes the most important products for each manager.</span></div><div><span class="toolRow">The center bubble represents a manager and he bubbles attached to it represent a product. The size of the product bubble depends on the number of members of the staff of that product.</span></div></div>';
         addQTip($('#managers-stitle-help'), "prodManagersTool", managerCyto);
         // Positions Lines
-        var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">This chart analyzes the distribution of members by position during he selected period of time.</span></div>';
+        var positionLine = '<div><span class="toolTitle"><p>Members by positions.</p></span></div><div><span class="toolRow">This chart analyzes the distribution of members by position during the selected period of time.</span></div>';
         addQTip($('#positions-stitle-help'), "positionsLineTool", positionLine);
         // Manager Selector
         var managerSelect = '<div><span class="toolTitle"><p>List of Managers.</p></span></div><div><span class="toolRow">Select for comparison.</span></div>';
         addQTip($('#members-table-stitle-help'), "managerSelectTool", managerSelect);
         // Manager Comparison
-        var managerComp = '<div><span class="toolTitle"><p>Manager team roles comparison.</p></span></div><div><span class="toolRow">This chart compared the number of team members per role and manager.</span></div>';
+        var managerComp = '<div><span class="toolTitle"><p>Manager team roles comparison.</p></span></div><div><span class="toolRow">This chart compares the number of team members per role and manager.</span></div>';
         addQTip($('#team-multibar-stitle-help'), "managerCompTool", managerComp);
         // Total Member Roles
         var memberRoles = '<div><span class="toolTitle"><p>Total members by role.</p></span></div><div><span class="toolRow">Accumulated number of team members by role.</span></div>';

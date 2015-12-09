@@ -64,9 +64,9 @@ var setTimeInfo, clearTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHead
 
 	setTimeInfo = function setTimeInfo (from, to) {
 		if (moment(from).isValid() && moment(from).isValid()) {
-			fromLabel.text(moment(from).format("DD-MM-YYYY"));
+			fromLabel.text(moment(from).format("MM-DD-YYYY"));
 			sinceLabel.text(moment.duration(to-from).humanize());
-			toLabel.text(moment(to).format("DD-MM-YYYY"));
+			toLabel.text(moment(to).format("MM-DD-YYYY"));
 		} else {
 			console.log("setTimeInfo... invalid dates");
 		}

@@ -13,7 +13,12 @@
         <link rel="stylesheet" href="/vendor/sdh-framework/fonts/linecons/css/linecons.css">
         <link rel="stylesheet" href="/vendor/sdh-framework/fonts/octicons/css/octicons.css">
         @yield('css')
-        <script data-main="/assets/js/loginLoader" src="/vendor/requirejs/require.js"></script>
+        <script src="/vendor/requirejs/require.js"></script>
+        <script>
+            require(['/assets/js/require-config.js'], function() {
+                require(['/assets/js/loginLoader.js']);
+            });
+        </script>
     </head>
     <body class="page-body light hidd">
         @yield('header')

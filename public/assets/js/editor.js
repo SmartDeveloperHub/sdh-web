@@ -19,30 +19,22 @@
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
-define(function(require, exports, module) {
+// Load all the modules needed
+require(["jquery", 'gridstack', 'css!/vendor/gridstack/dist/gridstack.min.css'], function() {
 
-    // Load require configuration
-    require(["/assets/js/require-config.js"], function() {
+    $(document).ready(function() {
 
-        // Load all the modules needed
-        require(["jquery", 'gridstack', 'css!/vendor/gridstack/dist/gridstack.min.css'], function() {
+        //Show the page container
+        $('body').removeClass('hidd');
+        $(".page-container").show();
+        $("footer.footer-container").show();
 
-            $(document).ready(function() {
-
-                //Show the page container
-                $('body').removeClass('hidd');
-                $(".page-container").show();
-                $("footer.footer-container").show();
-
-                var options = {
-                    cell_height: 80,
-                    vertical_margin: 10
-                };
-                $('.grid-stack').gridstack(options);
-
-            });
-
-        });
+        var options = {
+            cell_height: 80,
+            vertical_margin: 10
+        };
+        $('.grid-stack').gridstack(options);
 
     });
+
 });

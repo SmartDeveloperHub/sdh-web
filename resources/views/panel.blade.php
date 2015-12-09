@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-<?php $requirejsMain = "/assets/js/dashboardLoader"; ?>
+<?php $requirejsMain = "/assets/js/dashboardLoader.js"; ?>
 
 @section('scripts')
     @parent

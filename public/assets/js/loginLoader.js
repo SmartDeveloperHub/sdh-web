@@ -19,23 +19,15 @@
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
 */
 
-define(function(require, exports, module) {
+// Load all the modules needed
+require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "widgetCommon"], function () {
 
-    // Load require configuration
-    require(["/assets/js/require-config.js"], function() {
-
-        // Load all the modules needed
-        require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "widgetCommon"], function () {
-
-            $(document).ready(function () {
-                console.log("SDH Welcome Ready!");
-            });
-
-            framework.ready(function () {
-                // TODO new widget instantations
-            });
-
-        });
-
+    $(document).ready(function () {
+        console.log("SDH Welcome Ready!");
     });
+
+    framework.ready(function () {
+        // TODO new widget instantations
+    });
+
 });

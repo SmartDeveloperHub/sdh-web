@@ -269,69 +269,57 @@ var finishLoading = function() {
     $( "#loading" ).fadeOut(250);
 };
 
+document.getElementById("loading").className = "";
 
-define(function(require, exports, module) {
 
-    document.getElementById("loading").className = "";
+// Load all the modules needed
+require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler",
+    "widgetCommon", 'gridstack', 'css!/vendor/gridstack/dist/gridstack.min.css'], function() {
 
-    // Load require configuration
-    require(["/assets/js/require-config.js"], function() {
+    framework.ready(function() {
+        console.log("Framework ready");
 
-        // Load all the modules needed
-        require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler",
-            "widgetCommon", 'gridstack', 'css!/vendor/gridstack/dist/gridstack.min.css'], function() {
+        var dashboardController = new DashboardController();
 
-            framework.ready(function() {
-                console.log("Framework ready");
+        //Set an error handler for require js
+        requirejs.onError = function (err) {
+            console.error(err);
+            alert("Oups! There were some problems trying to download all the dependencies of the dashboard." +
+                " If problems persist, check your Internet connection. \n\nReturning to the previous dashboard...");
+            this.goToPrevious();
+            //throw err; //Should I throw it?
+        }.bind(dashboardController);
 
-                var dashboardController = new DashboardController();
+        //Set a load handler to add the load maps to the dashboard controller
+        requirejs.onResourceLoad = function(context, map)
+        {
+            dashboardController.cssRequirejsMaps.push(map);
+        };
 
-                //Set an error handler for require js
-                requirejs.onError = function (err) {
-                    console.error(err);
-                    alert("Oups! There were some problems trying to download all the dependencies of the dashboard." +
-                        " If problems persist, check your Internet connection. \n\nReturning to the previous dashboard...");
-                    this.goToPrevious();
-                    //throw err; //Should I throw it?
-                }.bind(dashboardController);
+        //Tell the framework this is the Dashboard Controller
+        framework.dashboard.setDashboardController(dashboardController);
 
-                //Set a load handler to add the load maps to the dashboard controller
-                requirejs.onResourceLoad = function(context, map)
-                {
-                    dashboardController.cssRequirejsMaps.push(map);
-                };
+        //Show header
+        $('body').removeClass('hidd');
 
-                //Tell the framework this is the Dashboard Controller
-                framework.dashboard.setDashboardController(dashboardController);
+        if(BASE_DASHBOARD != null) {
 
-                //Show header
-                $('body').removeClass('hidd');
+            $(document).ready(function() {
 
-                if(BASE_DASHBOARD != null) {
+                //Show the page container
+                $(".page-container").show();
+                $("footer.footer-container").show();
 
-                    $(document).ready(function() {
-
-                        //Show the page container
-                        $(".page-container").show();
-                        $("footer.footer-container").show();
-
-                        // Load the initial dashboard
-                        framework.dashboard.changeTo(BASE_DASHBOARD);
-
-                    });
-
-                } else {
-                    console.error("BASE_DASHBOARD is not defined.");
-                }
+                // Load the initial dashboard
+                framework.dashboard.changeTo(BASE_DASHBOARD);
 
             });
 
-
-        });
+        } else {
+            console.error("BASE_DASHBOARD is not defined.");
+        }
 
     });
 
 
 });
-
-

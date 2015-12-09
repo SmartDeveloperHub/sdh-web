@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-<?php $requirejsMain = "/assets/js/editor"; ?>
+<?php $requirejsMain = "/assets/js/editor.js"; ?>
 
 @section('scripts')
     @parent

@@ -8,7 +8,12 @@
         <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/assets/css/core.css">
         @yield('css')
-        <script data-main="{{$requirejsMain}}" src="/vendor/requirejs/require.js"></script>
+        <script src="/vendor/requirejs/require.js"></script>
+        <script>
+            require(['/assets/js/require-config.js'], function() {
+                require(['{{$requirejsMain}}']);
+            });
+        </script>
     </head>
     <body class="page-body light hidd">
         @yield('header')

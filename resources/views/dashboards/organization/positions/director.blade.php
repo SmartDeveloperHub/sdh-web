@@ -720,11 +720,14 @@
                 yDomain: [0,1],
                 pointDomain: [0,1],
                 clipEdge: true,
-                tooltip: "<div style='text-align: center;'>" +
+                // TODO try to add blur somewhere
+                tooltip: "<div class='scatterTooltip' style='text-align: center;'>" +
                 "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data.productcost.info.prid.avatar¬\" />" +
                 "<h3>¬_D.data.productcost.info.prid.name¬</h3>" +
-                "<h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4>" +
-                "<h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-balance-scale green'></i><h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-hourglass-start violet'></i><h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
                 "</div>",
                 image: "¬_D.data.productcost.info.prid.avatar¬",
                 xAxisGradient: ['red', 'orange', 'yellow', 'green'],

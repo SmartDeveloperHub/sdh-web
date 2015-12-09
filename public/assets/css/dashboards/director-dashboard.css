@@ -178,27 +178,27 @@ html, body {
     color: #868686;
 }
 
-.subtitleTooltip .toolRow .red {
+.subtitleTooltip .toolRow .red, .scatterTooltip .scatterTTIco.red {
     color: #DC0C15;
 }
 
-.subtitleTooltip .toolRow .green {
+.subtitleTooltip .toolRow .green, .scatterTooltip .scatterTTIco.green {
     color: #019640;
 }
 
-.subtitleTooltip .toolRow .blue {
+.subtitleTooltip .toolRow .blue, .scatterTooltip .scatterTTIco.blue {
     color: #019640;
 }
 
-.subtitleTooltip .toolRow .orange {
+.subtitleTooltip .toolRow .orange, .scatterTooltip .scatterTTIco.orange {
     color: #ED7225;
 }
 
-.subtitleTooltip .toolRow .violet {
+.subtitleTooltip .toolRow .violet, .scatterTooltip .scatterTTIco.violet {
     color: #8A1978;
 }
 
-.subtitleTooltip .toolRow .yellow {
+.subtitleTooltip .toolRow .yellow, .scatterTooltip .scatterTTIco.yellow {
     color: #FFED00;
 }
 
@@ -219,6 +219,42 @@ html, body {
 }
 
 #scatter-plot-stitle-label {
+}
+
+.scatterTooltip {
+    padding: 10px;
+}
+
+.scatterTooltip img {
+
+}
+
+.scatterTooltip h3 {
+    margin-top: 10px;
+    background: rgba(0, 0, 0, 0);
+    color: #03015F;
+    margin-bottom: 10px;
+}
+
+.scatterTooltip .scattetTTLine {
+    display: block;
+    text-align: left;
+    line-height: 24px;
+}
+
+.scatterTooltip h4 {
+    display: inline-block;
+    margin: 0;
+    margin-left: 10px;
+    color: #5D5D5D;
+}
+
+.scatterTooltip .scatterTTIco {
+    font-family: FontAwesome;
+    display: inline-block;
+    width: 22px;
+    text-align: center;
+    font-size: 20px;
 }
 
 #products-table-subtitle {

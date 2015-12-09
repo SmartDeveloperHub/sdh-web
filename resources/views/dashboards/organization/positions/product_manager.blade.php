@@ -943,6 +943,16 @@
             // This method combines different contexts into a supercontext
             var superContextHandler = function(data, changes, contextId) {
 
+                // Get changed table id
+                var contextParts = contextId.split("-");
+                var dataId = contextParts[contextParts.length - 1];
+
+                // Get the number of selected rows in the changed table
+                var nSelectedInTable = $(".multitable-container > div[data-id='"+dataId+"']").find("tr.selected").length;
+
+                // Update the number in the uper icon selector
+                $("#product-projects-table .multitable-selector div[data-id='"+dataId+"'] span.number-selected").text(nSelectedInTable);
+
                 // Update the changed data
                 superContextData[contextId] = data;
 
@@ -1003,13 +1013,13 @@
                     var changeSelectedTable = function() {
 
                         if(selectedId != null) { //Previous selected
-                            selector.find("img[data-id='"+selectedId+"']").removeClass("selected");
+                            selector.find("div[data-id='"+selectedId+"']").removeClass("selected");
                             container.find("div[data-id='"+selectedId+"']").hide();
                         }
 
                         var id = $(this).data('id');
 
-                        selector.find("img[data-id='"+id+"']").addClass("selected");
+                        selector.find("div[data-id='"+id+"']").addClass("selected");
                         container.find("div[data-id='"+id+"']").show();
 
                         selectedId = id;
@@ -1020,9 +1030,11 @@
                         var name = products[x]['name'];
                         var avatar = products[x]['avatar'];
                         var id = products[x]['repositoryid'];
-                        var context = "product-projects-table-" + Math.floor(Math.random() * 100000000);
+                        var context = "product-projects-table-" + id;
 
-                        var avatarSelector = $('<img class="multitable-img-selector" src="'+avatar+'" alt="'+name+'" data-id="'+id+'"></img>')
+                        var avatarSelector = $('<div class="multitable-img-selector" data-id="'+id+'"></div>')
+                                .append('<img src="'+avatar+'" alt="'+name+'"></img>')
+                                .append('<span class="number-selected">0</span>')
                                 .click(changeSelectedTable);
 
                         // Start with all the tables being hidden

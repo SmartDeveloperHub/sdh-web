@@ -455,10 +455,18 @@ html, body {
 }
 
 .multitable-img-selector {
-    height: 40px;
-    width: 40px;
     margin: 3px;
     cursor: pointer;
+    display: inline-block;
+}
+
+.multitable-img-selector > img{
+    height: 40px;
+    width: 40px;
+}
+
+.multitable-img-selector > span.number-selected {
+    position: absolute;
 }
 
 .multitable-img-selector.selected {

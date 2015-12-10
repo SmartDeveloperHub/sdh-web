@@ -56,7 +56,7 @@ var setTimeInfo, clearTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHead
 
 		lastTopTimeout  = setTimeout(function(newLastTop) {
 			lastTop = newLastTop;
-		}.bind(null, win.scrollTop()), 500);
+		}.bind(null, win.scrollTop()), 1500);
 
 		scrollDir = win.scrollTop() - realLastTop;
 		realLastTop = win.scrollTop();

@@ -23,13 +23,20 @@ var setTimeInfo, clearTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHead
 
 (function() {
 
-	var showHeaderAt = 150;
-	var closePaneAt = 300;
+	var relative = function relative(val) {
+		return val * (window.innerHeight / 995); //995 is considered the default height of a window
+	};
+
+	var showHeaderAt = relative(150);
+	var closePaneAt = relative(300);
 
 	var win = $(window);
 	var body = $('body');
 
 	var lastTop = win.scrollTop();
+	var realLastTop = win.scrollTop();
+	var scrollDir = 0; //Positive value means scroll down
+	var lastTopTimeout = null;
 
 	var pane = $('.settings-pane');
 	var timeControl = $('#timeControler');
@@ -39,6 +46,33 @@ var setTimeInfo, clearTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHead
 	var toLabel = $('#toLabel');
 	var hTitle = $('#htitle');
 	var hSubtitle = $('#hsubtitle');
+
+	var delayLastTopUpdate = function() {
+
+		if(lastTopTimeout != null) {
+			clearTimeout(lastTopTimeout);
+			lastTopTimeout = null;
+		}
+
+		lastTopTimeout  = setTimeout(function(newLastTop) {
+			lastTop = newLastTop;
+		}.bind(null, win.scrollTop()), 500);
+
+		scrollDir = win.scrollTop() - realLastTop;
+		realLastTop = win.scrollTop();
+	};
+
+	var inmediateLastTopUpdate = function() {
+
+		if(lastTopTimeout != null) {
+			clearTimeout(lastTopTimeout);
+			lastTopTimeout = null;
+		}
+
+		lastTop = win.scrollTop();
+		scrollDir = win.scrollTop() - realLastTop;
+		realLastTop = win.scrollTop();
+	};
 
 	var changePanehandler = function changePanehandler() {
 		if (pane.hasClass('open')) {
@@ -102,35 +136,38 @@ var setTimeInfo, clearTimeInfo, setTitle, setSubtitle, hideHeaderChart, showHead
 	// "fixed" class on the body element.
 
 	win.on('scroll', function(e){
+
+		delayLastTopUpdate();
+
 		// auto close time Panel
-		if(Math.abs(win.scrollTop() - closePaneAt) > 300) {
+		if(Math.abs(win.scrollTop() - closePaneAt) > relative(300)) {
 			closePanehandler();
 		}
 
 		// auto hide/show header
-		if((win.scrollTop() > 350)) {
-			if ((lastTop > win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 15)) {
+		if((win.scrollTop() > relative(350))) {
+			if (scrollDir < 0 && (Math.abs(win.scrollTop() - lastTop) > relative(15))) {
 				// up
 				body.removeClass('hidd');
-			} else if ((lastTop <= win.scrollTop()) && (Math.abs(win.scrollTop() - lastTop) > 70)) {
+				inmediateLastTopUpdate();
+			} else if (scrollDir > 0 && (Math.abs(win.scrollTop() - lastTop) > relative(70))) {
 				// down
 				closePanehandler();
 				body.addClass('hidd');
 			}
-			lastTop = win.scrollTop();
-		} else if (body.hasClass('hidd') && (win.scrollTop() < 150)) {
+			//lastTop = win.scrollTop();
+		} else if (body.hasClass('hidd') && (win.scrollTop() < relative(150))) {
 			body.removeClass('hidd');
-			lastTop = win.scrollTop();
+			inmediateLastTopUpdate();
 		}
 
 		// Fixed Header
 		if(!body.hasClass('fixed') && (win.scrollTop() > showHeaderAt)) {
 			body.addClass('fixed');
-			lastTop = win.scrollTop();
 		}
 		else if(body.hasClass('fixed') && (win.scrollTop() <= showHeaderAt)){
 			body.removeClass('fixed');
-			lastTop = win.scrollTop();
+			inmediateLastTopUpdate();
 		}
 	});
 

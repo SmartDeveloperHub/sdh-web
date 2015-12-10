@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-<?php $requirejsMain = "/assets/js/dashboardLoader.js"; ?>
+<?php $requirejsMain = $PUBLIC_PATH . "assets/js/dashboardLoader.js"; ?>
 
 @section('scripts')
     @parent
@@ -15,12 +15,12 @@
 
 @section('css')
     @parent
-    <link rel="stylesheet" href="/vendor/nvd3/build/nv.d3.min.css">
-    <link rel="stylesheet" href="/vendor/sdh-framework/style/components.css">
-    <link rel="stylesheet" href="/vendor/sdh-framework/fonts/fontawesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/vendor/sdh-framework/fonts/linecons/css/linecons.css">
-    <link rel="stylesheet" href="/vendor/sdh-framework/fonts/octicons/css/octicons.css">
-    <link rel="stylesheet" href="/assets/css/header/header-fixed.css">
+    <link rel="stylesheet" href="{{$PUBLIC_PATH}}vendor/nvd3/build/nv.d3.min.css">
+    <link rel="stylesheet" href="{{$PUBLIC_PATH}}vendor/sdh-framework/style/components.css">
+    <link rel="stylesheet" href="{{$PUBLIC_PATH}}vendor/sdh-framework/fonts/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{$PUBLIC_PATH}}vendor/sdh-framework/fonts/linecons/css/linecons.css">
+    <link rel="stylesheet" href="{{$PUBLIC_PATH}}vendor/sdh-framework/fonts/octicons/css/octicons.css">
+    <link rel="stylesheet" href="{{$PUBLIC_PATH}}assets/css/header/header-fixed.css">
 @stop
 
 @section('header')
@@ -71,7 +71,7 @@
         <div class="loading-white">
             <div class="loading-info text-center">
                 <i class="loading-icon fa fa-spin">
-                    <img height="158" width="150" src="assets/images/sdh_400ppp_RGB_imagotipo_small.png" />
+                    <img height="158" width="150" src="{{$PUBLIC_PATH}}assets/images/sdh_400ppp_RGB_imagotipo_small.png" />
                 </i>
             </div>
         </div>

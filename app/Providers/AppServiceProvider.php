@@ -1,6 +1,7 @@
 <?php namespace SdhWeb\Providers;
 
 use Illuminate\Support\Facades\Auth;
+use View;
 use Illuminate\Support\ServiceProvider;
 use Barryvdh\Debugbar\Facade as Debugbar;
 
@@ -22,6 +23,11 @@ class AppServiceProvider extends ServiceProvider {
 		if(isset($_ENV['APP_DEBUG_BAR']) && $_ENV['APP_DEBUG_BAR'] == 'false') {
 			Debugbar::disable();
 		}
+
+		//Create a blade directive to create an asset url
+		View::share('PUBLIC_PATH', (getenv('APP_DEV') == 'true' ? '/': '/build/'));
+
+		//TODO: when upgrading to Laravel 5.1 create a directive asset_url to build urls.
 	}
 
 	/**

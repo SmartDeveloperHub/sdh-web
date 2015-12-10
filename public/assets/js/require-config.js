@@ -20,7 +20,7 @@
 */
 
 require.config({
-    baseUrl: "/",
+    baseUrl: PUBLIC_PATH,
     //enforceDefine: true,
     map: {
         '*': {

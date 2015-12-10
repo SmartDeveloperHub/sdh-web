@@ -2,8 +2,8 @@
 
 @section('css')
 @parent
-		<link href="/assets/css/header/header-login.css" rel="stylesheet">
-	    <link href="/assets/css/login/login.css" rel="stylesheet">
+		<link href="{{$PUBLIC_PATH}}assets/css/header/header-login.css" rel="stylesheet">
+	    <link href="{{$PUBLIC_PATH}}assets/css/login/login.css" rel="stylesheet">
 @stop
 
 @section('header')
@@ -69,7 +69,7 @@
 		                    <div class="row">
 		                        <div class="col col-sm-12 wow fadeInLeft animated" data-wow-duration="1.1s" data-wow-delay="0.2s">
 		                            <div class="screenshot">
-		                                <img class="image" height="100%" width="80%" src="/assets/images/sdh-architecture_v1.png">
+		                                <img class="image" height="100%" width="80%" src="{{$PUBLIC_PATH}}assets/images/sdh-architecture_v1.png">
 		                            </div>
 		                        </div>
 		                    </div>

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-<?php $requirejsMain = "/assets/js/editor.js"; ?>
+<?php $requirejsMain = $PUBLIC_PATH . "assets/js/editor.js"; ?>
 
 @section('scripts')
     @parent
@@ -47,7 +47,7 @@
         <div class="loading-white">
             <div class="loading-info text-center">
                 <i class="loading-icon fa fa-spin">
-                    <img height="158" width="150" src="assets/images/sdh_400ppp_RGB_imagotipo_small.png" />
+                    <img height="158" width="150" src="{{$PUBLIC_PATH}}assets/images/sdh_400ppp_RGB_imagotipo_small.png" />
                 </i>
             </div>
         </div>

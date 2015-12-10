@@ -7,12 +7,12 @@
         </div>
         <div class="col-sm-2 footer-img">
             <a target="blank_" href="http://www.centeropenmiddleware.com/">
-                <img src="assets/images/com.png" style="width:100%; max-width:80px; margin-left:0px">
+                <img src="{{$PUBLIC_PATH}}assets/images/com.png" style="width:100%; max-width:80px; margin-left:0px">
             </a>
         </div>
         <div class="col-sm-2 footer-img">
             <a target="blank_" href="http://www.upm.es/">
-                <img src="assets/images/upm.png" style="width:100%; max-width:70px; margin-left:0px">
+                <img src="{{$PUBLIC_PATH}}assets/images/upm.png" style="width:100%; max-width:70px; margin-left:0px">
             </a>
         </div>
     </div>

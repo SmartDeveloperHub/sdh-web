@@ -4,3 +4,4 @@
 .idea
 .vagrant
 /public/vendor
+/public/build

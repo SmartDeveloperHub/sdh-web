@@ -381,7 +381,7 @@
             // ------------------------------------ TEAM MEMBERS -------------------------------------------
             var team_members_dom = document.getElementById("team-members-ctr");
             var team_members_metrics = [{
-                id: 'member-team', //TODO member-members? :O
+                id: 'director-members', //TODO member-members? :O
                 max: 1
             }];
             var team_members_conf = {
@@ -396,7 +396,7 @@
             // ---------------------------------------- RELEASES -------------------------------------------
             var some1_dom = document.getElementById("releases-ctr");
             var some1_metrics = [{
-                id: 'member-success-builds',  //TODO: Nº Releases: total builds passed in master branch. userReleases o userPassedBuilds o algo así
+                id: 'passed-builds',  //TODO: Nº Releases: total builds passed in master branch. userReleases o userPassedBuilds o algo así
                 max: 1
             }];
             var some1_conf = {
@@ -427,7 +427,7 @@
             // ------------------------------------------ CONTRIBUTORS ----------------------------------------
             var some2_dom = document.getElementById("contributors-ctr");
             var some2_metrics = [{
-                id: 'externals',
+                id: 'director-externals',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -459,7 +459,7 @@
             // ------------------------------- AVG TEAM MEMBERS PER PRODUCT-------------------------------------
             var avgteam_dom = document.getElementById("avg-team-ctr");
             var avgteam_metrics = [{
-                id: 'member-productMembers',  //TODO: userProductsMembers AVG
+                id: 'director-productMembers',  //TODO: userProductsMembers AVG
                 max: 1,
                 aggr: 'avg'
             }];
@@ -818,7 +818,7 @@
             var releasesLines_dom = document.getElementById("releases-chart");
 
             var releasesLines_metrics = [{
-                id: 'productreleasestatus',
+                id: 'product-success-rate',
                 max: 20
             }];
 
@@ -923,7 +923,7 @@
             var test_dom = document.getElementById("liquid-1-chart");
             var test_metrics = [
                 {
-                    id: 'productreleasestatus',
+                    id: 'product-success-rate',
                     max: 1
                 }
             ];
@@ -945,7 +945,7 @@
             var test_dom = document.getElementById("liquid-2-chart");
             var test_metrics = [
                 {
-                    id: 'producthealth',
+                    id: 'product-health',
                     max: 1
                 }
             ];
@@ -966,12 +966,7 @@
             var team_members_lines_dom = document.getElementById("position-members-lines");
             var team_members_lines_metrics = [
                 {
-                    id: 'director-managers',
-                    max: 40,
-                    uid: 200
-                },
-                {
-                    id: 'director-architects',
+                    id: 'director-externals',
                     max: 40,
                     uid: 200
                 },
@@ -992,7 +987,7 @@
             var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
                     [orgCtx, timeCtx], team_members_lines_configuration);
 
-            // ------------------------------- TEAM MEMBERS ROLES -------------------------------------
+            // ------------------------------- TEAM MEMBERS ROLES (pie Chart) -------------------------------------
             var team_members_pie_dom = document.getElementById("team-members-pie");
             var team_members_pie_metrics = [
                 {
@@ -1010,7 +1005,7 @@
                     uid: [1001, 1002] //TODO: temporal
                 },
                 {
-                    id: 'pmanager-managers',
+                    id: 'pmanager-pjmanagers',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum',
@@ -1087,11 +1082,11 @@
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");
             var project_roles_multibar_metrics = [
                 {
-                    id: 'pmanager-swdevelopers',
+                    id: 'pmanager-developers',
                     max: 1
                 },
-                                {
-                    id: 'pmanager-swarchitects',
+                {
+                    id: 'pmanager-architects',
                     max: 1
                 },
                 {

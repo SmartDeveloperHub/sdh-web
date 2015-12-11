@@ -275,7 +275,8 @@
                     event: 'mouseover'
                 },
                 hide: {
-                    event: 'mouseout'
+                    //event: 'mouseout'
+                    event: 'unfocus'
                 },
                 position: {
                     my: 'top center',
@@ -333,9 +334,8 @@
         var rangeNv_dom = document.getElementById("fixed-chart");
         var rangeNv_metrics = [
             {
-                id: 'orgcommits', //TODO: director activity metric
-                max: 101,
-                aggr: 'avg'
+                id: 'member-activity', //TODO: director activity metric
+                max: 101
             }
         ];
         var rangeNv_configuration = {
@@ -350,7 +350,7 @@
             axisColor: "#004C8B"
         };
 
-        var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [orgCtx], rangeNv_configuration);
+        var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [orgCtx, currentUserCtx], rangeNv_configuration);
         $(rangeNv).on("CONTEXT_UPDATED", function () {
             $(rangeNv).off("CONTEXT_UPDATED");
 
@@ -367,9 +367,8 @@
             // --------------------------------------- PRODUCTS --------------------------------------------
             var products_dom = document.getElementById("products-ctr");
             var products_metrics = [{
-                id: 'orgcommits',  //TODO: director Products metric. userproducts con uid. Tengo que conseguir el uid del logueado
-                max: 1,
-                aggr: 'sum'
+                id: 'director-products',
+                max: 1
             }];
             var products_conf = {
                 label: 'Products',
@@ -383,9 +382,8 @@
             // ------------------------------------ TEAM MEMBERS -------------------------------------------
             var team_members_dom = document.getElementById("team-members-ctr");
             var team_members_metrics = [{
-                id: 'orgdevelopers', //TODO: director users metric. userrsers con uid. Tengo que conseguir el uid del logueado
-                max: 1,
-                aggr: 'sum'
+                id: 'member-team', //TODO member-members? :O
+                max: 1
             }];
             var team_members_conf = {
                 label: 'Team members',
@@ -399,9 +397,8 @@
             // ---------------------------------------- RELEASES -------------------------------------------
             var some1_dom = document.getElementById("releases-ctr");
             var some1_metrics = [{
-                id: 'orgrepositories',  //TODO: Nº Releases: total builds passed in master branch. userReleases o userPassedBuilds o algo así
-                max: 1,
-                aggr: 'sum'
+                id: 'member-success-builds',  //TODO: Nº Releases: total builds passed in master branch. userReleases o userPassedBuilds o algo así
+                max: 1
             }];
             var some1_conf = {
                 label: 'Releases',
@@ -415,7 +412,7 @@
             // ------------------------------------------ PERSONEL COST ----------------------------------------
             var some2_dom = document.getElementById("personnel-cost-ctr");
             var some2_metrics = [{
-                id: 'orgbuilds',  //TODO: Ad hoc? o userTeamCost?. Total de coste por team member 25*nºmembers * (dias del rango seleccionado)
+                id: 'director-team-cost',  //TODO: Ad hoc? o userTeamCost?. Total de coste por team member 25*nºmembers * (dias del rango seleccionado)
                 max: 1,
                 aggr: 'sum'
             }];
@@ -431,7 +428,7 @@
             // ------------------------------------------ CONTRIBUTORS ----------------------------------------
             var some2_dom = document.getElementById("contributors-ctr");
             var some2_metrics = [{
-                id: 'orgbranches',  //TODO: AdHoc? userExternalContributors?. Número de externos (contributors) o  % externos
+                id: 'externals',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -447,7 +444,7 @@
             // --------------------------------- EXTERNAL COMPANIES --------------------------------
             var some2_dom = document.getElementById("companies-ctr");
             var some2_metrics = [{
-                id: 'orgexec',  //TODO: AdHoc? userExternalContributorCompanies? básicamente sacar del dominio del mail el nombre de  la empresa exerna.
+                id: 'external-companies',  //TODO: dummy? AdHoc? userExternalContributorCompanies? básicamente sacar del dominio del mail el nombre de  la empresa exerna.
                 max: 1,
                 aggr: 'sum'
             }];
@@ -463,9 +460,9 @@
             // ------------------------------- AVG TEAM MEMBERS PER PRODUCT-------------------------------------
             var avgteam_dom = document.getElementById("avg-team-ctr");
             var avgteam_metrics = [{
-                id: 'orgbrokenexec',  //TODO: userProductsMembers AVG
+                id: 'member-productMembers',  //TODO: userProductsMembers AVG
                 max: 1,
-                aggr: 'sum'
+                aggr: 'avg'
             }];
             var avgteam_conf = {
                 label: 'Team Members Per Product',
@@ -479,7 +476,7 @@
             // ------------------------------------ AVG HEALTH PER PRODUCT -------------------------------------------
             var avghealth_dom = document.getElementById("avg-health-ctr");
             var avghealth_metrics = [{
-                id: 'orgbrokentime', //TODO: userProductwHealth AVG
+                id: 'member-productHealth', //TODO: userProductwHealth AVG
                 max: 1,
                 aggr: 'sum'
             }];
@@ -506,18 +503,30 @@
                     'nodes': [],
                     'edges': edges
                 };
-                for (var prId in productsAux) {
+                for (var id in productsAux) {
                     // Add Metric
                     var aux = {
                         max: 1,
                         aggr: 'sum',
-                        prid: prId
+                        prid: id
                     };
-                    var productMetricId = framework.utils.resourceHash('produsers', aux);
-                    if (prId == theProductManagerId) {
+                    var aux2 = {
+                        max: 1,
+                        aggr: 'sum',
+                        uid: id
+                    };
+                    var productMetricId;
+                    if (id == theProductManagerId) {
                         productMetricId = "_static_";
+                        productMetricId = framework.utils.resourceHash('membercommits', aux2); // TODO membercommits?
+                        aux['id']= 'membercommits';
+                    } else {
+                        productMetricId = framework.utils.resourceHash('prodmembers', aux);
+                        aux['id']= 'prodmembers';
                     }
-                    aux['id']= 'produsers';
+                    if (productMetricId == null) {
+                        return null;
+                    };
                     cytograph1_metrics.push(aux);
 
                     cytograph1_configuration.tooltip = "Staff: ¬_D.data.values[0]¬";
@@ -525,11 +534,11 @@
                     // Add Node
                     cytograph1_configuration.nodes.push(
                         {
-                            id: productsAux[prId].name,
-                            avatar:productsAux[prId].avatar,
+                            id: productsAux[id].name,
+                            avatar:productsAux[id].avatar,
                             shape:"ellipse",
                             volume: productMetricId,
-                            tooltip: productsAux[prId].tooltip || ""
+                            tooltip: productsAux[id].tooltip || ""
                         }
                     )
                 }
@@ -542,81 +551,98 @@
             // mejores products de los  3 mejores P.Managers
             // Info de cada uno de los productos
             var cytograph1_dom = document.getElementById("cytograph1");
-            var theProductManagerId = 1;
+            var theProductManagerId = 1004;
             var edges = [
-                { source: 'P_ManagerA', target: 'Product_a' },
-                { source: 'P_ManagerA', target: 'Product_b' },
-                { source: 'P_ManagerA', target: 'Product_c' },
-                { source: 'P_ManagerA', target: 'Product_d' }
+                { source: '1004', target: 'product-sws' },
+                { source: '1004', target: 'product-ld' }
             ];
             var productsAux = {
-                1:{
-                    'name': "P_ManagerA",
-                    'avatar': "https://pbs.twimg.com/profile_images/1652209779/Foto_Jefe_Estudios.jpg",
-                    tooltip: "Francisco Javier Soriano"
+                1004:{
+                    "userid": "1004",
+                    //"name": "Francisco Javier Soriano",
+                    "name": "jSoriano",
+                    "avatar": "https://pbs.twimg.com/profile_images/1652209779/Foto_Jefe_Estudios.jpg",
+                    "email": [
+                        "jsoriano@fi.upm.es"
+                    ],
+                    "positionsByOrgId": {
+                        "1": [
+                            5
+                        ]
+                    },
+                    "tooltip": "Francisco Javier Soriano"
                 },
-                2:{
-                    'name': "Product_a",
-                    'avatar': "assets/images/CytoChartDemo/bp1.png"
+                "product-sws":{
+                    "avatar": "http://www.icon.com.pk/images/soft-img.jpg",
+                    "name": "Software Development Support Product",
+                    "productid": "product-sws"
                 },
-                3:{
-                    'name': "Product_b",
-                    'avatar': "assets/images/CytoChartDemo/bp2.png"
-                },
-                4:{
-                    'name': "Product_c",
-                    'avatar': "assets/images/CytoChartDemo/bp3.png"
-                },
-                5:{
-                    'name': "Product_d",
-                    'avatar': "assets/images/CytoChartDemo/bp4.png"
+                "product-ld":{
+                    "avatar": "http://fgiasson.com/blog/wp-content/uploads/2008/06/triple_big.png",
+                    "name": "Linked Data Product",
+                    "productid": "product-ld"
                 }
             };
 
             var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
-            var cytograph1_metrics = configPM.metrics;
-            var cytograph1_configuration = configPM.config;
+            console.log(configPM)
 
-            var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
-                    [orgCtx, timeCtx], cytograph1_configuration);
+            if (configPM == null){
+                console.log("error loading cytoChart1");
+            } else {
+                var cytograph1_metrics = configPM.metrics;
+                var cytograph1_configuration = configPM.config;
+                var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
+                        [orgCtx, timeCtx], cytograph1_configuration);
+            }
 
             // CYTOCHART2 INITIALIZATION
             var cytograph2_dom = document.getElementById("cytograph2");
-            var theProductManagerId = 1;
+            var theProductManagerId = 1006;
             var edges = [
-                { source: 'P_ManagerA', target: 'Product_a' },
-                { source: 'P_ManagerA', target: 'Product_b' },
-                { source: 'P_ManagerA', target: 'Product_c' }
+                { source: 1006, target: 'product-sws' },
+                { source: 1006, target: 'product-ld' }
             ];
             var productsAux = {
-                1:{
-                    'name': "P_ManagerA",
-                    'avatar': "https://avatars3.githubusercontent.com/u/1067341?v=3&s=400",
-                    tooltip: "Óscar Corcho"
+                1006:{
+                    "userid": 1006,
+                    "name": "Asuncion Gomez Perez",
+                    "avatar": "https://pbs.twimg.com/profile_images/1554448422/asun_oeg_400x400.png",
+                    "email": [
+                      "asun@fi.upm.es"
+                    ],
+                    "positionsByOrgId": {
+                      "1": [
+                        5
+                      ]
+                    }
                 },
-                2:{
-                    'name': "Product_a",
-                    'avatar': "assets/images/CytoChartDemo/gp1.png"
+                "product-sws":{
+                    "avatar": "http://www.icon.com.pk/images/soft-img.jpg",
+                    "name": "Software Development Support Product",
+                    "productid": "product-sws"
                 },
-                3:{
-                    'name': "Product_b",
-                    'avatar': "assets/images/CytoChartDemo/gp2.png"
-                },
-                4:{
-                    'name': "Product_c",
-                    'avatar': "assets/images/CytoChartDemo/gp3.png"
+                "product-ld":{
+                    "avatar": "http://fgiasson.com/blog/wp-content/uploads/2008/06/triple_big.png",
+                    "name": "Linked Data Product",
+                    "productid": "product-ld"
                 }
             };
 
             var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
-            var cytograph2_metrics = configPM.metrics;
-            var cytograph2_configuration = configPM.config;
 
-            var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
-                    [orgCtx, timeCtx], cytograph2_configuration);
+            if (configPM == null){
+                console.log("error loading cytoChart2");
+            } else {
+                var cytograph2_metrics = configPM.metrics;
+                var cytograph2_configuration = configPM.config;
+
+                var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
+                        [orgCtx, timeCtx], cytograph2_configuration);
+            }
 
             // CYTOCHART3 INITIALIZATION
-            var cytograph3_dom = document.getElementById("cytograph3");
+            /*var cytograph3_dom = document.getElementById("cytograph3");
             var theProductManagerId = 1;
             var edges = [
                 { source: 'P_ManagerA', target: 'Product_a' },
@@ -654,36 +680,36 @@
             };
 
             var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
-            var cytograph3_metrics = configPM.metrics;
-            var cytograph3_configuration = configPM.config;
+            if (configPM == null){
+                console.log("error loading cytoChart3");
+            } else {
+                var cytograph3_metrics = configPM.metrics;
+                var cytograph3_configuration = configPM.config;
 
-            var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
-                    [orgCtx, timeCtx], cytograph3_configuration);
+                var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
+                        [orgCtx, timeCtx], cytograph3_configuration);
+            }*/
 
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
             var scatter_dom = document.getElementById("scatter-plot");
             var scatter_test_cntx = "test_cntx";
-            framework.data.updateContext(scatter_test_cntx, {prid: [1,2,3,4,5]}); //TODO: this wont be needed
+            framework.data.updateContext(scatter_test_cntx, {prid: ['product-sws','product-ld']}); //TODO: this wont be needed
             var scatter_metrics = [ //TODO: required metrics
                 {
-                    id: 'productcost',
-                    max: 1,
-                    aggr: 'sum'
+                    id: 'product-cost',
+                    max: 1
                 },
                 {
-                    id: 'producthealth',
-                    max: 1,
-                    aggr: 'sum'
+                    id: 'product-health',
+                    max: 1
                 },
                 {
-                    id: 'productquality',
-                    max: 1,
-                    aggr: 'sum'
+                    id: 'product-quality',
+                    max: 1
                 },
                 {
-                    id: 'producttimetomarket',
-                    max: 1,
-                    aggr: 'sum'
+                    id: 'product-timetomarket',
+                    max: 1
                 }
             ];
             var scatter_conf = {
@@ -839,27 +865,27 @@
             //Average skills
             var skills_star_metrics2 = [
                 {
-                    id: 'userproductsactivity',
+                    id: 'memberproductsactivity',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'userproductspopularity',
+                    id: 'memberproductspopularity',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'userproductshealth',
+                    id: 'memberproductshealth',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'userproductsquality',
+                    id: 'memberproductsquality',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'userproductstimetomarket',
+                    id: 'memberproductstimetomarket',
                     max: 1,
                     aggr: 'avg'
                 }
@@ -871,11 +897,11 @@
                 height: 200,
                 radius: 180,
                 labelsAssoc: [{
-                    'userproductsactivity':      'Activity',
-                    'userproductspopularity':    'Popularity',
-                    'userproductshealth':        'Health',
-                    'userproductsquality':       'Quality',
-                    'userproductstimetomarket':  'Time To Market'
+                    'memberproductsactivity':      'Activity',
+                    'memberproductspopularity':    'Popularity',
+                    'memberproductshealth':        'Health',
+                    'memberproductsquality':       'Quality',
+                    'memberproductstimetomarket':  'Time To Market'
                 },
                 {
                     'productactivity':          'Activity',
@@ -941,19 +967,19 @@
             var team_members_lines_dom = document.getElementById("position-members-lines");
             var team_members_lines_metrics = [
                 {
-                    id: 'directormanagers',
+                    id: 'director-managers',
                     max: 40,
-                    uid: 1001
+                    uid: 200
                 },
                 {
-                    id: 'directorarchitects',
+                    id: 'director-architects',
                     max: 40,
-                    uid: 1001
+                    uid: 200
                 },
                 {
-                    id: 'directordevelopers',
+                    id: 'director-developers',
                     max: 40,
-                    uid: 1001
+                    uid: 200
                 }
             ];
             var team_members_lines_configuration = {
@@ -971,28 +997,28 @@
             var team_members_pie_dom = document.getElementById("team-members-pie");
             var team_members_pie_metrics = [
                 {
-                    id: 'managerstakeholders',
+                    id: 'pmanager-stakeholders',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum',
                     uid: [1001, 1002] //TODO: temporal
                 },
                 {
-                    id: 'managerdevelopers',
+                    id: 'pmanager-developers',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum',
                     uid: [1001, 1002] //TODO: temporal
                 },
                 {
-                    id: 'managermanagers',
+                    id: 'pmanager-managers',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum',
                     uid: [1001, 1002] //TODO: temporal
                 },
                 {
-                    id: 'managerarchitects',
+                    id: 'pmanager-architects',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum',
@@ -1062,27 +1088,27 @@
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");
             var project_roles_multibar_metrics = [
                 {
-                    id: 'userrepositories',
+                    id: 'pmanager-swdevelopers',
                     max: 1
                 },
                                 {
-                    id: 'userproducts',
+                    id: 'pmanager-swarchitects',
                     max: 1
                 },
                 {
-                    id: 'usercommits',
+                    id: 'pmanager-pjmanagers',
                     max: 1
                 },
                 {
-                    id: 'userusers',
+                    id: 'pmanager-stakeholders',
                     max: 1
                 }
             ];
             var roles = {
-                'userrepositories' : 'Software developer',
-                'userproducts': 'Software architect',
-                'usercommits': 'Project manager',
-                'userusers': 'Stakeholder'
+                'pmanager-swdevelopers' : 'Software developer',
+                'pmanager-swarchitects': 'Software architect',
+                'pmanager-pjmanagers': 'Project manager',
+                'pmanager-stakeholders': 'Stakeholder'
             };
             var project_roles_multibar_conf = {
                 stacked: false,

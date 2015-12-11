@@ -36,48 +36,91 @@
     /*<script>*/
     function _() {
 
+        var timeCtx = "time-context";
+        var productCtx = "product-context";
+
         //Show header chart and set titles
         setTitle("Product");
         setSubtitle(framework.dashboard.getEnv('name'));
+        showHeaderChart();
 
-        //Hide header chart
-        hideHeaderChart();
+        framework.data.updateContext(productCtx, {prid: framework.dashboard.getEnv()['prid']});
 
-
-        //ANGULAR INITIALIZATION
-        // TODO: add to documentation... This is the manual initialization of angular, with the difference that it is done
-        // with .main-content instead of document. https://docs.angularjs.org/guide/bootstrap#manual-initialization
-        angular.module('Dashboard', [])
-                .controller('ProjectsController', ['$scope', function ($scope) {
-                    $scope.changeToProjectDashboard = function (project) {
-                        var env = framework.dashboard.getEnv();
-                        env['pid'] = project['projectid'];
-                        env['name'] = project['name'];
-                        framework.dashboard.changeTo('project', env);
-                    };
-                }]);
-
-        angular.element(".main-content").ready(function () {
-            angular.bootstrap(".main-content", ['Dashboard']);
-        });
-
-        //USER LIST
-        framework.data.observe(['projectlist'], function (event) {
+        // UPPER SELECTOR RANGENV (NEEDS FIRST COMMIT)
+        framework.data.observe(['productinfo'], function (event) {
 
             if (event.event === 'data') {
-                var projects = event.data['projectlist'][Object.keys(event.data['projectlist'])[0]]['data'];
+                var productinfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
+                var firstCommit =  productinfo['firstcommit'];
 
-                $scope = angular.element(".main-content").scope();
+                var rangeNv_dom = document.getElementById("fixed-chart");
+                var rangeNv_metrics = [
+                    {
+                        id: 'product-activity',
+                        max: 101,
+                        aggr: 'sum'
+                    }
+                ];
+                var rangeNv_configuration = {
+                    ownContext: timeCtx,
+                    isArea: true,
+                    showLegend: false,
+                    interpolate: 'monotone',
+                    showFocus: false,
+                    height: 140,
+                    duration: 500,
+                    colors: ["#004C8B"],
+                    axisColor: "#004C8B"
+                };
 
-                $scope.$apply(function () {
-                    $scope.projects = projects;
+                var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [productCtx], rangeNv_configuration);
+                $(rangeNv).on("CONTEXT_UPDATED", function () {
+                    $(rangeNv).off("CONTEXT_UPDATED");
+                    loadTimeDependentWidgets();
+
+                    // Hide the loading animation
+                    finishLoading();
                 });
-
             }
-        }, []);
+        }, [productCtx]);
 
-        // Hide the loading animation
-        finishLoading();
+
+        var loadTimeDependentWidgets = function() {
+
+            //ANGULAR INITIALIZATION
+            // TODO: add to documentation... This is the manual initialization of angular, with the difference that it is done
+            // with .main-content instead of document. https://docs.angularjs.org/guide/bootstrap#manual-initialization
+            angular.module('Dashboard', [])
+                    .controller('ProjectsController', ['$scope', function ($scope) {
+                        $scope.changeToProjectDashboard = function (project) {
+                            var env = framework.dashboard.getEnv();
+                            env['pid'] = project['projectid'];
+                            env['name'] = project['name'];
+                            framework.dashboard.changeTo('project', env);
+                        };
+                    }]);
+
+            angular.element(".main-content").ready(function () {
+                angular.bootstrap(".main-content", ['Dashboard']);
+            });
+
+            //USER LIST
+            framework.data.observe(['projectlist'], function (event) {
+
+                if (event.event === 'data') {
+                    var projects = event.data['projectlist'][Object.keys(event.data['projectlist'])[0]]['data'];
+
+                    $scope = angular.element(".main-content").scope();
+
+                    $scope.$apply(function () {
+                        $scope.projects = projects;
+                    });
+
+                }
+            }, []);
+
+
+        };
 
     }
 @stop

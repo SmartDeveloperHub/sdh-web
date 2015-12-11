@@ -36,48 +36,90 @@
     /*<script>*/
     function _() {
 
+        var timeCtx = "time-context";
+        var projectCtx = "project-context";
+
         //Show header chart and set titles
         setTitle("Project");
         setSubtitle(framework.dashboard.getEnv('name'));
+        showHeaderChart();
 
-        //Hide header chart
-        hideHeaderChart();
+        framework.data.updateContext(projectCtx, {pid: framework.dashboard.getEnv()['pid']});
 
-
-        //ANGULAR INITIALIZATION
-        // TODO: add to documentation... This is the manual initialization of angular, with the difference that it is done
-        // with .main-content instead of document. https://docs.angularjs.org/guide/bootstrap#manual-initialization
-        angular.module('Dashboard', [])
-                .controller('ReposController', ['$scope', function ($scope) {
-                    $scope.changeToRepoDashboard = function (repo) {
-                        var env = framework.dashboard.getEnv();
-                        env['rid'] = repo['repositoryid'];
-                        env['name'] = repo['name'];
-                        framework.dashboard.changeTo('repository', env);
-                    };
-                }]);
-
-        angular.element(".main-content").ready(function () {
-            angular.bootstrap(".main-content", ['Dashboard']);
-        });
-
-        //USER LIST
-        framework.data.observe(['repolist'], function (event) {
+        // UPPER SELECTOR RANGENV (NEEDS FIRST COMMIT)
+        framework.data.observe(['projectinfo'], function (event) {
 
             if (event.event === 'data') {
-                var repos = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
+                var projectinfo = event.data['projectinfo'][Object.keys(event.data['projectinfo'])[0]]['data'];
+                var firstCommit =  projectinfo['firstcommit'];
 
-                $scope = angular.element(".main-content").scope();
+                var rangeNv_dom = document.getElementById("fixed-chart");
+                var rangeNv_metrics = [
+                    {
+                        id: 'project-activity',
+                        max: 101,
+                        aggr: 'sum'
+                    }
+                ];
+                var rangeNv_configuration = {
+                    ownContext: timeCtx,
+                    isArea: true,
+                    showLegend: false,
+                    interpolate: 'monotone',
+                    showFocus: false,
+                    height: 140,
+                    duration: 500,
+                    colors: ["#004C8B"],
+                    axisColor: "#004C8B"
+                };
 
-                $scope.$apply(function () {
-                    $scope.repos = repos;
+                var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [projectCtx], rangeNv_configuration);
+                $(rangeNv).on("CONTEXT_UPDATED", function () {
+                    $(rangeNv).off("CONTEXT_UPDATED");
+                    loadTimeDependentWidgets();
+
+                    // Hide the loading animation
+                    finishLoading();
                 });
-
             }
-        }, []);
+        }, [projectCtx]);
 
-        // Hide the loading animation
-        finishLoading();
+
+        var loadTimeDependentWidgets = function() {
+
+            //ANGULAR INITIALIZATION
+            // TODO: add to documentation... This is the manual initialization of angular, with the difference that it is done
+            // with .main-content instead of document. https://docs.angularjs.org/guide/bootstrap#manual-initialization
+            angular.module('Dashboard', [])
+                    .controller('ReposController', ['$scope', function ($scope) {
+                        $scope.changeToRepoDashboard = function (repo) {
+                            var env = framework.dashboard.getEnv();
+                            env['rid'] = repo['repositoryid'];
+                            env['name'] = repo['name'];
+                            framework.dashboard.changeTo('repository', env);
+                        };
+                    }]);
+
+            angular.element(".main-content").ready(function () {
+                angular.bootstrap(".main-content", ['Dashboard']);
+            });
+
+            //USER LIST
+            framework.data.observe(['repolist'], function (event) {
+
+                if (event.event === 'data') {
+                    var repos = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
+
+                    $scope = angular.element(".main-content").scope();
+
+                    $scope.$apply(function () {
+                        $scope.repos = repos;
+                    });
+
+                }
+            }, []);
+
+        };
 
     }
 @stop

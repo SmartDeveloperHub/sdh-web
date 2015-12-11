@@ -72,7 +72,7 @@
     <div class="row" id="devActivBox">
         <div class="row titleRow" id="devActivityTitle">
             <span id="devActIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
-            <span class="titleLabel">Activity</span>
+            <span class="titleLabel">Contribution</span>
         </div>
         <div class="row" id="activityChart"></div>
     </div>
@@ -163,14 +163,14 @@
 
             if (event.event === 'data') {
                 var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
-                var firstCommit = repoinfo['firstCommit'];
+                var firstCommit =  repoinfo['firstcommit'];
 
                 var rangeNv_dom = document.getElementById("fixed-chart");
                 var rangeNv_metrics = [
                     {
-                        id: 'repocommits',
+                        id: 'repository-activity',
                         max: 101,
-                        aggr: 'avg',
+                        aggr: 'sum',
                         from: moment(firstCommit).format("YYYY-MM-DD")
                     }
                 ];
@@ -202,7 +202,7 @@
             // TOTAL COMMITS
             var total_commits_dom = document.getElementById("total-commits");
             var total_commits_metrics = [{
-                id: 'repocommits',
+                id: 'repository-commits',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -218,7 +218,7 @@
             // TOTAL DEVELOPERS
             var total_users_dom = document.getElementById("total-developers");
             var total_users_metrics = [{
-                id: 'repodevelopers',
+                id: 'repository-developers',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -234,7 +234,7 @@
             // TOTAL EXECUTIONS
             var total_executions_dom = document.getElementById("total-executions");
             var total_executions_metrics = [{
-                id: 'repoexecutions',
+                id: 'repository-executions',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -250,7 +250,7 @@
             // TOTAL EXECUTIONS
             var broken_exec_dom = document.getElementById("broken-build-exec");
             var broken_exec_metrics = [{
-                id: 'repofailedexecutions',
+                id: 'failed-repository-executions',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -266,7 +266,7 @@
             // SUCCESSFUL EXECUTIONS
             var success_executions_dom = document.getElementById("passed-build-exec");
             var success_executions_metrics = [{
-                id: 'repopassedexecutions',
+                id: 'passed-repository-executions',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -282,7 +282,7 @@
             // AVG COMMITS
             var avg_commits_dom = document.getElementById("avg-commits");
             var avg_commits_metrics = [{
-                id: 'repocommits',
+                id: 'repository-commits',
                 max: 1,
                 aggr: 'avg'
             }];
@@ -298,7 +298,9 @@
             // AVG TIME TO FIX
             var avg_time_to_fix_dom = document.getElementById("avg-time-to-fix");
             var avg_time_to_fix_metrics = [{
-                id: 'repotimetofixtbd'
+                id: 'repository-timetofix',
+                max: 1,
+                aggr: 'avg'
             }];
             var avg_time_to_fix_conf = {
                 label: 'Average time to fix',
@@ -310,10 +312,12 @@
             };
             var avg_time_to_fix = new framework.widgets.CounterBox(avg_time_to_fix_dom, avg_time_to_fix_metrics, [timeCtx, repoCtx], avg_time_to_fix_conf);
 
-            // AVG BUILD TIME
+            // BUILD TIME
             var avg_build_time_dom = document.getElementById("avg-build-time");
             var avg_build_time_metrics = [{
-                id: 'repobuildtimetbd'
+                id: 'repository-buildtime',
+                max: 1,
+                aggr: 'sum'
             }];
             var avg_build_time_conf = {
                 label: 'Build execution time',
@@ -325,10 +329,12 @@
             };
             var avg_build_time = new framework.widgets.CounterBox(avg_build_time_dom, avg_build_time_metrics, [timeCtx, repoCtx], avg_build_time_conf);
 
-            // AVG BROKEN TIME
+            // BROKEN TIME
             var avg_broken_time_dom = document.getElementById("avg-broken-time");
             var avg_broken_time_metrics = [{
-                id: 'repobrokentimetbd'
+                id: 'repository-brokentime',
+                max: 1,
+                aggr: 'sum'
             }];
             var avg_broken_time_conf = {
                 label: 'Build broken time',
@@ -344,11 +350,11 @@
             var activity_dom = document.getElementById("activityChart");
             var activity_metrics = [
                 {
-                    id: 'repocommits',
+                    id: 'repository-commits',
                     max: 30
                 },
                 {
-                    id: 'repocommits',
+                    id: 'repository-commits',
                     max: 30,
                     aggr: "avg"
                 }
@@ -370,15 +376,15 @@
             var ci_dom = document.getElementById("execChart");
             var ci_metrics = [
                 {
-                    id: 'repoexecutions',
+                    id: 'repository-executions',
                     max: 30
                 },
                 {
-                    id: 'repofailedexecutions',
+                    id: 'failed-repository-executions',
                     max: 30
                 },
                 {
-                    id: 'repopassedexecutions',
+                    id: 'passed-repository-executions',
                     max: 30
                 }
             ];
@@ -389,9 +395,9 @@
                 height: 200,
                 labelFormat: '¬_D.data.info.title¬',
                 colors: {
-                    repoexecutions: "#004B8B",
-                    repofailedexecutions: "#DB0013",
-                    repopassedexecutions: "#0A8931"
+                    'repository-executions': "#004B8B",
+                    'failed-repository-executions': "#DB0013",
+                    'passed-repository-executions': "#0A8931"
                 }
             };
             var ci_lines = new framework.widgets.LinesChart(ci_dom, ci_metrics,
@@ -413,13 +419,13 @@
                     var rfirstc = document.getElementById('repo-first');
                     var rlastc = document.getElementById('repo-last');
                     var repostatus = document.getElementById('repo-status');
-                    creation.innerHTML = moment(new Date(repoinfo['creation'])).format('MMMM Do YYYY');
-                    rfirstc.innerHTML = moment(new Date(repoinfo['firstCommit'])).format('MMMM Do YYYY');
-                    rlastc.innerHTML = moment(new Date(repoinfo['lastCommit'])).format('MMMM Do YYYY');
+                    creation.innerHTML = moment(new Date(repoinfo['createdon'])).format('MMMM Do YYYY');
+                    rfirstc.innerHTML = moment(new Date(repoinfo['firstcommit'])).format('MMMM Do YYYY');
+                    rlastc.innerHTML = moment(new Date(repoinfo['lastcommit'])).format('MMMM Do YYYY');
                     rbuildstatus.innerHTML = (repoinfo['buildStatus'] ?
                             '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i><span class="passedLabel">(Passed)</span>' :
                             '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i><span class="errorLabel">(Error)</span>');
-                    repostatus.innerHTML = (repoinfo['public'] ?
+                    repostatus.innerHTML = (repoinfo['ispublic'] ?
                             '<i title="Public" class="fa fa-eye publicIco"></i><span class="publicLabel">(Public)</span>' :
                             '<i title="Private" class="octicon octicon-loc privateIco"></i><span class="privateLabel">(Private)</span>');
 
@@ -442,11 +448,11 @@
             var executions_dom = document.getElementById("executions-stacked");
             var executions_metrics = [
                 {
-                    id: 'repopassedexecutions',
+                    id: 'passed-repository-executions',
                     max: 30
                 },
                 {
-                    id: 'repofailedexecutions',
+                    id: 'failed-repository-executions',
                     max: 30
                 }];
             var executions_conf = {
@@ -455,8 +461,8 @@
                 showControls: false,
                 height: 250,
                 color: {
-                    repopassedexecutions: "#0A8931",
-                    repofailedexecutions: "#DB0013"
+                    'passed-repository-executions': "#0A8931",
+                    'failed-repository-executions': "#DB0013"
                 }
             };
             var executions = new framework.widgets.MultiBar(executions_dom, executions_metrics,
@@ -466,20 +472,20 @@
             // EXECUTIONS
             var executions_info = [
                 {
-                    id: 'repopassedexecutions',
+                    id: 'passed-repository-executions',
                     aggr: 'sum',
                     max: 1
                 },
                 {
-                    id: 'repofailedexecutions',
+                    id: 'failed-repository-executions',
                     aggr: 'sum',
                     max: 1
                 }
             ];
             var display_executions_info = function (event) {
                 if (event.event === 'data') {
-                    var success = event.data['repopassedexecutions'][Object.keys(event.data['repopassedexecutions'])[0]]['data']['values'][0];
-                    var broken = event.data['repofailedexecutions'][Object.keys(event.data['repofailedexecutions'])[0]]['data']['values'][0];
+                    var success = event.data['passed-repository-executions'][Object.keys(event.data['passed-repository-executions'])[0]]['data']['values'][0];
+                    var broken = event.data['failed-repository-executions'][Object.keys(event.data['failed-repository-executions'])[0]]['data']['values'][0];
                     var total = broken + success;
 
                     $("#successNum").text(success);
@@ -495,7 +501,7 @@
 
             // REPOSITORY USERS TABLE
             var table_dom = document.getElementById("users-table");
-            var table_metrics = ['repodeveloperstbd'];
+            var table_metrics = ['view-repository-developers'];
             var table_configuration = {
                 columns: [
                     {
@@ -547,7 +553,7 @@
             // HORIZONTAL CONTRIBUTION TO PROJECTS
             var multibar_projects_dom = document.getElementById("user-commits-horizontal");
             var multibar_projects_metrics = [{
-                id: 'repousercommits',
+                id: 'repository-member-commits',
                 max: 1
             }];
             var multibar_projects_configuration = {
@@ -558,7 +564,7 @@
                 yAxisTicks: 8,
                 height: 155,
                 total: {
-                    id: 'repocommits',
+                    id: 'repository-commits',
                     max: 1
                 }
             };
@@ -568,7 +574,7 @@
             // COMMITS PER PROJECT AND USER
             var user_project_commits_dom = document.getElementById("user-commits-lines");
             var user_project_commits_metrics = [{
-                id: 'repousercommits',
+                id: 'repository-member-commits',
                 max: 100
             }];
             var user_project_commits_conf = {

@@ -117,13 +117,13 @@
 
             if (event.event === 'data') {
                 var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
-                var firstCommit = userinfo['firstCommit'];
+                var firstCommit = userinfo['firstcommit'];
 
                 var rangeNv_dom = document.getElementById("fixed-chart");
                 var rangeNv_metrics = [
                     {
-                        id: 'usercommits',
-                        aggr: 'avg',
+                        id: 'member-activity',
+                        aggr: 'sum',
                         from: moment(firstCommit).format("YYYY-MM-DD"),
                         max: 101
                     }
@@ -160,7 +160,7 @@
             // TOTAL COMMITS
             var total_commits_dom = document.getElementById("total-commits");
             var total_commits_metrics = [{
-                id: 'usercommits',
+                id: 'member-commits',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -176,7 +176,7 @@
             // AVG COMMITS PER DAY
             var avg_commits_dom = document.getElementById("avg-commitsday");
             var avg_commits_metrics = [{
-                id: 'usercommits',
+                id: 'member-commits',
                 max: 1,
                 aggr: 'avg'
             }];
@@ -192,7 +192,7 @@
             // LONGEST STREAK
             var streak_dom = document.getElementById("longest-streak");
             var streak_metrics = [{
-                id: 'userstreak',
+                id: 'member-longest-streak',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -209,7 +209,7 @@
             // TOTAL PROJECTS
             var total_projects_dom = document.getElementById("total-repositories");
             var total_projects_metrics = [{
-                id: 'userrepositories',
+                id: 'member-repositories',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -237,9 +237,9 @@
                     var ulastc = document.getElementById('user-last-commit');
 
                     uemail.innerHTML = userinfo['email'];
-                    usince.innerHTML = moment(new Date(userinfo['register'])).format('MMMM Do YYYY');
-                    ufirstc.innerHTML = moment(new Date(userinfo['firstCommit'])).format('MMMM Do YYYY');
-                    ulastc.innerHTML = moment(new Date(userinfo['lastCommit'])).format('MMMM Do YYYY');
+                    usince.innerHTML = moment(new Date(/*TODO: userinfo['register']*/userinfo['firstcommit'])).format('MMMM Do YYYY');
+                    ufirstc.innerHTML = moment(new Date(userinfo['firstcommit'])).format('MMMM Do YYYY');
+                    ulastc.innerHTML = moment(new Date(userinfo['lastcommit'])).format('MMMM Do YYYY');
 
                     $(uemail).removeClass('blurado');
                     $(usince).removeClass('blurado');
@@ -261,11 +261,11 @@
             var userCC_dom = document.getElementById("commits-lines");
             var userCC_metrics = [
                 {
-                    id: 'usercommits',
+                    id: 'member-commits',
                     max: 30
                 },
                 {
-                    id: 'usercommits',
+                    id: 'member-commits',
                     max: 30,
                     aggr: "avg"
                 }
@@ -351,7 +351,7 @@
 
             // USER REPOSITORIES TABLE
             var table_dom = document.getElementById("repositories-table");
-            var table_metrics = ['userrepositoriestbd'];
+            var table_metrics = ['view-member-repositories'];
             var table_configuration = {
                 columns: [
                     {
@@ -401,7 +401,7 @@
             // HORIZONTAL CONTRIBUTION TO REPOSITORIES
             var multibar_repositories_dom = document.getElementById("repositories-commits-horizontal");
             var multibar_repositories_metrics = [{
-                id: 'repousercommits',
+                id: 'repository-member-commits',
                 max: 1
             }];
             var multibar_repositories_configuration = {
@@ -412,7 +412,7 @@
                 yAxisTicks: 8,
                 height: 155,
                 total: {
-                    id: 'usercommits',
+                    id: 'member-commits',
                     max: 1,
                     aggr: 'sum'
                 }
@@ -423,7 +423,7 @@
             // COMMITS PER REPOSITORY AND USER
             var user_repositories_commits_dom = document.getElementById("repositories-commits-lines");
             var user_repositories_commits_metrics = [{
-                id: 'repousercommits',
+                id: 'repository-member-commits',
                 max: 100
             }];
             var user_repositories_commits_conf = {

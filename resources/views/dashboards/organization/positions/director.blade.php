@@ -275,8 +275,7 @@
                     event: 'mouseover'
                 },
                 hide: {
-                    //event: 'mouseout'
-                    event: 'unfocus'
+                    event: 'mouseout'
                 },
                 position: {
                     my: 'top center',

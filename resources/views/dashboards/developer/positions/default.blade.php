@@ -287,17 +287,17 @@
             var skills_star_dom = document.getElementById("skills-star");
             var skills_star_metrics = [
                 {
-                    id: 'userspeed',
+                    id: 'member-speed-fake',
                     max: 1,
                     aggr: "sum"
                 },
                 {
-                    id: 'usercollaboration',
+                    id: 'member-collaboration-fake',
                     max: 1,
                     aggr: "sum"
                 },
                 {
-                    id: 'userquality',
+                    id: 'member-quality',
                     max: 1,
                     aggr: "sum"
                 }];
@@ -305,9 +305,9 @@
                 height: 300,
                 labels: ["Speed", "Collaboration", "Quality"],
                 labelsAssoc: [{
-                    'userspeed': 'Speed',
-                    'usercollaboration': 'Collaboration',
-                    'userquality': 'Quality'
+                    'member-speed-fake': 'Speed',
+                    'member-collaboration-fake': 'Collaboration',
+                    'member-quality': 'Quality'
                 }],
                 fillColor: "rgba(1, 150, 64, 0.4)",
                 strokeColor: "#019640",
@@ -322,17 +322,17 @@
             var skills_lines_dom = document.getElementById("skills-lines");
             var skills_lines_metrics = [
                 {
-                    id: 'userspeed',
+                    id: 'member-speed-fake',
                     max: 20,
                     aggr: 'sum'
                 },
                 {
-                    id: 'usercollaboration',
+                    id: 'member-collaboration-fake',
                     max: 20,
                     aggr: 'sum'
                 },
                 {
-                    id: 'userquality',
+                    id: 'member-quality',
                     max: 20,
                     aggr: 'sum'
                 }

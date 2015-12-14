@@ -337,9 +337,9 @@
         var rangeNv_dom = document.getElementById("fixed-chart");
         var rangeNv_metrics = [
             {
-                id: 'orgcommits', //TODO: director activity metric
-                max: 101,
-                aggr: 'avg'
+                id: 'member-activity',
+                //id: 'pmanager-activity', //TODO: director activity metric
+                max: 101
             }
         ];
         var rangeNv_configuration = {
@@ -354,7 +354,7 @@
             axisColor: "#004C8B"
         };
 
-        var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [orgCtx], rangeNv_configuration);
+        var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [orgCtx, currentUserCtx], rangeNv_configuration);
         $(rangeNv).on("CONTEXT_UPDATED", function () {
             $(rangeNv).off("CONTEXT_UPDATED");
 
@@ -371,7 +371,7 @@
             // --------------------------------------- PRODUCTS --------------------------------------------
             var products_dom = document.getElementById("products-ctr");
             var products_metrics = [{
-                id: 'orgcommits',  //TODO: implement products metric
+                id: 'pmanager-products',  //TODO: implement products metric
                 max: 1,
                 aggr: 'sum'
             }];
@@ -387,7 +387,7 @@
             // ------------------------------------ PROJECTS -------------------------------------------
             var team_members_dom = document.getElementById("projects-ctr");
             var team_members_metrics = [{
-                id: 'orgcommits', //TODO: implement projects metric
+                id: 'pmanager-products', //TODO: implement projects metric
                 max: 1,
                 aggr: 'sum'
             }];
@@ -403,7 +403,7 @@
             // ------------------------------------------ DEVELOPERS ----------------------------------------
             var developers_dom = document.getElementById("developers-ctr");
             var developers_metrics = [{
-                id: 'orgcommits',  //TODO: implement developers metric
+                id: 'pmanager-developers',  //TODO: implement developers metric
                 max: 1,
                 aggr: 'sum'
             }];
@@ -978,7 +978,7 @@
 
             };
 
-            framework.data.observe(['repolist'], function (event) { //Change repos with products
+            framework.data.observe(['view-pmanager-products'], function (event) { //Change repos with products
 
                 if (event.event === 'data') {
 
@@ -1007,7 +1007,8 @@
                         .append(container);
 
                     // Now we can start adding things
-                    var products = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
+                    var products = event.data['view-pmanager-products'][Object.keys(event.data['view-pmanager-products'])[0]]['data']['values'];
+                    console.log(products);
 
                     // Function to change the selected table
                     var changeSelectedTable = function() {
@@ -1029,7 +1030,7 @@
 
                         var name = products[x]['name'];
                         var avatar = products[x]['avatar'];
-                        var id = products[x]['repositoryid'];
+                        var id = products[x]['productid'];
                         var context = "product-projects-table-" + id;
 
                         var avatarSelector = $('<div class="multitable-img-selector" data-id="'+id+'"></div>')
@@ -1057,7 +1058,7 @@
                         var product_projects_table_dom = tableContainer.get(0);
                         var product_projects_table_metrics = [
                             {
-                                id: 'repolist', //TODO: change resource
+                                id: 'view-product-projects', //TODO: change resource
                                 //TODO: force the product id
                             }
                         ];
@@ -1067,11 +1068,11 @@
                                     label: "",
                                     link: {
                                          img: "avatar", //or label
-                                         href: "repository",
+                                         href: "project",
                                          env: [
                                              {
-                                                 property: "repositoryid",
-                                                 as: "rid"
+                                                 property: "projectid",
+                                                 as: "prid"
                                              },
                                              {
                                                  property: "name",
@@ -1091,13 +1092,13 @@
                                     id: context,
                                     filter: [
                                         {
-                                            property: "repositoryid", //TODO
-                                            as: "rid"
+                                            property: "projectid", //TODO
+                                            as: "prid"
                                         }
                                     ]
                                 }
                             ],
-                            keepSelectedByProperty: "repositoryid",
+                            keepSelectedByProperty: "projectid",
                             selectable: true,
                             minRowsSelected: 1,
                             maxRowsSelected: 8,
@@ -1107,14 +1108,14 @@
                         };
 
                         //Create the widget
-                        var widget = new framework.widgets.Table(product_projects_table_dom, product_projects_table_metrics, [orgCtx, timeCtx], product_projects_table_configuration);
+                        var widget = new framework.widgets.Table(product_projects_table_dom, product_projects_table_metrics, [orgCtx, timeCtx, currentUserCtx], product_projects_table_configuration);
 
                         // Add the widget to the widget list to then be able to destroy all the widgets in case of context change
                         widgetList.push(widget);
                     }
 
                 }
-            }, [timeCtx]);
+            }, [timeCtx, currentUserCtx]);
 
             // --------------------------ROLES MULTIBAR ------------------------------------
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");

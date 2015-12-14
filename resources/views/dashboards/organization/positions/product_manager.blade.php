@@ -337,7 +337,7 @@
         var rangeNv_dom = document.getElementById("fixed-chart");
         var rangeNv_metrics = [
             {
-                id: 'member-activity',
+                id: 'pmanager-activity',
                 //id: 'pmanager-activity', //TODO: director activity metric
                 max: 101
             }
@@ -387,7 +387,7 @@
             // ------------------------------------ PROJECTS -------------------------------------------
             var team_members_dom = document.getElementById("projects-ctr");
             var team_members_metrics = [{
-                id: 'pmanager-products', //TODO: implement projects metric
+                id: 'pmanager-projects', //TODO: implement projects metric
                 max: 1,
                 aggr: 'sum'
             }];
@@ -403,7 +403,7 @@
             // ------------------------------------------ DEVELOPERS ----------------------------------------
             var developers_dom = document.getElementById("developers-ctr");
             var developers_metrics = [{
-                id: 'pmanager-developers',  //TODO: implement developers metric
+                id: 'pmanager-members',  //TODO: implement developers metric
                 max: 1,
                 aggr: 'sum'
             }];
@@ -419,7 +419,7 @@
             // ---------------------------------- AVERAGE DEVELOPERS PER PROJECT ---------------------------------
             var avg_developers_dom = document.getElementById("avg-developers-ctr");
             var avg_developers_metrics = [{
-                id: 'orgcommits',  //TODO: choose metric
+                id: 'pmanager-projectmembers',  //TODO: choose metric
                 max: 1,
                 aggr: 'sum'
             }];
@@ -435,7 +435,7 @@
             // ----------------------------------- REPOSITORIES -------------------------------------------
             var repos_dom = document.getElementById("repositories-ctr");
             var repos_metrics = [{
-                id: 'orgcommits',  //TODO: choose metric
+                id: 'pmanager-repositories',  //TODO: choose metric
                 max: 1,
                 aggr: 'sum'
             }];
@@ -451,9 +451,9 @@
             // ------------------------------- AVERAGE REPOSITORIES PER PROJECT ---------------------------------------
             var avg_repositories_dom = document.getElementById("avg-repositories-ctr");
             var avg_repositories_metrics = [{
-                id: 'orgcommits',  //TODO: choose metric
+                id: 'pmanager-repositories',  //TODO: choose metric
                 max: 1,
-                aggr: 'sum'
+                aggr: 'avg'
             }];
             var avg_repositories_conf = {
                 label: 'Repositories / project',
@@ -470,22 +470,22 @@
             framework.data.updateContext(scatter_test_cntx, {prid: [1,2,3,4,5]}); //TODO: this wont be needed
             var scatter_metrics = [ //TODO: required metrics
                 {
-                    id: 'productcost',
+                    id: 'product-cost',
                     max: 1,
                     aggr: 'sum'
                 },
                 {
-                    id: 'producthealth',
+                    id: 'product-health',
                     max: 1,
                     aggr: 'sum'
                 },
                 {
-                    id: 'productquality',
+                    id: 'product-quality',
                     max: 1,
                     aggr: 'sum'
                 },
                 {
-                    id: 'producttimetomarket',
+                    id: 'product-timetomarket',
                     max: 1,
                     aggr: 'sum'
                 }
@@ -524,6 +524,7 @@
                 yDomain: [0,1],
                 pointDomain: [0,1],
                 clipEdge: true,
+                // TODO 
                 tooltip: "<div style='text-align: center;'>" +
                 "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data.productcost.info.prid.avatar¬\" />" +
                 "<h3>¬_D.data.productcost.info.prid.name¬</h3>" +
@@ -541,7 +542,7 @@
 
             //  ----------------------------------- PRODUCTS TABLE ------------------------------------------
             var table_dom = document.getElementById("products-table");
-            var table_metrics = ['productlist']; //TODO: choose resource
+            var table_metrics = ['view-pmanager-products'];
             var table_configuration = {
                 columns: [
                     {
@@ -588,13 +589,13 @@
                 alwaysOneSelected: true,
                 scrollButtons: true
             };
-            var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx], table_configuration);
+            var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx, currentUserCtx], table_configuration);
 
             //  ----------------------------------- RELEASES LINES WIDGET ------------------------------------------
             var releasesLines_dom = document.getElementById("releases-chart");
 
             var releasesLines_metrics = [{
-                id: 'productreleasestatus',
+                id: 'product-success-rate',
                 max: 20
             }];
 
@@ -617,50 +618,49 @@
             //Specific skills
             var skills_star_metrics1 = [
                 {
-                    id: 'productactivity',
+                    id: 'product-activity',
                     max: 1
                 },
                 {
-                    id: 'productpopularity',
+                    id: 'product-popularity',
                     max: 1
                 },
                 {
-                    id: 'producthealth',
+                    id: 'product-health',
                     max: 1
                 },
                 {
-                    id: 'productquality',
+                    id: 'product-quality',
                     max: 1
                 },
                 {
-                    id: 'producttimetomarket',
+                    id: 'product-timetomarket',
                     max: 1
                 }
             ];
             //Average skills
             var skills_star_metrics2 = [
                 {
-                    id: 'userproductsactivity',
+                    id: 'pmanager-activity',
+                    max: 1
+                },
+                {
+                    id: 'pmanager-popularity',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'userproductspopularity',
+                    id: 'pmanager-health',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'userproductshealth',
+                    id: 'pmanager-quality',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'userproductsquality',
-                    max: 1,
-                    aggr: 'avg'
-                },
-                {
-                    id: 'userproductstimetomarket',
+                    id: 'pmanager-timetomarket',
                     max: 1,
                     aggr: 'avg'
                 }
@@ -672,6 +672,7 @@
                 height: 200,
                 radius: 180,
                 labelsAssoc: [{
+                    // TODO change ids
                     'userproductsactivity':      'Activity',
                     'userproductspopularity':    'Popularity',
                     'userproductshealth':        'Health',
@@ -700,14 +701,14 @@
             var test_dom = document.getElementById("liquid-1-chart");
             var test_metrics = [
                 {
-                    id: 'productreleasestatus',
+                    id: 'product-success-rate',
                     max: 1
                 }
             ];
             var test_configuration = {
                 height: 110,
                 minValue: 0,
-                maxValue: 100,
+                maxValue: 1,
                 waveColor: '#8ACA17',
                 textColor: '#4BAD06',
                 circleColor: '#4BAD06',
@@ -721,14 +722,14 @@
             var test_dom = document.getElementById("liquid-2-chart");
             var test_metrics = [
                 {
-                    id: 'producthealth',
+                    id: 'product-health',
                     max: 1
                 }
             ];
             var test_configuration = {
                 height: 110,
                 minValue: 0,
-                maxValue: 100,
+                maxValue: 1,
                 waveColor: '#E65538',
                 textColor: '#8C1700',
                 circleColor: '#8C1700',
@@ -901,6 +902,7 @@
                     [orgCtx, timeCtx], cytograph3_configuration);
 
             // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
+            // ODO cargarse esto y meter dos, una con los members del pmanager y otra con externos
             var team_members_lines_dom = document.getElementById("team-members-lines");
             var team_members_lines_metrics = [
                 {
@@ -1072,7 +1074,7 @@
                                          env: [
                                              {
                                                  property: "projectid",
-                                                 as: "prid"
+                                                 as: "pid"
                                              },
                                              {
                                                  property: "name",
@@ -1093,7 +1095,7 @@
                                     filter: [
                                         {
                                             property: "projectid", //TODO
-                                            as: "prid"
+                                            as: "pid"
                                         }
                                     ]
                                 }

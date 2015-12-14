@@ -105,10 +105,9 @@
             });
 
             //USER LIST
-            framework.data.observe(['projectlist'], function (event) {
-
+            framework.data.observe(['view-product-projects'], function (event) {
                 if (event.event === 'data') {
-                    var projects = event.data['projectlist'][Object.keys(event.data['projectlist'])[0]]['data'];
+                    var projects = event.data['view-product-projects'][Object.keys(event.data['view-product-projects'])[0]]['data'];
 
                     $scope = angular.element(".main-content").scope();
 
@@ -117,7 +116,7 @@
                     });
 
                 }
-            }, []);
+            }, [productCtx, timeCtx]);
 
 
         };

@@ -765,7 +765,7 @@
 
             //  ----------------------------------- PRODUCTS TABLE ------------------------------------------
             var table_dom = document.getElementById("products-table");
-            var table_metrics = ['productlist']; //TODO: choose resource
+            var table_metrics = ['view-director-products']; //TODO: choose resource
             var table_configuration = {
                 columns: [
                     {
@@ -812,7 +812,7 @@
                 alwaysOneSelected: true,
                 scrollButtons: true
             };
-            var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx], table_configuration);
+            var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx, currentUserCtx], table_configuration);
 
             //  ----------------------------------- RELEASES LINES WIDGET ------------------------------------------
             var releasesLines_dom = document.getElementById("releases-chart");
@@ -841,50 +841,52 @@
             //Specific skills
             var skills_star_metrics1 = [
                 {
-                    id: 'productactivity',
+                    id: 'product-activity',
                     max: 1
                 },
                 {
-                    id: 'productpopularity',
+                    //id: 'productpopularity',
+                    id: 'product-activity',
                     max: 1
                 },
                 {
-                    id: 'producthealth',
+                    id: 'product-health',
                     max: 1
                 },
                 {
-                    id: 'productquality',
+                    id: 'product-quality',
                     max: 1
                 },
                 {
-                    id: 'producttimetomarket',
+                    id: 'product-timetomarket',
                     max: 1
                 }
             ];
             //Average skills
             var skills_star_metrics2 = [
                 {
-                    id: 'memberproductsactivity',
+                    id: 'director-activity',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'memberproductspopularity',
+                    //id: 'memberproductspopularity',
+                    id: 'director-activity',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'memberproductshealth',
+                    id: 'director-health',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'memberproductsquality',
+                    id: 'director-quality',
                     max: 1,
                     aggr: 'avg'
                 },
                 {
-                    id: 'memberproductstimetomarket',
+                    id: 'director-timetomarket',
                     max: 1,
                     aggr: 'avg'
                 }
@@ -1029,14 +1031,14 @@
 
             //  ------------------------------ PRODUCT MANAGERS TABLE --------------------------------------
             var team_members_table_dom = document.getElementById("team-members-table");
-            var team_members_table_metrics = ['userlist']; //TODO: choose resource
+            var team_members_table_metrics = ['view-director-productmanagers']; //TODO: choose resource
             var team_members_table_configuration = {
                 columns: [
                     {
                         label: "",
                         link: {
                          img: "avatar", //or label
-                         href: "user",
+                         href: "developer",
                          env: [
                              {
                                  property: "userid",
@@ -1066,7 +1068,7 @@
                         ]
                     }
                 ],
-                keepSelectedByProperty: "uid",
+                keepSelectedByProperty: "userid",
                 selectable: true,
                 minRowsSelected: 1,
                 maxRowsSelected: 8,
@@ -1076,7 +1078,7 @@
                 scrollButtons: true,
                 height: 620
             };
-            var team_members_table = new framework.widgets.Table(team_members_table_dom, team_members_table_metrics, [orgCtx, timeCtx], team_members_table_configuration);
+            var team_members_table = new framework.widgets.Table(team_members_table_dom, team_members_table_metrics, [orgCtx, timeCtx, currentUserCtx], team_members_table_configuration);
 
             // --------------------------ROLES MULTIBAR ------------------------------------
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");

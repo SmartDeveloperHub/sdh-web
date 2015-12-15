@@ -1175,9 +1175,9 @@
             var superContextHandler = function(data, changes, contextId) {
 
                 // Get changed table id
-                var contextParts = contextId.split("-");
+                var contextParts = contextId.split("~");
                 var dataId = contextParts[contextParts.length - 1];
-
+                
                 // Get the number of selected rows in the changed table
                 var nSelectedInTable = $(".multitable-container > div[data-id='"+dataId+"']").find("tr.selected").length;
 
@@ -1262,7 +1262,7 @@
                         var name = products[x]['name'];
                         var avatar = products[x]['avatar'];
                         var id = products[x]['productid'];
-                        var context = "product-projects-table-" + id;
+                        var context = "productprojectstable~" + id;
 
                         var avatarSelector = $('<div class="multitable-img-selector" data-id="'+id+'"></div>')
                                 .append('<img src="'+avatar+'" alt="'+name+'"></img>')

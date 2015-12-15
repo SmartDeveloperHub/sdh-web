@@ -1177,7 +1177,7 @@
                 // Get changed table id
                 var contextParts = contextId.split("~");
                 var dataId = contextParts[contextParts.length - 1];
-                
+
                 // Get the number of selected rows in the changed table
                 var nSelectedInTable = $(".multitable-container > div[data-id='"+dataId+"']").find("tr.selected").length;
 
@@ -1376,7 +1376,7 @@
             };
             var project_roles_multibar_conf = {
                 stacked: false,
-                labelFormat: "¬_D.data.info.uid.name¬",
+                labelFormat: "¬_D.data.info.pid.name¬",
                 showControls: false,
                 height: 250,
                 showLegend: true,

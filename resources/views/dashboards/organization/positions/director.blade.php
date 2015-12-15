@@ -191,14 +191,32 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="12" data-gs-height="10" data-gs-x="0" data-gs-y="23">
-            <div id="position-members-lines" class="widget grid-stack-item-content"></div>
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="3" data-gs-x="0" data-gs-y="23">
+            <div id="external-members-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="external-members-table-stitle-ico" class="subtitleIcon fa fa-user-secret"></span>
+                <span id="external-members-table-stitle-label" class="subtitleLabel">External developers</span>
+                <span id="external-members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="0" data-gs-y="26">
+            <div id="external-members-lines" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="3" data-gs-x="6" data-gs-y="23">
+            <div id="internal-members-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="internal-members-table-stitle-ico" class="subtitleIcon fa fa-user"></span>
+                <span id="internal-members-table-stitle-label" class="subtitleLabel">Internal developers</span>
+                <span id="internal-members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="6" data-gs-y="26">
+            <div id="internal-members-lines" class="widget grid-stack-item-content"></div>
         </div>
 
         <!-- Subsection: Manager Selector -->
 
         <!-- Column -->
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="33">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="36">
             <div id="members-table-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
                 <span id="members-table-stitle-label" class="subtitleLabel"> Manager Selector</span>
@@ -206,14 +224,14 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="36">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="39">
             <div class="grid-stack-item-content">
                 <div id="team-members-table" class="widget"></div>
             </div>
         </div>
 
         <!-- Column -->
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="33">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="36">
             <div id="team-multibar-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                 <span id="team-multibar-stitle-label" class="subtitleLabel">Roles Breakdown</span>
@@ -221,11 +239,11 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="35">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="38">
             <div id="projects-roles-multibar" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="48">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="51">
             <div id="team-pie-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                 <span id="team-pie-stitle-label" class="subtitleLabel">Roles Summary</span>
@@ -233,7 +251,7 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="50">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="53">
             <div id="team-members-pie" class="widget grid-stack-item-content"></div>
         </div>
 
@@ -515,23 +533,24 @@
                         uid: id
                     };
                     var productMetricId;
+                    var tooltip;
+                    var volume = null;
+
                     if (id == theProductManagerId) {
-                        productMetricId = "_static_";
+                        volume = '_static_';
                         productMetricId = framework.utils.resourceHash('pmanager-products', aux2); // Hay un problema, parece que si los dos widgets cytocharts escuchan pmanager-products, el segundo no machea con el hash que viene del framework... TODO??
                         aux2['id']= 'pmanager-products';
                         aux = aux2;
-                        cytograph1_configuration.tooltip = productsAux[theProductManagerId].tooltip + "<br/>¬_D.data.values[0]¬ products";
+                        tooltip = productsAux[theProductManagerId].tooltip + "<br/>¬_D.data.values[0]¬ products";
                     } else {
                         productMetricId = framework.utils.resourceHash('product-developers', aux);
                         aux['id']= 'product-developers';
-                        cytograph1_configuration.tooltip = "Staff: ¬_D.data.values[0]¬";
+                        tooltip = "Staff: ¬_D.data.values[0]¬";
                     }
                     if (productMetricId == null) {
                         return null;
                     }
                     cytograph1_metrics.push(aux);
-
-
 
                     // Add Node
                     cytograph1_configuration.nodes.push(
@@ -539,8 +558,9 @@
                             id: productsAux[id].name,
                             avatar:productsAux[id].avatar,
                             shape:"ellipse",
-                            volume: productMetricId,
-                            tooltip: productsAux[id].tooltip || ""
+                            volume: volume,
+                            metric: productMetricId,
+                            tooltip: tooltip || productsAux[id].tooltip || ""
                         }
                     )
                 }
@@ -563,7 +583,7 @@
                     toRemove.delete();
                 }
 
-                for(var i = 0; i < frameData.values.length; i++) {
+                for(var i = 0; i < frameData.values.length && i < 3; i++) {
 
                     var data = frameData.values[i];
                     var cytograph_dom = document.getElementById("cytograph" + (i+1));
@@ -625,155 +645,10 @@
 
                     }.bind(null, cytograph_dom, theProductManagerId, productsAux));
 
-
-
-
                 }
-
-
 
 
             }, [timeCtx, currentUserCtx]);
-
-            // CYTOCHART1 INITIALIZATION
-            // TODO get
-            // product managers del director
-            // mejores products de los  3 mejores P.Managers
-            // Info de cada uno de los productos
-            /*var cytograph1_dom = document.getElementById("cytograph1");
-            var theProductManagerId = '1011';
-            var edges = [
-                { source: '1011', target: 'product-sdh' },
-                { source: '1011', target: 'product-phoenix' }
-            ];
-            var productsAux = {
-                '1011':{
-                  "name": '1011',
-                  "tooltip": "Maria Jose Gonzalez",
-                  "nick": "mgonzper",
-                  "avatar": "https://image.freepik.com/iconos-gratis/avatar-mujer_318-81274.jpg",
-                  "email": [
-                    "mgonzper@isban.es"
-                  ],
-                  "positionsByOrgId": {
-                    "1": [
-                      2
-                    ]
-                  }
-                },
-                "product-sdh": {
-                  "name": "product-sdh",
-                  "tooltip": "Software Development Support Product",
-                  "avatar": "https://avatars1.githubusercontent.com/u/12413297?v=3&s=200"
-                },
-                "product-phoenix": {
-                  "name": "product-phoenix",
-                  "tooltip": "phoenix",
-                  "avatar": "https://cdn1.iconfinder.com/data/icons/business-bicolor-4/512/presentation-512.png"
-                }
-            };
-
-            var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
-            //console.log(configPM)
-
-            if (configPM == null){
-                console.log("error loading cytoChart1");
-            } else {
-                var cytograph1_metrics = configPM.metrics;
-                var cytograph1_configuration = configPM.config;
-                var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
-                        [orgCtx, timeCtx], cytograph1_configuration);
-            }
-
-            // CYTOCHART2 INITIALIZATION
-            var cytograph2_dom = document.getElementById("cytograph2");
-            var theProductManagerId = '1013';
-            var edges = [
-                { source: '1013', target: 'product-jenkins' }
-            ];
-            var productsAux = {
-                '1013':{
-                  "name": '1013',
-                  "tooltip": "Julian García",
-                  "nick": "jgarcia",
-                  "avatar": "https://image.freepik.com/iconos-gratis/hombre-avatar-oscuro_318-9118.jpg",
-                  "email": [
-                    "juliangarcia@gmail.com"
-                  ],
-                  "positionsByOrgId": {
-                    "1": [
-                      2
-                    ]
-                  }
-                },
-                "product-jenkins":{
-                    "name": "product-jenkins",
-                    "tooltip": "Jenkins",
-                    "avatar": "https://cdn1.iconfinder.com/data/icons/business-bicolor-4/512/presentation-512.png"
-                }
-            };
-
-            var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
-
-            if (configPM == null){
-                console.log("error loading cytoChart2");
-            } else {
-                var cytograph2_metrics = configPM.metrics;
-                var cytograph2_configuration = configPM.config;
-
-                var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
-                        [orgCtx, timeCtx], cytograph2_configuration);
-            }
-            */
-
-            // CYTOCHART3 INITIALIZATION
-            /*var cytograph3_dom = document.getElementById("cytograph3");
-            var theProductManagerId = 1;
-            var edges = [
-                { source: 'P_ManagerA', target: 'Product_a' },
-                { source: 'P_ManagerA', target: 'Product_b' },
-                { source: 'P_ManagerA', target: 'Product_c' },
-                { source: 'P_ManagerA', target: 'Product_d' },
-                { source: 'P_ManagerA', target: 'Product_e' }
-            ];
-            var productsAux = {
-                1:{
-                    'name': "P_ManagerA",
-                    'avatar': "https://pbs.twimg.com/profile_images/1554448422/asun_oeg_400x400.png",
-                    tooltip: "Asunción Gómez"
-                },
-                2:{
-                    'name': "Product_a",
-                    'avatar': "assets/images/CytoChartDemo/rp1.png"
-                },
-                3:{
-                    'name': "Product_b",
-                    'avatar': "assets/images/CytoChartDemo/rp2.png"
-                },
-                4:{
-                    'name': "Product_c",
-                    'avatar': "assets/images/CytoChartDemo/rp3.png"
-                },
-                5:{
-                    'name': "Product_d",
-                    'avatar': "assets/images/CytoChartDemo/rp4.png"
-                },
-                6:{
-                    'name': "Product_e",
-                    'avatar': "assets/images/CytoChartDemo/rp5.png"
-                }
-            };
-
-            var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
-            if (configPM == null){
-                console.log("error loading cytoChart3");
-            } else {
-                var cytograph3_metrics = configPM.metrics;
-                var cytograph3_configuration = configPM.config;
-
-                var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
-                        [orgCtx, timeCtx], cytograph3_configuration);
-            }*/
 
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
             var scatter_dom = document.getElementById("scatter-plot");
@@ -782,14 +657,14 @@
                 if (frameData.event == "loading") {
                     return;
                 }
-                //console.log("getting view-director-products");
+
                 var pList = frameData.data["view-director-products"][0].data.values;
-                //console.log("pList: " + JSON.stringify(pList));
+
                 var pIdList = [];
                 for (var i = 0; i < pList.length; i++) {
                     pIdList.push(pList[i].productid);
                 }
-                //console.log("pList: " + JSON.stringify(pIdList));
+
                 framework.data.updateContext(director_products_cntx, {prid: pIdList});
             }, [currentUserCtx]);
             //framework.data.updateContext(director_products_cntx, {prid: ['product-jenkins','product-sdh']}); //TODO: this wont be needed
@@ -938,56 +813,83 @@
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 
+
+            var toPercentagePostAggr = function toPercentagePostAggr(responses, skel) {
+
+                var vals = [];
+                for(var i = 0; i < responses.length; ++i) {
+                    var values = responses[i]['data']['values'];
+                    for(var x = 0; x < values.length; x++) {
+                        vals.push(Math.round(values[x] * 100));
+                    }
+                }
+
+                skel['data']['values'] = vals;
+
+                return skel;
+
+            };
+
             //  ---------------------------------- PRODUCT STAR CHART ------------------------------------------
             var skills_star_dom = document.getElementById("radar-product-chart");
             //Specific skills
             var skills_star_metrics1 = [
                 {
                     id: 'product-activity',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'product-popularity-fake',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'product-health',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'product-quality',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'product-timetomarket',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 }
             ];
             //Average skills
             var skills_star_metrics2 = [
                 {
                     id: 'director-activity',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'director-popularity-fake',
                     max: 1,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'director-health',
                     max: 1,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'director-quality',
                     max: 1,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'director-timetomarket',
                     max: 1,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_aggr: toPercentagePostAggr
                 }
             ];
 
@@ -1020,22 +922,7 @@
             var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
                     [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);
 
-            //  ----------------------------------- LIQUID GAUGE 1 ------------------------------------------
-            var toPercentagePostAggr = function toPercentagePostAggr(responses, skel) {
-
-                var vals = [];
-                for(var i = 0; i < responses.length; ++i) {
-                    var values = responses[i]['data']['values'];
-                    for(var x = 0; x < values.length; x++) {
-                        vals.push(Math.round(values[x] * 100));
-                    }
-                }
-
-                skel['data']['values'] = vals;
-
-                return skel;
-
-            };
+            //  ----------------------------------- LIQUID GAUGE 1 -----------------------------------------
 
             var liquid1_dom = document.getElementById("liquid-1-chart");
             var liquid1_metrics = [
@@ -1082,31 +969,44 @@
             new framework.widgets.LiquidGauge(liquid2_dom, liquid2_metrics,
                     [orgCtx, timeCtx, productsCtx], liquid2_configuration);
 
-            // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
-            // TODO 2 gráficas externals y developers total a lo largo del tiempo line interpolate or area. 1 linea por product en cada una de las line charts
-            var team_members_lines_dom = document.getElementById("position-members-lines");
-            var team_members_lines_metrics = [
+            // ----------------------------- EXTERNAL MEMBERS LINES CHART ----------------------------------
+            var external_members_lines_dom = document.getElementById("external-members-lines");
+            var external_members_lines_metrics = [
                 {
-                    id: 'product-externals', // TODO por cada product
-                    max: 40,
-                    uid: 200
-                },
-                {
-                    id: 'product-developers',
-                    max: 40,
-                    uid: 200
+                    id: 'product-externals',
+                    max: 40
                 }
             ];
-            var team_members_lines_configuration = {
+            var external_members_lines_configuration = {
                 xlabel: '',
                 ylabel: '',
                 interpolate: 'monotone',
                 height: 200,
-                labelFormat: '¬_D.data.info.title¬',
+                labelFormat: '¬_D.data.info.prid.name¬',
                 area: true
             };
-            var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
-                    [orgCtx, timeCtx], team_members_lines_configuration);
+            new framework.widgets.LinesChart(external_members_lines_dom, external_members_lines_metrics,
+                    [orgCtx, timeCtx, director_products_cntx], external_members_lines_configuration);
+
+
+            // ----------------------------- INTERNAL MEMBERS LINES CHART ----------------------------------
+            var internal_members_lines_dom = document.getElementById("internal-members-lines");
+            var internal_members_lines_metrics = [
+                {
+                    id: 'product-developers',
+                    max: 40
+                }
+            ];
+            var internal_members_lines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 200,
+                labelFormat: '¬_D.data.info.prid.name¬',
+                area: true
+            };
+            new framework.widgets.LinesChart(internal_members_lines_dom, internal_members_lines_metrics,
+                    [orgCtx, timeCtx, director_products_cntx], internal_members_lines_configuration);
 
             // ------------------------------- TEAM MEMBERS ROLES (pie Chart) -------------------------------------
             var team_members_pie_dom = document.getElementById("team-members-pie");

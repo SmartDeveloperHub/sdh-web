@@ -113,6 +113,14 @@
             <span id="repoIco" class="titleIcon octicon octicon-organization"></span>
             <span class="titleLabel">Developers</span>
         </div>
+           <div id="external-members-subtitle" class="row subtitleRow">
+                <span id="external-members-table-stitle-ico" class="subtitleIcon fa fa-user-secret"></span>
+                <span id="external-members-table-stitle-label" class="subtitleLabel">External developers</span>
+                <span id="external-members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+            <div class="row" data-gs-width="6" data-gs-height="10" data-gs-x="0" data-gs-y="8">
+                <div id="external-members-lines"></div>
+            </div>
         <div class="row">
             <div class="col-sm-9">
                 <div class="row">
@@ -498,6 +506,24 @@
             };
             framework.data.observe(executions_info, display_executions_info, [timeCtx, repoCtx]);
 
+            // ----------------------------- EXTERNAL MEMBERS LINES CHART ----------------------------------
+            var external_members_lines_dom = document.getElementById("external-members-lines");
+            var external_members_lines_metrics = [
+                {
+                    id: 'repository-externals',
+                    max: 60
+                }
+            ];
+            var external_members_lines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 200,
+                labelFormat: '¬_D.data.info.rid.name¬',
+                area: true
+            };
+            new framework.widgets.LinesChart(external_members_lines_dom, external_members_lines_metrics,
+                    [timeCtx, repoCtx], external_members_lines_configuration);
 
             // REPOSITORY USERS TABLE
             var table_dom = document.getElementById("users-table");

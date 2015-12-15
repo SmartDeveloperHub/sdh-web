@@ -1021,47 +1021,66 @@
                     [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);
 
             //  ----------------------------------- LIQUID GAUGE 1 ------------------------------------------
-            var test_dom = document.getElementById("liquid-1-chart");
-            var test_metrics = [
+            var toPercentagePostAggr = function toPercentagePostAggr(responses, skel) {
+
+                var vals = [];
+                for(var i = 0; i < responses.length; ++i) {
+                    var values = responses[i]['data']['values'];
+                    for(var x = 0; x < values.length; x++) {
+                        vals.push(Math.round(values[x] * 100));
+                    }
+                }
+
+                skel['data']['values'] = vals;
+
+                return skel;
+
+            };
+
+            var liquid1_dom = document.getElementById("liquid-1-chart");
+            var liquid1_metrics = [
                 {
                     id: 'product-success-rate',
-                    max: 1
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: toPercentagePostAggr
                 }
             ];
-            var test_configuration = {
+            var liquid1_configuration = {
                 height: 110,
                 minValue: 0,
-                maxValue: 1,
+                maxValue: 100,
                 waveColor: ['#E65538', '#8ACA17'],
                 textColor: ['#E65538', '#DBF1B4'],
                 circleColor: ['#8C1700', '#4BAD06'],
                 waveTextColor:'#DBF1B4',
-                radius: 45,
-                displayPercent: false
-            };
-            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
-                    [orgCtx, timeCtx, productsCtx], test_configuration);
-
-            //  ----------------------------------- LIQUID GAUGE 2 ------------------------------------------
-            var test_dom = document.getElementById("liquid-2-chart");
-            var test_metrics = [
-                {
-                    id: 'product-health',
-                    max: 1
-                }
-            ];
-            var test_configuration = {
-                height: 110,
-                minValue: 0,
-                maxValue: 1,
-                waveColor: ['#E65538', '#8ACA17'],
-                textColor: '#333333',
-                circleColor: ['#8C1700', '#4BAD06'],
-                waveTextColor: '#333333',
                 radius: 45
             };
-            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
-                    [orgCtx, timeCtx, productsCtx], test_configuration);
+            new framework.widgets.LiquidGauge(liquid1_dom, liquid1_metrics,
+                    [orgCtx, timeCtx, productsCtx], liquid1_configuration);
+
+            //  ----------------------------------- LIQUID GAUGE 2 ------------------------------------------
+            var liquid2_dom = document.getElementById("liquid-2-chart");
+            var liquid2_metrics = [
+                {
+                    id: 'product-health',
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: toPercentagePostAggr
+                }
+            ];
+            var liquid2_configuration = {
+                height: 110,
+                minValue: 0,
+                maxValue: 100,
+                waveColor: ['#E65538', '#8ACA17'],
+                textColor: ['#E65538', '#DBF1B4'],
+                circleColor: ['#8C1700', '#4BAD06'],
+                waveTextColor: '#DBF1B4',
+                radius: 45
+            };
+            new framework.widgets.LiquidGauge(liquid2_dom, liquid2_metrics,
+                    [orgCtx, timeCtx, productsCtx], liquid2_configuration);
 
             // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
             // TODO 2 gráficas externals y developers total a lo largo del tiempo line interpolate or area. 1 linea por product en cada una de las line charts

@@ -708,30 +708,30 @@
             //Average skills
             var skills_star_metrics2 = [
                 {
-                    id: 'director-activity', //Fails
+                    id: 'pmanager-activity',
                     max: 1,
                     post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'director-popularity-fake',
-                    max: 1,
-                    aggr: 'avg',
-                    post_aggr: toPercentagePostAggr
-                },
-                {
-                    id: 'director-health',//Fails
+                    id: 'pmanager-popularity-fake',
                     max: 1,
                     aggr: 'avg',
                     post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'director-quality',//Fails
+                    id: 'pmanager-health',
                     max: 1,
                     aggr: 'avg',
                     post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'director-timetomarket',//Fails
+                    id: 'pmanager-quality',
+                    max: 1,
+                    aggr: 'avg',
+                    post_aggr: toPercentagePostAggr
+                },
+                {
+                    id: 'pmanager-timetomarket',
                     max: 1,
                     aggr: 'avg',
                     post_aggr: toPercentagePostAggr
@@ -751,10 +751,10 @@
                         'product-quality':           'Quality',
                         'product-timetomarket':      'Time To Market'
                     }, {
-                        'director-activity':      'Activity',
-                        'director-popularity-fake':    'Popularity',
-                        'director-health':        'Health',
-                        'director-quality':       'Quality',
+                        'pmanager-activity':      'Activity',
+                        'pmanager-popularity-fake':    'Popularity',
+                        'pmanager-health':        'Health',
+                        'pmanager-quality':       'Quality',
                         'director-timetomarket':  'Time To Market'
                     }
                 ],

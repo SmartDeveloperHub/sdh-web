@@ -53,33 +53,33 @@ class DashboardsSeeder extends Seeder {
         DB::table('dashboards')->insert([
 
             // Organization
-            ['id' => 1, 'path' => 'dashboards.organization.positions.1', 'created_at' => $time, 'updated_at' => $time],
-            ['id' => 2, 'path' => 'dashboards.organization.positions.2', 'created_at' => $time, 'updated_at' => $time],
-            ['id' => 3, 'path' => 'dashboards.organization.positions.3', 'created_at' => $time, 'updated_at' => $time],
-            ['id' => 4, 'path' => 'dashboards.organization.positions.default', 'created_at' => $time, 'updated_at' => $time],
+            ['id' => 1, 'path' => 'dashboards.organization.positions.director', 'created_at' => $time, 'updated_at' => $time],
+            ['id' => 2, 'path' => 'dashboards.organization.positions.product_manager', 'created_at' => $time, 'updated_at' => $time],
+            ['id' => 3, 'path' => 'dashboards.organization.positions.default', 'created_at' => $time, 'updated_at' => $time],
 
             // Product
-            ['id' => 5, 'path' => 'dashboards.product.positions.default', 'created_at' => $time, 'updated_at' => $time],
+            ['id' => 4, 'path' => 'dashboards.product.positions.default', 'created_at' => $time, 'updated_at' => $time],
 
             // Project
-            ['id' => 6, 'path' => 'dashboards.project.roles.default', 'created_at' => $time, 'updated_at' => $time],
+            ['id' => 5, 'path' => 'dashboards.project.roles.default', 'created_at' => $time, 'updated_at' => $time],
 
             // Repository
-            ['id' => 7, 'path' => 'dashboards.repository.roles.default', 'created_at' => $time, 'updated_at' => $time],
+            ['id' => 6, 'path' => 'dashboards.repository.roles.default', 'created_at' => $time, 'updated_at' => $time],
 
             // User
-            ['id' => 8, 'path' => 'dashboards.developer.positions.default', 'created_at' => $time, 'updated_at' => $time],
+            ['id' => 7, 'path' => 'dashboards.developer.positions.default', 'created_at' => $time, 'updated_at' => $time],
         ]);
 
 
         DB::table('generic_dashboard_category_dashboard')->insert([
             //TODO
             ['generic_dashboard' => 1, 'category' => 'positions', 'category_value' => '1', 'dashboard' => 1],
-            ['generic_dashboard' => 1, 'category' => 'positions', 'category_value' => 'default', 'dashboard' => 4],
-            ['generic_dashboard' => 2, 'category' => 'positions', 'category_value' => 'default', 'dashboard' => 5],
-            ['generic_dashboard' => 3, 'category' => 'roles', 'category_value' => 'default', 'dashboard' => 6],
-            ['generic_dashboard' => 4, 'category' => 'roles', 'category_value' => 'default', 'dashboard' => 7],
-            ['generic_dashboard' => 5, 'category' => 'positions', 'category_value' => 'default', 'dashboard' => 8]
+            ['generic_dashboard' => 1, 'category' => 'positions', 'category_value' => '2', 'dashboard' => 2],
+            ['generic_dashboard' => 1, 'category' => 'positions', 'category_value' => 'default', 'dashboard' => 3],
+            ['generic_dashboard' => 2, 'category' => 'positions', 'category_value' => 'default', 'dashboard' => 4],
+            ['generic_dashboard' => 3, 'category' => 'roles', 'category_value' => 'default', 'dashboard' => 5],
+            ['generic_dashboard' => 4, 'category' => 'roles', 'category_value' => 'default', 'dashboard' => 6],
+            ['generic_dashboard' => 5, 'category' => 'positions', 'category_value' => 'default', 'dashboard' => 7]
         ]);
 
 

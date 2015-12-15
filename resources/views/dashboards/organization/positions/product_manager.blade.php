@@ -708,7 +708,7 @@
             //Average skills
             var skills_star_metrics2 = [
                 {
-                    id: 'director-activity',
+                    id: 'director-activity', //Fails
                     max: 1,
                     post_aggr: toPercentagePostAggr
                 },
@@ -719,19 +719,19 @@
                     post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'director-health',
+                    id: 'director-health',//Fails
                     max: 1,
                     aggr: 'avg',
                     post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'director-quality',
+                    id: 'director-quality',//Fails
                     max: 1,
                     aggr: 'avg',
                     post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'director-timetomarket',
+                    id: 'director-timetomarket',//Fails
                     max: 1,
                     aggr: 'avg',
                     post_aggr: toPercentagePostAggr
@@ -745,17 +745,17 @@
                 radius: 180,
                 labelsAssoc: [
                     {
-                        'pmanager-activity':          'Activity',
-                        'pmanager-popularity-fake':        'Popularity',
-                        'pmanager-health':            'Health',
-                        'pmanager-quality':           'Quality',
-                        'pmanager-timetomarket':      'Time To Market'
+                        'product-activity':          'Activity',
+                        'product-popularity-fake':        'Popularity',
+                        'product-health':            'Health',
+                        'product-quality':           'Quality',
+                        'product-timetomarket':      'Time To Market'
                     }, {
-                        'product-activity':      'Activity',
-                        'product-popularity-fake':    'Popularity',
-                        'product-health':        'Health',
-                        'product-quality':       'Quality',
-                        'product-timetomarket':  'Time To Market'
+                        'director-activity':      'Activity',
+                        'director-popularity-fake':    'Popularity',
+                        'director-health':        'Health',
+                        'director-quality':       'Quality',
+                        'director-timetomarket':  'Time To Market'
                     }
                 ],
                 labels: ["Activity", "Popularity", 'Health', 'Time To Market', 'Quality' ],
@@ -764,8 +764,8 @@
                 pointLabelFontColor: "#2876B8",
                 pointLabelFontSize: 14
             };
-            /*var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
-                    [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);*/
+            var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
+                    [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);
 
 
             //  ----------------------------------- LIQUID GAUGE 1 ------------------------------------------

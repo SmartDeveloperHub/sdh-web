@@ -1159,42 +1159,39 @@
                     [orgCtx, timeCtx, productByProjectCtx], project_roles_multibar_conf);
 
 
-            // TEAM MEMBERS ROLES
+            // TEAM MEMBERS ROLES (pie Chart)
             var team_members_pie_dom = document.getElementById("team-members-pie");
             var team_members_pie_metrics = [
-            {
-                id: 'projectstakeholders',
-                max: 1,
-                aggr: "sum",
-                post_aggr: 'sum',
-                pid: [1, 2] //TODO: temporal
-            },
-            {
-                id: 'projectdevelopers',
-                max: 1,
-                aggr: "sum",
-                post_aggr: 'sum',
-                pid: [1, 2] //TODO: temporal
-            },
-            {
-                id: 'projectmanagers',
-                max: 1,
-                aggr: "sum",
-                post_aggr: 'sum',
-                pid: [1, 2] //TODO: temporal
-            },
-            {
-                id: 'projectarchitects',
-                max: 1,
-                aggr: "sum",
-                post_aggr: 'sum',
-                pid: [1, 2] //TODO: temporal
-            }];
+                {
+                    id: 'project-stakeholders',
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'project-swdevelopers',
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'project-pjmanagers',
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'project-swarchitects',
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                }
+            ];
             var team_members_pie_configuration = {
                 height: 250,
                 showLegend: true,
-                labelFormat: "¬_D.data.info.title¬",
-                showLabels: false
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬"
             };
             var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,
                     [orgCtx, timeCtx, productByProjectCtx], team_members_pie_configuration);

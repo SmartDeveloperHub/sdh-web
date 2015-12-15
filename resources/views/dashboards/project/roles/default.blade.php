@@ -43,7 +43,7 @@
         setTitle("Project");
         setSubtitle(framework.dashboard.getEnv('name'));
         showHeaderChart();
-
+        console.log("framework.dashboard.getEnv()['pid']: " + framework.dashboard.getEnv()['pid']);
         framework.data.updateContext(projectCtx, {pid: framework.dashboard.getEnv()['pid']});
 
         // UPPER SELECTOR RANGENV (NEEDS FIRST COMMIT)
@@ -103,13 +103,11 @@
             angular.element(".main-content").ready(function () {
                 angular.bootstrap(".main-content", ['Dashboard']);
             });
-
-            //USER LIST
-            framework.data.observe(['repolist'], function (event) {
+            //PROJECT LIST
+            framework.data.observe(['view-project-repositories'], function (event) {
 
                 if (event.event === 'data') {
-                    var repos = event.data['repolist'][Object.keys(event.data['repolist'])[0]]['data'];
-
+                    var repos = event.data['view-project-repositories'][Object.keys(event.data['view-project-repositories'])[0]]['data']['values'];
                     $scope = angular.element(".main-content").scope();
 
                     $scope.$apply(function () {
@@ -117,7 +115,7 @@
                     });
 
                 }
-            }, []);
+            },[projectCtx, timeCtx]);
 
         };
 

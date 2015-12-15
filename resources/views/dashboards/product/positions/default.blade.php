@@ -103,12 +103,10 @@
             angular.element(".main-content").ready(function () {
                 angular.bootstrap(".main-content", ['Dashboard']);
             });
-
-            //USER LIST
+            //PRODUCT LIST
             framework.data.observe(['view-product-projects'], function (event) {
                 if (event.event === 'data') {
-                    var projects = event.data['view-product-projects'][Object.keys(event.data['view-product-projects'])[0]]['data'];
-
+                    var projects = event.data['view-product-projects'][Object.keys(event.data['view-product-projects'])[0]]['data']['values'];
                     $scope = angular.element(".main-content").scope();
 
                     $scope.$apply(function () {

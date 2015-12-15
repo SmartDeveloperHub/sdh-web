@@ -180,27 +180,27 @@ html, body {
     color: #868686;
 }
 
-.subtitleTooltip .toolRow .red {
+.subtitleTooltip .toolRow .red, .scatterTooltip .scatterTTIco.red {
     color: #DC0C15;
 }
 
-.subtitleTooltip .toolRow .green {
+.subtitleTooltip .toolRow .green, .scatterTooltip .scatterTTIco.green {
     color: #019640;
 }
 
-.subtitleTooltip .toolRow .blue {
+.subtitleTooltip .toolRow .blue, .scatterTooltip .scatterTTIco.blue {
     color: #019640;
 }
 
-.subtitleTooltip .toolRow .orange {
+.subtitleTooltip .toolRow .orange, .scatterTooltip .scatterTTIco.orange {
     color: #ED7225;
 }
 
-.subtitleTooltip .toolRow .violet {
+.subtitleTooltip .toolRow .violet, .scatterTooltip .scatterTTIco.violet {
     color: #8A1978;
 }
 
-.subtitleTooltip .toolRow .yellow {
+.subtitleTooltip .toolRow .yellow, .scatterTooltip .scatterTTIco.yellow {
     color: #FFED00;
 }
 

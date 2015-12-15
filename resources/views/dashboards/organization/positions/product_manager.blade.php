@@ -50,7 +50,7 @@
             </div>
 
             <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="0" data-gs-y="13">
-                <div id="empty-ctr1" class="boxCounter grid-stack-item-content"></div>
+                <div id="personnel-cost-ctr" class="grid-stack-item-content"></div>
             </div>
             <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="3" data-gs-y="13">
                 <div id="avg-developers-ctr" class="boxCounter grid-stack-item-content"></div>
@@ -178,24 +178,39 @@
             </div>
         </div>
 
-        <!-- Subsection: Roles -->
-
-        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="4">
-            <div class="grid-stack-item-content subtitleRow">
-                <span id="roles-stitle-ico" class="subtitleIcon fa fa-graduation-cap"></span>
-                <span id="roles-stitle-label" class="subtitleLabel">Roles</span>
-                <span id="roles-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+        <!-- Subsection: Developers/externals -->
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="3" data-gs-x="0" data-gs-y="5">
+            <div id="external-members-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="external-members-table-stitle-ico" class="subtitleIcon fa fa-user-secret"></span>
+                <span id="external-members-table-stitle-label" class="subtitleLabel">External developers</span>
+                <span id="external-members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="0" data-gs-y="8">
+            <div id="external-members-lines" class="widget grid-stack-item-content"></div>
+        </div>
 
-        <div class="grid-stack-item" data-gs-width="12" data-gs-height="10" data-gs-x="0" data-gs-y="6">
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="3" data-gs-x="6" data-gs-y="5">
+            <div id="internal-members-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="internal-members-table-stitle-ico" class="subtitleIcon fa fa-user"></span>
+                <span id="internal-members-table-stitle-label" class="subtitleLabel">Internal developers</span>
+                <span id="internal-members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="6" data-gs-y="8">
+            <div id="internal-members-lines" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <!-- Subsection: Roles -->
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="10" data-gs-x="0" data-gs-y="19">
             <div id="team-members-lines" class="widget grid-stack-item-content"></div>
         </div>
 
         <!-- Subsection: Project Selector -->
 
         <!-- Column -->
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="16">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="29">
             <div class="grid-stack-item-content subtitleRow">
                 <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
                 <span id="members-table-stitle-label" class="subtitleLabel">Project Selector</span>
@@ -203,14 +218,14 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="19">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="32">
             <div class="grid-stack-item-content">
                 <div id="product-projects-table" class="widget grid-stack-item-content"></div>
             </div>
         </div>
 
         <!-- Column -->
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="16">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="29">
             <div id="team-multibar-subtitle" class="row subtitleRow">
                 <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                 <span id="team-multibar-stitle-label" class="subtitleLabel">Teams Comparison</span>
@@ -218,11 +233,11 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="18">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="31">
             <div id="projects-roles-multibar" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="31">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="44">
             <div id="team-pie-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                 <span id="team-pie-stitle-label" class="subtitleLabel">Roles Summary</span>
@@ -230,7 +245,7 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="33">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="46">
             <div id="team-members-pie" class="widget grid-stack-item-content"></div>
         </div>
 
@@ -432,6 +447,21 @@
             };
             var avg_developers = new framework.widgets.CounterBox(avg_developers_dom, avg_developers_metrics, [orgCtx, timeCtx, currentUserCtx], avg_developers_conf);
 
+            // ------------------------------------------ PERSONEL COST ----------------------------------------
+            var some2_dom = document.getElementById("personnel-cost-ctr");
+            var some2_metrics = [{
+                id: 'pmanager-costs',
+                max: 1
+            }];
+            var some2_conf = {
+                label: 'Personnel Cost',
+                decimal: 0,
+                icon: 'fa-eur',
+                iconbackground: '#EE7529',
+                background: 'transparent'
+            };
+            var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx, currentUserCtx], some2_conf);
+
             // ----------------------------------- REPOSITORIES -------------------------------------------
             var repos_dom = document.getElementById("repositories-ctr");
             var repos_metrics = [{
@@ -462,23 +492,31 @@
             };
             var avg_repositories = new framework.widgets.CounterBox(avg_repositories_dom, avg_repositories_metrics, [orgCtx, timeCtx, currentUserCtx], avg_repositories_conf);
 
-            // ------------------------------------------ SCATTER PLOT -------------------------------------------
+            // ------------------------------------------ SCATTER PLOT ------------------------------------------- TODO tooltips petan
             var scatter_dom = document.getElementById("scatter-plot");
-            var pmanager_products_cntx = "pmanager-products-cntxt";
-            framework.data.observe(["view-pmanager-products"], function(frameData) {
+            var currentCost;
+            var pmanager_products_cntx = "pmanager-products-cntx";
+            framework.data.observe([{id: 'pmanager-costs', max: 1 }], function(frameData) {
                 if (frameData.event == "loading") {
                     return;
                 }
-                var pList = frameData.data["view-pmanager-products"][0].data.values;
-                //console.log("pList: " + JSON.stringify(pList));
-                var pIdList = [];
-                for (var i = 0; i < pList.length; i++) {
-                    pIdList.push(pList[i].productid);
-                }
-                console.log("pList: " + JSON.stringify(pIdList));
-                framework.data.updateContext(pmanager_products_cntx, {prid: pIdList});
+                currentCost = frameData.data["pmanager-costs"][0].data.values[0];
+                framework.data.observe(["view-pmanager-products"], function(frameData) {
+                    if (frameData.event == "loading") {
+                        return;
+                    }
+
+                    var pList = frameData.data["view-pmanager-products"][0].data.values;
+
+                    var pIdList = [];
+                    for (var i = 0; i < pList.length; i++) {
+                        pIdList.push(pList[i].productid);
+                    }
+
+                    framework.data.updateContext(pmanager_products_cntx, {prid: pIdList});
+                }, [currentUserCtx]);
             }, [currentUserCtx]);
-            //framework.data.updateContext(scatter_test_cntx, {prid: [1,2,3,4,5]}); //TODO: this wont be needed
+
             var scatter_metrics = [ //TODO: required metrics
                 {
                     id: 'product-cost',
@@ -502,10 +540,11 @@
                     var color = d3.scale.linear()
                             .domain([0, 0.5, 1])
                             .range(["red", "yellow", "green"]);
-                    return color(Math.random());
+                    return color(data['product-health']['values'][0]);
                 },
                 size: function(data) {
-                    return Math.random();
+                    var auxX = data['product-cost']['values'][0] / currentCost;
+                    return (auxX);
                 },
                 shape: function(data) {
                     return 'circle';
@@ -530,15 +569,15 @@
                 pointDomain: [0,1],
                 clipEdge: true,
                 // TODO 
-                tooltip:  "<div class='scatterTooltip' style='text-align: center;'>" +
+                tooltip: "<div class='scatterTooltip' style='text-align: center;'>" +
                 "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data['product-cost'].info.prid.avatar¬\" />" +
                 "<h3>¬_D.data['product-cost'].info.prid.name¬</h3>" +
                 "<div class='scattetTTLine'><i class='scatterTTIco fa fa-balance-scale green'></i><h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
                 "<div class='scattetTTLine'><i class='scatterTTIco fa fa-hourglass-start violet'></i><h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
-                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
-                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D.data.y * 100)/100¬</h4></div>" +
                 "</div>",
-                image: "¬_D.data.productcost.info.prid.avatar¬",
+                image: "¬_D.data['product-cost'].info.prid.avatar¬",
                 xAxisGradient: ['red', 'orange', 'yellow', 'green'],
                 yAxisGradient: ['green', 'yellow', 'orange', 'red'],
                 showLegend: false,
@@ -598,6 +637,22 @@
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx, currentUserCtx], table_configuration);
 
+            var toPercentagePostAggr = function toPercentagePostAggr(responses, skel) {
+
+                var vals = [];
+                for(var i = 0; i < responses.length; ++i) {
+                    var values = responses[i]['data']['values'];
+                    for(var x = 0; x < values.length; x++) {
+                        vals.push(Math.round(values[x] * 100));
+                    }
+                }
+
+                skel['data']['values'] = vals;
+
+                return skel;
+
+            };
+
             //  ----------------------------------- RELEASES LINES WIDGET ------------------------------------------
             var releasesLines_dom = document.getElementById("releases-chart");
 
@@ -620,56 +675,66 @@
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 
-            //  ---------------------------------- PRODUCT STAR CHART ------------------------------------------
+            //  ---------------------------------- PRODUCT STAR CHART ------------------------------------------ PETA mucho
             var skills_star_dom = document.getElementById("radar-product-chart");
             //Specific skills
             var skills_star_metrics1 = [
                 {
                     id: 'product-activity',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'product-popularity',
-                    max: 1
+                    id: 'product-popularity-fake',
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'product-health',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'product-quality',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'product-timetomarket',
-                    max: 1
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 }
             ];
             //Average skills
             var skills_star_metrics2 = [
                 {
-                    id: 'pmanager-activity',
-                    max: 1
+                    id: 'director-activity',
+                    max: 1,
+                    post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'pmanager-popularity',
+                    id: 'director-popularity-fake',
                     max: 1,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'pmanager-health',
+                    id: 'director-health',
                     max: 1,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'pmanager-quality',
+                    id: 'director-quality',
                     max: 1,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_aggr: toPercentagePostAggr
                 },
                 {
-                    id: 'pmanager-timetomarket',
+                    id: 'director-timetomarket',
                     max: 1,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_aggr: toPercentagePostAggr
                 }
             ];
 
@@ -678,73 +743,116 @@
             var skills_star_configuration = {
                 height: 200,
                 radius: 180,
-                labelsAssoc: [{
-                    // TODO change ids
-                    'userproductsactivity':      'Activity',
-                    'userproductspopularity':    'Popularity',
-                    'userproductshealth':        'Health',
-                    'userproductsquality':       'Quality',
-                    'userproductstimetomarket':  'Time To Market'
-                },
-                {
-                    'productactivity':          'Activity',
-                    'productpopularity':        'Popularity',
-                    'producthealth':            'Health',
-                    'productquality':           'Quality',
-                    'producttimetomarket':      'Time To Market'
-                }
+                labelsAssoc: [
+                    {
+                        'pmanager-activity':          'Activity',
+                        'pmanager-popularity-fake':        'Popularity',
+                        'pmanager-health':            'Health',
+                        'pmanager-quality':           'Quality',
+                        'pmanager-timetomarket':      'Time To Market'
+                    }, {
+                        'product-activity':      'Activity',
+                        'product-popularity-fake':    'Popularity',
+                        'product-health':        'Health',
+                        'product-quality':       'Quality',
+                        'product-timetomarket':  'Time To Market'
+                    }
                 ],
-                labels: ["Activity", "Popularity", 'Health', 'Time To Market', 'Quality'],
+                labels: ["Activity", "Popularity", 'Health', 'Time To Market', 'Quality' ],
                 fillColor: ["rgba(30, 30, 30, 0.2)", "rgba(1, 150, 64, 0.4)"],
                 strokeColor: ["rgba(30, 30, 30, 0.3)", "#019640"],
                 pointLabelFontColor: "#2876B8",
                 pointLabelFontSize: 14
             };
-            var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
-                    [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);
+            /*var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
+                    [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);*/
 
 
             //  ----------------------------------- LIQUID GAUGE 1 ------------------------------------------
-            var test_dom = document.getElementById("liquid-1-chart");
-            var test_metrics = [
+            var liquid1_dom = document.getElementById("liquid-1-chart");
+            var liquid1_metrics = [
                 {
                     id: 'product-success-rate',
-                    max: 1
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: toPercentagePostAggr
                 }
             ];
-            var test_configuration = {
+            var liquid1_configuration = {
                 height: 110,
                 minValue: 0,
-                maxValue: 1,
-                waveColor: '#8ACA17',
-                textColor: '#4BAD06',
-                circleColor: '#4BAD06',
+                maxValue: 100,
+                waveColor: ['#E65538', '#8ACA17'],
+                textColor: ['#E65538', '#DBF1B4'],
+                circleColor: ['#8C1700', '#4BAD06'],
                 waveTextColor:'#DBF1B4',
                 radius: 45
             };
-            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
-                    [orgCtx, timeCtx, productsCtx], test_configuration);
+            new framework.widgets.LiquidGauge(liquid1_dom, liquid1_metrics,
+                    [orgCtx, timeCtx, productsCtx], liquid1_configuration);
 
             //  ----------------------------------- LIQUID GAUGE 2 ------------------------------------------
-            var test_dom = document.getElementById("liquid-2-chart");
-            var test_metrics = [
+            var liquid2_dom = document.getElementById("liquid-2-chart");
+            var liquid2_metrics = [
                 {
                     id: 'product-health',
-                    max: 1
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: toPercentagePostAggr
                 }
             ];
-            var test_configuration = {
+            var liquid2_configuration = {
                 height: 110,
                 minValue: 0,
-                maxValue: 1,
-                waveColor: '#E65538',
-                textColor: '#8C1700',
-                circleColor: '#8C1700',
-                waveTextColor: '#FFC5B9',
+                maxValue: 100,
+                waveColor: ['#E65538', '#8ACA17'],
+                textColor: ['#E65538', '#DBF1B4'],
+                circleColor: ['#8C1700', '#4BAD06'],
+                waveTextColor: '#DBF1B4',
                 radius: 45
             };
-            var test = new framework.widgets.LiquidGauge(test_dom, test_metrics,
-                    [orgCtx, timeCtx, productsCtx], test_configuration);
+            new framework.widgets.LiquidGauge(liquid2_dom, liquid2_metrics,
+                    [orgCtx, timeCtx, productsCtx], liquid2_configuration);
+
+            // ----------------------------- EXTERNAL MEMBERS LINES CHART ----------------------------------
+            var external_members_lines_dom = document.getElementById("external-members-lines");
+            var external_members_lines_metrics = [
+                {
+                    id: 'product-externals',
+                    max: 60
+                }
+            ];
+            var external_members_lines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 200,
+                labelFormat: '¬_D.data.info.prid.name¬',
+                area: true
+            };
+            new framework.widgets.LinesChart(external_members_lines_dom, external_members_lines_metrics,
+                    [orgCtx, timeCtx, pmanager_products_cntx], external_members_lines_configuration);
+
+
+            // ----------------------------- INTERNAL MEMBERS LINES CHART ----------------------------------
+            var internal_members_lines_dom = document.getElementById("internal-members-lines");
+            var internal_members_lines_metrics = [
+                {
+                    id: 'product-developers',
+                    max: 60
+                }
+            ];
+            var internal_members_lines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 200,
+                labelFormat: '¬_D.data.info.prid.name¬',
+                area: true
+            };
+            new framework.widgets.LinesChart(internal_members_lines_dom, internal_members_lines_metrics,
+                    [orgCtx, timeCtx, pmanager_products_cntx], internal_members_lines_configuration);
+
 
             // CYTOCHART CONFIG FOR PRODUCT MANAGER
             function configPManagerCytoChart(productsAux, theProductManagerId, edges) {
@@ -881,7 +989,7 @@
                 1:{
                     'name': "ProductA",
                     'avatar': "assets/images/logo_bg.png",
-                    tooltip: "I'm the main circle on the right"
+                    'tooltip': "I'm the main circle on the right"
                 },
                 2:{
                     'name': "Project1",
@@ -908,41 +1016,6 @@
             var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
                     [orgCtx, timeCtx], cytograph3_configuration);
 
-            // ----------------------------- TEAM MEMBERS LINES CHART ----------------------------------
-            // ODO cargarse esto y meter dos, una con los members del pmanager y otra con externos
-            var team_members_lines_dom = document.getElementById("team-members-lines");
-            var team_members_lines_metrics = [
-                {
-                    id: 'managerstakeholders',
-                    max: 40,
-                    uid: 1001
-                },
-                {
-                    id: 'managerdevelopers',
-                    max: 40,
-                    uid: 1001
-                },
-                {
-                    id: 'managermanagers',
-                    max: 40,
-                    uid: 1001
-                },
-                {
-                    id: 'managerarchitects',
-                    max: 40,
-                    uid: 1001
-                }
-            ];
-            var team_members_lines_configuration = {
-                xlabel: '',
-                ylabel: '',
-                interpolate: 'monotone',
-                height: 200,
-                labelFormat: '¬_D.data.info.title¬',
-                area: true
-            };
-            var team_members_lines = new framework.widgets.LinesChart(team_members_lines_dom, team_members_lines_metrics,
-                    [orgCtx, timeCtx], team_members_lines_configuration);
 
             //  --------------------------- PRODUCT / PROJECTS TABLE ---------------------------------
 
@@ -1068,7 +1141,7 @@
                         var product_projects_table_metrics = [
                             {
                                 id: 'view-product-projects', //TODO: change resource
-                                //TODO: force the product id
+                                prid: id
                             }
                         ];
                         var product_projects_table_configuration = {
@@ -1117,7 +1190,7 @@
                         };
 
                         //Create the widget
-                        var widget = new framework.widgets.Table(product_projects_table_dom, product_projects_table_metrics, [orgCtx, timeCtx, currentUserCtx], product_projects_table_configuration);
+                        var widget = new framework.widgets.Table(product_projects_table_dom, product_projects_table_metrics, [orgCtx, timeCtx, ], product_projects_table_configuration);
 
                         // Add the widget to the widget list to then be able to destroy all the widgets in case of context change
                         widgetList.push(widget);
@@ -1130,31 +1203,31 @@
             var project_roles_multibar_dom = document.getElementById("projects-roles-multibar");
             var project_roles_multibar_metrics = [
                 {
-                    id: 'repodevelopers',
-                    max: 1
-                },
-                                {
-                    id: 'repopassedexecutions',
+                    id: 'project-swdevelopers',
                     max: 1
                 },
                 {
-                    id: 'repocommits',
+                    id: 'project-swarchitects',
                     max: 1
                 },
                 {
-                    id: 'repobrokenexecutions',
+                    id: 'project-pjmanagers',
+                    max: 1
+                },
+                {
+                    id: 'project-stakeholders',
                     max: 1
                 }
             ];
             var roles = {
-                'repodevelopers' : 'Software developer',
-                'repopassedexecutions': 'Software architect',
-                'repocommits': 'Project manager',
-                'repobrokenexecutions': 'Stakeholder'
+                'project-swdevelopers' : 'Software developer',
+                'project-swarchitects': 'Software architect',
+                'project-pjmanagers': 'Project manager',
+                'project-stakeholders': 'Stakeholder'
             };
             var project_roles_multibar_conf = {
                 stacked: false,
-                labelFormat: "¬_D.data.info.rid.name¬",
+                labelFormat: "¬_D.data.info.uid.name¬",
                 showControls: false,
                 height: 250,
                 showLegend: true,
@@ -1164,7 +1237,6 @@
             };
             var project_roles_multibar = new framework.widgets.MultiBar(project_roles_multibar_dom, project_roles_multibar_metrics,
                     [orgCtx, timeCtx, productByProjectCtx], project_roles_multibar_conf);
-
 
             // TEAM MEMBERS ROLES (pie Chart)
             var team_members_pie_dom = document.getElementById("team-members-pie");

@@ -506,6 +506,8 @@
                     var aux = {
                         max: 1,
                         aggr: 'sum',
+                        //from: '', // esto no influye en el resourceHash TODO??
+                        //to: '',
                         prid: id
                     };
                     var aux2 = {
@@ -516,8 +518,9 @@
                     var productMetricId;
                     if (id == theProductManagerId) {
                         productMetricId = "_static_";
-                        productMetricId = framework.utils.resourceHash('pmanager-products', aux2); // TODO membercommits? pmanager-cost
+                        //productMetricId = framework.utils.resourceHash('pmanager-products', aux2); // Hay un problema, parece que si los dos widgets cytocharts escuchan pmanager-products, el segundo no machea con el hash que viene del framework... TODO??
                         aux2['id']= 'pmanager-products';
+                        aux = aux2;
                     } else {
                         productMetricId = framework.utils.resourceHash('product-developers', aux);
                         aux['id']= 'product-developers';
@@ -540,6 +543,8 @@
                         }
                     )
                 }
+                console.log(JSON.stringify(cytograph1_metrics));
+                console.log(JSON.stringify(cytograph1_configuration))
                 return {'config': cytograph1_configuration, 'metrics': cytograph1_metrics};
             };
 
@@ -549,15 +554,15 @@
             // mejores products de los  3 mejores P.Managers
             // Info de cada uno de los productos
             var cytograph1_dom = document.getElementById("cytograph1");
-            var theProductManagerId = 1011;
+            var theProductManagerId = '1011';
             var edges = [
                 { source: '1011', target: 'product-sdh' },
                 { source: '1011', target: 'product-phoenix' }
             ];
             var productsAux = {
-                1011:{
-                  "userid": "1011",
-                  "name": "Maria Jose Gonzales",
+                '1011':{
+                  "name": '1011',
+                  "tooltip": "Maria Jose Gonzalez",
                   "nick": "mgonzper",
                   "avatar": "https://image.freepik.com/iconos-gratis/avatar-mujer_318-81274.jpg",
                   "email": [
@@ -570,13 +575,13 @@
                   }
                 },
                 "product-sdh": {
-                  "productid": "product-sdh",
-                  "name": "Software Development Support Product",
+                  "name": "product-sdh",
+                  "tooltip": "Software Development Support Product",
                   "avatar": "https://avatars1.githubusercontent.com/u/12413297?v=3&s=200"
                 },
                 "product-phoenix": {
-                  "productid": "product-phoenix",
-                  "name": "phoenix",
+                  "name": "product-phoenix",
+                  "tooltip": "phoenix",
                   "avatar": "https://cdn1.iconfinder.com/data/icons/business-bicolor-4/512/presentation-512.png"
                 }
             };
@@ -590,19 +595,19 @@
                 var cytograph1_metrics = configPM.metrics;
                 var cytograph1_configuration = configPM.config;
                 var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
-                        [orgCtx, timeCtx], cytograph1_configuration);
+                        [orgCtx, timeCtx, currentUserCtx], cytograph1_configuration);
             }
 
             // CYTOCHART2 INITIALIZATION
             var cytograph2_dom = document.getElementById("cytograph2");
-            var theProductManagerId = 1013;
+            var theProductManagerId = '1013';
             var edges = [
-                { source: 1013, target: 'product-jenkins' }
+                { source: '1013', target: 'product-jenkins' }
             ];
             var productsAux = {
-                1013:{
-                  "userid": "1013",
-                  "name": "Julian García",
+                '1013':{
+                  "name": '1013',
+                  "tooltip": "Julian García",
                   "nick": "jgarcia",
                   "avatar": "https://image.freepik.com/iconos-gratis/hombre-avatar-oscuro_318-9118.jpg",
                   "email": [
@@ -615,8 +620,8 @@
                   }
                 },
                 "product-jenkins":{
-                    "productid": "product-jenkins",
-                    "name": "Jenkins",
+                    "name": "product-jenkins",
+                    "tooltip": "Jenkins",
                     "avatar": "https://cdn1.iconfinder.com/data/icons/business-bicolor-4/512/presentation-512.png"
                 }
             };
@@ -689,14 +694,14 @@
                 if (frameData.event == "loading") {
                     return;
                 }
-                console.log("getting view-director-products");
+                //console.log("getting view-director-products");
                 var pList = frameData.data["view-director-products"][0].data.values;
-                console.log("pList: " + JSON.stringify(pList));
+                //console.log("pList: " + JSON.stringify(pList));
                 var pIdList = [];
                 for (var i = 0; i < pList.length; i++) {
                     pIdList.push(pList[i].productid);
                 }
-                console.log("pList: " + JSON.stringify(pIdList));
+                //console.log("pList: " + JSON.stringify(pIdList));
                 framework.data.updateContext(director_products_cntx, {prid: pIdList});
             }, [currentUserCtx]);
             //framework.data.updateContext(director_products_cntx, {prid: ['product-jenkins','product-sdh']}); //TODO: this wont be needed

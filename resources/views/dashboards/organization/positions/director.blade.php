@@ -595,7 +595,7 @@
                 var cytograph1_metrics = configPM.metrics;
                 var cytograph1_configuration = configPM.config;
                 var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
-                        [orgCtx, timeCtx, currentUserCtx], cytograph1_configuration);
+                        [orgCtx, timeCtx], cytograph1_configuration);
             }
 
             // CYTOCHART2 INITIALIZATION
@@ -1009,29 +1009,25 @@
                     id: 'pmanager-stakeholders',
                     max: 1,
                     aggr: "sum",
-                    post_aggr: 'sum',
-                    uid: [1001, 1002] //TODO: temporal
+                    post_aggr: 'sum'
                 },
                 {
                     id: 'pmanager-swdevelopers',
                     max: 1,
                     aggr: "sum",
-                    post_aggr: 'sum',
-                    uid: [1001, 1002] //TODO: temporal
+                    post_aggr: 'sum'
                 },
                 {
                     id: 'pmanager-pjmanagers',
                     max: 1,
                     aggr: "sum",
-                    post_aggr: 'sum',
-                    uid: [1001, 1002] //TODO: temporal
+                    post_aggr: 'sum'
                 },
                 {
                     id: 'pmanager-swarchitects',
                     max: 1,
                     aggr: "sum",
-                    post_aggr: 'sum',
-                    uid: [1001, 1002] //TODO: temporal
+                    post_aggr: 'sum'
                 }
             ];
             var team_members_pie_configuration = {

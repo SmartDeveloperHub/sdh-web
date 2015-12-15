@@ -289,12 +289,12 @@
                 {
                     id: 'member-speed-fake',
                     max: 1,
-                    aggr: "sum"
+                    aggr: "avg"
                 },
                 {
                     id: 'member-collaboration-fake',
                     max: 1,
-                    aggr: "sum"
+                    aggr: "avg"
                 },
                 {
                     id: 'member-quality',
@@ -324,12 +324,12 @@
                 {
                     id: 'member-speed-fake',
                     max: 20,
-                    aggr: 'sum'
+                    aggr: 'avg'
                 },
                 {
                     id: 'member-collaboration-fake',
                     max: 20,
-                    aggr: 'sum'
+                    aggr: 'avg'
                 },
                 {
                     id: 'member-quality',

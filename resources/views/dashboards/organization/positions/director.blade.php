@@ -367,8 +367,7 @@
             var products_dom = document.getElementById("products-ctr");
             var products_metrics = [{
                 id: 'director-products',
-                max: 1,
-                aggr: 'avg'
+                max: 1
             }];
             var products_conf = {
                 label: 'Products',
@@ -377,7 +376,7 @@
                 iconbackground: '#F75333',
                 background: 'transparent'
             };
-            var products = new framework.widgets.CounterBox(products_dom, products_metrics, [orgCtx, timeCtx], products_conf);
+            var products = new framework.widgets.CounterBox(products_dom, products_metrics, [orgCtx, timeCtx, currentUserCtx], products_conf);
 
             // ------------------------------------ TEAM MEMBERS -------------------------------------------
             var team_members_dom = document.getElementById("team-members-ctr");
@@ -392,7 +391,7 @@
                 iconbackground: '#019640',
                 background: 'transparent'
             };
-            var team_members = new framework.widgets.CounterBox(team_members_dom, team_members_metrics, [orgCtx, timeCtx], team_members_conf);
+            var team_members = new framework.widgets.CounterBox(team_members_dom, team_members_metrics, [orgCtx, timeCtx, currentUserCtx], team_members_conf);
 
             // ---------------------------------------- RELEASES -------------------------------------------
             var some1_dom = document.getElementById("releases-ctr");
@@ -422,7 +421,7 @@
                 iconbackground: '#EE7529',
                 background: 'transparent'
             };
-            var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
+            var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx, currentUserCtx], some2_conf);
 
             // ------------------------------------------ CONTRIBUTORS ----------------------------------------
             var some2_dom = document.getElementById("contributors-ctr");
@@ -437,12 +436,12 @@
                 iconbackground: '#737373',
                 background: 'transparent'
             };
-            var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
+            var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx, currentUserCtx], some2_conf);
 
             // --------------------------------- EXTERNAL COMPANIES --------------------------------
             var some2_dom = document.getElementById("companies-ctr");
             var some2_metrics = [{
-                id: 'external-companies-fake',  //TODO: dummy? AdHoc? userExternalContributorCompanies? básicamente sacar del dominio del mail el nombre de  la empresa exerna.
+                id: 'director-externalcompanies-fake',  //TODO: dummy? AdHoc? userExternalContributorCompanies? básicamente sacar del dominio del mail el nombre de  la empresa exerna.
                 max: 1,
                 aggr: 'sum'
             }];
@@ -453,7 +452,7 @@
                 iconbackground: 'rgb(0, 75, 139)',
                 background: 'transparent'
             };
-            var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx], some2_conf);
+            var some2 = new framework.widgets.CounterBox(some2_dom, some2_metrics, [orgCtx, timeCtx, currentUserCtx], some2_conf);
 
             // ------------------------------- AVG TEAM MEMBERS PER PRODUCT-------------------------------------
             var avgteam_dom = document.getElementById("avg-team-ctr");
@@ -469,7 +468,7 @@
                 iconbackground: '#6895BA',
                 background: 'transparent'
             };
-            var avgTeam = new framework.widgets.CounterBox(avgteam_dom, avgteam_metrics, [orgCtx, timeCtx], avgteam_conf);
+            var avgTeam = new framework.widgets.CounterBox(avgteam_dom, avgteam_metrics, [orgCtx, timeCtx, currentUserCtx], avgteam_conf);
 
             // ------------------------------------ AVG HEALTH PER PRODUCT -------------------------------------------
             var avghealth_dom = document.getElementById("avg-health-ctr");
@@ -485,7 +484,7 @@
                 iconbackground: '#29BB67',
                 background: 'transparent'
             };
-            var avgHealth = new framework.widgets.CounterBox(avghealth_dom, avghealth_metrics, [orgCtx, timeCtx], avghealth_conf);
+            var avgHealth = new framework.widgets.CounterBox(avghealth_dom, avghealth_metrics, [orgCtx, timeCtx, currentUserCtx], avghealth_conf);
 
 
 

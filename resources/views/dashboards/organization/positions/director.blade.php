@@ -371,7 +371,7 @@
             }];
             var products_conf = {
                 label: 'Products',
-                decimal: 0,
+                decimal: 2,
                 icon: 'fa fa-industry',
                 iconbackground: '#F75333',
                 background: 'transparent'
@@ -1001,7 +1001,6 @@
                     [orgCtx, timeCtx], team_members_lines_configuration);
 
             // ------------------------------- TEAM MEMBERS ROLES (pie Chart) -------------------------------------
-            // TODO sumar en cliente!!!
             var team_members_pie_dom = document.getElementById("team-members-pie");
             var team_members_pie_metrics = [
                 {

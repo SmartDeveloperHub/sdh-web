@@ -854,8 +854,157 @@
                     [orgCtx, timeCtx, pmanager_products_cntx], internal_members_lines_configuration);
 
 
+            // CYTOCHART CONFIG FOR DIRECTOR
+            function configDirectorCytoChart(productsAux, theProduct, edges) {
+                var cytograph1_metrics = [];
+                // Add edges
+                var cytograph1_configuration = {
+                    'nodes': [],
+                    'edges': edges
+                };
+                for (var id in productsAux) {
+                    // Add Metric
+                    var aux;
+                    var productMetricId;
+                    var tooltip;
+                    var volume = null;
+
+                    if (id == theProduct) {
+                        volume = '_static_';
+                        aux = {
+                            max: 1,
+                            aggr: 'sum',
+                            prid: id,
+                            from: framework.data.getContextData(timeCtx)['from'],
+                            to: framework.data.getContextData(timeCtx)['to']
+                        };
+                        productMetricId = framework.utils.resourceHash('product-developers', aux);
+                        aux['id'] = 'product-developers';
+                        tooltip = "Product \"¬_D.data.info.prid.name¬\"<br/> Staff: ¬_D.data.values[0]¬";
+
+                    } else {
+                        aux = {
+                            max: 1,
+                            aggr: 'sum',
+                            pid: id,
+                            from: framework.data.getContextData(timeCtx)['from'],
+                            to: framework.data.getContextData(timeCtx)['to']
+                        };
+                        productMetricId = framework.utils.resourceHash('project-developers', aux);
+                        aux['id'] = 'project-developers';
+                        tooltip = "Product \"¬_D.data.info.pid.name¬\"<br/> Staff: ¬_D.data.values[0]¬";
+                    }
+
+
+                    if (productMetricId == null) {
+                        return null;
+                    }
+                    cytograph1_metrics.push(aux);
+
+                    // Add Node
+                    cytograph1_configuration.nodes.push(
+                            {
+                                id: productsAux[id].name,
+                                avatar:productsAux[id].avatar,
+                                shape:"ellipse",
+                                volume: volume,
+                                metric: productMetricId,
+                                tooltip: tooltip || productsAux[id].tooltip || ""
+                            }
+                    )
+                }
+
+                return {'config': cytograph1_configuration, 'metrics': cytograph1_metrics};
+            };
+
+            var cytocharts = [];
+            framework.data.observe(["view-pmanager-products"], function(framework_data) {
+
+                if (framework_data.event == "loading") {
+                    return;
+                }
+
+                var frameData = framework_data['data']['view-pmanager-products'][0]['data'];
+
+                // Remove previous cytocharts
+                var toRemove = null;
+                while( (toRemove = cytocharts.pop()) != null ) {
+                    toRemove.delete();
+                }
+
+                for(var i = 0; i < frameData.values.length && i < 3; i++) {
+
+                    var data = frameData.values[i];
+                    var cytograph_dom = document.getElementById("cytograph" + (i+1));
+
+                    var theProductId = data['productid'];
+
+                    var productsAux = {};
+                    productsAux[data['productid']] = {
+                        "id": data['productid'],
+                        "name": data['productid'],
+                        "avatar": data['avatar']
+                    };
+
+                    var project_metric = [{
+                        id: "view-product-projects",
+                        prid: theProductId,
+                        from: framework.data.getContextData(timeCtx)['from'],
+                        to: framework.data.getContextData(timeCtx)['to']
+                    }];
+
+                    //Request product manager products
+                    framework.data.observe(project_metric, function(cytograph_dom, theProductId, productsAux, framework_data) {
+
+                        if (framework_data.event == "loading") {
+                            return;
+                        }
+
+                        var frameData = framework_data['data']['view-product-projects'][0]['data'];
+
+                        var edges = [];
+
+                        for(var j = 0; j < frameData.values.length; j++) {
+
+                            var project_data = frameData.values[j];
+
+                            edges.push({
+                                source: theProductId,
+                                target: project_data['projectid']
+                            });
+
+                            productsAux[project_data['projectid']] = {
+                                "id": project_data['projectid'],
+                                "name": project_data['projectid'],
+                                "avatar": project_data['avatar']
+                            }
+
+                        }
+
+                        var configPM = configDirectorCytoChart(productsAux, theProductId, edges);
+
+                        if (configPM == null){
+                            console.log("error loading cytoChart1");
+                        } else {
+                            var cytograph_metrics = configPM.metrics;
+                            var cytograph_configuration = configPM.config;
+
+                            var cytograph = new framework.widgets.CytoChart2(cytograph_dom, cytograph_metrics,
+                                    [], cytograph_configuration);
+
+                            cytocharts.push(cytograph);
+                        }
+
+
+                    }.bind(null, cytograph_dom, theProductId, productsAux));
+
+                }
+
+
+            }, [timeCtx, currentUserCtx]);
+
             // CYTOCHART CONFIG FOR PRODUCT MANAGER
-            function configPManagerCytoChart(productsAux, theProductManagerId, edges) {
+            /*function configPManagerCytoChart(productsAux, theProductManagerId, edges) {
                 var cytograph1_metrics = [];
                 // Add edges
                 var cytograph1_configuration = {
@@ -1015,7 +1164,7 @@
 
             var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
                     [orgCtx, timeCtx], cytograph3_configuration);
-
+*/
 
             //  --------------------------- PRODUCT / PROJECTS TABLE ---------------------------------
 

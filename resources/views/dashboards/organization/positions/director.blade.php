@@ -182,15 +182,6 @@
             <div id="cytograph3" class="widget grid-stack-item-content"></div>
         </div>
 
-        <!-- Subsection: Positions -->
-        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="21">
-            <div id="positions-subtitle" class="grid-stack-item-content subtitleRow">
-                <span id="positions-stitle-ico" class="subtitleIcon fa fa-graduation-cap"></span>
-                <span id="positions-stitle-label" class="subtitleLabel">Positions</span>
-                <span id="positions-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
-            </div>
-        </div>
-
         <div class="grid-stack-item" data-gs-width="6" data-gs-height="3" data-gs-x="0" data-gs-y="23">
             <div id="external-members-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="external-members-table-stitle-ico" class="subtitleIcon fa fa-user-secret"></span>
@@ -651,22 +642,31 @@
             }, [timeCtx, currentUserCtx]);
 
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
+            var currentCost;
             var scatter_dom = document.getElementById("scatter-plot");
             var director_products_cntx = "director-products-cntxt";
-            framework.data.observe(["view-director-products"], function(frameData) {
+            framework.data.observe([{id: 'director-costs', max: 1 }], function(frameData) {
                 if (frameData.event == "loading") {
                     return;
                 }
+                currentCost = frameData.data["director-costs"][0].data.values[0];
+                //console.log("director-cost_4Scatter: " + frameData.data["director-costs"][0].data.values[0]);
+                framework.data.observe(["view-director-products"], function(frameData) {
+                    if (frameData.event == "loading") {
+                        return;
+                    }
 
-                var pList = frameData.data["view-director-products"][0].data.values;
+                    var pList = frameData.data["view-director-products"][0].data.values;
 
-                var pIdList = [];
-                for (var i = 0; i < pList.length; i++) {
-                    pIdList.push(pList[i].productid);
-                }
+                    var pIdList = [];
+                    for (var i = 0; i < pList.length; i++) {
+                        pIdList.push(pList[i].productid);
+                    }
 
-                framework.data.updateContext(director_products_cntx, {prid: pIdList});
+                    framework.data.updateContext(director_products_cntx, {prid: pIdList});
+                }, [currentUserCtx]);
             }, [currentUserCtx]);
+
             //framework.data.updateContext(director_products_cntx, {prid: ['product-jenkins','product-sdh']}); //TODO: this wont be needed
             var scatter_metrics = [ //TODO: required metrics
                 {
@@ -691,24 +691,21 @@
                     var color = d3.scale.linear()
                             .domain([0, 0.5, 1])
                             .range(["red", "yellow", "green"]);
-                    return color(Math.random());
+                    return color(data['product-health']['values'][0]);
                 },
                 size: function(data) {
-                    return Math.random();
+                    var auxX = data['product-cost']['values'][0] / currentCost;
+                    return (auxX)
                 },
                 shape: function(data) {
                     return 'circle';
                 },
                 x: function(data) {
-                    //return (data['product-timetomarket']['values'][0] > 100 ? data['repodevelopers']['values'][0]/10 : data['repodevelopers']['values'][0]);
                     return (data['product-timetomarket']['values'][0]);
-                    //return Math.random();
                 },
                 xAxisLabel: "Time to market",
                 y: function(data) {
-                    //return (data['product-quality']['values'][0] > data['repopassedexecutions']['values'][0]/10 ? 100 : data['repopassedexecutions']['values'][0]);
                     return (data['product-quality']['values'][0]);
-                    //return Math.random();
                 },
                 xAxisTicks: 3,
                 yAxisTicks: 3,
@@ -729,6 +726,8 @@
                 "<div class='scattetTTLine'><i class='scatterTTIco fa fa-balance-scale green'></i><h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
                 "<div class='scattetTTLine'><i class='scatterTTIco fa fa-hourglass-start violet'></i><h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
                 "<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
+                //"<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D['product-cost'].data.values[0] * 100)/100¬</h4></div>" +
+                //"<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
                 "<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
                 "</div>",
                 image: "¬_D.data['product-cost'].info.prid.avatar¬",
@@ -898,20 +897,20 @@
             var skills_star_configuration = {
                 height: 200,
                 radius: 180,
-                labelsAssoc: [{
-                    'product-activity':      'Activity',
-                    'product-popularity-fake':    'Popularity',
-                    'product-health':        'Health',
-                    'product-quality':       'Quality',
-                    'product-timetomarket':  'Time To Market'
-                },
-                {
-                    'director-activity':          'Activity',
-                    'director-popularity-fake':        'Popularity',
-                    'director-health':            'Health',
-                    'director-quality':           'Quality',
-                    'director-timetomarket':      'Time To Market'
-                }
+                labelsAssoc: [
+                    {
+                        'director-activity':          'Activity',
+                        'director-popularity-fake':        'Popularity',
+                        'director-health':            'Health',
+                        'director-quality':           'Quality',
+                        'director-timetomarket':      'Time To Market'
+                    },{
+                        'product-activity':      'Activity',
+                        'product-popularity-fake':    'Popularity',
+                        'product-health':        'Health',
+                        'product-quality':       'Quality',
+                        'product-timetomarket':  'Time To Market'
+                    }
                 ],
                 labels: ["Activity", "Popularity", 'Health', 'Time To Market', 'Quality' ],
                 fillColor: ["rgba(30, 30, 30, 0.2)", "rgba(1, 150, 64, 0.4)"],
@@ -974,7 +973,7 @@
             var external_members_lines_metrics = [
                 {
                     id: 'product-externals',
-                    max: 40
+                    max: 60
                 }
             ];
             var external_members_lines_configuration = {
@@ -994,7 +993,7 @@
             var internal_members_lines_metrics = [
                 {
                     id: 'product-developers',
-                    max: 40
+                    max: 60
                 }
             ];
             var internal_members_lines_configuration = {

@@ -382,7 +382,7 @@
                 iconbackground: '#F75333',
                 background: 'transparent'
             };
-            var products = new framework.widgets.CounterBox(products_dom, products_metrics, [orgCtx, timeCtx], products_conf);
+            var products = new framework.widgets.CounterBox(products_dom, products_metrics, [orgCtx, timeCtx, currentUserCtx], products_conf);
 
             // ------------------------------------ PROJECTS -------------------------------------------
             var team_members_dom = document.getElementById("projects-ctr");
@@ -398,7 +398,7 @@
                 iconbackground: '#8A1978',
                 background: 'transparent'
             };
-            var team_members = new framework.widgets.CounterBox(team_members_dom, team_members_metrics, [orgCtx, timeCtx], team_members_conf);
+            var team_members = new framework.widgets.CounterBox(team_members_dom, team_members_metrics, [orgCtx, timeCtx, currentUserCtx], team_members_conf);
 
             // ------------------------------------------ DEVELOPERS ----------------------------------------
             var developers_dom = document.getElementById("developers-ctr");
@@ -414,14 +414,14 @@
                 iconbackground: '#019640',
                 background: 'transparent'
             };
-            var developers = new framework.widgets.CounterBox(developers_dom, developers_metrics, [orgCtx, timeCtx], developers_conf);
+            var developers = new framework.widgets.CounterBox(developers_dom, developers_metrics, [orgCtx, timeCtx, currentUserCtx], developers_conf);
 
             // ---------------------------------- AVERAGE DEVELOPERS PER PROJECT ---------------------------------
             var avg_developers_dom = document.getElementById("avg-developers-ctr");
             var avg_developers_metrics = [{
                 id: 'pmanager-projectmembers',  //TODO: choose metric
                 max: 1,
-                aggr: 'sum'
+                aggr: 'avg'
             }];
             var avg_developers_conf = {
                 label: 'Developers / project',
@@ -430,14 +430,12 @@
                 iconbackground: '#EE7529',
                 background: 'transparent'
             };
-            var avg_developers = new framework.widgets.CounterBox(avg_developers_dom, avg_developers_metrics, [orgCtx, timeCtx], avg_developers_conf);
+            var avg_developers = new framework.widgets.CounterBox(avg_developers_dom, avg_developers_metrics, [orgCtx, timeCtx, currentUserCtx], avg_developers_conf);
 
             // ----------------------------------- REPOSITORIES -------------------------------------------
             var repos_dom = document.getElementById("repositories-ctr");
             var repos_metrics = [{
                 id: 'pmanager-repositories',  //TODO: choose metric
-                max: 1,
-                aggr: 'sum'
             }];
             var repos_conf = {
                 label: 'Repositories',
@@ -446,12 +444,12 @@
                 iconbackground: 'rgb(0, 75, 139)',
                 background: 'transparent'
             };
-            var repos = new framework.widgets.CounterBox(repos_dom, repos_metrics, [orgCtx, timeCtx], repos_conf);
+            var repos = new framework.widgets.CounterBox(repos_dom, repos_metrics, [orgCtx, timeCtx, currentUserCtx], repos_conf);
 
             // ------------------------------- AVERAGE REPOSITORIES PER PROJECT ---------------------------------------
             var avg_repositories_dom = document.getElementById("avg-repositories-ctr");
             var avg_repositories_metrics = [{
-                id: 'pmanager-repositories',  //TODO: choose metric
+                id: 'pmanager-projectrepositories',  //TODO: choose metric
                 max: 1,
                 aggr: 'avg'
             }];
@@ -462,32 +460,41 @@
                 iconbackground: '#EE7529',
                 background: 'transparent'
             };
-            var avg_repositories = new framework.widgets.CounterBox(avg_repositories_dom, avg_repositories_metrics, [orgCtx, timeCtx], avg_repositories_conf);
+            var avg_repositories = new framework.widgets.CounterBox(avg_repositories_dom, avg_repositories_metrics, [orgCtx, timeCtx, currentUserCtx], avg_repositories_conf);
 
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
             var scatter_dom = document.getElementById("scatter-plot");
-            var scatter_test_cntx = "test_cntx";
-            framework.data.updateContext(scatter_test_cntx, {prid: [1,2,3,4,5]}); //TODO: this wont be needed
+            var pmanager_products_cntx = "pmanager-products-cntxt";
+            framework.data.observe(["view-pmanager-products"], function(frameData) {
+                if (frameData.event == "loading") {
+                    return;
+                }
+                var pList = frameData.data["view-pmanager-products"][0].data.values;
+                //console.log("pList: " + JSON.stringify(pList));
+                var pIdList = [];
+                for (var i = 0; i < pList.length; i++) {
+                    pIdList.push(pList[i].productid);
+                }
+                console.log("pList: " + JSON.stringify(pIdList));
+                framework.data.updateContext(pmanager_products_cntx, {prid: pIdList});
+            }, [currentUserCtx]);
+            //framework.data.updateContext(scatter_test_cntx, {prid: [1,2,3,4,5]}); //TODO: this wont be needed
             var scatter_metrics = [ //TODO: required metrics
                 {
                     id: 'product-cost',
-                    max: 1,
-                    aggr: 'sum'
+                    max: 1
                 },
                 {
                     id: 'product-health',
-                    max: 1,
-                    aggr: 'sum'
+                    max: 1
                 },
                 {
                     id: 'product-quality',
-                    max: 1,
-                    aggr: 'sum'
+                    max: 1
                 },
                 {
                     id: 'product-timetomarket',
-                    max: 1,
-                    aggr: 'sum'
+                    max: 1
                 }
             ];
             var scatter_conf = {
@@ -504,20 +511,18 @@
                     return 'circle';
                 },
                 x: function(data) {
-                    //return (data['repodevelopers']['values'][0] > 100 ? data['repodevelopers']['values'][0]/10 : data['repodevelopers']['values'][0]);
-                    return Math.random();
+                    return (data['product-timetomarket']['values'][0]);
                 },
                 xAxisLabel: "Time to market",
                 y: function(data) {
-                    //return (data['repopassedexecutions']['values'][0] > data['repopassedexecutions']['values'][0]/10 ? 100 : data['repopassedexecutions']['values'][0]);
-                    return Math.random();
+                    return (data['product-quality']['values'][0]);
                 },
                 xAxisTicks: 3,
                 yAxisTicks: 3,
                 yAxisLabel: "Quality",
                 height: 390,
                 groupBy: 'prid',
-                labelFormat: '¬_D.productcost.info.prid.name¬',
+                labelFormat: "¬_D['product-cost'].info.prid.name¬",
                 showDistX: false,
                 showDistY: false,
                 xDomain: [0,1],
@@ -525,11 +530,13 @@
                 pointDomain: [0,1],
                 clipEdge: true,
                 // TODO 
-                tooltip: "<div style='text-align: center;'>" +
-                "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data.productcost.info.prid.avatar¬\" />" +
-                "<h3>¬_D.data.productcost.info.prid.name¬</h3>" +
-                "<h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4>" +
-                "<h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4>" +
+                tooltip:  "<div class='scatterTooltip' style='text-align: center;'>" +
+                "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data['product-cost'].info.prid.avatar¬\" />" +
+                "<h3>¬_D.data['product-cost'].info.prid.name¬</h3>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-balance-scale green'></i><h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-hourglass-start violet'></i><h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
+                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
                 "</div>",
                 image: "¬_D.data.productcost.info.prid.avatar¬",
                 xAxisGradient: ['red', 'orange', 'yellow', 'green'],
@@ -538,7 +545,7 @@
                 showMaxMin: false
             };
 
-            var scatter = new framework.widgets.Scatter(scatter_dom, scatter_metrics, [orgCtx, timeCtx, scatter_test_cntx], scatter_conf);
+            var scatter = new framework.widgets.Scatter(scatter_dom, scatter_metrics, [orgCtx, timeCtx, pmanager_products_cntx], scatter_conf);
 
             //  ----------------------------------- PRODUCTS TABLE ------------------------------------------
             var table_dom = document.getElementById("products-table");

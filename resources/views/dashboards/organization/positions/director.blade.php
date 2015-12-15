@@ -517,19 +517,21 @@
                     var productMetricId;
                     if (id == theProductManagerId) {
                         productMetricId = "_static_";
-                        //productMetricId = framework.utils.resourceHash('pmanager-products', aux2); // Hay un problema, parece que si los dos widgets cytocharts escuchan pmanager-products, el segundo no machea con el hash que viene del framework... TODO??
+                        productMetricId = framework.utils.resourceHash('pmanager-products', aux2); // Hay un problema, parece que si los dos widgets cytocharts escuchan pmanager-products, el segundo no machea con el hash que viene del framework... TODO??
                         aux2['id']= 'pmanager-products';
                         aux = aux2;
+                        cytograph1_configuration.tooltip = productsAux[theProductManagerId].tooltip + "<br/>¬_D.data.values[0]¬ products";
                     } else {
                         productMetricId = framework.utils.resourceHash('product-developers', aux);
                         aux['id']= 'product-developers';
+                        cytograph1_configuration.tooltip = "Staff: ¬_D.data.values[0]¬";
                     }
                     if (productMetricId == null) {
                         return null;
-                    };
+                    }
                     cytograph1_metrics.push(aux);
 
-                    cytograph1_configuration.tooltip = "Staff: ¬_D.data.values[0]¬";
+
 
                     // Add Node
                     cytograph1_configuration.nodes.push(
@@ -542,17 +544,103 @@
                         }
                     )
                 }
-                console.log(JSON.stringify(cytograph1_metrics));
-                console.log(JSON.stringify(cytograph1_configuration))
+
                 return {'config': cytograph1_configuration, 'metrics': cytograph1_metrics};
             };
+
+            var cytocharts = [];
+            framework.data.observe(["view-director-productmanagers"], function(framework_data) {
+
+                if (framework_data.event == "loading") {
+                    return;
+                }
+
+                var frameData = framework_data['data']['view-director-productmanagers'][0]['data'];
+
+                // Remove previous cytocharts
+                var toRemove = null;
+                while( (toRemove = cytocharts.pop()) != null ) {
+                    toRemove.delete();
+                }
+
+                for(var i = 0; i < frameData.values.length; i++) {
+
+                    var data = frameData.values[i];
+                    var cytograph_dom = document.getElementById("cytograph" + (i+1));
+
+                    var theProductManagerId = data['userid'];
+
+                    var productsAux = {};
+                    productsAux[data['userid']] = {
+                        "name": data['userid'],
+                        "tooltip": data['name'],
+                        "nick": data['nick'],
+                        "avatar": data['avatar'],
+                        "email": data['email'],
+                        "positionsByOrgId": data['positionsByOrgId']
+                    };
+
+                    //Request product manager products
+                    framework.data.observe([{id: "view-pmanager-products", uid: theProductManagerId}], function(cytograph_dom, theProductManagerId, productsAux, framework_data) {
+
+                        if (framework_data.event == "loading") {
+                            return;
+                        }
+
+                        var frameData = framework_data['data']['view-pmanager-products'][0]['data'];
+
+                        var edges = [];
+
+                        for(var j = 0; j < frameData.values.length; j++) {
+
+                            var product_data = frameData.values[j];
+
+                            edges.push({
+                                source: theProductManagerId,
+                                target: product_data['productid']
+                            });
+
+                            productsAux[product_data['productid']] = {
+                                "name": product_data['productid'],
+                                "tooltip": product_data['name'],
+                                "avatar": product_data['avatar']
+                            }
+
+                        }
+
+                        var configPM = configDirectorCytoChart(productsAux, theProductManagerId, edges);
+
+                        if (configPM == null){
+                            console.log("error loading cytoChart1");
+                        } else {
+                            var cytograph_metrics = configPM.metrics;
+                            var cytograph_configuration = configPM.config;
+
+                            var cytograph = new framework.widgets.CytoChart2(cytograph_dom, cytograph_metrics,
+                                    [], cytograph_configuration);
+
+                            cytocharts.push(cytograph);
+                        }
+
+
+                    }.bind(null, cytograph_dom, theProductManagerId, productsAux));
+
+
+
+
+                }
+
+
+
+
+            }, [timeCtx, currentUserCtx]);
 
             // CYTOCHART1 INITIALIZATION
             // TODO get
             // product managers del director
             // mejores products de los  3 mejores P.Managers
             // Info de cada uno de los productos
-            var cytograph1_dom = document.getElementById("cytograph1");
+            /*var cytograph1_dom = document.getElementById("cytograph1");
             var theProductManagerId = '1011';
             var edges = [
                 { source: '1011', target: 'product-sdh' },
@@ -636,6 +724,7 @@
                 var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
                         [orgCtx, timeCtx], cytograph2_configuration);
             }
+            */
 
             // CYTOCHART3 INITIALIZATION
             /*var cytograph3_dom = document.getElementById("cytograph3");

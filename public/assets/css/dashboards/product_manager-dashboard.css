@@ -309,6 +309,14 @@ html, body {
 #members-table-stitle-help {
 }
 
+#internal-members-stitle-ico {
+    color: #944444;
+}
+
+#external-members-stitle-ico {
+    color: #947744;
+}
+
 #team-multibar-subtitle {
 }
 

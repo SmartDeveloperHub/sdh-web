@@ -551,3 +551,11 @@ table.dataTable tbody tr .odd {
     width: 32px;
     text-align: center;
 }
+
+.skill-lines {
+    height: 200px;
+}
+
+.repositories-commits-lines {
+    height: 220px;
+}

@@ -49,17 +49,14 @@
                 <div id="projects-ctr" class="boxCounter grid-stack-item-content"></div>
             </div>
 
-            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="0" data-gs-y="13">
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="2" data-gs-y="13">
                 <div id="personnel-cost-ctr" class="grid-stack-item-content"></div>
             </div>
-            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="3" data-gs-y="13">
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="5" data-gs-y="13">
                 <div id="avg-developers-ctr" class="boxCounter grid-stack-item-content"></div>
             </div>
-            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="6" data-gs-y="13">
+            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="8" data-gs-y="13">
                 <div id="avg-repositories-ctr" class="boxCounter grid-stack-item-content"></div>
-            </div>
-            <div class="grid-stack-item" data-gs-width="3" data-gs-height="8" data-gs-x="9" data-gs-y="13">
-                <div id="empty-ctr2" class="boxCounter grid-stack-item-content"></div>
             </div>
         </div>
     </div>

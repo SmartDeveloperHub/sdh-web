@@ -16,9 +16,14 @@
                         <a id="activate-grid" class="headbutton fa-pencil"></a>
                         <a class="headbutton fa-sign-out" href="/auth/logout"></a>
                     </div>
+                    @if (Auth::user() != null && Auth::user()->avatar != null)
+                    <div id="avatarbox" class="headcomp useravatar-img" style="background-image: url({{Auth::user()->avatar}})">
+                    </div>
+                    @else
                     <div id="avatarbox" class="headcomp">
                         <a class="useravatar fa-user-secret"></a>
                     </div>
+                    @endif
                     <div id="userinfobox" class="headcomp">
                         <span id="usernick">{{ Auth::user()->username }}</span>
                         <span id="username">{{ Auth::user()->name }} {{ Auth::user()->surname }}</span>

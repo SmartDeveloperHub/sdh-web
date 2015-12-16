@@ -144,6 +144,12 @@
 	transition:all 0.3s;
 }
 
+.useravatar-img{
+	background-repeat: no-repeat;
+	height: 64px;
+	background-size: contain;
+}
+
 .headbutton {
     display: block !important;
     font-family: 'FontAwesome';

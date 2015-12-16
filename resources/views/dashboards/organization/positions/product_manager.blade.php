@@ -200,14 +200,10 @@
 
         <!-- Subsection: Roles -->
 
-        <div class="grid-stack-item" data-gs-width="12" data-gs-height="10" data-gs-x="0" data-gs-y="19">
-            <div id="team-members-lines" class="widget grid-stack-item-content"></div>
-        </div>
-
         <!-- Subsection: Project Selector -->
 
         <!-- Column -->
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="29">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="19">
             <div class="grid-stack-item-content subtitleRow">
                 <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
                 <span id="members-table-stitle-label" class="subtitleLabel">Project Selector</span>
@@ -215,14 +211,14 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="32">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="22">
             <div class="grid-stack-item-content">
                 <div id="product-projects-table" class="widget grid-stack-item-content"></div>
             </div>
         </div>
 
         <!-- Column -->
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="29">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="19">
             <div id="team-multibar-subtitle" class="row subtitleRow">
                 <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                 <span id="team-multibar-stitle-label" class="subtitleLabel">Teams Comparison</span>
@@ -230,11 +226,11 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="31">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="21">
             <div id="projects-roles-multibar" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="44">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="34">
             <div id="team-pie-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                 <span id="team-pie-stitle-label" class="subtitleLabel">Roles Summary</span>
@@ -242,7 +238,7 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="46">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="36">
             <div id="team-members-pie" class="widget grid-stack-item-content"></div>
         </div>
 

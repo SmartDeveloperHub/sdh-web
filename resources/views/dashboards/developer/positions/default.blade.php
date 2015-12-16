@@ -157,6 +157,22 @@
 
         var loadTimeDependentWidgets = function loadTimeDependentWidgets() {
 
+            var toPercentagePostAggr = function toPercentagePostAggr(responses, skel) {
+
+                var vals = [];
+                for(var i = 0; i < responses.length; ++i) {
+                    var values = responses[i]['data']['values'];
+                    for(var x = 0; x < values.length; x++) {
+                        vals.push(Math.round(values[x] * 100));
+                    }
+                }
+
+                skel['data']['values'] = vals;
+
+                return skel;
+
+            };
+
             // TOTAL COMMITS
             var total_commits_dom = document.getElementById("total-commits");
             var total_commits_metrics = [{
@@ -289,17 +305,20 @@
                 {
                     id: 'member-speed-fake',
                     max: 1,
-                    aggr: "avg"
+                    aggr: "avg",
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'member-collaboration-fake',
                     max: 1,
-                    aggr: "avg"
+                    aggr: "avg",
+                    post_aggr: toPercentagePostAggr
                 },
                 {
                     id: 'member-quality',
                     max: 1,
-                    aggr: "sum"
+                    aggr: "sum",
+                    post_aggr: toPercentagePostAggr
                 }];
             var skills_star_configuration = {
                 height: 300,

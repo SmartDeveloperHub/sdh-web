@@ -266,17 +266,6 @@
         setSubtitle("Product Manager");
         showHeaderChart();
 
-        //change Product subtitle in start chart
-        framework.data.observe(['productinfo'], function (event) {
-
-            if (event.event === 'data') {
-                var productInfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
-                $('#radar-product-stitle-label').text(productInfo.name);
-                $('#liquid1-chart-stitle-label').text(productInfo.name + " Status");
-                $('#liquid2-chart-stitle-label').text(productInfo.name + " Health");
-            }
-
-        }, [productsCtx]);
 
         // Subtitles info
         var addQTip = function addQTip(element, id, htmlText) {
@@ -379,7 +368,7 @@
             // --------------------------------------- PRODUCTS --------------------------------------------
             var products_dom = document.getElementById("products-ctr");
             var products_metrics = [{
-                id: 'pmanager-products',  //TODO: implement products metric
+                id: 'pmanager-products',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -395,7 +384,7 @@
             // ------------------------------------ PROJECTS -------------------------------------------
             var team_members_dom = document.getElementById("projects-ctr");
             var team_members_metrics = [{
-                id: 'pmanager-projects', //TODO: implement projects metric
+                id: 'pmanager-projects',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -411,7 +400,7 @@
             // ------------------------------------------ DEVELOPERS ----------------------------------------
             var developers_dom = document.getElementById("developers-ctr");
             var developers_metrics = [{
-                id: 'pmanager-members',  //TODO: implement developers metric
+                id: 'pmanager-members',
                 max: 1,
                 aggr: 'sum'
             }];
@@ -427,7 +416,7 @@
             // ---------------------------------- AVERAGE DEVELOPERS PER PROJECT ---------------------------------
             var avg_developers_dom = document.getElementById("avg-developers-ctr");
             var avg_developers_metrics = [{
-                id: 'pmanager-projectmembers',  //TODO: choose metric
+                id: 'pmanager-projectmembers',
                 max: 1,
                 aggr: 'avg'
             }];
@@ -458,7 +447,7 @@
             // ----------------------------------- REPOSITORIES -------------------------------------------
             var repos_dom = document.getElementById("repositories-ctr");
             var repos_metrics = [{
-                id: 'pmanager-repositories',  //TODO: choose metric
+                id: 'pmanager-repositories',
             }];
             var repos_conf = {
                 label: 'Repositories',
@@ -472,7 +461,7 @@
             // ------------------------------- AVERAGE REPOSITORIES PER PROJECT ---------------------------------------
             var avg_repositories_dom = document.getElementById("avg-repositories-ctr");
             var avg_repositories_metrics = [{
-                id: 'pmanager-projectrepositories',  //TODO: choose metric
+                id: 'pmanager-projectrepositories',
                 max: 1,
                 aggr: 'avg'
             }];
@@ -510,7 +499,7 @@
                 }, [currentUserCtx]);
             }, [currentUserCtx]);
 
-            var scatter_metrics = [ //TODO: required metrics
+            var scatter_metrics = [
                 {
                     id: 'product-cost',
                     max: 1
@@ -908,7 +897,7 @@
                 }
 
                 return {'config': cytograph1_configuration, 'metrics': cytograph1_metrics};
-            };
+            }
 
             var cytocharts = [];
             framework.data.observe(["view-pmanager-products"], function(framework_data) {
@@ -996,168 +985,6 @@
 
             }, [timeCtx, currentUserCtx]);
 
-            // CYTOCHART CONFIG FOR PRODUCT MANAGER
-            /*function configPManagerCytoChart(productsAux, theProductManagerId, edges) {
-                var cytograph1_metrics = [];
-                // Add edges
-                var cytograph1_configuration = {
-                    'nodes': [],
-                    'edges': edges
-                };
-                for (var prId in productsAux) {
-                    // Add Metric
-                    var aux = {
-                        max: 1,
-                        aggr: 'sum',
-                        prid: prId
-                    };
-                    var productMetricId = framework.utils.resourceHash('produsers', aux);
-                    if (prId == theProductManagerId) {
-                        productMetricId = "_static_";
-                    }
-                    aux['id']= 'produsers';
-                    cytograph1_metrics.push(aux);
-
-                    cytograph1_configuration.tooltip = "Staff: ¬_D.data.values[0]¬";
-
-                    // Add Node
-                    cytograph1_configuration.nodes.push(
-                        {
-                            id: productsAux[prId].name,
-                            avatar:productsAux[prId].avatar,
-                            shape:"ellipse",
-                            volume: productMetricId,
-                            tooltip: productsAux[prId].tooltip || ""
-                        }
-                    )
-                }
-                return {'config': cytograph1_configuration, 'metrics': cytograph1_metrics};
-            };
-
-            // CYTOCHART1 INITIALIZATION
-            // TODO get
-            // product managers del director
-            // mejores products de los  3 mejores P.Managers
-            // Info de cada uno de los productos
-            var cytograph1_dom = document.getElementById("cytograph1");
-            var theProductManagerId = 1;
-            var edges = [
-                { source: 'ProductA', target: 'Project1' },
-                { source: 'ProductA', target: 'Project2' },
-                { source: 'ProductA', target: 'Project3' },
-                { source: 'ProductA', target: 'Project4' },
-                { source: 'ProductA', target: 'Project5' }
-            ];
-            var productsAux = {
-                1:{
-                    'name': "ProductA",
-                    'avatar': "assets/images/logo_bg.png",
-                    tooltip: "I'm the main circle on the left"
-                },
-                2:{
-                    'name': "Project1",
-                    'avatar': "assets/images/CytoChartDemo/bp1.png"
-                },
-                3:{
-                    'name': "Project2",
-                    'avatar': "assets/images/CytoChartDemo/bp2.png"
-                },
-                4:{
-                    'name': "Project3",
-                    'avatar': "assets/images/CytoChartDemo/bp3.png"
-                },
-                5:{
-                    'name': "Project4",
-                    'avatar': "assets/images/CytoChartDemo/bp4.png"
-                },
-                6:{
-                    'name': "Project5",
-                    'avatar': "assets/images/CytoChartDemo/bp5.png"
-                }
-            };
-
-            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
-            var cytograph1_metrics = configPM.metrics;
-            var cytograph1_configuration = configPM.config;
-
-            var cytograph1 = new framework.widgets.CytoChart2(cytograph1_dom, cytograph1_metrics,
-                    [orgCtx, timeCtx], cytograph1_configuration);
-
-            // CYTOCHART2 INITIALIZATION
-            var cytograph2_dom = document.getElementById("cytograph2");
-            var theProductManagerId = 1;
-            var edges = [
-                { source: 'ProductA', target: 'Project1' },
-                { source: 'ProductA', target: 'Project2' },
-                { source: 'ProductA', target: 'Project3' }
-            ];
-            var productsAux = {
-                1:{
-                    'name': "ProductA",
-                    'avatar': "assets/images/logo_bg.png",
-                    tooltip: "I'm the main circle on the center"
-                },
-                2:{
-                    'name': "Project1",
-                    'avatar': "assets/images/CytoChartDemo/bp1.png"
-                },
-                3:{
-                    'name': "Project2",
-                    'avatar': "assets/images/CytoChartDemo/bp2.png"
-                },
-                4:{
-                    'name': "Project3",
-                    'avatar': "assets/images/CytoChartDemo/bp3.png"
-                }
-            };
-
-            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
-            var cytograph2_metrics = configPM.metrics;
-            var cytograph2_configuration = configPM.config;
-
-            var cytograph2 = new framework.widgets.CytoChart2(cytograph2_dom, cytograph2_metrics,
-                    [orgCtx, timeCtx], cytograph2_configuration);
-
-            // CYTOCHART3 INITIALIZATION
-            var cytograph3_dom = document.getElementById("cytograph3");
-            var theProductManagerId = 1;
-            var edges = [
-                { source: 'ProductA', target: 'Project1' },
-                { source: 'ProductA', target: 'Project2' },
-                { source: 'ProductA', target: 'Project3' },
-                { source: 'ProductA', target: 'Project4' }
-            ];
-            var productsAux = {
-                1:{
-                    'name': "ProductA",
-                    'avatar': "assets/images/logo_bg.png",
-                    'tooltip': "I'm the main circle on the right"
-                },
-                2:{
-                    'name': "Project1",
-                    'avatar': "assets/images/CytoChartDemo/bp1.png"
-                },
-                3:{
-                    'name': "Project2",
-                    'avatar': "assets/images/CytoChartDemo/bp2.png"
-                },
-                4:{
-                    'name': "Project3",
-                    'avatar': "assets/images/CytoChartDemo/bp3.png"
-                },
-                5:{
-                    'name': "Project4",
-                    'avatar': "assets/images/CytoChartDemo/bp4.png"
-                }
-            };
-
-            var configPM = configPManagerCytoChart(productsAux, theProductManagerId, edges);
-            var cytograph3_metrics = configPM.metrics;
-            var cytograph3_configuration = configPM.config;
-
-            var cytograph3 = new framework.widgets.CytoChart2(cytograph3_dom, cytograph3_metrics,
-                    [orgCtx, timeCtx], cytograph3_configuration);
-*/
 
             //  --------------------------- PRODUCT / PROJECTS TABLE ---------------------------------
 
@@ -1232,7 +1059,6 @@
 
                     // Now we can start adding things
                     var products = event.data['view-pmanager-products'][Object.keys(event.data['view-pmanager-products'])[0]]['data']['values'];
-                    console.log(products);
 
                     // Function to change the selected table
                     var changeSelectedTable = function() {

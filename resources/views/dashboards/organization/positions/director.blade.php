@@ -813,19 +813,14 @@
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 
 
-            var toPercentagePostAggr = function toPercentagePostAggr(responses, skel) {
+            var toPercentagePostModifier = function toPercentagePostModifier(resourceData) {
 
-                var vals = [];
-                for(var i = 0; i < responses.length; ++i) {
-                    var values = responses[i]['data']['values'];
-                    for(var x = 0; x < values.length; x++) {
-                        vals.push(Math.round(values[x] * 100));
-                    }
+                var values = resourceData['data']['values'];
+                for(var x = 0; x < values.length; x++) {
+                    values[x] = Math.round(values[x] * 100);
                 }
 
-                skel['data']['values'] = vals;
-
-                return skel;
+                return resourceData;
 
             };
 
@@ -836,27 +831,27 @@
                 {
                     id: 'product-activity',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'product-popularity-fake',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'product-health',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'product-quality',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'product-timetomarket',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 }
             ];
             //Average skills
@@ -864,31 +859,31 @@
                 {
                     id: 'director-activity',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'director-popularity-fake',
                     max: 1,
                     aggr: 'avg',
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'director-health',
                     max: 1,
                     aggr: 'avg',
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'director-quality',
                     max: 1,
                     aggr: 'avg',
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'director-timetomarket',
                     max: 1,
                     aggr: 'avg',
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 }
             ];
 
@@ -929,7 +924,7 @@
                     id: 'product-success-rate',
                     max: 1,
                     aggr: "sum",
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 }
             ];
             var liquid1_configuration = {
@@ -952,7 +947,7 @@
                     id: 'product-health',
                     max: 1,
                     aggr: "sum",
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 }
             ];
             var liquid2_configuration = {

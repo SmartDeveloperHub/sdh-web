@@ -626,19 +626,14 @@
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx, currentUserCtx], table_configuration);
 
-            var toPercentagePostAggr = function toPercentagePostAggr(responses, skel) {
+            var toPercentagePostModifier = function toPercentagePostModifier(resourceData) {
 
-                var vals = [];
-                for(var i = 0; i < responses.length; ++i) {
-                    var values = responses[i]['data']['values'];
-                    for(var x = 0; x < values.length; x++) {
-                        vals.push(Math.round(values[x] * 100));
-                    }
+                var values = resourceData['data']['values'];
+                for(var x = 0; x < values.length; x++) {
+                    values[x] = Math.round(values[x] * 100);
                 }
 
-                skel['data']['values'] = vals;
-
-                return skel;
+                return resourceData;
 
             };
 
@@ -647,18 +642,19 @@
 
             var releasesLines_metrics = [{
                 id: 'product-success-rate',
-                max: 20
+                max: 20,
+                post_modifier: toPercentagePostModifier
             }];
 
             var releasesLines_configuration = {
                 height: 65,
                 color: function(val) {
                     var color = d3.scale.linear()
-                            .domain([0, 0.5, 1])
+                            .domain([0, 50, 100])
                             .range(["red", "yellow", "green"]);
                     return color(val);
                 },
-                tooltip: '<h3>Value: ¬Math.round(_E.value * 100)/100¬</h3>' +
+                tooltip: '<h3>Value: ¬_E.value¬%</h3>' +
                          '<h3>Date: ¬Widget.format.date(_E.time)¬ </h3>',
                 legend: ['Success', 'Broken']
             };
@@ -671,27 +667,27 @@
                 {
                     id: 'product-activity',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'product-popularity-fake',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'product-health',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'product-quality',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'product-timetomarket',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 }
             ];
             //Average skills
@@ -699,31 +695,31 @@
                 {
                     id: 'pmanager-activity',
                     max: 1,
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'pmanager-popularity-fake',
                     max: 1,
                     aggr: 'avg',
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'pmanager-health',
                     max: 1,
                     aggr: 'avg',
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'pmanager-quality',
                     max: 1,
                     aggr: 'avg',
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'pmanager-timetomarket',
                     max: 1,
                     aggr: 'avg',
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 }
             ];
 
@@ -764,7 +760,7 @@
                     id: 'product-success-rate',
                     max: 1,
                     aggr: "sum",
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 }
             ];
             var liquid1_configuration = {
@@ -787,7 +783,7 @@
                     id: 'product-health',
                     max: 1,
                     aggr: "sum",
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 }
             ];
             var liquid2_configuration = {

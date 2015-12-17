@@ -157,19 +157,14 @@
 
         var loadTimeDependentWidgets = function loadTimeDependentWidgets() {
 
-            var toPercentagePostAggr = function toPercentagePostAggr(responses, skel) {
+            var toPercentagePostModifier = function toPercentagePostModifier(resourceData) {
 
-                var vals = [];
-                for(var i = 0; i < responses.length; ++i) {
-                    var values = responses[i]['data']['values'];
-                    for(var x = 0; x < values.length; x++) {
-                        vals.push(Math.round(values[x] * 100));
-                    }
+                var values = resourceData['data']['values'];
+                for(var x = 0; x < values.length; x++) {
+                    values[x] = Math.round(values[x] * 100);
                 }
 
-                skel['data']['values'] = vals;
-
-                return skel;
+                return resourceData;
 
             };
 
@@ -306,19 +301,19 @@
                     id: 'member-speed-fake',
                     max: 1,
                     aggr: "avg",
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'member-collaboration-fake',
                     max: 1,
                     aggr: "avg",
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'member-quality',
                     max: 1,
                     aggr: "sum",
-                    post_aggr: toPercentagePostAggr
+                    post_modifier: toPercentagePostModifier
                 }];
             var skills_star_configuration = {
                 height: 300,
@@ -343,17 +338,20 @@
                 {
                     id: 'member-speed-fake',
                     max: 20,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'member-collaboration-fake',
                     max: 20,
-                    aggr: 'avg'
+                    aggr: 'avg',
+                    post_modifier: toPercentagePostModifier
                 },
                 {
                     id: 'member-quality',
                     max: 20,
-                    aggr: 'sum'
+                    aggr: 'sum',
+                    post_modifier: toPercentagePostModifier
                 }
             ];
             var skills_lines_configuration = {

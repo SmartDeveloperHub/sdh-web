@@ -273,7 +273,7 @@ document.getElementById("loading").className = "";
 
 
 // Load all the modules needed
-require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "joinable", "headerHandler",
+require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "headerHandler",
     "widgetCommon", 'gridstack', 'css!/vendor/gridstack/dist/gridstack.min.css'], function() {
 
     framework.ready(function() {

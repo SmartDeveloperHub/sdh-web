@@ -40,7 +40,6 @@ require.config({
         'jquery': 'vendor/jquery/dist/jquery',
         'jquery-ui': 'vendor/jquery-ui/ui',
         'jquery-qtip': 'vendor/qtip2/jquery.qtip.min',
-        'joinable': "vendor/sdh-framework/lib/joinable/joinable",
         'moment': "vendor/moment/moment",
         'datatables' : 'vendor/datatables/media/js/jquery.dataTables.min',
         'lodash': 'vendor/lodash/lodash.min',
@@ -51,21 +50,12 @@ require.config({
         'cola': 'vendor/cytoscape/lib/cola.v3.min'
     },
     shim : {
-        'framework': {
-            deps :['jquery']
-        },
-        'joinable': {
-            deps: ['jquery']
-        },
         'nvd3': {
             exports: 'nv',
             deps: ['d3']
         },
         'headerHandler': {
             deps: ['jquery']
-        },
-        'widgetCommon': {
-            deps: ['framework', 'css!vendor/sdh-framework/framework.widget.common.css']
         },
         'cytoscape': {
             exports: 'cytoscape',

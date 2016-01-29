@@ -10,8 +10,8 @@
     "//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js",
     "css!assets/css/animate.css",
     "css!assets/css/dashboards/organization-dashboard",
-    "vendor/sdh-framework/framework.widget.counterbox",
-    "vendor/sdh-framework/framework.widget.linesChart"
+    "vendor/sdh-framework/widgets/CounterBox/counterbox",
+    "vendor/sdh-framework/widgets/LinesChart/linesChart"
     ]
 @stop
 

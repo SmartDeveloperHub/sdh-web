@@ -5,18 +5,18 @@
 
 @section('require')
     [
-    "vendor/sdh-framework/framework.widget.rangeNv",
-    "vendor/sdh-framework/framework.widget.counterbox",
-    "vendor/sdh-framework/framework.widget.scatter",
-    "vendor/sdh-framework/framework.widget.table",
+    "vendor/sdh-framework/widgets/RangeNv/rangeNv",
+    "vendor/sdh-framework/widgets/CounterBox/counterbox",
+    "vendor/sdh-framework/widgets/Scatter/scatter",
+    "vendor/sdh-framework/widgets/Table/table",
     "css!vendor/qtip2/jquery.qtip.min.css",
-    "vendor/sdh-framework/framework.widget.linesChart",
-    "vendor/sdh-framework/framework.widget.radarchart",
-    "vendor/sdh-framework/framework.widget.liquidgauge",
-    "vendor/sdh-framework/framework.widget.piechart",
-    "vendor/sdh-framework/framework.widget.timebar",
-    "vendor/sdh-framework/framework.widget.cytoChart2",
-    "vendor/sdh-framework/framework.widget.multibar",
+    "vendor/sdh-framework/widgets/LinesChart/linesChart",
+    "vendor/sdh-framework/widgets/RadarChart/radarchart",
+    "vendor/sdh-framework/widgets/LiquidGauge/liquidgauge",
+    "vendor/sdh-framework/widgets/PieChart/piechart",
+    "vendor/sdh-framework/widgets/TimeBar/timebar",
+    "vendor/sdh-framework/widgets/CytoChart2/cytoChart2",
+    "vendor/sdh-framework/widgets/MultiBar/multibar",
     "css!assets/css/dashboards/director-dashboard",
     "http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"
     ]

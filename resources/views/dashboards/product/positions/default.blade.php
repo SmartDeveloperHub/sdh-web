@@ -46,43 +46,35 @@
 
         framework.data.updateContext(productCtx, {prid: framework.dashboard.getEnv()['prid']});
 
-        // UPPER SELECTOR RANGENV (NEEDS FIRST COMMIT)
-        framework.data.observe(['productinfo'], function (event) {
 
-            if (event.event === 'data') {
-                var productinfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
-                var firstCommit =  productinfo['firstcommit'];
-
-                var rangeNv_dom = document.getElementById("fixed-chart");
-                var rangeNv_metrics = [
-                    {
-                        id: 'product-activity',
-                        max: 101,
-                        aggr: 'sum'
-                    }
-                ];
-                var rangeNv_configuration = {
-                    ownContext: timeCtx,
-                    isArea: true,
-                    showLegend: false,
-                    interpolate: 'monotone',
-                    showFocus: false,
-                    height: 140,
-                    duration: 500,
-                    colors: ["#004C8B"],
-                    axisColor: "#004C8B"
-                };
-
-                var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [productCtx], rangeNv_configuration);
-                $(rangeNv).on("CONTEXT_UPDATED", function () {
-                    $(rangeNv).off("CONTEXT_UPDATED");
-                    loadTimeDependentWidgets();
-
-                    // Hide the loading animation
-                    finishLoading();
-                });
+        var rangeNv_dom = document.getElementById("fixed-chart");
+        var rangeNv_metrics = [
+            {
+                id: 'product-activity',
+                max: 101,
+                aggr: 'sum'
             }
-        }, [productCtx]);
+        ];
+        var rangeNv_configuration = {
+            ownContext: timeCtx,
+            isArea: true,
+            showLegend: false,
+            interpolate: 'monotone',
+            showFocus: false,
+            height: 140,
+            duration: 500,
+            colors: ["#004C8B"],
+            axisColor: "#004C8B"
+        };
+
+        var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [productCtx], rangeNv_configuration);
+        $(rangeNv).on("CONTEXT_UPDATED", function () {
+            $(rangeNv).off("CONTEXT_UPDATED");
+            loadTimeDependentWidgets();
+
+            // Hide the loading animation
+            finishLoading();
+        });
 
 
         var loadTimeDependentWidgets = function() {

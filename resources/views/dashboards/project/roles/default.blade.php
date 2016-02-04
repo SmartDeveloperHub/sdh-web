@@ -46,43 +46,34 @@
         console.log("framework.dashboard.getEnv()['pid']: " + framework.dashboard.getEnv()['pid']);
         framework.data.updateContext(projectCtx, {pid: framework.dashboard.getEnv()['pid']});
 
-        // UPPER SELECTOR RANGENV (NEEDS FIRST COMMIT)
-        framework.data.observe(['projectinfo'], function (event) {
-
-            if (event.event === 'data') {
-                var projectinfo = event.data['projectinfo'][Object.keys(event.data['projectinfo'])[0]]['data'];
-                var firstCommit =  projectinfo['firstcommit'];
-
-                var rangeNv_dom = document.getElementById("fixed-chart");
-                var rangeNv_metrics = [
-                    {
-                        id: 'project-activity',
-                        max: 101,
-                        aggr: 'sum'
-                    }
-                ];
-                var rangeNv_configuration = {
-                    ownContext: timeCtx,
-                    isArea: true,
-                    showLegend: false,
-                    interpolate: 'monotone',
-                    showFocus: false,
-                    height: 140,
-                    duration: 500,
-                    colors: ["#004C8B"],
-                    axisColor: "#004C8B"
-                };
-
-                var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [projectCtx], rangeNv_configuration);
-                $(rangeNv).on("CONTEXT_UPDATED", function () {
-                    $(rangeNv).off("CONTEXT_UPDATED");
-                    loadTimeDependentWidgets();
-
-                    // Hide the loading animation
-                    finishLoading();
-                });
+        var rangeNv_dom = document.getElementById("fixed-chart");
+        var rangeNv_metrics = [
+            {
+                id: 'project-activity',
+                max: 101,
+                aggr: 'sum'
             }
-        }, [projectCtx]);
+        ];
+        var rangeNv_configuration = {
+            ownContext: timeCtx,
+            isArea: true,
+            showLegend: false,
+            interpolate: 'monotone',
+            showFocus: false,
+            height: 140,
+            duration: 500,
+            colors: ["#004C8B"],
+            axisColor: "#004C8B"
+        };
+
+        var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [projectCtx], rangeNv_configuration);
+        $(rangeNv).on("CONTEXT_UPDATED", function () {
+            $(rangeNv).off("CONTEXT_UPDATED");
+            loadTimeDependentWidgets();
+
+            // Hide the loading animation
+            finishLoading();
+        });
 
 
         var loadTimeDependentWidgets = function() {

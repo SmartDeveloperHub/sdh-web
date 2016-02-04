@@ -18,7 +18,7 @@
     "vendor/sdh-framework/widgets/CytoChart2/cytoChart2",
     "vendor/sdh-framework/widgets/MultiBar/multibar",
     "css!assets/css/dashboards/director-dashboard",
-    "http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"
+    "//crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"
     ]
 @stop
 

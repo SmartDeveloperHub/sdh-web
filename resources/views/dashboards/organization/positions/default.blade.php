@@ -5,8 +5,8 @@
 
 @section('require')
     [
-    "https://cdn.rawgit.com/matthieua/WOW/master/dist/wow.js",
-    "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js",
+    "//cdn.rawgit.com/matthieua/WOW/master/dist/wow.js",
+    "//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js",
     "//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js",
     "css!assets/css/animate.css",
     "css!assets/css/dashboards/organization-dashboard",

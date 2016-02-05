@@ -1153,7 +1153,7 @@
                             selectable: true,
                             minRowsSelected: 0,
                             maxRowsSelected: 8,
-                            initialSelectedRows: 3,
+                            initialSelectedRows: (x === 0 ? 3 : 0), //Only the first table has elements selected
                             showHeader: false,
                             filterControl: false
                         };

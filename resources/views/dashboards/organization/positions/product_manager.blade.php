@@ -643,7 +643,7 @@
             }];
 
             var releasesLines_configuration = {
-                height: 65,
+                height: 130,
                 color: function(val) {
                     var color = d3.scale.linear()
                             .domain([0, 50, 100])

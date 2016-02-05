@@ -1016,6 +1016,8 @@
                                 if(mergedData[prop].indexOf(superContextData[context][prop][i]) == -1)
                                     mergedData[prop].push(superContextData[context][prop][i]);
                             }
+                        } else if(superContextData[context][prop] instanceof Array) {
+                            mergedData[prop] = superContextData[context][prop].slice(0); //Clone the array
                         } else {
                             mergedData[prop] = superContextData[context][prop];
                         }
@@ -1149,7 +1151,7 @@
                             ],
                             keepSelectedByProperty: "projectid",
                             selectable: true,
-                            minRowsSelected: 1,
+                            minRowsSelected: 0,
                             maxRowsSelected: 8,
                             initialSelectedRows: 3,
                             showHeader: false,

@@ -1316,12 +1316,13 @@ a:hover {
 
 .footer-container {
   background-color: #e6e6e6;
-  height: 130px;
+  height: 100px;
   overflow: hidden;
+  font-size: 13px;
 }
 
 .footer-text {
-   margin-top: 34px;
+   margin-top: 20px;
 }
 
 .footer-container p {
@@ -1336,7 +1337,7 @@ a:hover {
 }
 
 .footer-img {
-  margin-top: 25px;
+  margin-top: 13px;
 }
 
 /* For gridstack */

@@ -429,6 +429,7 @@ div#floatingRow .panel.panel-default {
 	padding-right: 0;
 	margin-left: 10px;
 	margin-right: 14px;
+	border-color: rgba(255, 255, 255, 0);
 }
 
 .settings-pane {

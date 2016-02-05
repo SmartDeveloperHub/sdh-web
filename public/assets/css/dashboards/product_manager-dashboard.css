@@ -463,20 +463,25 @@ html, body {
 }
 
 .multitable-img-selector {
-    margin: 3px;
+    margin: 3px 6px;
     cursor: pointer;
     display: inline-block;
+    border-radius: 30px;
 }
 
 .multitable-img-selector > img{
     height: 40px;
     width: 40px;
+    border-radius: 30px;
 }
 
 .multitable-img-selector > span.number-selected {
     position: absolute;
+    margin-left: 1px;
+    font-family: Roboto;
+    color: rgb(119, 119, 119);
 }
 
 .multitable-img-selector.selected {
-    box-shadow: 1px 1px 5px 1px #000000;
+    box-shadow: 1px 1px 4px 1px #6B6B6B;
 }

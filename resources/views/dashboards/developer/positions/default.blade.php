@@ -112,44 +112,68 @@
             setSubtitle(env['name']);
         }
 
-        // UPPER SELECTOR RANENV (NEEDS FIRST COMMIT)
+        // UPPER SELECTOR RANENV
+        var rangeNv_dom = document.getElementById("fixed-chart");
+        var rangeNv_metrics = [
+            {
+                id: 'member-activity',
+                aggr: 'sum',
+                max: 101
+            }
+        ];
+        var rangeNv_configuration = {
+            ownContext: timeCtx,
+            isArea: true,
+            showLegend: false,
+            interpolate: 'monotone',
+            showFocus: false,
+            height: 140,
+            duration: 500,
+            colors: ["#004C8B"],
+            axisColor: "#004C8B"
+        };
+
+        var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [userCtx], rangeNv_configuration);
+
+        // Wait for the event of context updated to load the rest of the widgets
+        $(rangeNv).on("CONTEXT_UPDATED", function () {
+            $(rangeNv).off("CONTEXT_UPDATED");
+            loadTimeDependentWidgets();
+
+            // Hide the loading animation
+            finishLoading();
+        });
+
         framework.data.observe(['userinfo'], function (event) {
 
             if (event.event === 'data') {
                 var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
-                var firstCommit = userinfo['firstcommit'];
 
-                var rangeNv_dom = document.getElementById("fixed-chart");
-                var rangeNv_metrics = [
-                    {
-                        id: 'member-activity',
-                        aggr: 'sum',
-                        from: moment(firstCommit).format("YYYY-MM-DD"),
-                        max: 101
-                    }
-                ];
-                var rangeNv_configuration = {
-                    ownContext: timeCtx,
-                    isArea: true,
-                    showLegend: false,
-                    interpolate: 'monotone',
-                    showFocus: false,
-                    height: 140,
-                    duration: 500,
-                    colors: ["#004C8B"],
-                    axisColor: "#004C8B"
-                };
+                //Set header subtitle
+                setSubtitle(userinfo['name']);
 
-                var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [userCtx], rangeNv_configuration);
+                //Set data
+                var uemail = document.getElementById('user-email');
+                var usince = document.getElementById('user-since');
+                var ufirstc = document.getElementById('user-first-commit');
+                var ulastc = document.getElementById('user-last-commit');
 
-                // Wait for the event of context updated to load the rest of the widgets
-                $(rangeNv).on("CONTEXT_UPDATED", function () {
-                    $(rangeNv).off("CONTEXT_UPDATED");
-                    loadTimeDependentWidgets();
+                uemail.innerHTML = userinfo['email'];
+                usince.innerHTML = moment(new Date(userinfo['register'])).format('MMMM Do YYYY');
+                ufirstc.innerHTML = moment(new Date(userinfo['firstcommit'])).format('MMMM Do YYYY');
+                ulastc.innerHTML = moment(new Date(userinfo['lastcommit'])).format('MMMM Do YYYY');
 
-                    // Hide the loading animation
-                    finishLoading();
-                });
+                $(uemail).removeClass('blurado');
+                $(usince).removeClass('blurado');
+                $(ufirstc).removeClass('blurado');
+                $(ulastc).removeClass('blurado');
+                $("#avatar").removeClass('fa-user-secret');
+
+                if (userinfo['avatar'] !== undefined && userinfo['avatar'] !== null && userinfo['avatar'] !== "" && userinfo['avatar'] !== "http://avatarURL") {
+                    $("#avatar").css("background-image", "url(" + userinfo['avatar'] + ")");
+                } else {
+                    $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
+                }
 
             }
 
@@ -232,40 +256,6 @@
                 background: 'transparent'
             };
             var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [timeCtx, userCtx], total_projects_conf);
-
-
-            // USER META INFO
-            framework.data.observe(['userinfo'], function (event) {
-                if (event.event === 'data') {
-                    var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
-                    //Set header subtitle
-                    setSubtitle(userinfo['name']);
-
-                    //Set data
-                    var uemail = document.getElementById('user-email');
-                    var usince = document.getElementById('user-since');
-                    var ufirstc = document.getElementById('user-first-commit');
-                    var ulastc = document.getElementById('user-last-commit');
-
-                    uemail.innerHTML = userinfo['email'];
-                    usince.innerHTML = moment(new Date(/*TODO: userinfo['register']*/userinfo['firstcommit'])).format('MMMM Do YYYY');
-                    ufirstc.innerHTML = moment(new Date(userinfo['firstcommit'])).format('MMMM Do YYYY');
-                    ulastc.innerHTML = moment(new Date(userinfo['lastcommit'])).format('MMMM Do YYYY');
-
-                    $(uemail).removeClass('blurado');
-                    $(usince).removeClass('blurado');
-                    $(ufirstc).removeClass('blurado');
-                    $(ulastc).removeClass('blurado');
-                    $("#avatar").removeClass('fa-user-secret');
-
-                    if (userinfo['avatar'] !== undefined && userinfo['avatar'] !== null && userinfo['avatar'] !== "" && userinfo['avatar'] !== "http://avatarURL") {
-                        $("#avatar").css("background-image", "url(" + userinfo['avatar'] + ")");
-                    } else {
-                        $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
-                    }
-
-                }
-            }, [userCtx]);
 
 
             // USER COMMITS LINE CHART

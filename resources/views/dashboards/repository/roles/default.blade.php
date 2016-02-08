@@ -166,42 +166,74 @@
             setSubtitle(env['name']);
         }
 
-        // UPPER SELECTOR RANGENV (NEEDS FIRST COMMIT)
+        // UPPER SELECTOR RANGENV
+        var rangeNv_dom = document.getElementById("fixed-chart");
+        var rangeNv_metrics = [
+            {
+                id: 'repository-activity',
+                max: 101,
+                aggr: 'sum'
+            }
+        ];
+        var rangeNv_configuration = {
+            ownContext: timeCtx,
+            isArea: true,
+            showLegend: false,
+            interpolate: 'monotone',
+            showFocus: false,
+            height: 140,
+            duration: 500,
+            colors: ["#004C8B"],
+            axisColor: "#004C8B"
+        };
+
+        var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
+        $(rangeNv).on("CONTEXT_UPDATED", function () {
+            $(rangeNv).off("CONTEXT_UPDATED");
+            loadTimeDependentWidgets();
+
+            // Hide the loading animation
+            finishLoading();
+        });
+
         framework.data.observe(['repoinfo'], function (event) {
 
             if (event.event === 'data') {
                 var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
-                var firstCommit =  repoinfo['firstcommit'];
 
-                var rangeNv_dom = document.getElementById("fixed-chart");
-                var rangeNv_metrics = [
-                    {
-                        id: 'repository-activity',
-                        max: 101,
-                        aggr: 'sum',
-                        from: moment(firstCommit).format("YYYY-MM-DD")
-                    }
-                ];
-                var rangeNv_configuration = {
-                    ownContext: timeCtx,
-                    isArea: true,
-                    showLegend: false,
-                    interpolate: 'monotone',
-                    showFocus: false,
-                    height: 140,
-                    duration: 500,
-                    colors: ["#004C8B"],
-                    axisColor: "#004C8B"
-                };
+                //Set header subtitle
+                setSubtitle(repoinfo['name']);
 
-                var rangeNv = new framework.widgets.RangeNv(rangeNv_dom, rangeNv_metrics, [repoCtx], rangeNv_configuration);
-                $(rangeNv).on("CONTEXT_UPDATED", function () {
-                    $(rangeNv).off("CONTEXT_UPDATED");
-                    loadTimeDependentWidgets();
+                //Set data
+                var creation = document.getElementById('repo-created');
+                var rbuildstatus = document.getElementById('repo-buildstatus');
+                var rfirstc = document.getElementById('repo-first');
+                var rlastc = document.getElementById('repo-last');
+                var repostatus = document.getElementById('repo-status');
+                
+                creation.innerHTML = moment(new Date(repoinfo['createdon'])).format('MMMM Do YYYY');
+                rfirstc.innerHTML = moment(new Date(repoinfo['firstcommit'])).format('MMMM Do YYYY');
+                rlastc.innerHTML = moment(new Date(repoinfo['lastcommit'])).format('MMMM Do YYYY');
+                rbuildstatus.innerHTML = (repoinfo['buildStatus'] ?
+                        '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i><span class="passedLabel">(Passed)</span>' :
+                        '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i><span class="errorLabel">(Error)</span>');
+                repostatus.innerHTML = (repoinfo['ispublic'] ?
+                        '<i title="Public" class="fa fa-eye publicIco"></i><span class="publicLabel">(Public)</span>' :
+                        '<i title="Private" class="octicon octicon-loc privateIco"></i><span class="privateLabel">(Private)</span>');
 
-                    // Hide the loading animation
-                    finishLoading();
-                });
+                $(creation).removeClass('blurado');
+                $(rfirstc).removeClass('blurado');
+                $(rlastc).removeClass('blurado');
+                $(rbuildstatus).removeClass('blurado');
+                $(repostatus).removeClass('blurado');
+                $("#avatar").removeClass('octicon octicon-repo');
+
+                if (repoinfo['avatar'] !== undefined && repoinfo['avatar'] !== null && repoinfo['avatar'] !== "" && repoinfo['avatar'] !== "http://avatarURL") {
+                    $("#avatar").css("background-image", "url(" + repoinfo['avatar'] + ")");
+                } else {
+                    $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
+                }
+
             }
         }, [repoCtx]);
 
@@ -411,46 +443,6 @@
             var ci_lines = new framework.widgets.LinesChart(ci_dom, ci_metrics,
                     [timeCtx, repoCtx], ci_configuration);
 
-
-            // REPOSITORY META INFO
-            framework.data.observe(['repoinfo'], function (event) {
-                if (event.event === 'loading') {
-                    //TODO
-                } else if (event.event === 'data') {
-                    var repoinfo = event.data['repoinfo'][Object.keys(event.data['repoinfo'])[0]]['data'];
-                    //Set header subtitle
-                    setSubtitle(repoinfo['name']);
-
-                    //Set data
-                    var creation = document.getElementById('repo-created');
-                    var rbuildstatus = document.getElementById('repo-buildstatus');
-                    var rfirstc = document.getElementById('repo-first');
-                    var rlastc = document.getElementById('repo-last');
-                    var repostatus = document.getElementById('repo-status');
-                    creation.innerHTML = moment(new Date(repoinfo['createdon'])).format('MMMM Do YYYY');
-                    rfirstc.innerHTML = moment(new Date(repoinfo['firstcommit'])).format('MMMM Do YYYY');
-                    rlastc.innerHTML = moment(new Date(repoinfo['lastcommit'])).format('MMMM Do YYYY');
-                    rbuildstatus.innerHTML = (repoinfo['buildStatus'] ?
-                            '<i class="fa fa-thumbs-up" style="color: rgb(104, 184, 40);"></i><span class="passedLabel">(Passed)</span>' :
-                            '<i class="fa fa-thumbs-down" style="color: rgb(200, 104, 40);"></i><span class="errorLabel">(Error)</span>');
-                    repostatus.innerHTML = (repoinfo['ispublic'] ?
-                            '<i title="Public" class="fa fa-eye publicIco"></i><span class="publicLabel">(Public)</span>' :
-                            '<i title="Private" class="octicon octicon-loc privateIco"></i><span class="privateLabel">(Private)</span>');
-
-                    $(creation).removeClass('blurado');
-                    $(rfirstc).removeClass('blurado');
-                    $(rlastc).removeClass('blurado');
-                    $(rbuildstatus).removeClass('blurado');
-                    $(repostatus).removeClass('blurado');
-                    $("#avatar").removeClass('octicon octicon-repo');
-
-                    if (repoinfo['avatar'] !== undefined && repoinfo['avatar'] !== null && repoinfo['avatar'] !== "" && repoinfo['avatar'] !== "http://avatarURL") {
-                        $("#avatar").css("background-image", "url(" + repoinfo['avatar'] + ")");
-                    } else {
-                        $("#avatar").css("background-image", "url(../../assets/images/user-4.png)");
-                    }
-                }
-            }, [repoCtx]);
 
             // EXECUTIONS MULTIBAR
             var executions_dom = document.getElementById("executions-stacked");

@@ -10,7 +10,6 @@
     "vendor/sdh-framework/widgets/Table/table",
     "vendor/sdh-framework/widgets/LinesChart/linesChart",
     "vendor/sdh-framework/widgets/RangeNv/rangeNv",
-    "vendor/sdh-framework/widgets/RadarChart/radarchart",
     "vendor/sdh-framework/widgets/MultiBar/multibar",
     "css!assets/css/dashboards/repository-dashboard"
     ]

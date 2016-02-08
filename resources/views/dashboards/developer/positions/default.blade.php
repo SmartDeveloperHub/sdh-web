@@ -306,7 +306,8 @@
                     post_modifier: toPercentagePostModifier
                 }];
             var skills_star_configuration = {
-                height: 300,
+                height: 250,
+                width: 400,
                 labels: ["Speed", "Collaboration", "Quality"],
                 labelsAssoc: [{
                     'member-speed-fake': 'Speed',

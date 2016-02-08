@@ -240,8 +240,6 @@ table.dataTable tbody tr .odd {
     text-align: center;
 }
 #skills-star canvas {
-    margin-bottom: -135px;
-    margin-top: -33px;
 }
 #description {
     text-overflow: ellipsis;

@@ -886,8 +886,8 @@
             var skills_star_metrics = skills_star_metrics1.concat(skills_star_metrics2); //Merge all in one array
 
             var skills_star_configuration = {
-                height: 200,
-                radius: 180,
+                height: 280,
+                width: 420,
                 labelsAssoc: [
                     {
                         'director-activity':          'Activity',

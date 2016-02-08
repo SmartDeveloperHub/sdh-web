@@ -467,8 +467,6 @@ html, body {
     text-align: center;
 }
 #radar-product-chart .blurable canvas {
-    margin-bottom: -135px;
-    margin-top: -32px;
 }
 
 #liquid-1-chart, #liquid-2-chart {

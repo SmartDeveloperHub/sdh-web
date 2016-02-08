@@ -210,7 +210,7 @@
                 var rfirstc = document.getElementById('repo-first');
                 var rlastc = document.getElementById('repo-last');
                 var repostatus = document.getElementById('repo-status');
-                
+
                 creation.innerHTML = moment(new Date(repoinfo['createdon'])).format('MMMM Do YYYY');
                 rfirstc.innerHTML = moment(new Date(repoinfo['firstcommit'])).format('MMMM Do YYYY');
                 rlastc.innerHTML = moment(new Date(repoinfo['lastcommit'])).format('MMMM Do YYYY');

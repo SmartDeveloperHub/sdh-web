@@ -168,13 +168,13 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="0" data-gs-y="6">
+        <div class="grid-stack-item" data-gs-width="0" data-gs-height="15" data-gs-x="0" data-gs-y="6">
             <div id="cytograph1" class="widget grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="4" data-gs-y="6">
+        <div class="grid-stack-item" data-gs-width="0" data-gs-height="15" data-gs-x="4" data-gs-y="6">
             <div id="cytograph2" class="widget grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="8" data-gs-y="6">
+        <div class="grid-stack-item" data-gs-width="0" data-gs-height="15" data-gs-x="8" data-gs-y="6">
             <div id="cytograph3" class="widget grid-stack-item-content"></div>
         </div>
 
@@ -569,12 +569,19 @@
                 while( (toRemove = cytocharts.pop()) != null ) {
                     toRemove.delete();
                 }
+                // 3 cytochart in the same line or less
+                var gridstackWidth = 4;
+                if (frameData.values.length < 3){
+                    gridstackWidth = 12 / frameData.values.length;
+                }
 
                 for(var i = 0; i < frameData.values.length && i < 3; i++) {
 
                     var data = frameData.values[i];
                     var cytograph_dom = document.getElementById("cytograph" + (i+1));
-
+                    cytograph_dom.parentElement.setAttribute("data-gs-width", gridstackWidth);
+                    cytograph_dom.parentElement.setAttribute("data-gs-x", gridstackWidth*i);
+                    
                     var theProductManagerId = data['userid'];
 
                     var productsAux = {};

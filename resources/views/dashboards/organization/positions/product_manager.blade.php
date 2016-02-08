@@ -912,11 +912,18 @@
                 while( (toRemove = cytocharts.pop()) != null ) {
                     toRemove.delete();
                 }
+                // 3 cytochart in the same line or less
+                var gridstackWidth = 4;
+                if (frameData.values.length < 3){
+                    gridstackWidth = 12 / frameData.values.length;
+                }
 
                 for(var i = 0; i < frameData.values.length && i < 3; i++) {
 
                     var data = frameData.values[i];
                     var cytograph_dom = document.getElementById("cytograph" + (i+1));
+                    cytograph_dom.parentElement.setAttribute("data-gs-width", gridstackWidth);
+                    cytograph_dom.parentElement.setAttribute("data-gs-x", gridstackWidth*i);
 
                     var theProductId = data['productid'];
 

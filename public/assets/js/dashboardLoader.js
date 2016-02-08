@@ -227,6 +227,34 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
             // The grid should start disabled
             _this.disableGrid();
 
+            var objectId, objectType;
+            if(newEnv['uid']) {
+                objectId = newEnv['uid'];
+                objectType = 'member';
+            } else if(newEnv['rid']) {
+                objectId = newEnv['rid'];
+                objectType = 'repository';
+            } else if(newEnv['pid']) {
+                objectId = newEnv['pid'];
+                objectType = 'project';
+            } else if(newEnv['prid']) {
+                objectId = newEnv['prid'];
+                objectType = 'product';
+            } else if(newEnv['oid']) {
+                objectId = newEnv['oid'];
+                objectType = 'organization';
+            }
+            
+            //Google analytics
+            if(typeof ga === 'function') {
+                ga('send', 'pageview', {
+                  'dimension1':  USER_ID,
+                  'dimension2':  objectId,
+                  'dimension3': objectType
+                });
+            }
+            
+
         } catch(e) {
             console.error(e);
             e.status = 0;

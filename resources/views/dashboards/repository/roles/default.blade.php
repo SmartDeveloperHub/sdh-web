@@ -73,7 +73,7 @@
             <span id="devActIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
             <span class="titleLabel">Contribution</span>
         </div>
-        <div class="row" id="activityChart"></div>
+        <div class="row" id="activityChart" style="margin-right:20px"></div>
     </div>
     <div class="row" id="RepoCIBox">
         <div class="row titleRow" id="RepoCITitle">
@@ -100,11 +100,11 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div id="executions-stacked" class="widget"></div>
+                <div id="executions-stacked" class="widget" style="margin-right:20px"></div>
             </div>
         </div>
         <div class="row" id="execChartBox">
-            <div class="row" id="execChart"></div>
+            <div class="row" id="execChart" style="margin-right:20px"></div>
         </div>
     </div>
     <div class="row" id="UserRepoBox">
@@ -118,7 +118,7 @@
                 <span id="external-members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
             <div class="row" data-gs-width="6" data-gs-height="10" data-gs-x="0" data-gs-y="8">
-                <div id="external-members-lines"></div>
+                <div id="external-members-lines" style="margin-right:15px"></div>
             </div>
         <div class="row">
             <div class="col-sm-9">

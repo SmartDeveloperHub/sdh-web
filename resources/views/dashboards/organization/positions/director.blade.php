@@ -311,7 +311,7 @@
         var liquidStatus = '<div><span class="toolTitle"><p>Product status.</p></span></div><div><span class="toolRow">Average value of the builds for the product.</span></div>';
         addQTip($('#liquid1-chart-stitle-help'), "prodLiqSuccesTool", liquidStatus);
         // Product health
-        var liquidHealth = '<div><span class="toolTitle"><p>Product health.</p></span></div><div><span class="toolRow">Percentage that represent the health of the product.</span></div>';
+        var liquidHealth = '<div><span class="toolTitle"><p>Product health.</p></span></div><div><span class="toolRow">Percentage that represents the health of the product.</span></div>';
         addQTip($('#liquid2-chart-stitle-help'), "prodLiqBrokenTool", liquidHealth);
         // Managers Cytocharts
         var managerCyto = '<div><span class="toolTitle"><p>Most significant managers.</p></span></div><div><span class="toolRow">This chart analyzes the most important products for each manager.</span></div><div><span class="toolRow">The center bubble represents a manager and he bubbles attached to it represent a product. The size of the product bubble depends on the number of members of the staff of that product.</span></div></div>';

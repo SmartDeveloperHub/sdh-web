@@ -180,9 +180,9 @@
 
         <div class="grid-stack-item" data-gs-width="6" data-gs-height="3" data-gs-x="0" data-gs-y="23">
             <div id="external-members-subtitle" class="grid-stack-item-content subtitleRow">
-                <span id="external-members-table-stitle-ico" class="subtitleIcon fa fa-user-secret"></span>
-                <span id="external-members-table-stitle-label" class="subtitleLabel">External developers</span>
-                <span id="external-members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                <span id="external-members-stitle-ico" class="subtitleIcon fa fa-user-secret"></span>
+                <span id="external-members-stitle-label" class="subtitleLabel">External developers</span>
+                <span id="external-members-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
         <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="0" data-gs-y="26">
@@ -191,9 +191,9 @@
 
         <div class="grid-stack-item" data-gs-width="6" data-gs-height="3" data-gs-x="6" data-gs-y="23">
             <div id="internal-members-subtitle" class="grid-stack-item-content subtitleRow">
-                <span id="internal-members-table-stitle-ico" class="subtitleIcon fa fa-user"></span>
-                <span id="internal-members-table-stitle-label" class="subtitleLabel">Internal developers</span>
-                <span id="internal-members-table-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                <span id="internal-members-stitle-ico" class="subtitleIcon fa fa-user"></span>
+                <span id="internal-members-stitle-label" class="subtitleLabel">Internal developers</span>
+                <span id="internal-members-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
         <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="6" data-gs-y="26">
@@ -328,6 +328,11 @@
         // Total Member Roles
         var memberRoles = '<div><span class="toolTitle"><p>Total members by role.</p></span></div><div><span class="toolRow">Accumulated number of team members by role.</span></div>';
         addQTip($('#team-pie-stitle-help'), "memberRolesTool", memberRoles);
+        var externalMembers = '<div><span class="toolTitle"><p>External developers</p></span></div><div><span class="toolRow">Number of external developers per product</span></div>';
+        addQTip($('#external-members-stitle-help'), "externalMembers", externalMembers);
+        //Internal members
+        var internalMembers = '<div><span class="toolTitle"><p>Internal developers</p></span></div><div><span class="toolRow">Number of internal developers per product</span></div>';
+        addQTip($('#internal-members-stitle-help'), "internalMembers", internalMembers);
 
         var env = framework.dashboard.getEnv();
         //console.log(env);
@@ -376,7 +381,7 @@
             }];
             var products_conf = {
                 label: 'Products',
-                decimal: 2,
+                decimal: 0,
                 icon: 'fa fa-industry',
                 iconbackground: '#F75333',
                 background: 'transparent'

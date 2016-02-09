@@ -323,10 +323,10 @@
         addQTip($('#team-pie-stitle-help'), "memberRolesTool", memberRoles);
         //External members
         var externalMembers = '<div><span class="toolTitle"><p>External developers</p></span></div><div><span class="toolRow">Number of external developers per product</span></div>';
-        addQTip($('#external-members-stitle-help'), "externalMembers", memberRoles);
+        addQTip($('#external-members-stitle-help'), "externalMembers", externalMembers);
         //Internal members
         var internalMembers = '<div><span class="toolTitle"><p>Internal developers</p></span></div><div><span class="toolRow">Number of internal developers per product</span></div>';
-        addQTip($('#internal-members-stitle-help'), "internalMembers", memberRoles);
+        addQTip($('#internal-members-stitle-help'), "internalMembers", internalMembers);
 
 
         var env = framework.dashboard.getEnv();

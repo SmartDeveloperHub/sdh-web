@@ -581,11 +581,11 @@
                 }
 
                 for(var i = 0; i < frameData.values.length && i < 3; i++) {
-
                     var data = frameData.values[i];
                     var cytograph_dom = document.getElementById("cytograph" + (i+1));
                     cytograph_dom.parentElement.setAttribute("data-gs-width", gridstackWidth);
                     cytograph_dom.parentElement.setAttribute("data-gs-x", gridstackWidth*i);
+                    $(cytograph_dom.parentElement).get(0).style['display'] = 'visible';
                     
                     var theProductManagerId = data['userid'];
 
@@ -645,7 +645,10 @@
                     }.bind(null, cytograph_dom, theProductManagerId, productsAux));
 
                 }
-
+                for(var i = frameData.values.length; i < 3; i++) {
+                    var cytograph_dom = document.getElementById("cytograph" + (i+1));
+                    $(cytograph_dom.parentElement).get(0).style['display'] = 'none';
+                }
 
             }, [timeCtx, currentUserCtx]);
 

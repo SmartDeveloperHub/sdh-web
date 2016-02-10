@@ -178,32 +178,32 @@
             <div id="cytograph3" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="6" data-gs-height="3" data-gs-x="0" data-gs-y="23">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="3" data-gs-x="0" data-gs-y="23">
             <div id="external-members-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="external-members-stitle-ico" class="subtitleIcon fa fa-user-secret"></span>
                 <span id="external-members-stitle-label" class="subtitleLabel">External developers</span>
                 <span id="external-members-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
-        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="0" data-gs-y="26">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="10" data-gs-x="0" data-gs-y="26">
             <div id="external-members-lines" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="6" data-gs-height="3" data-gs-x="6" data-gs-y="23">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="3" data-gs-x="0" data-gs-y="38">
             <div id="internal-members-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="internal-members-stitle-ico" class="subtitleIcon fa fa-user"></span>
                 <span id="internal-members-stitle-label" class="subtitleLabel">Internal developers</span>
                 <span id="internal-members-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
-        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="6" data-gs-y="26">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="10" data-gs-x="0" data-gs-y="41">
             <div id="internal-members-lines" class="widget grid-stack-item-content"></div>
         </div>
 
         <!-- Subsection: Manager Selector -->
 
         <!-- Column -->
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="36">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="53">
             <div id="members-table-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="members-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
                 <span id="members-table-stitle-label" class="subtitleLabel"> Manager Selector</span>
@@ -211,14 +211,14 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="39">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="56">
             <div class="grid-stack-item-content">
                 <div id="team-members-table" class="widget"></div>
             </div>
         </div>
 
         <!-- Column -->
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="36">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="53">
             <div id="team-multibar-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="team-multibar-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                 <span id="team-multibar-stitle-label" class="subtitleLabel">Roles Breakdown</span>
@@ -226,11 +226,11 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="38">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="55">
             <div id="projects-roles-multibar" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="51">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="69">
             <div id="team-pie-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="team-pie-stitle-ico" class="subtitleIcon fa fa-chain-broken"></span>
                 <span id="team-pie-stitle-label" class="subtitleLabel">Roles Summary</span>
@@ -238,7 +238,7 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="53">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="13" data-gs-x="4" data-gs-y="71">
             <div id="team-members-pie" class="widget grid-stack-item-content"></div>
         </div>
 
@@ -1045,7 +1045,8 @@
                 height: 250,
                 showLegend: true,
                 showLabels: false,
-                labelFormat: "¬_D.data.info.title¬"
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
             };
             var team_members_pie = new framework.widgets.PieChart(team_members_pie_dom, team_members_pie_metrics,
                     [orgCtx, timeCtx, teamMembersCtx], team_members_pie_configuration);

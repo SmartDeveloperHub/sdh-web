@@ -650,8 +650,8 @@
                             .range(["red", "yellow", "green"]);
                     return color(val);
                 },
-                tooltip: '<h3>Value: ¬_E.value¬%</h3>' +
-                         '<h3>Date: ¬Widget.format.date(_E.time)¬ </h3>',
+                tooltip: '<p>Success Rate: ¬_E.value¬%</p>' +
+                         '<p>¬Widget.format.date(_E.time)¬ </p>',
                 legend: ['Success', 'Broken']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);

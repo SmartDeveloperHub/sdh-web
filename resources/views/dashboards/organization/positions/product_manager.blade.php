@@ -612,7 +612,7 @@
                 ],
                 keepSelectedByProperty: "productid",
                 selectable: true,
-                minRowsSelected: 0,
+                minRowsSelected: 1,
                 maxRowsSelected: 1,
                 filterControl: true,
                 initialSelectedRows: 1,
@@ -741,6 +741,7 @@
                 ],
                 labels: ["Activity", "Popularity", 'Health', 'Time To Market', 'Quality' ],
                 fillColor: ["rgba(30, 30, 30, 0.2)", "rgba(1, 150, 64, 0.4)"],
+                pointColor: ["rgba(30, 30, 30, 0.4)", "rgba(1, 150, 64, 0.6)"],
                 strokeColor: ["rgba(30, 30, 30, 0.3)", "#019640"],
                 pointLabelFontColor: "#2876B8",
                 pointLabelFontSize: 14

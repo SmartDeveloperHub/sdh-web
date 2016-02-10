@@ -382,6 +382,7 @@ html, body {
 #products-table {
     margin-left: 16%;
     margin-right: 16%;
+    width: 68%;
     height: 480px;
 }
 

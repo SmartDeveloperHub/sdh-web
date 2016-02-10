@@ -414,6 +414,7 @@ html, body {
 #products-table {
     margin-left: 16%;
     margin-right: 16%;
+    width: 68%;
     height: 480px;
 }
 
@@ -478,6 +479,7 @@ html, body {
 #team-members-table {
     margin-left: 16%;
     margin-right: 16%;
+    width: 68%;
 }
 
 #team-members-table .scroll-table {

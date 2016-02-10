@@ -223,6 +223,42 @@ html, body {
 #scatter-plot-stitle-label {
 }
 
+.scatterTooltip {
+    padding: 10px;
+}
+
+.scatterTooltip img {
+
+}
+
+.scatterTooltip h3 {
+    margin-top: 10px;
+    background: rgba(0, 0, 0, 0);
+    color: #03015F;
+    margin-bottom: 10px;
+}
+
+.scatterTooltip .scattetTTLine {
+    display: block;
+    text-align: left;
+    line-height: 24px;
+}
+
+.scatterTooltip h4 {
+    display: inline-block;
+    margin: 0;
+    margin-left: 10px;
+    color: #5D5D5D;
+}
+
+.scatterTooltip .scatterTTIco {
+    font-family: FontAwesome;
+    display: inline-block;
+    width: 22px;
+    text-align: center;
+    font-size: 20px;
+}
+
 #products-table-subtitle {
 }
 

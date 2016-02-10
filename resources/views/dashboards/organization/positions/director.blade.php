@@ -110,7 +110,7 @@
             <div id="releases-chart" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="2" data-gs-x="5" data-gs-y="36">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="4" data-gs-y="36">
             <div id="radar-product-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="radar-product-stitle-ico" class="subtitleIcon fa fa-line-chart"></span>
                 <span id="radar-product-stitle-label" class="subtitleLabel">Product Profile</span>

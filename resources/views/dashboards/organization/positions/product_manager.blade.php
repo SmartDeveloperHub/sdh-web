@@ -25,7 +25,7 @@
 @section('html')
     <div id="metricsSect" class="row">
         <div id="metricBoxes" class="grid-stack">
-            <div class="grid-stack-item" data-gs-width="11" data-gs-height="4" data-gs-x="0" data-gs-y="1">
+            <div class="grid-stack-item" data-gs-width="12" data-gs-height="4" data-gs-x="0" data-gs-y="1">
                 <div id="metTitRow" class="titleRow grid-stack-item-content">
                     <span id="metricsTitIco" class="titleIcon octicon octicon-dashboard"></span>
                     <span id="metricsTitLabel" class="titleLabel">Metrics</span>

@@ -149,6 +149,7 @@ html, body {
     -o-transition: all ease-in-out 2s;
     transition: all ease-in-out 2s;
     z-index: 9999;
+    position: absolute;
 }
 
 .subtitleRow:hover .subtitleHelp {

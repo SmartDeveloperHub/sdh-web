@@ -208,6 +208,10 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
         $(".main-content").remove();
         $(".page-container").append('<div class="main-content">');
 
+        //Remove tooltips that are generated outside the page container
+        $(".qtip").remove();
+        $(".nvtooltip").remove();
+
         // Load the new HTML
         try{
             $("#template-exec").html(data);

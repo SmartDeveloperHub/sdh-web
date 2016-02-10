@@ -156,7 +156,13 @@
 		                            </div>
 		                        </div>
 		                    </form>
-
+							@if (old('username') != "" )
+								<script>
+									var mustOpenLoginModal = function() {
+										$('#myModal').modal('show');
+									};
+								</script>
+							@endif
 		                </div>
 		            </div>
 		        </div>

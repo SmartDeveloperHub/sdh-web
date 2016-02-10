@@ -24,6 +24,9 @@ require(["jquery", "moment", "framework", "bootstrap", "widgetCommon"], function
 
     $(document).ready(function () {
         console.log("SDH Welcome Ready!");
+        if(typeof mustOpenLoginModal === "function") {
+            mustOpenLoginModal(); //Open the modal with the login form
+        }
     });
 
     framework.ready(function () {

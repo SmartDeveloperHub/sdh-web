@@ -13,8 +13,8 @@
             <div id="headerright" class="headcomp">
                 <div class="control">
                     <div id="buttonbox" class="headcomp">
-                        <a id="activate-grid" class="headbutton fa-pencil"></a>
-                        <a class="headbutton fa-sign-out" href="/auth/logout"></a>
+                        <a id="activate-grid" class="headbutton fa-pencil" title="Edit dashboard"></a>
+                        <a class="headbutton fa-sign-out" href="/auth/logout" title="Logout"></a>
                     </div>
                     @if (Auth::user() != null && Auth::user()->avatar != null)
                     <div id="avatarbox" class="headcomp useravatar-img" style="background-image: url({{Auth::user()->avatar}})">

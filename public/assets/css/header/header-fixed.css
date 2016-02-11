@@ -166,6 +166,9 @@
 	transition:all 0.3s;
 	cursor: pointer;
 }
+a.headbutton:hover {
+	text-decoration: none;
+}
 
 .headbutton:hover {
 	color: #BFE5E3;

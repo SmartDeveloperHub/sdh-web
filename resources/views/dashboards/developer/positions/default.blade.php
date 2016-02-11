@@ -241,12 +241,17 @@
             };
             var streak = new framework.widgets.CounterBox(streak_dom, streak_metrics, [timeCtx, userCtx], streak_conf);
 
+            var memberReposPostMod = function memberReposPostMod(resourceData) {
+                console.log(JSON.stringify(resourceData))
+                resourceData['data']['values'] = [resourceData['data']['values'].length];
+                return resourceData;
+
+            };
             // TOTAL PROJECTS
             var total_projects_dom = document.getElementById("total-repositories");
             var total_projects_metrics = [{
-                id: 'member-repositories',
-                max: 1,
-                aggr: 'sum'
+                id: 'view-member-repositories',
+                post_modifier: memberReposPostMod
             }];
             var total_projects_conf = {
                 label: 'Total repositories',

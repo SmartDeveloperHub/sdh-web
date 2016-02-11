@@ -817,8 +817,8 @@
                             .range(["red", "yellow", "green"]);
                     return color(val);
                 },
-                tooltip: '<p>Value: ¬Math.round(_E.value * 100)/100¬</p>' +
-                         '<p>Date: ¬Widget.format.date(_E.time)¬ </p>',
+                tooltip: '<p>Success Rate: ¬Math.round(_E.value * 100)¬%</p>' +
+                         '<p>¬Widget.format.date(_E.time)¬ </p>',
                 legend: ['Success', 'Broken']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);

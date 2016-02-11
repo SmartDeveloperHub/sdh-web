@@ -638,19 +638,18 @@
 
             var releasesLines_metrics = [{
                 id: 'product-success-rate',
-                max: 20,
-                post_modifier: toPercentagePostModifier
+                max: 20
             }];
 
             var releasesLines_configuration = {
                 height: 130,
                 color: function(val) {
                     var color = d3.scale.linear()
-                            .domain([0, 50, 100])
+                            .domain([0, 0.5, 1])
                             .range(["red", "yellow", "green"]);
                     return color(val);
                 },
-                tooltip: '<p>Success Rate: ¬_E.value¬%</p>' +
+                tooltip: '<p>Success Rate: ¬Math.round(_E.value * 100)¬%</p>' +
                          '<p>¬Widget.format.date(_E.time)¬ </p>',
                 legend: ['Success', 'Broken']
             };

@@ -901,8 +901,6 @@
             var skills_star_metrics = skills_star_metrics1.concat(skills_star_metrics2); //Merge all in one array
 
             var skills_star_configuration = {
-                height: 280,
-                width: 420,
                 labelsAssoc: [
                     {
                         'director-activity':          'Activity',
@@ -918,7 +916,7 @@
                         'product-timetomarket':  'Time To Market'
                     }
                 ],
-                labels: ["Activity", "Popularity", 'Health', 'Time To Market', 'Quality' ],
+                labels: ["Popularity", 'Health', "Activity", 'Quality', 'Time To Market' ],
                 fillColor: ["rgba(30, 30, 30, 0.2)", "rgba(1, 150, 64, 0.4)"],
                 pointColor: ["rgba(30, 30, 30, 0.4)", "rgba(1, 150, 64, 0.6)"],
                 strokeColor: ["rgba(30, 30, 30, 0.3)", "#019640"],

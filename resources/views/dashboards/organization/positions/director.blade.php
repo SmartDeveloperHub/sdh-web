@@ -1059,20 +1059,7 @@
                 columns: [
                     {
                         label: "",
-                        link: {
-                         img: "avatar", //or label
-                         href: "developer",
-                         env: [
-                             {
-                                 property: "userid",
-                                 as: "uid"
-                             },
-                             {
-                                 property: "name",
-                                 as: "name"
-                             }
-                         ]
-                         },
+                        img: "avatar",
                         width: "40px"
                     },
                     {

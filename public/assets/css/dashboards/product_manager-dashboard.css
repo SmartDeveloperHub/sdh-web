@@ -459,6 +459,7 @@ html, body {
 }
 
 #radar-product-chart {
+    text-align: center;
     height: 100%;
     width: 100%;
 }
@@ -475,30 +476,37 @@ html, body {
 }
 
 /* Large desktop */
-@media (min-width: 1168px) {
+@media (min-width: 1258px) {
     #radar-product-chart .blurable canvas {
     }
 }
 
-@media (min-width: 932px) and (max-width: 1168px) {
-    #radar-product-chart .blurable canvas {
-        margin-left: -4%;
-        margin-top: -2%;
-    }
-}
-
-/* Portrait tablet to landscape and desktop */
-@media (min-width: 884px) and (max-width: 932px) {
+@media (min-width: 1170px) and (max-width: 1258px) {
     #radar-product-chart .blurable canvas {
         margin-left: -10%;
+        margin-top: -6%;
+    }
+}
+
+@media (min-width: 1019px) and (max-width: 1170px) {
+    #radar-product-chart .blurable canvas {
+        margin-left: -14%;
         margin-top: -10%;
     }
 }
-/* Landscape phone to portrait tablet */
-@media (min-width: 769px) and (max-width: 884px) {
+
+@media (min-width: 932px) and (max-width: 1019px) {
     #radar-product-chart .blurable canvas {
-        margin-left: -25%;
-            margin-top: -11%;
+        margin-left: -22%;
+        margin-top: -17%;
+    }
+}
+
+/* Landscape phone to portrait tablet */
+@media (min-width: 769px) and (max-width: 932px) {
+    #radar-product-chart .blurable canvas {
+        margin-left: -26%;
+        margin-top: -22%;
     }
 }
 

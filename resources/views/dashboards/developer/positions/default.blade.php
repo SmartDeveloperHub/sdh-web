@@ -242,7 +242,6 @@
             var streak = new framework.widgets.CounterBox(streak_dom, streak_metrics, [timeCtx, userCtx], streak_conf);
 
             var memberReposPostMod = function memberReposPostMod(resourceData) {
-                console.log(JSON.stringify(resourceData))
                 resourceData['data']['values'] = [resourceData['data']['values'].length];
                 return resourceData;
 

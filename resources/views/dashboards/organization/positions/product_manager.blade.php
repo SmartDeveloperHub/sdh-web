@@ -18,7 +18,8 @@
     "vendor/sdh-framework/widgets/CytoChart2/cytoChart2",
     "vendor/sdh-framework/widgets/MultiBar/multibar",
     "css!assets/css/dashboards/product_manager-dashboard",
-    "//crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"
+    "//crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js",
+    "//cdnjs.cloudflare.com/ajax/libs/jcarousel/0.3.4/jquery.jcarousel.js"
     ]
 @stop
 
@@ -1054,19 +1055,34 @@
                         removeWidget.delete();
                     }
 
+                    var carouselId = "myCarousel" + Math.round(Math.random() * 10000);
+
                     var multitable = $("#product-projects-table");
 
                     // Remove table rows
                     multitable.empty();
 
                     // Multitable contains a selector (with images) and a container of tables
-                    var selector = $('<div class="multitable-selector"></div>');
+                    var selectorContainer = $('<div class="multitable-selector jcarousel"></div>');
+                    var selector = $('<ul></ul>');
                     var container = $('<div class="multitable-container"></div>');
+
+                    selectorContainer
+                            .append(selector);
 
                     multitable
                         .empty()
-                        .append(selector)
+                        .append('<a class="jcarousel-prev" href="#">' +
+                                    '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>' +
+                                    '<span class="sr-only">Previous</span>' +
+                                '</a>' +
+                                '<a class="jcarousel-next" href="#">' +
+                                    '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>' +
+                                    '<span class="sr-only">Next</span>' +
+                                '</a>')
+                        .append(selectorContainer)
                         .append(container);
+
 
                     // Now we can start adding things
                     var products = event.data['view-pmanager-products'][Object.keys(event.data['view-pmanager-products'])[0]]['data']['values'];
@@ -1075,13 +1091,13 @@
                     var changeSelectedTable = function() {
 
                         if(selectedId != null) { //Previous selected
-                            selector.find("div[data-id='"+selectedId+"']").removeClass("selected");
+                            selector.find("li[data-id='"+selectedId+"']").removeClass("selected");
                             container.find("div[data-id='"+selectedId+"']").hide();
                         }
 
                         var id = $(this).data('id');
 
-                        selector.find("div[data-id='"+id+"']").addClass("selected");
+                        selector.find("li[data-id='"+id+"']").addClass("selected");
                         container.find("div[data-id='"+id+"']").show();
 
                         selectedId = id;
@@ -1094,7 +1110,7 @@
                         var id = products[x]['productid'];
                         var context = "productprojectstable~" + id;
 
-                        var avatarSelector = $('<div class="multitable-img-selector" data-id="'+id+'"></div>')
+                        var avatarSelector = $('<li class="multitable-img-selector" data-id="'+id+'"></li>')
                                 .append('<img src="'+avatar+'" alt="'+name+'"></img>')
                                 .append('<span class="number-selected">0</span>')
                                 .click(changeSelectedTable);
@@ -1174,6 +1190,21 @@
                         // Add the widget to the widget list to then be able to destroy all the widgets in case of context change
                         widgetList.push(widget);
                     }
+
+                    // Uses jcarousel library (http://sorgalla.com/jcarousel)
+                    var carousel = $(multitable).find('.jcarousel').jcarousel({
+                        // Core configuration goes here
+                    });
+
+                    $(multitable).find('.jcarousel-prev').jcarouselControl({
+                        target: '-=2',
+                        carousel: carousel
+                    });
+
+                    $(multitable).find('.jcarousel-next').jcarouselControl({
+                        target: '+=2',
+                        carousel: carousel
+                    });
 
                 }
             }, [timeCtx, currentUserCtx]);

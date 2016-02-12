@@ -546,6 +546,7 @@ html, body {
     cursor: pointer;
     display: inline-block;
     border-radius: 30px;
+    vertical-align: top;
 }
 
 .multitable-img-selector > img{
@@ -555,12 +556,48 @@ html, body {
 }
 
 .multitable-img-selector > span.number-selected {
-    position: absolute;
     margin-left: 1px;
     font-family: Roboto;
     color: rgb(119, 119, 119);
+    vertical-align: top;
 }
 
-.multitable-img-selector.selected {
+.multitable-img-selector.selected > img {
     box-shadow: 1px 1px 4px 1px #6B6B6B;
+}
+
+.jcarousel {
+    overflow: hidden;
+    position: relative;
+    display: block;
+    float: none;
+}
+
+.jcarousel ul {
+    width: 20000em;
+    position: relative;
+
+    /* Optional, required in this case since it's a <ul> element */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.jcarousel li {
+    float: left;
+}
+
+a.jcarousel-prev {
+    display: inline-block;
+    float: left;
+}
+
+a.jcarousel-next {
+    display: inline-block;
+    float: right;
+}
+
+.jcarousel-prev > .glyphicon.glyphicon-chevron-left, .jcarousel-next > .glyphicon.glyphicon-chevron-right {
+    margin-top: 13px;
+    font-size: 20px;
 }

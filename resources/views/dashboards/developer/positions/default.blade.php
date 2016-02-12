@@ -160,8 +160,8 @@
 
                 uemail.innerHTML = userinfo['email'];
                 usince.innerHTML = moment(new Date(userinfo['register'])).format('MMMM Do YYYY');
-                ufirstc.innerHTML = moment(new Date(userinfo['firstcommit'])).format('MMMM Do YYYY');
-                ulastc.innerHTML = moment(new Date(userinfo['lastcommit'])).format('MMMM Do YYYY');
+                ufirstc.innerHTML = (userinfo['firstcommit'] != 0 ? moment(new Date(userinfo['firstcommit'])).format('MMMM Do YYYY') : 'Never');
+                ulastc.innerHTML = (userinfo['lastcommit'] != 0 ? moment(new Date(userinfo['lastcommit'])).format('MMMM Do YYYY') : 'Never');
 
                 $(uemail).removeClass('blurado');
                 $(usince).removeClass('blurado');

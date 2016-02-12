@@ -166,7 +166,7 @@
 	transition:all 0.3s;
 	cursor: pointer;
 }
-a.headbutton:hover {
+a.headbutton:hover, a.headbutton:active, a.headbutton:visited, a.headbutton:focus {
 	text-decoration: none;
 }
 

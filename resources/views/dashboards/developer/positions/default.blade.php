@@ -59,11 +59,11 @@
             <span id="skillsIco" class="titleIcon fa fa-heartbeat"></span>
             <span class="titleLabel">Skills</span>
         </div>
-        <div class="row">
-            <div class="col-sm-5">
+        <div class="row skillsSection">
+            <div class="col-sm-4 starDiv">
                 <div id="skills-star" class="widget"></div>
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-8 skillLineDiv">
                 <div id="skills-lines" class="widget"></div>
             </div>
         </div>
@@ -311,9 +311,7 @@
                     post_modifier: toPercentagePostModifier
                 }];
             var skills_star_configuration = {
-                height: 250,
-                width: 400,
-                labels: ["Speed", "Collaboration", "Quality"],
+                labels: ["Quality", "Speed", "Collaboration"],
                 labelsAssoc: [{
                     'member-speed-fake': 'Speed',
                     'member-collaboration-fake': 'Collaboration',

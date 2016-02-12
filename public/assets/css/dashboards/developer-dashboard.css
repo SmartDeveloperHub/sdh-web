@@ -98,12 +98,13 @@ div#UserInfoBox {
     margin-top: 14px;
     margin-left: 0px;
     margin-right: 0px;
+    margin-bottom: 0;
 }
 
 #UserRepoBox {
     background-color: #FFF;
     box-shadow: inset 0px 2px 5px 0px #DDD;
-    margin-top: 14px;
+    /* margin-top: 14px; */
     margin-left: 0px;
     margin-right: 0px;
 }
@@ -235,16 +236,6 @@ table.dataTable tbody tr .odd {
     border-right: 0;
 }
 
-/* Radar Chart */
-#skills-star {
-    text-align: center;
-}
-#skills-star canvas {
-}
-#description {
-    text-overflow: ellipsis;
-}
-
 /* Repository */
 #executions-info-percent {
     height: 50px;
@@ -270,9 +261,9 @@ table.dataTable tbody tr .odd {
 /* titles */
 
 .titleRow {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     text-align: center;
-    margin-top: 35px;
+    margin-top: 34px;
 }
 
 .titleCol {
@@ -311,7 +302,6 @@ table.dataTable tbody tr .odd {
 }
 
 #userSkillTitle {
-    margin-bottom: 20px;
 }
 
 #userRepoTitle {
@@ -376,4 +366,33 @@ div.dataTables_filter input{
     padding-left: 44px;
     padding-right: 44px;
     position: relative;
+}
+
+/* Radar Chart */
+#skills-star {
+    text-align: center;
+    height: 100%;
+    margin-top: -12px;
+}
+#skills-star canvas {
+}
+
+#description {
+    text-overflow: ellipsis;
+}
+
+.skillsSection {
+    height: 255px;
+}
+
+.skillsSection .starDiv {
+    height: 255px;
+}
+
+.skillsSection .starDiv .blurable{
+    height: 100%;
+}
+
+.skillsSection .skillLineDiv {
+    height: 100%;
 }

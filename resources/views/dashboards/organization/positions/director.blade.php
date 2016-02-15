@@ -807,11 +807,33 @@
                 initialSelectedRows: 1,
                 showHeader: false,
                 alwaysOneSelected: true,
-                scrollButtons: true
+                scrollButtons: true,
+                height: 568
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx, currentUserCtx], table_configuration);
 
-            //  ----------------------------------- RELEASES LINES WIDGET ------------------------------------------
+            // ----------------------------------- PRODUCT ACTIVITY WIDGET ----------------------------------------
+            var pa_lines_dom = document.getElementById("product-activity-Lines");
+            var pa_lines_metrics = [
+                {
+                    id: 'product-activity',
+                    max: 60
+                }
+            ];
+            var pa_lines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 180,
+                labelFormat: '¬_D.data.info.prid.name¬',
+                area: true,
+                showXLabels: false,
+                colors: ['#004C8B']
+            };
+            new framework.widgets.LinesChart(pa_lines_dom, pa_lines_metrics,
+                    [orgCtx, timeCtx, productsCtx], pa_lines_configuration);
+
+            //  ----------------------------------- RELEASES TIMEBAR WIDGET ------------------------------------------
             var releasesLines_dom = document.getElementById("releases-chart");
 
             var releasesLines_metrics = [{
@@ -820,7 +842,7 @@
             }];
 
             var releasesLines_configuration = {
-                height: 130,
+                height: 50,
                 color: function(val) {
                     var color = d3.scale.linear()
                             .domain([0, 0.5, 1])
@@ -829,7 +851,10 @@
                 },
                 tooltip: '<p>Success Rate: ¬Math.round(_E.value * 100)¬%</p>' +
                          '<p>¬Widget.format.date(_E.time)¬ </p>',
-                legend: ['Success', 'Broken']
+                showAxis: true,
+                showMaxMin: true,
+                leyend: []
+                //legend: ['Success', 'Broken']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 
@@ -936,7 +961,7 @@
             var skills_star = new framework.widgets.RadarChart(skills_star_dom, skills_star_metrics,
                     [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);
 
-            //  ----------------------------------- LIQUID GAUGE 1 -----------------------------------------
+            //  ----------------------------------- LIQUID GAUGE 1 (STATUS)-----------------------------------------
 
             var liquid1_dom = document.getElementById("liquid-1-chart");
             var liquid1_metrics = [
@@ -960,7 +985,31 @@
             new framework.widgets.LiquidGauge(liquid1_dom, liquid1_metrics,
                     [orgCtx, timeCtx, productsCtx], liquid1_configuration);
 
-            //  ----------------------------------- LIQUID GAUGE 2 ------------------------------------------
+            //  ----------------------------------- LIQUID GAUGE 11 (AVG STATUS)-----------------------------------------
+
+            var liquid11_dom = document.getElementById("liquid-11-chart");
+            var liquid11_metrics = [
+                {
+                    id: 'product-success-rate',
+                    max: 1,
+                    aggr: "sum",
+                    post_modifier: toPercentagePostModifier
+                }
+            ];
+            var liquid11_configuration = {
+                height: 110,
+                minValue: 0,
+                maxValue: 100,
+                waveColor: ['#E65538', '#8ACA17'],
+                textColor: ['#E65538', '#DBF1B4'],
+                circleColor: ['#8C1700', '#4BAD06'],
+                waveTextColor:'#DBF1B4',
+                radius: 45
+            };
+            new framework.widgets.LiquidGauge(liquid11_dom, liquid11_metrics,
+                    [orgCtx, timeCtx, productsCtx], liquid11_configuration);
+
+            //  ----------------------------------- LIQUID GAUGE 2 (HEALTH)------------------------------------------
             var liquid2_dom = document.getElementById("liquid-2-chart");
             var liquid2_metrics = [
                 {
@@ -982,6 +1031,29 @@
             };
             new framework.widgets.LiquidGauge(liquid2_dom, liquid2_metrics,
                     [orgCtx, timeCtx, productsCtx], liquid2_configuration);
+
+            //  ----------------------------------- LIQUID GAUGE 22 (AVG HEALTH)------------------------------------------
+            var liquid22_dom = document.getElementById("liquid-22-chart");
+            var liquid22_metrics = [
+                {
+                    id: 'director-health',
+                    max: 1,
+                    aggr: "avg",
+                    post_modifier: toPercentagePostModifier
+                }
+            ];
+            var liquid22_configuration = {
+                height: 110,
+                minValue: 0,
+                maxValue: 100,
+                waveColor: ['#E65538', '#8ACA17'],
+                textColor: ['#E65538', '#DBF1B4'],
+                circleColor: ['#8C1700', '#4BAD06'],
+                waveTextColor: '#DBF1B4',
+                radius: 45
+            };
+            new framework.widgets.LiquidGauge(liquid22_dom, liquid22_metrics,
+                    [orgCtx, timeCtx, currentUserCtx], liquid22_configuration);
 
             // ----------------------------- EXTERNAL MEMBERS LINES CHART ----------------------------------
             var external_members_lines_dom = document.getElementById("external-members-lines");

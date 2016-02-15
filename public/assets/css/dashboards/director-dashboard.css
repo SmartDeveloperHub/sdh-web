@@ -268,6 +268,18 @@ html, body {
 #products-table-stitle-label {
 }
 
+#product-activity-Lines {
+    margin-left: -72px;
+    left: 0;
+}
+
+#pa-chart-subtitle {
+}
+
+#pa-chart-stitle-ico {
+    color: #004C8B;
+}
+
 #releases-chart-subtitle {
 }
 
@@ -416,7 +428,7 @@ html, body {
     margin-left: 16%;
     margin-right: 16%;
     width: 68%;
-    height: 480px;
+    height: 568px;
 }
 
 #scatter-plot {
@@ -456,8 +468,8 @@ html, body {
 
 #releases-chart {
     height: 126px;
-    margin-left: 2%;
-    margin-right: 9%;
+    margin-left: -19px;
+    margin-right: 25px;
 }
 
 #radar-product-chart {
@@ -480,6 +492,8 @@ html, body {
 /* Large desktop */
 @media (min-width: 1258px) {
     #radar-product-chart .blurable canvas {
+        margin-top: 1%;
+        margin-left: -8%;
     }
 }
 
@@ -493,22 +507,22 @@ html, body {
 @media (min-width: 1019px) and (max-width: 1170px) {
     #radar-product-chart .blurable canvas {
         margin-left: -14%;
-        margin-top: -10%;
+        margin-top: -5%;
     }
 }
 
 @media (min-width: 932px) and (max-width: 1019px) {
     #radar-product-chart .blurable canvas {
-        margin-left: -22%;
-        margin-top: -17%;
+        margin-left: -28%;
+        margin-top: -5%;
     }
 }
 
 /* Landscape phone to portrait tablet */
 @media (min-width: 769px) and (max-width: 932px) {
     #radar-product-chart .blurable canvas {
-        margin-left: -26%;
-        margin-top: -22%;
+        margin-left: -35%;
+        margin-top: -16%;
     }
 }
 
@@ -517,7 +531,39 @@ html, body {
     display: inline-block;
 }
 
+#liquid-11-chart, #liquid-22-chart {
+    text-align: left;
+    display: inline-block;
+}
+
 /* team members secction*/
+
+#external-members-subtitle {
+}
+
+#external-members-stitle-ico {
+    color: #004C8B;
+}
+
+#external-members-stitle-label {
+}
+
+#external-members-stitle-help {
+}
+
+#internal-members-subtitle {
+}
+
+#internal-members-stitle-ico {
+    color: #009740;
+}
+
+#internal-members-stitle-label {
+}
+
+#internal-members-stitle-help {
+}
+
 #team-members-table {
     margin-left: 16%;
     margin-right: 16%;

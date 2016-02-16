@@ -814,7 +814,7 @@
                 color: function(val) {
                     var color = d3.scale.linear()
                             .domain([0, 0.5, 1])
-                            .range(["red", "yellow", "green"]);
+                            .range(["#DD0B14", "#FFEF00", "#009640"]);
                     return color(val);
                 },
                 tooltip: '<p>Success Rate: ¬Math.round(_E.value * 100)¬%</p>' +

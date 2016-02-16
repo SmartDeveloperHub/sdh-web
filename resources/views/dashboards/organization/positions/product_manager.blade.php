@@ -525,7 +525,7 @@
                 color: function(data) {
                     var color = d3.scale.linear()
                             .domain([0, 0.5, 1])
-                            .range(["red", "yellow", "green"]);
+                            .range(["#DD0B14", "#FFEF00", "#009640"]);
                     return color(data['product-health']['values'][0]);
                 },
                 size: function(data) {

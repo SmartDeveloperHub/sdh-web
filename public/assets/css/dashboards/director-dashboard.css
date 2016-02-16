@@ -467,9 +467,10 @@ html, body {
 }
 
 #releases-chart {
-    height: 126px;
-    margin-left: -19px;
+    height: 42px;
+    margin-left: -20px;
     margin-right: 25px;
+    margin-top: -10px;
 }
 
 #radar-product-chart {

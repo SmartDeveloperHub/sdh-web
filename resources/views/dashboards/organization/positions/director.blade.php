@@ -126,7 +126,7 @@
             <div id="radar-product-chart" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="39">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="2" data-gs-x="8" data-gs-y="39">
             <div id="liquid1-chart-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-check-circle"></span>
                 <span id="liquid1-chart-stitle-label" class="subtitleLabel">Product Status</span>
@@ -141,7 +141,7 @@
             <div id="liquid-11-chart" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="49">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="2" data-gs-x="8" data-gs-y="49">
             <div id="liquid2-chart-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-heartbeat"></span>
                 <span id="liquid2-chart-stitle-label" class="subtitleLabel">Product Health</span>

@@ -1055,8 +1055,6 @@
                         removeWidget.delete();
                     }
 
-                    var carouselId = "myCarousel" + Math.round(Math.random() * 10000);
-
                     var multitable = $("#product-projects-table");
 
                     // Remove table rows

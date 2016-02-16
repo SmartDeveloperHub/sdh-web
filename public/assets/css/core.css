@@ -1342,7 +1342,7 @@ a:hover {
 
 /* For gridstack */
 .main-content .grid-stack>.grid-stack-item>.grid-stack-item-content {
-    overflow: hidden;
+    overflow: visible;
     white-space: nowrap;
     text-overflow: ellipsis;
 }

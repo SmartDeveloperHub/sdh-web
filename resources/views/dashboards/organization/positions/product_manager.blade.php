@@ -218,7 +218,7 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="30" data-gs-x="0" data-gs-y="37">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="28" data-gs-x="0" data-gs-y="37">
             <div class="grid-stack-item-content">
                 <div id="product-projects-table" class="widget grid-stack-item-content"></div>
             </div>
@@ -629,7 +629,8 @@
                 initialSelectedRows: 1,
                 showHeader: false,
                 alwaysOneSelected: true,
-                scrollButtons: true
+                scrollButtons: true,
+                height: 568
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [orgCtx, timeCtx, currentUserCtx], table_configuration);
 
@@ -1261,7 +1262,8 @@
                             maxRowsSelected: 8,
                             initialSelectedRows: (x === 0 ? 3 : 0), //Only the first table has elements selected
                             showHeader: false,
-                            filterControl: false
+                            filterControl: false,
+                            height: 493
                         };
 
                         //Create the widget

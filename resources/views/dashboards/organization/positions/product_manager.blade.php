@@ -88,25 +88,29 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="24" data-gs-x="0" data-gs-y="29">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="32" data-gs-x="0" data-gs-y="29">
             <div class="grid-stack-item-content">
                 <div id="products-table" class="widget"></div>
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="2" data-gs-x="4" data-gs-y="26">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="3" data-gs-x="4" data-gs-y="26">
             <div id="releases-chart-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="releases-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
-                <span id="releases-chart-stitle-label" class="subtitleLabel">Status History</span>
+                <span id="releases-chart-stitle-label" class="subtitleLabel">History</span>
                 <span id="releases-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="8" data-gs-x="4" data-gs-y="28">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="7" data-gs-x="4" data-gs-y="29">
+            <div id="product-activity-Lines" class="widget grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="3" data-gs-x="4" data-gs-y="36">
             <div id="releases-chart" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="4" data-gs-y="36">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="4" data-gs-y="39">
             <div id="radar-product-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="radar-product-stitle-ico" class="subtitleIcon fa fa-line-chart"></span>
                 <span id="radar-product-stitle-label" class="subtitleLabel">Product Profile</span>
@@ -114,11 +118,11 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="4" data-gs-y="38">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="18" data-gs-x="4" data-gs-y="41">
             <div id="radar-product-chart" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="36">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="39">
             <div id="liquid1-chart-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-check-circle"></span>
                 <span id="liquid1-chart-stitle-label" class="subtitleLabel">Product Status</span>
@@ -126,11 +130,14 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="6" data-gs-x="8" data-gs-y="38">
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="7" data-gs-x="8" data-gs-y="41">
             <div id="liquid-1-chart" class="widget grid-stack-item-content"></div>
         </div>
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="7" data-gs-x="10" data-gs-y="41">
+            <div id="liquid-11-chart" class="widget grid-stack-item-content"></div>
+        </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="44">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="49">
             <div id="liquid2-chart-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-heartbeat"></span>
                 <span id="liquid2-chart-stitle-label" class="subtitleLabel">Product Health</span>
@@ -138,11 +145,14 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="6" data-gs-x="8" data-gs-y="46">
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="8" data-gs-x="8" data-gs-y="51">
             <div id="liquid-2-chart" class="widget grid-stack-item-content"></div>
         </div>
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="8" data-gs-x="10" data-gs-y="51">
+            <div id="liquid-22-chart" class="widget grid-stack-item-content"></div>
+        </div>
 
-        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="53">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="62">
             <div class="grid-stack-item-content subtitleRow">
                 <span id="products-stitle-ico" class="subtitleIcon fa fa-sitemap"></span>
                 <span id="products-stitle-label" class="subtitleLabel">Products</span>
@@ -150,13 +160,13 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="0" data-gs-y="55">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="0" data-gs-y="65">
             <div id="cytograph1" class="widget grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="4" data-gs-y="55">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="4" data-gs-y="65">
             <div id="cytograph2" class="widget grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="8" data-gs-y="55">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="15" data-gs-x="8" data-gs-y="65">
             <div id="cytograph3" class="widget grid-stack-item-content"></div>
         </div>
 
@@ -634,7 +644,28 @@
 
             };
 
-            //  ----------------------------------- RELEASES LINES WIDGET ------------------------------------------
+            // ----------------------------------- PRODUCT ACTIVITY WIDGET ----------------------------------------
+            var pa_lines_dom = document.getElementById("product-activity-Lines");
+            var pa_lines_metrics = [
+                {
+                    id: 'product-activity',
+                    max: 60
+                }
+            ];
+            var pa_lines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 180,
+                labelFormat: '¬_D.data.info.prid.name¬',
+                area: true,
+                showXLabels: false,
+                colors: ['#004C8B']
+            };
+            new framework.widgets.LinesChart(pa_lines_dom, pa_lines_metrics,
+                    [orgCtx, timeCtx, productsCtx], pa_lines_configuration);
+
+            //  ----------------------------------- RELEASES TIMEBAR WIDGET ------------------------------------------
             var releasesLines_dom = document.getElementById("releases-chart");
 
             var releasesLines_metrics = [{
@@ -643,16 +674,19 @@
             }];
 
             var releasesLines_configuration = {
-                height: 130,
+                height: 50,
                 color: function(val) {
                     var color = d3.scale.linear()
                             .domain([0, 0.5, 1])
-                            .range(["red", "yellow", "green"]);
+                            .range(["#DD0B14", "#FFEF00", "#009640"]);
                     return color(val);
                 },
                 tooltip: '<p>Success Rate: ¬Math.round(_E.value * 100)¬%</p>' +
                          '<p>¬Widget.format.date(_E.time)¬ </p>',
-                legend: ['Success', 'Broken']
+                showAxis: true,
+                showMaxMin: true,
+                leyend: []
+                //legend: ['Success', 'Broken']
             };
             var releasesLines = new framework.widgets.TimeBar(releasesLines_dom, releasesLines_metrics, [orgCtx, timeCtx, productsCtx], releasesLines_configuration);
 
@@ -748,7 +782,8 @@
                     [orgCtx, timeCtx, productsCtx, currentUserCtx], skills_star_configuration);
 
 
-            //  ----------------------------------- LIQUID GAUGE 1 ------------------------------------------
+            //  ----------------------------------- LIQUID GAUGE 1 (STATUS)-----------------------------------------
+
             var liquid1_dom = document.getElementById("liquid-1-chart");
             var liquid1_metrics = [
                 {
@@ -771,7 +806,31 @@
             new framework.widgets.LiquidGauge(liquid1_dom, liquid1_metrics,
                     [orgCtx, timeCtx, productsCtx], liquid1_configuration);
 
-            //  ----------------------------------- LIQUID GAUGE 2 ------------------------------------------
+            //  ----------------------------------- LIQUID GAUGE 11 (AVG STATUS)-----------------------------------------
+
+            var liquid11_dom = document.getElementById("liquid-11-chart");
+            var liquid11_metrics = [
+                {
+                    id: 'product-success-rate',
+                    max: 1,
+                    aggr: "sum",
+                    post_modifier: toPercentagePostModifier
+                }
+            ];
+            var liquid11_configuration = {
+                height: 110,
+                minValue: 0,
+                maxValue: 100,
+                waveColor: ['#E65538', '#8ACA17'],
+                textColor: ['#E65538', '#DBF1B4'],
+                circleColor: ['#8C1700', '#4BAD06'],
+                waveTextColor:'#DBF1B4',
+                radius: 45
+            };
+            new framework.widgets.LiquidGauge(liquid11_dom, liquid11_metrics,
+                    [orgCtx, timeCtx, productsCtx], liquid11_configuration);
+
+            //  ----------------------------------- LIQUID GAUGE 2 (HEALTH)------------------------------------------
             var liquid2_dom = document.getElementById("liquid-2-chart");
             var liquid2_metrics = [
                 {
@@ -793,6 +852,29 @@
             };
             new framework.widgets.LiquidGauge(liquid2_dom, liquid2_metrics,
                     [orgCtx, timeCtx, productsCtx], liquid2_configuration);
+
+            //  ----------------------------------- LIQUID GAUGE 22 (AVG HEALTH)------------------------------------------
+            var liquid22_dom = document.getElementById("liquid-22-chart");
+            var liquid22_metrics = [
+                {
+                    id: 'pmanager-health',
+                    max: 1,
+                    aggr: "avg",
+                    post_modifier: toPercentagePostModifier
+                }
+            ];
+            var liquid22_configuration = {
+                height: 110,
+                minValue: 0,
+                maxValue: 100,
+                waveColor: ['#E65538', '#8ACA17'],
+                textColor: ['#E65538', '#DBF1B4'],
+                circleColor: ['#8C1700', '#4BAD06'],
+                waveTextColor: '#DBF1B4',
+                radius: 45
+            };
+            new framework.widgets.LiquidGauge(liquid22_dom, liquid22_metrics,
+                    [orgCtx, timeCtx, currentUserCtx], liquid22_configuration);
 
             // ----------------------------- EXTERNAL MEMBERS LINES CHART ----------------------------------
             var external_members_lines_dom = document.getElementById("external-members-lines");

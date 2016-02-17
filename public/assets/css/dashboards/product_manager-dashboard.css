@@ -118,8 +118,11 @@ html, body {
 /* subtitles */
 /*************/
 
+
 .subtitleRow {
+    margin-bottom: 25px;
     text-align: center;
+    margin-top: 35px;
     margin-left: 0;
     margin-right: 0;
     line-height: 30px;
@@ -270,6 +273,18 @@ html, body {
 #products-table-stitle-label {
 }
 
+#product-activity-Lines {
+    margin-left: -72px;
+    left: 0;
+}
+
+#pa-chart-subtitle {
+}
+
+#pa-chart-stitle-ico {
+    color: #004C8B;
+}
+
 #releases-chart-subtitle {
 }
 
@@ -290,6 +305,11 @@ html, body {
 }
 
 #radar-product-stitle-label {
+}
+
+#liquid1-chart-subtitle {
+    margin-left: -11px;
+    margin-bottom: 0;
 }
 
 #liquid1-chart-subtitle {
@@ -420,7 +440,7 @@ html, body {
     margin-left: 16%;
     margin-right: 16%;
     width: 68%;
-    height: 480px;
+    height: 568px;
 }
 
 #scatter-plot {
@@ -458,6 +478,13 @@ html, body {
     text-align: center;
 }
 
+#releases-chart {
+    height: 42px;
+    margin-left: -20px;
+    margin-right: 25px;
+    margin-top: 0;
+}
+
 #radar-product-chart {
     text-align: center;
     height: 100%;
@@ -478,6 +505,8 @@ html, body {
 /* Large desktop */
 @media (min-width: 1258px) {
     #radar-product-chart .blurable canvas {
+        margin-top: 1%;
+        margin-left: -8%;
     }
 }
 
@@ -491,27 +520,31 @@ html, body {
 @media (min-width: 1019px) and (max-width: 1170px) {
     #radar-product-chart .blurable canvas {
         margin-left: -14%;
-        margin-top: -10%;
+        margin-top: -5%;
     }
 }
 
 @media (min-width: 932px) and (max-width: 1019px) {
     #radar-product-chart .blurable canvas {
-        margin-left: -22%;
-        margin-top: -17%;
+        margin-left: -28%;
+        margin-top: -5%;
     }
 }
 
 /* Landscape phone to portrait tablet */
 @media (min-width: 769px) and (max-width: 932px) {
     #radar-product-chart .blurable canvas {
-        margin-left: -26%;
-        margin-top: -22%;
+        margin-left: -35%;
+        margin-top: -16%;
     }
 }
 
-
 #liquid-1-chart, #liquid-2-chart {
+    text-align: center;
+    display: inline-block;
+}
+
+#liquid-11-chart, #liquid-22-chart {
     text-align: center;
     display: inline-block;
 }

@@ -404,7 +404,8 @@
                 maxRowsSelected: 6,
                 filterControl: true,
                 initialSelectedRows: 5,
-                showHeader: false
+                showHeader: false,
+                height: 330
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, userCtx], table_configuration);
 

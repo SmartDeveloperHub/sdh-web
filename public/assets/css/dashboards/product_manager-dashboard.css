@@ -375,6 +375,7 @@ html, body {
 }
 
 #team-multibar-subtitle {
+    margin-top: 0;
 }
 
 #team-multibar-stitle-ico {
@@ -445,6 +446,7 @@ html, body {
 
 #scatter-plot {
     font-family: Roboto;
+    height: 400px;
 }
 
 #scatter-plot .nvd3 .nv-axislabel{

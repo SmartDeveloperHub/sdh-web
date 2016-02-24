@@ -301,6 +301,34 @@ var finishLoading = function() {
     $( "#loading" ).fadeOut(250);
 };
 
+var parseUrl = function(url) {
+    var parser = document.createElement('a');
+    parser.href = decodeURI(url);
+
+    var res = {
+        protocol: parser.protocol, // => "http:"
+        hostname: parser.hostname, // => "example.com"
+        port: parser.port,     // => "3000"
+        pathname: parser.pathname, // => "/pathname/"
+        search: parser.search,   // => "?search=test"
+        hash: parser.hash,     // => "#hash"
+        host: parser.host     // => "example.com:3000"
+    };
+
+    res.params = {};
+
+    if(res.search.length > 1) {
+        var paramstr = res.search.split('?')[1];
+        var paramsarr = paramstr.split('&');
+        for (var i = 0; i < paramsarr.length; i++) {
+            var tmparr = paramsarr[i].split('=');
+            res.params[decodeURIComponent(tmparr[0])] = decodeURIComponent(tmparr[1]);
+        }
+    }
+
+    return res;
+};
+
 document.getElementById("loading").className = "";
 
 
@@ -342,8 +370,18 @@ require(["jquery", "d3", "nvd3", "moment", "framework", "bootstrap", "headerHand
                 $(".page-container").show();
                 $("footer.footer-container").show();
 
-                // Load the initial dashboard
-                framework.dashboard.changeTo(BASE_DASHBOARD);
+                var url = parseUrl(document.location);
+
+                if(url.params.dashboard != null && url.params.env != null) {
+
+                    framework.dashboard.changeTo(url.params.dashboard, JSON.parse(url.params.env));
+
+                } else {
+
+                    // Load the initial dashboard
+                    framework.dashboard.changeTo(BASE_DASHBOARD);
+
+                }
 
             });
 

@@ -1095,7 +1095,7 @@
                 var nSelectedInTable = $(".multitable-container > div[data-id='"+dataId+"']").find("tr.selected").length;
 
                 // Update the number in the uper icon selector
-                $("#product-projects-table .multitable-selector div[data-id='"+dataId+"'] span.number-selected").text(nSelectedInTable);
+                $("#product-projects-table .multitable-selector li[data-id='"+dataId+"'] span.number-selected").text(nSelectedInTable);
 
                 // Update the changed data
                 superContextData[contextId] = data;

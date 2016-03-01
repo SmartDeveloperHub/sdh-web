@@ -815,6 +815,7 @@
                     id: 'product-success-rate',
                     max: 1,
                     aggr: "sum",
+                    //aggr: "avg"
                     post_modifier: toPercentagePostModifier
                 }
             ];
@@ -858,9 +859,11 @@
             var liquid22_dom = document.getElementById("liquid-22-chart");
             var liquid22_metrics = [
                 {
-                    id: 'pmanager-health',
+                    //id: 'pmanager-health',
+                    //id: 'product-health-fake',
+                    id: 'product-health',
                     max: 1,
-                    aggr: "avg",
+                    //aggr: "avg",
                     post_modifier: toPercentagePostModifier
                 }
             ];
@@ -875,7 +878,7 @@
                 radius: 45
             };
             new framework.widgets.LiquidGauge(liquid22_dom, liquid22_metrics,
-                    [orgCtx, timeCtx, currentUserCtx], liquid22_configuration);
+                    [orgCtx, timeCtx, productsCtx], liquid22_configuration);
 
             // ----------------------------- EXTERNAL MEMBERS LINES CHART ----------------------------------
             var external_members_lines_dom = document.getElementById("external-members-lines");

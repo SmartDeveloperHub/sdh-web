@@ -529,12 +529,14 @@ html, body {
 
 #liquid-1-chart, #liquid-2-chart {
     text-align: center;
-    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 
 #liquid-11-chart, #liquid-22-chart {
     text-align: center;
-    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 
 /* team members secction*/

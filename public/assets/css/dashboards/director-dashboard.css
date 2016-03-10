@@ -479,17 +479,6 @@ html, body {
     width: 100%;
 }
 
-#radar-product-chart .blurable {
-    height: 100%;
-    width: 100%;
-}
-
-#radar-product-chart .blurable canvas {
-    width: 100% !important;
-    /*max-width: 700px;*/
-    height: 100% !important;
-}
-
 /* Large desktop */
 @media (min-width: 1258px) {
     #radar-product-chart .blurable canvas {

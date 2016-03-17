@@ -219,9 +219,10 @@ a.headbutton:hover, a.headbutton:active, a.headbutton:visited, a.headbutton:focu
 	margin: -2px 20px 2px 10px;
 	width: 163px;
 	height: 64px;
-    background-size: contain;
-    -webkit-transition: all 0.3s;
+	background-size: contain;
+	-webkit-transition: all 0.3s;
 	transition: all 0.3s;
+	background-repeat: no-repeat;
 }
 
 .header-first-bar{

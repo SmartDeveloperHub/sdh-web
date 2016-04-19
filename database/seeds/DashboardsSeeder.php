@@ -45,8 +45,8 @@ class DashboardsSeeder extends Seeder {
         DB::table('generic_dashboard_categories')->insert([
             ['generic_dashboard' => 1, 'category' => 'positions', 'param' => 'oid'],
             ['generic_dashboard' => 2, 'category' => 'positions', 'param' => 'oid'],
-            ['generic_dashboard' => 3, 'category' => 'roles', 'param' => 'pid'],
-            ['generic_dashboard' => 4, 'category' => 'roles', 'param' => 'pid'],
+            ['generic_dashboard' => 3, 'category' => 'roles', 'param' => 'pjid'],
+            ['generic_dashboard' => 4, 'category' => 'roles', 'param' => 'pjid'],
             ['generic_dashboard' => 5, 'category' => 'positions', 'param' => 'oid']
         ]);
 

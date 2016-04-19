@@ -597,11 +597,11 @@
                     cytograph_dom.parentElement.setAttribute("data-gs-x", gridstackWidth*i);
                     $(cytograph_dom.parentElement).get(0).style['display'] = 'visible';
                     
-                    var theProductManagerId = data['userid'];
+                    var theProductManagerId = data['uid'];
 
                     var productsAux = {};
-                    productsAux[data['userid']] = {
-                        "name": data['userid'],
+                    productsAux[data['uid']] = {
+                        "name": data['uid'],
                         "tooltip": data['name'],
                         "nick": data['nick'],
                         "avatar": data['avatar'],
@@ -626,11 +626,11 @@
 
                             edges.push({
                                 source: theProductManagerId,
-                                target: product_data['productid']
+                                target: product_data['prid']
                             });
 
-                            productsAux[product_data['productid']] = {
-                                "name": product_data['productid'],
+                            productsAux[product_data['prid']] = {
+                                "name": product_data['prid'],
                                 "tooltip": product_data['name'],
                                 "avatar": product_data['avatar']
                             }
@@ -681,7 +681,7 @@
 
                     var pIdList = [];
                     for (var i = 0; i < pList.length; i++) {
-                        pIdList.push(pList[i].productid);
+                        pIdList.push(pList[i].prid);
                     }
 
                     framework.data.updateContext(director_products_cntx, {prid: pIdList});
@@ -772,7 +772,7 @@
                             href: "product",
                             env: [
                                 {
-                                    property: "productid",
+                                    property: "prid",
                                     as: "prid"
                                 },
                                 {
@@ -793,13 +793,13 @@
                         id: productsCtx,
                         filter: [
                             {
-                                property: "productid", //TODO
+                                property: "prid", //TODO
                                 as: "prid"
                             }
                         ]
                     }
                 ],
-                keepSelectedByProperty: "productid",
+                keepSelectedByProperty: "prid",
                 selectable: true,
                 minRowsSelected: 1,
                 maxRowsSelected: 1,
@@ -1154,13 +1154,13 @@
                         id: teamMembersCtx,
                         filter: [
                             {
-                                property: "userid", //TODO
+                                property: "uid", //TODO
                                 as: "uid"
                             }
                         ]
                     }
                 ],
-                keepSelectedByProperty: "userid",
+                keepSelectedByProperty: "uid",
                 selectable: true,
                 minRowsSelected: 1,
                 maxRowsSelected: 8,

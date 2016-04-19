@@ -952,13 +952,13 @@
                         aux = {
                             max: 1,
                             aggr: 'sum',
-                            pid: id,
+                            pjid: id,
                             from: framework.data.getContextData(timeCtx)['from'],
                             to: framework.data.getContextData(timeCtx)['to']
                         };
                         productMetricId = framework.utils.resourceHash('project-developers', aux);
                         aux['id'] = 'project-developers';
-                        tooltip = "Product \"¬_D.data.info.pid.name¬\"<br/> Staff: ¬_D.data.values[0]¬";
+                        tooltip = "Project \"¬_D.data.info.pjid.name¬\"<br/> Staff: ¬_D.data.values[0]¬";
                     }
 
 
@@ -1044,12 +1044,12 @@
 
                             edges.push({
                                 source: theProductId,
-                                target: project_data['projectid']
+                                target: project_data['pjid']
                             });
 
-                            productsAux[project_data['projectid']] = {
-                                "id": project_data['projectid'],
-                                "name": project_data['projectid'],
+                            productsAux[project_data['pjid']] = {
+                                "id": project_data['pjid'],
+                                "name": project_data['pjid'],
                                 "avatar": project_data['avatar']
                             }
 
@@ -1232,8 +1232,8 @@
                                          href: "project",
                                          env: [
                                              {
-                                                 property: "projectid",
-                                                 as: "pid"
+                                                 property: "pjid",
+                                                 as: "pjid"
                                              },
                                              {
                                                  property: "name",
@@ -1253,13 +1253,13 @@
                                     id: context,
                                     filter: [
                                         {
-                                            property: "projectid", //TODO
-                                            as: "pid"
+                                            property: "pjid", //TODO
+                                            as: "pjid"
                                         }
                                     ]
                                 }
                             ],
-                            keepSelectedByProperty: "projectid",
+                            keepSelectedByProperty: "pjid",
                             selectable: true,
                             minRowsSelected: 0,
                             maxRowsSelected: 8,
@@ -1322,7 +1322,7 @@
             };
             var project_roles_multibar_conf = {
                 stacked: false,
-                labelFormat: "¬_D.data.info.pid.name¬",
+                labelFormat: "¬_D.data.info.pjid.name¬",
                 showControls: false,
                 height: 250,
                 showLegend: true,

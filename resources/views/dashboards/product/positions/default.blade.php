@@ -87,7 +87,7 @@
                     .controller('ProjectsController', ['$scope', function ($scope) {
                         $scope.changeToProjectDashboard = function (project) {
                             var env = framework.dashboard.getEnv();
-                            env['pid'] = project['projectid'];
+                            env['pjid'] = project['pjid'];
                             env['name'] = project['name'];
                             framework.dashboard.changeTo('project', env);
                         };

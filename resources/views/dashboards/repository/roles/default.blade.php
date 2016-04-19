@@ -528,7 +528,7 @@
                             href: "developer",
                             env: [
                                 {
-                                    property: "userid",
+                                    property: "uid",
                                     as: "uid"
                                 },
                                 {
@@ -550,7 +550,7 @@
                         id: usersTableCtx,
                         filter: [
                             {
-                                property: "userid",
+                                property: "uid",
                                 as: "uid"
                             }
                         ]
@@ -561,7 +561,7 @@
                 maxRowsSelected: 8,
                 filterControl: true,
                 initialSelectedRows: 5,
-                keepSelectedByProperty: "userid",
+                keepSelectedByProperty: "uid",
                 orderByColumn: [[1, 'asc']],
                 showHeader: false,
                 height: 336

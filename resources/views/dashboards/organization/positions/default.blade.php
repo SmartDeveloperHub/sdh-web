@@ -447,7 +447,7 @@
                 .controller('UsersController', ['$scope', function ($scope) {
                     $scope.changeToUserDashboard = function (user) {
                         var env = framework.dashboard.getEnv();
-                        env['uid'] = user['userid'];
+                        env['uid'] = user['uid'];
                         env['name'] = user['name'];
                         framework.dashboard.changeTo('developer', env);
                     };
@@ -455,7 +455,7 @@
                 .controller('ReposController', ['$scope', function ($scope) {
                     $scope.changeToRepoDashboard = function (repo) {
                         var env = framework.dashboard.getEnv();
-                        env['rid'] = repo['repositoryid'];
+                        env['rid'] = repo['rid'];
                         env['name'] = repo['name'];
                         framework.dashboard.changeTo('repository', env);
                     };

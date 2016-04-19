@@ -43,8 +43,8 @@
         setTitle("Project");
         setSubtitle(framework.dashboard.getEnv('name'));
         showHeaderChart();
-        console.log("framework.dashboard.getEnv()['pid']: " + framework.dashboard.getEnv()['pid']);
-        framework.data.updateContext(projectCtx, {pid: framework.dashboard.getEnv()['pid']});
+        console.log("framework.dashboard.getEnv()['pjid']: " + framework.dashboard.getEnv()['pjid']);
+        framework.data.updateContext(projectCtx, {pjid: framework.dashboard.getEnv()['pjid']});
 
         var rangeNv_dom = document.getElementById("fixed-chart");
         var rangeNv_metrics = [
@@ -85,7 +85,7 @@
                     .controller('ReposController', ['$scope', function ($scope) {
                         $scope.changeToRepoDashboard = function (repo) {
                             var env = framework.dashboard.getEnv();
-                            env['rid'] = repo['repositoryid'];
+                            env['rid'] = repo['rid'];
                             env['name'] = repo['name'];
                             framework.dashboard.changeTo('repository', env);
                         };

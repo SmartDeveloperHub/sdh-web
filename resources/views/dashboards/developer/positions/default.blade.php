@@ -371,7 +371,7 @@
                             href: "repository",
                             env: [
                                 {
-                                    property: "repositoryid",
+                                    property: "rid",
                                     as: "rid"
                                 },
                                 {
@@ -392,13 +392,13 @@
                         id: reposTableCtx,
                         filter: [
                             {
-                                property: "repositoryid",
+                                property: "rid",
                                 as: "rid"
                             }
                         ]
                     }
                 ],
-                keepSelectedByProperty: "repositoryid",
+                keepSelectedByProperty: "rid",
                 selectable: true,
                 minRowsSelected: 1,
                 maxRowsSelected: 6,

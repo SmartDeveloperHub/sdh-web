@@ -119,7 +119,7 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
         newEnv['oid'] = ORGANIZATION_ID;
     }
 
-    //Also add the user id
+    //Also add the logged user id
     if(newEnv['user_id'] == null) {
         newEnv['user_id'] = USER_ID;
     }
@@ -238,8 +238,8 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
             } else if(newEnv['rid']) {
                 objectId = newEnv['rid'];
                 objectType = 'repository';
-            } else if(newEnv['pid']) {
-                objectId = newEnv['pid'];
+            } else if(newEnv['pjid']) {
+                objectId = newEnv['pjid'];
                 objectType = 'project';
             } else if(newEnv['prid']) {
                 objectId = newEnv['prid'];

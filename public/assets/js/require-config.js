@@ -44,7 +44,7 @@ require.config({
         'datatables' : 'vendor/datatables/media/js/jquery.dataTables.min',
         'lodash': 'vendor/lodash/lodash.min',
         'gridstack': 'vendor/gridstack/dist/gridstack',
-        'joint': 'vendor/dist/joint/joint.min',
+        'joint': 'vendor/joint/dist/joint.min',
         'cytoscape': 'vendor/cytoscape/dist/cytoscape',
         'cytoscape-qtip': 'vendor/cytoscape-qtip/cytoscape-qtip',
         'cola': 'vendor/cytoscape/lib/cola.v3.min'

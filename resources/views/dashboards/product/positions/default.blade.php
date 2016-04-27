@@ -4,7 +4,7 @@
     [
     "//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js",
     "css!assets/css/dashboards/organization-dashboard",
-    "vendor/sdh-framework/widgets/RangeNv/rangeNv"
+    "sdh-framework/widgets/RangeNv/rangeNv"
     ]
 @stop
 

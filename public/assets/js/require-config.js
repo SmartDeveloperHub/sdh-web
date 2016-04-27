@@ -27,27 +27,48 @@ require.config({
             'css': 'require-css' // or whatever the path to require-css is
         }
     },
+    packages: [
+        {
+            name: 'sdh-framework',
+            location: 'vendor/sdh-framework',
+            main: 'framework'
+        },
+        {
+            name: 'datatables',
+            location: 'vendor/datatables',
+            main: 'media/js/jquery.dataTables.min'
+        },
+        {
+            name: 'bootstrap',
+            location: 'vendor/bootstrap',
+            main: 'dist/js/bootstrap.min',
+            deps: ['jquery']
+        },
+        {
+            name: 'jquery-qtip',
+            location: 'vendor/qtip2',
+            main: 'jquery.qtip.min'
+        }
+    ],
     paths: {
         'require-css': 'vendor/require-css/css',
-        'framework': "vendor/sdh-framework/framework",
         'headerHandler': "assets/js/header/headerHandler",
         'widgetCommon': 'vendor/sdh-framework/widgets/Common/common',
-        'bootstrap': "vendor/bootstrap/dist/js/bootstrap.min",
         'backbone': 'vendor/backbone/backbone-min',
         'underscore': 'vendor/underscore/underscore-min',
         'd3': "vendor/d3/d3.min",
         'nvd3': "vendor/nvd3/build/nv.d3.min",
         'jquery': 'vendor/jquery/dist/jquery',
         'jquery-ui': 'vendor/jquery-ui/ui',
-        'jquery-qtip': 'vendor/qtip2/jquery.qtip.min',
         'moment': "vendor/moment/moment",
-        'datatables' : 'vendor/datatables/media/js/jquery.dataTables.min',
         'lodash': 'vendor/lodash/lodash.min',
         'gridstack': 'vendor/gridstack/dist/gridstack',
         'joint': 'vendor/joint/dist/joint.min',
         'cytoscape': 'vendor/cytoscape/dist/cytoscape',
         'cytoscape-qtip': 'vendor/cytoscape-qtip/cytoscape-qtip',
-        'cola': 'vendor/cytoscape/lib/cola.v3.min'
+        'cola': 'vendor/cytoscape/lib/cola.v3.min',
+        'chartjs': 'vendor/Chart.js/Chart.min',
+        'roboto-fontface': 'vendor/roboto-fontface'
     },
     shim : {
         'nvd3': {
@@ -67,9 +88,6 @@ require.config({
         },
         'cola': {
             exports: 'cola'
-        },
-        'bootstrap': {
-            deps: ['jquery']
         }
     }
 });

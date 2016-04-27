@@ -5,12 +5,12 @@
 
 @section('require')
     [
-    "vendor/sdh-framework/widgets/CounterBox/counterbox",
-    "vendor/sdh-framework/widgets/HorizontalBar/horizontalbar",
-    "vendor/sdh-framework/widgets/Table/table",
-    "vendor/sdh-framework/widgets/LinesChart/linesChart",
-    "vendor/sdh-framework/widgets/RangeNv/rangeNv",
-    "vendor/sdh-framework/widgets/MultiBar/multibar",
+    "sdh-framework/widgets/CounterBox/counterbox",
+    "sdh-framework/widgets/HorizontalBar/horizontalbar",
+    "sdh-framework/widgets/Table/table",
+    "sdh-framework/widgets/LinesChart/linesChart",
+    "sdh-framework/widgets/RangeNv/rangeNv",
+    "sdh-framework/widgets/MultiBar/multibar",
     "css!assets/css/dashboards/repository-dashboard"
     ]
 @stop

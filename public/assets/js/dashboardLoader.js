@@ -217,12 +217,12 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
             $("#template-exec").html(data);
 
             var options = {
-                cell_height: 20,
+                cellHeight: 20,
                 height: 0,
                 width: 12,
                 animate: false,
                 float: true,
-                vertical_margin: 0
+                verticalMargin: 0
             };
 
             // Create the grid

@@ -39,12 +39,6 @@ require.config({
             main: 'media/js/jquery.dataTables.min'
         },
         {
-            name: 'bootstrap',
-            location: 'vendor/bootstrap',
-            main: 'dist/js/bootstrap.min',
-            deps: ['jquery']
-        },
-        {
             name: 'jquery-qtip',
             location: 'vendor/qtip2',
             main: 'jquery.qtip.min'
@@ -53,7 +47,8 @@ require.config({
     paths: {
         'require-css': 'vendor/require-css/css',
         'headerHandler': "assets/js/header/headerHandler",
-        'widgetCommon': 'vendor/sdh-framework/widgets/Common/common',
+        'bootstrap': "vendor/bootstrap/dist/js/bootstrap.min",
+        'bootstrap-css': "vendor/bootstrap/dist/css/bootstrap.min",
         'backbone': 'vendor/backbone/backbone-min',
         'underscore': 'vendor/underscore/underscore-min',
         'd3': "vendor/d3/d3.min",
@@ -88,6 +83,9 @@ require.config({
         },
         'cola': {
             exports: 'cola'
+        },
+        'bootstrap': {
+            deps: ['jquery']
         }
     }
 });

@@ -20,7 +20,7 @@
 */
 
 // Load all the modules needed
-require(["jquery", "moment", "framework", "bootstrap", "widgetCommon"], function () {
+require(["jquery", "moment", "sdh-framework", "bootstrap"], function () {
 
     $(document).ready(function () {
         console.log("SDH Welcome Ready!");

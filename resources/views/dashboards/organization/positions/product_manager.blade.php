@@ -18,7 +18,6 @@
     "sdh-framework/widgets/CytoChart2/cytoChart2",
     "sdh-framework/widgets/MultiBar/multibar",
     "css!assets/css/dashboards/product_manager-dashboard",
-    "//crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js",
     "//cdnjs.cloudflare.com/ajax/libs/jcarousel/0.3.4/jquery.jcarousel.js"
     ]
 @stop

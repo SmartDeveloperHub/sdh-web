@@ -17,8 +17,7 @@
     "sdh-framework/widgets/TimeBar/timebar",
     "sdh-framework/widgets/CytoChart2/cytoChart2",
     "sdh-framework/widgets/MultiBar/multibar",
-    "css!assets/css/dashboards/director-dashboard",
-    "//crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"
+    "css!assets/css/dashboards/director-dashboard"
     ]
 @stop
 
@@ -505,12 +504,6 @@
                 background: 'transparent'
             };
             var avgHealth = new framework.widgets.CounterBox(avghealth_dom, avghealth_metrics, [orgCtx, timeCtx, currentUserCtx], avghealth_conf);
-
-
-
-            function getRandomGravatar(size) {
-                return "https://secure.gravatar.com/avatar/"+CryptoJS.MD5(""+Math.random())+"?d=identicon&s="+size;
-            }
 
             // CYTOCHART CONFIG FOR DIRECTOR
             function configDirectorCytoChart(productsAux, theProductManagerId, edges) {

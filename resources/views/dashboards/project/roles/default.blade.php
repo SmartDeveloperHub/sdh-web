@@ -3,7 +3,8 @@
 @section('require')
     [
     "//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js",
-    "css!assets/css/dashboards/organization-dashboard"
+    "css!assets/css/dashboards/organization-dashboard",
+    "sdh-framework/widgets/RangeNv/rangeNv"
     ]
 @stop
 

@@ -348,7 +348,6 @@
         var rangeNv_metrics = [
             {
                 id: 'pmanager-activity',
-                //id: 'pmanager-activity', //TODO: director activity metric
                 max: 101
             }
         ];
@@ -492,12 +491,12 @@
             var currentCost;
             var pmanager_products_cntx = "pmanager-products-cntx";
             framework.data.observe([{id: 'pmanager-costs', max: 1 }], function(frameData) {
-                if (frameData.event == "loading") {
+                if (frameData.event != "data") {
                     return;
                 }
                 currentCost = frameData.data["pmanager-costs"][0].data.values[0];
                 framework.data.observe(["view-pmanager-products"], function(frameData) {
-                    if (frameData.event == "loading") {
+                    if (frameData.event != "data") {
                         return;
                     }
 
@@ -505,7 +504,7 @@
 
                     var pIdList = [];
                     for (var i = 0; i < pList.length; i++) {
-                        pIdList.push(pList[i].productid);
+                        pIdList.push(pList[i].prid);
                     }
 
                     framework.data.updateContext(pmanager_products_cntx, {prid: pIdList});
@@ -593,7 +592,7 @@
                             href: "product",
                             env: [
                                 {
-                                    property: "productid",
+                                    property: "prid",
                                     as: "prid"
                                 },
                                 {
@@ -614,13 +613,13 @@
                         id: productsCtx,
                         filter: [
                             {
-                                property: "productid", //TODO
+                                property: "prid",
                                 as: "prid"
                             }
                         ]
                     }
                 ],
-                keepSelectedByProperty: "productid",
+                keepSelectedByProperty: "prid",
                 selectable: true,
                 minRowsSelected: 1,
                 maxRowsSelected: 1,
@@ -985,7 +984,7 @@
             var cytocharts = [];
             framework.data.observe(["view-pmanager-products"], function(framework_data) {
 
-                if (framework_data.event == "loading") {
+                if (framework_data.event != "data") {
                     return;
                 }
 
@@ -1010,12 +1009,12 @@
                     cytograph_dom.parentElement.setAttribute("data-gs-x", gridstackWidth*i);
                     $(cytograph_dom.parentElement).get(0).style['display'] = 'inherit';
 
-                    var theProductId = data['productid'];
+                    var theProductId = data['prid'];
 
                     var productsAux = {};
-                    productsAux[data['productid']] = {
-                        "id": data['productid'],
-                        "name": data['productid'],
+                    productsAux[data['prid']] = {
+                        "id": data['prid'],
+                        "name": data['prid'],
                         "avatar": data['avatar']
                     };
 
@@ -1029,7 +1028,7 @@
                     //Request product manager products
                     framework.data.observe(project_metric, function(cytograph_dom, theProductId, productsAux, framework_data) {
 
-                        if (framework_data.event == "loading") {
+                        if (framework_data.event != "data") {
                             return;
                         }
 
@@ -1190,7 +1189,7 @@
 
                         var name = products[x]['name'];
                         var avatar = products[x]['avatar'];
-                        var id = products[x]['productid'];
+                        var id = products[x]['prid'];
                         var context = "productprojectstable~" + id;
 
                         var avatarSelector = $('<li class="multitable-img-selector" data-id="'+id+'"></li>')

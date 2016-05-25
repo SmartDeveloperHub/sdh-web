@@ -658,7 +658,7 @@
                 height: 180,
                 labelFormat: '¬_D.data.info.prid.name¬',
                 area: true,
-                showXLabels: false,
+                showXAxis: false,
                 colors: ['#004C8B']
             };
             new framework.widgets.LinesChart(pa_lines_dom, pa_lines_metrics,

@@ -1,0 +1,85 @@
+.info-box {
+    background-color: #FFF;
+    margin-top: 40px;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+.widget{
+    background-color: transparent;
+    display: block;
+    margin-bottom: 10px;
+    padding: 12px;
+    height: 100%;
+}
+
+.static-info-widget {
+    min-height: 100px;
+    font-family: Roboto;
+    font-size: 20px;
+    line-height: 35px;
+    margin-bottom: 18px;
+}
+
+.static-info-widget .static-info-line {
+    white-space: nowrap;
+    margin-left: 6px;
+}
+
+.static-info-widget .theicon {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 2px;
+    font-size: 29px;
+    width: 40px;
+    margin-left: 12px;
+}
+
+.blurado {
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+}
+
+.static-info-widget .thelabel {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-family: Roboto;
+    vertical-align: middle;
+    font-weight: bold;
+    color: #3E3F3F;
+}
+
+.static-info-widget .theVal {
+    color: #737070;
+    vertical-align: middle;
+    font-family: Roboto;
+    white-space: nowrap;
+    margin-left: 10px;
+    font-size: 18px;
+    display: inline-block;
+    overflow: hidden;
+    max-width: 65%;
+    text-overflow: ellipsis;
+    line-height: 27px;
+}
+
+/* avatar */
+.avatarBox {
+    text-align: center;
+}
+
+.avatar {
+    width: 76px;
+    height: 76px;
+    font-size: 73px;
+    color: #004C8B;
+    text-align: center;
+    display: inline-block;
+    border-radius: 1px;
+    background-size: contain;
+    margin-left: 31%;
+    margin-top: 23px;
+    background-repeat: no-repeat;
+}

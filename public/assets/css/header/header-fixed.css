@@ -226,7 +226,7 @@ a.headbutton:hover, a.headbutton:active, a.headbutton:visited, a.headbutton:focu
 }
 
 .header-first-bar{
-	height: 100px;
+	height: 0;
 	box-sizing: border-box;
 }
 
@@ -253,7 +253,7 @@ body.hidd .settings-pane {
 }
 
 body.fixed .header-fixed .header-limiter {
-	height: 60px;
+	height: 0;
 }
 
 body.fixed .header-fixed-placeholder {
@@ -392,9 +392,7 @@ div#timeBarDown {
 div#timeControler {
 	background-image: url("../../images/mini_down_bar_dark.png");
 	background-repeat: repeat-x;
-    text-align: center;
-    cursor: pointer;
-    height: 25px;
+	text-align: center;
 	-webkit-transition:all 0.3s;
 	transition:all 0.3s;
 }
@@ -471,6 +469,7 @@ div#floatingRow .panel.panel-default {
     width: 320px;
     height: 25px;
     background-image: url("../../images/center_down_bar_dark.png");
+    cursor: pointer;
 }
 
 .infoBox {

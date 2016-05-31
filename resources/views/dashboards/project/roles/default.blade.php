@@ -4,11 +4,40 @@
     [
     "//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js",
     "css!assets/css/dashboards/organization-dashboard",
-    "sdh-framework/widgets/RangeNv/rangeNv"
+    "sdh-framework/widgets/RangeNv/rangeNv",
+    "sdh-framework/widgets/Table/table",
+    "css!assets/css/info-box"
     ]
 @stop
 
 @section('html')
+    <div class="row info-box">
+        <div class="row">
+            <div class="com-widget widget static-info-widget col-sm-12">
+                <div class="row">
+                    <div class="col-sm-2 avatarBox">
+                        <div id="avatar" class="avatar"></div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="row static-info-line">
+                            <span id="createdIco" class="theicon fa fa-pencil-square-o" style="color: #019640"></span><span class="thelabel">Created:</span><span class="theVal blurado" id="project-created">------</span>
+                        </div>
+                        <div class="row static-info-line">
+                            <span id="firstIco" class="theicon fa fa-user-secret"></span><span class="thelabel">Manager:</span><span class="theVal blurado" id="project-manager">-------</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="row static-info-line">
+                            <span id="lastIco" class="theicon fa fa-cubes" style="color: #C0485E"></span><span class="thelabel">Number of projects:</span><span class="theVal blurado" id="project-repositories-number">--------</span>
+                        </div>
+                        <div class="row static-info-line">
+                            <span id="lastIco" class="theicon octicon octicon-git-branch" style="color: #8A1978"></span><span class="thelabel">Last commit:</span><span class="theVal blurado" id="project-last-commit">--------</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="usersPanel" class="section" ng-controller="ReposController">
         <div id="develHeader" class="row row-centered">
             <span id="headIcon" class="headIcon octicon octicon-organization"></span>
@@ -30,11 +59,11 @@
                 <span class="card-name">@{{ repo.name }}</span>
             </div>
         </div>
-        <div class="row row-centered">
-            <div class="col-sm-4">
-                <div id="repositories-table" class="widget"></div>
-            <div>
-        </div>
+    </div>
+    <div class="row row-centered">
+        <div class="col-sm-4">
+            <div id="repositories-table" class="widget"></div>
+        <div>
     </div>
 @stop
 
@@ -51,6 +80,30 @@
         setSubtitle(framework.dashboard.getEnv('name'));
         showHeaderChart();
         framework.data.updateContext(projectCtx, {pjid: framework.dashboard.getEnv()['pjid']});
+
+        framework.data.observe(['projectinfo'], function (event) {
+
+            if (event.event === 'data') {
+                var productInfo = event.data['projectinfo'][Object.keys(event.data['projectinfo'])[0]]['data'];
+
+                var creation = document.getElementById('project-created');
+                var manager = document.getElementById('project-manager');
+                var repositories_number = document.getElementById('project-repositories-number');
+                var last_commit = document.getElementById('project-last-commit');
+
+                $(creation).removeClass('blurado');
+                $(manager).removeClass('blurado');
+                $(repositories_number).removeClass('blurado');
+                $(last_commit).removeClass('blurado');
+
+                if (productInfo['avatar'] != null && productInfo['avatar'] !== "" && productInfo['avatar'] !== "http://avatarURL") {
+                    $("#avatar").css("background-image", "url(" + productInfo['avatar'] + ")");
+                }
+
+                //TODO: fill the data in the project info
+
+            }
+        }, [projectCtx]);
 
         var rangeNv_dom = document.getElementById("fixed-chart");
         var rangeNv_metrics = [

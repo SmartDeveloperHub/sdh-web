@@ -30,6 +30,11 @@
                 <span class="card-name">@{{ repo.name }}</span>
             </div>
         </div>
+        <div class="row row-centered">
+            <div class="col-sm-4">
+                <div id="repositories-table" class="widget"></div>
+            <div>
+        </div>
     </div>
 @stop
 
@@ -39,12 +44,12 @@
 
         var timeCtx = "time-context";
         var projectCtx = "project-context";
+        var repositoriesCtx = "repositories-context";
 
         //Show header chart and set titles
         setTitle("Project");
         setSubtitle(framework.dashboard.getEnv('name'));
         showHeaderChart();
-        console.log("framework.dashboard.getEnv()['pjid']: " + framework.dashboard.getEnv()['pjid']);
         framework.data.updateContext(projectCtx, {pjid: framework.dashboard.getEnv()['pjid']});
 
         var rangeNv_dom = document.getElementById("fixed-chart");
@@ -110,6 +115,59 @@
             },[projectCtx, timeCtx]);
 
         };
+
+        //  ----------------------------------- REPOSITORIES TABLE ------------------------------------------
+        var table_dom = document.getElementById("repositories-table");
+        var table_metrics = ['view-project-repositories'];
+        var table_configuration = {
+            columns: [
+                {
+                    label: "",
+                    link: {
+                        img: "avatar", //or label
+                        href: "repository",
+                        env: [
+                            {
+                                property: "rid",
+                                as: "rid"
+                            },
+                            {
+                                property: "name",
+                                as: "name"
+                            }
+                        ]
+                    },
+                    width: "40px"
+                },
+                {
+                    label: "",
+                    property: "name"
+                }
+            ],
+            updateContexts: [
+                {
+                    id: repositoriesCtx,
+                    filter: [
+                        {
+                            property: "rid",
+                            as: "rid"
+                        }
+                    ]
+                }
+            ],
+            keepSelectedByProperty: "rid",
+            selectable: true,
+            minRowsSelected: 1,
+            maxRowsSelected: 1,
+            filterControl: true,
+            initialSelectedRows: 1,
+            showHeader: false,
+            alwaysOneSelected: true,
+            scrollButtons: true,
+            height: 568
+        };
+        var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, projectCtx], table_configuration);
+
 
     }
 @stop

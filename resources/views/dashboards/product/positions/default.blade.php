@@ -30,6 +30,11 @@
                 <span class="card-name">@{{ project.name }}</span>
             </div>
         </div>
+        <div class="row row-centered">
+            <div class="col-sm-4">
+                <div id="projects-table" class="widget"></div>
+            <div>
+        </div>
     </div>
 @stop
 
@@ -39,6 +44,7 @@
 
         var timeCtx = "time-context";
         var productCtx = "product-context";
+        var projectsCtx = "projects-context";
 
         //Show header chart and set titles
         setTitle("Product");
@@ -108,6 +114,59 @@
 
                 }
             }, [productCtx, timeCtx]);
+
+
+            //  ----------------------------------- PROJECTS TABLE ------------------------------------------
+            var table_dom = document.getElementById("projects-table");
+            var table_metrics = ['view-product-projects'];
+            var table_configuration = {
+                columns: [
+                    {
+                        label: "",
+                        link: {
+                            img: "avatar", //or label
+                            href: "project",
+                            env: [
+                                {
+                                    property: "pjid",
+                                    as: "pjid"
+                                },
+                                {
+                                    property: "name",
+                                    as: "name"
+                                }
+                            ]
+                        },
+                        width: "40px"
+                    },
+                    {
+                        label: "",
+                        property: "name"
+                    }
+                ],
+                updateContexts: [
+                    {
+                        id: projectsCtx,
+                        filter: [
+                            {
+                                property: "pjid",
+                                as: "pjid"
+                            }
+                        ]
+                    }
+                ],
+                keepSelectedByProperty: "pjid",
+                selectable: true,
+                minRowsSelected: 1,
+                maxRowsSelected: 1,
+                filterControl: true,
+                initialSelectedRows: 1,
+                showHeader: false,
+                alwaysOneSelected: true,
+                scrollButtons: true,
+                height: 568
+            };
+            var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, productCtx], table_configuration);
 
 
         };

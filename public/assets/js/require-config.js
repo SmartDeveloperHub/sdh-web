@@ -46,6 +46,7 @@ require.config({
     ],
     paths: {
         'require-css': 'vendor/require-css/css',
+        'dashboard-controller': "assets/js/dashboardController",
         'headerHandler': "assets/js/header/headerHandler",
         'bootstrap': "vendor/bootstrap/dist/js/bootstrap.min",
         'bootstrap-css': "vendor/bootstrap/dist/css/bootstrap.min",

@@ -1,0 +1,75 @@
+.centered-element-container {
+    position: relative;
+}
+
+.centered-element {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.row-section-icon {
+    font-size: 38px;
+}
+
+.titleRow {
+    margin-bottom: 8px;
+    text-align: center;
+    margin-top: 35px;
+}
+
+.titleIcon {
+    font-size: 54px;
+    vertical-align: middle;
+}
+
+.titleLabel {
+    font-size: 32px;
+    margin-left: 20px;
+    color: #5A5858;
+    vertical-align: middle;
+    font-family: Roboto;
+}
+
+.subtitleRow {
+    margin-bottom: 25px;
+    text-align: center;
+    margin-top: 35px;
+    margin-left: 0;
+    margin-right: 0;
+    line-height: 30px;
+}
+
+.subtitleIcon {
+    font-size: 29px;
+    vertical-align: middle;
+}
+
+.subtitleLabel {
+    font-size: 24px;
+    margin-left: 20px;
+    color: #6F6C6C;
+    vertical-align: middle;
+    font-family: Roboto;
+}
+
+.subtitleHelp {
+    font-size: 29px;
+    vertical-align: middle;
+    color: #004C8B;
+    opacity: 0;
+    margin-top: 4px;
+    margin-left: 20px;
+    -webkit-transition: all ease-in-out 2s;
+    -o-transition: all ease-in-out 2s;
+    transition: all ease-in-out 2s;
+    z-index: 9999;
+    position: absolute;
+}
+
+
+/* Dashboard specific */
+.avatar-rounded-icon {
+    height: 60px;
+    width: 60px;
+}

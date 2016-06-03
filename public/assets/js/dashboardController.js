@@ -268,7 +268,6 @@ DashboardController.prototype.changeTo = function changeTo(newDashboard, newEnv,
 
             // Update the grid configuration if the change event is triggered
             gridEl.on('change', function(event, items) {
-                console.log(items);
 
                 var gridConfigData = JSON.parse(localStorage.getItem(dashboardUID));
                 var config = (gridConfigData ? gridConfigData.config : {});

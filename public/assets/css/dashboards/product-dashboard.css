@@ -8,10 +8,6 @@
     transform: translate(-50%, -50%);
 }
 
-.row-section-icon {
-    font-size: 38px;
-}
-
 .titleRow {
     margin-bottom: 8px;
     text-align: center;
@@ -72,4 +68,29 @@
 .avatar-rounded-icon {
     height: 60px;
     width: 60px;
+}
+
+.com-widget.com-counter .com-label .num {
+    font-size: 38px;
+    font-family: Roboto;
+    white-space: nowrap;
+}
+
+.com-widget.com-counter .com-label span {
+    font-size: 16px;
+    font-family: Roboto;
+    min-width: 125px;
+}
+
+.row-title {
+    font-size: 20px;
+    color: #6F6C6C;
+    vertical-align: middle;
+    font-family: Roboto;
+    white-space: normal;
+    display: block;
+}
+
+.row-section-icon {
+    font-size: 32px;
 }

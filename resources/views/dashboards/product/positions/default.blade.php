@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="19" data-gs-x="0" data-gs-y="5">
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="46" data-gs-x="0" data-gs-y="5">
             <div id="developers-table" class="grid-stack-item-content"></div>
         </div>
 
@@ -100,7 +100,7 @@
             <div id="developer-activity" class="grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="9" data-gs-height="2" data-gs-x="3" data-gs-y="19">
+        <div class="grid-stack-item" data-gs-width="10" data-gs-height="2" data-gs-x="2" data-gs-y="19">
             <div style="color: #6e8b00" class="grid-stack-item-content subtitleRow">
                 <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-exclamation-circle"></span>
                 <span id="pa-chart-stitle-label" class="subtitleLabel">Issues breakdown</span>
@@ -108,73 +108,78 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="6" data-gs-x="6" data-gs-y="21">
+
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="4" data-gs-y="21">
             <div id="developer-counter-1" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="6" data-gs-x="8" data-gs-y="21">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="7" data-gs-y="21">
             <div id="developer-counter-2" class="grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="4" data-gs-y="27">
-            <div id="row-section-1" class="grid-stack-item-content centered-element-container">
-                <span class="centered-element avatar-rounded-icon img-circle"></span>
+        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="27">
+            <div id="row-section-1" class="grid-stack-item-content">
+                <span class="row-section-icon octicon octicon-issue-opened"></span>
+                <span class="row-title text-center">Assigned issues</span>
             </div>
         </div>
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="6" data-gs-x="5" data-gs-y="27">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="27">
             <div id="developer-counter-3" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="6" data-gs-x="7" data-gs-y="27">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="27">
             <div id="developer-counter-4" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="6" data-gs-x="9" data-gs-y="27">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="27">
             <div id="developer-counter-5" class="grid-stack-item-content"></div>
         </div>
 
 
-        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="4" data-gs-y="33">
-            <div id="row-section-2" class="grid-stack-item-content centered-element-container">
-                <span class="row-section-icon centered-element fa fa-retweet"></span>
+        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="33">
+            <div id="row-section-2" class="grid-stack-item-content">
+                <span class="row-section-icon octicon octicon-issue-reopened"></span>
+                <span class="row-title text-center">Reassigned issues</span>
             </div>
         </div>
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="6" data-gs-x="5" data-gs-y="33">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="33">
             <div id="developer-counter-6" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="6" data-gs-x="7" data-gs-y="33">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="33">
             <div id="developer-counter-7" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="6" data-gs-x="9" data-gs-y="33">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="33">
             <div id="developer-counter-8" class="grid-stack-item-content"></div>
         </div>
 
 
-        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="4" data-gs-y="39">
-            <div id="row-section-3" class="grid-stack-item-content centered-element-container">
-                <span class="centered-element avatar-rounded-icon img-circle"></span>
+        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="39">
+            <div id="row-section-3" class="grid-stack-item-content">
+                <span class="row-section-icon fa fa-user"></span>
+                <span class="row-title text-center">Member percentage</span>
             </div>
         </div>
-        <div class="grid-stack-item text-center" data-gs-width="2" data-gs-height="6" data-gs-x="5" data-gs-y="39">
+        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="39">
             <div id="liquid-chart-1" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item text-center" data-gs-width="2" data-gs-height="6" data-gs-x="7" data-gs-y="39">
+        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="39">
             <div id="liquid-chart-2" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item text-center" data-gs-width="2" data-gs-height="6" data-gs-x="9" data-gs-y="39">
+        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="39">
             <div id="liquid-chart-3" class="grid-stack-item-content"></div>
         </div>
 
 
-        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="4" data-gs-y="45">
-            <div id="row-section-4" class="grid-stack-item-content centered-element-container">
-                <span class="row-section-icon centered-element fa fa-users"></span>
+        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="45">
+            <div id="row-section-4" class="grid-stack-item-content">
+                <span class="row-section-icon fa fa-globe"></span>
+                <span class="row-title text-center">Total percentage</span>
             </div>
         </div>
-        <div class="grid-stack-item text-center" data-gs-width="2" data-gs-height="6" data-gs-x="5" data-gs-y="45">
+        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="45">
             <div id="liquid-chart-4" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item text-center" data-gs-width="2" data-gs-height="6" data-gs-x="7" data-gs-y="45">
+        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="45">
             <div id="liquid-chart-5" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item text-center" data-gs-width="2" data-gs-height="6" data-gs-x="9" data-gs-y="45">
+        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="45">
             <div id="liquid-chart-6" class="grid-stack-item-content"></div>
         </div>
 
@@ -343,7 +348,7 @@
                 showHeader: false,
                 alwaysOneSelected: true,
                 scrollButtons: true,
-                height: 568
+                height: 920
             };
             var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, productCtx], table_configuration);
 

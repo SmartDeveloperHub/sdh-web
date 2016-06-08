@@ -1,10 +1,13 @@
 .centered-element-container {
     position: relative;
+    height: 100%;
+    width: 100%;
 }
 
 .centered-element {
     position: absolute;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 
@@ -83,14 +86,24 @@
 }
 
 .row-title {
+    display: block;
     font-size: 20px;
     color: #6F6C6C;
     vertical-align: middle;
     font-family: Roboto;
     white-space: normal;
-    display: block;
+    word-break: normal;
 }
 
 .row-section-icon {
     font-size: 32px;
+}
+
+.colored-row-item {
+    background-color: #F0F0F0;
+}
+
+.com-widget {
+    padding: 0 !important;
+    margin: 0 !important;;
 }

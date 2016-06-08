@@ -96,7 +96,7 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="9" data-gs-height="7" data-gs-x="3" data-gs-y="11">
+        <div class="grid-stack-item" data-gs-width="10" data-gs-height="7" data-gs-x="2" data-gs-y="11">
             <div id="developer-activity" class="grid-stack-item-content"></div>
         </div>
 
@@ -116,27 +116,35 @@
             <div id="developer-counter-2" class="grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="27">
-            <div id="row-section-1" class="grid-stack-item-content">
-                <span class="row-section-icon octicon octicon-issue-opened"></span>
-                <span class="row-title text-center">Assigned issues</span>
+        <div class="grid-stack-item text-center colored-row-item" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="27">
+            <div class="centered-element-container">
+                <div class="centered-element">
+                    <div id="row-section-1" class="grid-stack-item-content">
+                        <span class="row-section-icon octicon octicon-issue-opened"></span>
+                        <span class="row-title text-center">Assigned issues</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="27">
+        <div class="grid-stack-item colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="27">
             <div id="developer-counter-3" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="27">
+        <div class="grid-stack-item colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="27">
             <div id="developer-counter-4" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="27">
+        <div class="grid-stack-item colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="27">
             <div id="developer-counter-5" class="grid-stack-item-content"></div>
         </div>
 
 
         <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="33">
-            <div id="row-section-2" class="grid-stack-item-content">
-                <span class="row-section-icon octicon octicon-issue-reopened"></span>
-                <span class="row-title text-center">Reassigned issues</span>
+            <div class="centered-element-container">
+                <div class="centered-element">
+                    <div id="row-section-2" class="grid-stack-item-content">
+                        <span class="row-section-icon octicon octicon-issue-reopened"></span>
+                        <span class="row-title text-center">Reassigned issues</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="33">
@@ -150,27 +158,35 @@
         </div>
 
 
-        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="39">
-            <div id="row-section-3" class="grid-stack-item-content">
-                <span class="row-section-icon fa fa-user"></span>
-                <span class="row-title text-center">Member percentage</span>
+        <div class="grid-stack-item text-center colored-row-item" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="39">
+            <div class="centered-element-container">
+                <div class="centered-element">
+                    <div id="row-section-3" class="grid-stack-item-content">
+                        <span class="row-section-icon fa fa-user"></span>
+                        <span class="row-title text-center">Member percentage</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="39">
+        <div class="grid-stack-item text-center colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="39">
             <div id="liquid-chart-1" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="39">
+        <div class="grid-stack-item text-center colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="39">
             <div id="liquid-chart-2" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="39">
+        <div class="grid-stack-item text-center colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="39">
             <div id="liquid-chart-3" class="grid-stack-item-content"></div>
         </div>
 
 
         <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="45">
-            <div id="row-section-4" class="grid-stack-item-content">
-                <span class="row-section-icon fa fa-globe"></span>
-                <span class="row-title text-center">Total percentage</span>
+            <div class="centered-element-container">
+                <div class="centered-element">
+                    <div id="row-section-4" class="grid-stack-item-content">
+                        <span class="row-section-icon fa fa-globe"></span>
+                        <span class="row-title text-center">Total percentage</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="45">

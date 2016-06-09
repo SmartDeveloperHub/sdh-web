@@ -803,7 +803,11 @@
                 height: 250,
                 showLegend: true,
                 showXAxis: false,
-                yAxisTickFormat : function(d) {  return Math.round(d + 100); }
+                yAxisTickFormat : function(d) {  return Math.round(d + 100); },
+                x: function(metric, extra) {
+                    return "Workload";
+                },
+                sort: 'asc'
             };
             new framework.widgets.MultiBar(products_workload_dom, products_workload_metrics,
                     [orgCtx, timeCtx, director_products_cntx], products_workload_conf);

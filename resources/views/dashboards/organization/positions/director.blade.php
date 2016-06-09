@@ -82,8 +82,20 @@
             <div id="scatter-plot" class="widget grid-stack-item-content"></div>
         </div>
 
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="26">
+            <div id="scatter-plot-subtitle" class="grid-stack-item-content subtitleRow">
+                <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
+                <span id="scatter-plot-stitle-label" class="subtitleLabel">Products workload</span>
+                <span id="scatter-plot-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="10" data-gs-height="12" data-gs-x="1" data-gs-y="28">
+            <div id="products-workload" class="widget grid-stack-item-content"></div>
+        </div>
+
         <!-- Left table - Product selector -->
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="26">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="3" data-gs-x="0" data-gs-y="40">
             <div id="products-table-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="products-table-stitle-ico" class="subtitleIcon fa fa-hand-pointer-o"></span>
                 <span id="products-table-stitle-label" class="subtitleLabel">Product Selector</span>
@@ -91,13 +103,13 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="32" data-gs-x="0" data-gs-y="29">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="32" data-gs-x="0" data-gs-y="43">
             <div class="grid-stack-item-content">
                 <div id="products-table" class="widget"></div>
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="3" data-gs-x="4" data-gs-y="26">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="3" data-gs-x="4" data-gs-y="40">
             <div id="pa-chart-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
                 <span id="pa-chart-stitle-label" class="subtitleLabel">History</span>
@@ -105,15 +117,15 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="7" data-gs-x="4" data-gs-y="29">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="7" data-gs-x="4" data-gs-y="43">
             <div id="product-activity-Lines" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="8" data-gs-height="3" data-gs-x="4" data-gs-y="36">
+        <div class="grid-stack-item" data-gs-width="8" data-gs-height="3" data-gs-x="4" data-gs-y="50">
             <div id="releases-chart" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="4" data-gs-y="39">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="4" data-gs-y="53">
             <div id="radar-product-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="radar-product-stitle-ico" class="subtitleIcon fa fa-line-chart"></span>
                 <span id="radar-product-stitle-label" class="subtitleLabel">Product Profile</span>
@@ -121,11 +133,11 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="18" data-gs-x="4" data-gs-y="41">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="18" data-gs-x="4" data-gs-y="55">
             <div id="radar-product-chart" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="39">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="53">
             <div id="liquid1-chart-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="liquid1-chart-stitle-ico" class="subtitleIcon fa fa-check-circle"></span>
                 <span id="liquid1-chart-stitle-label" class="subtitleLabel">Product Status</span>
@@ -133,14 +145,14 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="7" data-gs-x="8" data-gs-y="41">
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="7" data-gs-x="8" data-gs-y="55">
             <div id="liquid-1-chart" class="widget grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="7" data-gs-x="10" data-gs-y="41">
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="7" data-gs-x="10" data-gs-y="55">
             <div id="liquid-11-chart" class="widget grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="49">
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="2" data-gs-x="8" data-gs-y="63">
             <div id="liquid2-chart-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="liquid2-chart-stitle-ico" class="subtitleIcon fa fa-heartbeat"></span>
                 <span id="liquid2-chart-stitle-label" class="subtitleLabel">Product Health</span>
@@ -148,10 +160,10 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="8" data-gs-x="8" data-gs-y="51">
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="8" data-gs-x="8" data-gs-y="65">
             <div id="liquid-2-chart" class="widget grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="8" data-gs-x="10" data-gs-y="51">
+        <div class="grid-stack-item" data-gs-width="2" data-gs-height="8" data-gs-x="10" data-gs-y="65">
             <div id="liquid-22-chart" class="widget grid-stack-item-content"></div>
         </div>
 
@@ -274,6 +286,23 @@
         setTitle("Home");
         setSubtitle("Director");
         showHeaderChart();
+
+        // Load all the products of this director
+        var director_products_cntx = "director-products-cntxt";
+        framework.data.observe(["view-director-products"], function(frameData) {
+            if (frameData.event == "loading") {
+                return;
+            }
+
+            var pList = frameData.data["view-director-products"][0].data.values;
+
+            var pIdList = [];
+            for (var i = 0; i < pList.length; i++) {
+                pIdList.push(pList[i].prid);
+            }
+
+            framework.data.updateContext(director_products_cntx, {prid: pIdList});
+        }, [currentUserCtx]);
 
         //Subtitles information trying to include touch mode
         /*$('.subtitleRow').on('click') {
@@ -657,101 +686,128 @@
 
             // ------------------------------------------ SCATTER PLOT -------------------------------------------
             var currentCost;
-            var scatter_dom = document.getElementById("scatter-plot");
-            var director_products_cntx = "director-products-cntxt";
             framework.data.observe([{id: 'director-costs', max: 1 }], function(frameData) {
                 if (frameData.event == "loading") {
                     return;
                 }
                 currentCost = frameData.data["director-costs"][0].data.values[0];
+                loadProductsScatter();
                 //console.log("director-cost_4Scatter: " + frameData.data["director-costs"][0].data.values[0]);
-                framework.data.observe(["view-director-products"], function(frameData) {
-                    if (frameData.event == "loading") {
-                        return;
-                    }
 
-                    var pList = frameData.data["view-director-products"][0].data.values;
-
-                    var pIdList = [];
-                    for (var i = 0; i < pList.length; i++) {
-                        pIdList.push(pList[i].prid);
-                    }
-
-                    framework.data.updateContext(director_products_cntx, {prid: pIdList});
-                }, [currentUserCtx]);
             }, [currentUserCtx]);
+            var loadProductsScatter = function() {
 
-            //framework.data.updateContext(director_products_cntx, {prid: ['product-jenkins','product-sdh']}); //TODO: this wont be needed
-            var scatter_metrics = [ //TODO: required metrics
-                {
-                    id: 'product-cost',
-                    max: 1
-                },
-                {
-                    id: 'product-health',
-                    max: 1
-                },
-                {
-                    id: 'product-quality',
-                    max: 1
-                },
-                {
-                    id: 'product-timetomarket',
-                    max: 1
-                }
-            ];
-            var scatter_conf = {
-                color: function(data) {
-                    var color = d3.scale.linear()
-                            .domain([0, 0.5, 1])
-                            .range(["red", "yellow", "green"]);
-                    return color(data['product-health']['values'][0]);
-                },
-                size: function(data) {
-                    var auxX = data['product-cost']['values'][0] / currentCost;
-                    return (auxX)
-                },
-                shape: function(data) {
-                    return 'circle';
-                },
-                x: function(data) {
-                    return (data['product-timetomarket']['values'][0]);
-                },
-                xAxisLabel: "Time to market",
-                y: function(data) {
-                    return (data['product-quality']['values'][0]);
-                },
-                xAxisTicks: 3,
-                yAxisTicks: 3,
-                yAxisLabel: "Quality",
-                height: 390,
-                groupBy: 'prid',
-                labelFormat: "¬_D['product-cost'].info.prid.name¬",
-                showDistX: false,
-                showDistY: false,
-                xDomain: [0,1],
-                yDomain: [0,1],
-                pointDomain: [0,1],
-                clipEdge: true,
-                // TODO try to add blur somewhere
-                tooltip: "<div class='scatterTooltip' style='text-align: center;'>" +
-                "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data['product-cost'].info.prid.avatar¬\" />" +
-                "<h3>¬_D.data['product-cost'].info.prid.name¬</h3>" +
-                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-balance-scale green'></i><h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
-                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-hourglass-start violet'></i><h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
-                //"<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
-                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D.data['product-cost'].values[0] * 100)/100¬</h4></div>" +
-                "<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.data['product-health'].values[0] * 100)/100¬</h4></div>" +
-                //"<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
-                "</div>",
-                image: "¬_D.data['product-cost'].info.prid.avatar¬",
-                xAxisGradient: ['red', 'orange', 'yellow', 'green'],
-                yAxisGradient: ['green', 'yellow', 'orange', 'red'],
-                showLegend: false,
-                showMaxMin: false
+                var scatter_dom = document.getElementById("scatter-plot");
+                var scatter_metrics = [ //TODO: required metrics
+                    {
+                        id: 'product-cost',
+                        max: 1
+                    },
+                    {
+                        id: 'product-health',
+                        max: 1
+                    },
+                    {
+                        id: 'product-quality',
+                        max: 1
+                    },
+                    {
+                        id: 'product-timetomarket',
+                        max: 1
+                    }
+                ];
+                var scatter_conf = {
+                    color: function(data) {
+                        var color = d3.scale.linear()
+                                .domain([0, 0.5, 1])
+                                .range(["red", "yellow", "green"]);
+                        return color(data['product-health']['values'][0]);
+                    },
+                    size: function(data) {
+                        var auxX = data['product-cost']['values'][0] / currentCost;
+                        return (auxX)
+                    },
+                    shape: function(data) {
+                        return 'circle';
+                    },
+                    x: function(data) {
+                        return (data['product-timetomarket']['values'][0]);
+                    },
+                    xAxisLabel: "Time to market",
+                    y: function(data) {
+                        return (data['product-quality']['values'][0]);
+                    },
+                    xAxisTicks: 3,
+                    yAxisTicks: 3,
+                    yAxisLabel: "Quality",
+                    height: 390,
+                    groupBy: 'prid',
+                    labelFormat: "¬_D['product-cost'].info.prid.name¬",
+                    showDistX: false,
+                    showDistY: false,
+                    xDomain: [0,1],
+                    yDomain: [0,1],
+                    pointDomain: [0,1],
+                    clipEdge: true,
+                    // TODO try to add blur somewhere
+                    tooltip: "<div class='scatterTooltip' style='text-align: center;'>" +
+                    "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data['product-cost'].info.prid.avatar¬\" />" +
+                    "<h3>¬_D.data['product-cost'].info.prid.name¬</h3>" +
+                    "<div class='scattetTTLine'><i class='scatterTTIco fa fa-balance-scale green'></i><h4>Quality: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
+                    "<div class='scattetTTLine'><i class='scatterTTIco fa fa-hourglass-start violet'></i><h4>Time to market: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
+                        //"<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.y * 100)/100¬</h4></div>" +
+                    "<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D.data['product-cost'].values[0] * 100)/100¬</h4></div>" +
+                    "<div class='scattetTTLine'><i class='scatterTTIco fa fa-heartbeat orange'></i><h4>Health: ¬Math.round(_D.data['product-health'].values[0] * 100)/100¬</h4></div>" +
+                        //"<div class='scattetTTLine'><i class='scatterTTIco fa fa-eur red'></i><h4>Cost: ¬Math.round(_D.x * 100)/100¬</h4></div>" +
+                    "</div>",
+                    image: "¬_D.data['product-cost'].info.prid.avatar¬",
+                    xAxisGradient: ['red', 'orange', 'yellow', 'green'],
+                    yAxisGradient: ['green', 'yellow', 'orange', 'red'],
+                    showLegend: false,
+                    showMaxMin: false
+                };
+
+                var scatter = new framework.widgets.Scatter(scatter_dom, scatter_metrics, [orgCtx, timeCtx, director_products_cntx], scatter_conf);
+
             };
 
-            var scatter = new framework.widgets.Scatter(scatter_dom, scatter_metrics, [orgCtx, timeCtx, director_products_cntx], scatter_conf);
+            // -------------------------- WORKLOAD MULTIBAR ------------------------------------
+            var changeScalePostModifier = function toPercentagePostModifier(resourceData) {
+
+                // Data will be [0, 200] aprox, but we want 100 to be the y axis origin. Therefore, we change it to a
+                // [-100, 100] so that 100 will be 0 in our new scale, and then modify the yAxisTickFormat function of the
+                // widget to restore it to the [0,200] by adding 100
+                var scale = d3.scale.linear().domain([0, 200]).range([-100, 100]);
+
+                var values = resourceData['data']['values'];
+                for(var x = 0; x < values.length; x++) {
+                    values[x] = Math.random() * 200; //TODO: Remove: Just to generate random numbers until the metric is ready
+                    values[x] = scale(values[x]);
+                }
+                //debugger;
+                return resourceData;
+
+            };
+            var products_workload_dom = document.getElementById("products-workload");
+            var products_workload_metrics = [
+                {
+                    id: 'product-quality', //TODO: product-workload
+                    max: 1,
+                    post_modifier: changeScalePostModifier
+                }
+            ];
+            var products_workload_conf = {
+                stacked: false,
+                labelFormat: "¬_D.data.info.prid.name¬",
+                showControls: false,
+                height: 250,
+                showLegend: true,
+                showXAxis: false,
+                yAxisTickFormat : function(d) {  return Math.round(d + 100); }
+            };
+            new framework.widgets.MultiBar(products_workload_dom, products_workload_metrics,
+                    [orgCtx, timeCtx, director_products_cntx], products_workload_conf);
+
 
             //  ----------------------------------- PRODUCTS TABLE ------------------------------------------
             var table_dom = document.getElementById("products-table");

@@ -1056,7 +1056,8 @@
                 textColor: ['#E65538', '#DBF1B4'],
                 circleColor: ['#8C1700', '#4BAD06'],
                 waveTextColor:'#DBF1B4',
-                radius: 45
+                radius: 45,
+                suffix: "% avg"
             };
             new framework.widgets.LiquidGauge(liquid11_dom, liquid11_metrics,
                     [orgCtx, timeCtx, productsCtx], liquid11_configuration);
@@ -1104,7 +1105,8 @@
                 textColor: ['#E65538', '#DBF1B4'],
                 circleColor: ['#8C1700', '#4BAD06'],
                 waveTextColor: '#DBF1B4',
-                radius: 45
+                radius: 45,
+                suffix: "% avg"
             };
             new framework.widgets.LiquidGauge(liquid22_dom, liquid22_metrics,
                     [orgCtx, timeCtx, productsCtx], liquid22_configuration);

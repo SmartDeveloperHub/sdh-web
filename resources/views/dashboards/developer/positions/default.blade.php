@@ -41,20 +41,27 @@
             </div>
         </div>
     </div>
-    <div class="row" id="widgetsRow">
-        <div id="total-commits" class="boxCounter col-sm-3"></div>
-        <div id="avg-commitsday" class="boxCounter col-sm-3"></div>
-        <div id="longest-streak" class="boxCounter col-sm-3"></div>
-        <div id="total-repositories" class="boxCounter col-sm-3"></div>
+    <div id="widgetsRow">
+        <div class="row">
+            <div id="total-commits" class="boxCounter col-sm-3"></div>
+            <div id="avg-commitsday" class="boxCounter col-sm-3"></div>
+            <div id="longest-streak" class="boxCounter col-sm-3"></div>
+            <div id="total-repositories" class="boxCounter col-sm-3"></div>
+        </div>
+        <div class="row">
+            <div id="issues-open" class="boxCounter col-sm-3 col-md-offset-2"></div>
+            <div id="issues-in-progress" class="boxCounter col-sm-3"></div>
+            <div id="issues-close" class="boxCounter col-sm-3"></div>
+        </div>
     </div>
     <div class="row" id="devActivBox">
-        <div class="row titleRow" id="devActivityTitle">
+        <div class="row titleRow top-separator" id="devActivityTitle">
             <span id="devActIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
             <span class="titleLabel">Activity</span>
         </div>
         <div class="row" id="commits-lines"></div>
     </div>
-    <div class="row" id="UserSkillBox">
+    <div class="row top-separator" id="UserSkillBox">
         <div class="row titleRow" id="userSkillTitle">
             <span id="skillsIco" class="titleIcon fa fa-heartbeat"></span>
             <span class="titleLabel">Skills</span>
@@ -68,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="UserRepoBox">
+    <div class="row top-separator" id="UserRepoBox">
         <div class="row titleRow" id="userRepoTitle">
             <span id="repoIco" class="titleIcon octicon octicon-repo"></span>
             <span class="titleLabel">Repositories</span>
@@ -260,6 +267,50 @@
                 background: 'transparent'
             };
             var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [timeCtx, userCtx], total_projects_conf);
+
+            // ISSUES OPEN
+            var issues_open_dom = document.getElementById("issues-open");
+            var issues_open_metrics = [{
+                id: 'member-longest-streak' //TODO: fill with real metric
+            }];
+            var issues_open_conf = {
+                label: 'Issues opened',
+                decimal: 0,
+                icon: 'octicon octicon-issue-opened',
+                iconbackground: '#88B5DA',
+                background: 'transparent'
+            };
+            new framework.widgets.CounterBox(issues_open_dom, issues_open_metrics, [timeCtx, userCtx], issues_open_conf);
+
+            // ISSUES OPEN
+            var issues_in_progress_dom = document.getElementById("issues-in-progress");
+            var issues_in_progress_metrics = [{
+                id: 'member-longest-streak' //TODO: fill with real metric
+            }];
+            var issues_in_progress_conf = {
+                label: 'Issues in progress',
+                decimal: 0,
+                icon: 'octicon octicon-issue-opened',
+                iconbackground: '#21B660',
+                background: 'transparent'
+            };
+            new framework.widgets.CounterBox(issues_in_progress_dom, issues_in_progress_metrics, [timeCtx, userCtx], issues_in_progress_conf);
+
+            // ISSUES OPEN
+            var issues_close_dom = document.getElementById("issues-close");
+            var issues_close_metrics = [{
+                id: 'member-longest-streak' //TODO: fill with real metric
+            }];
+            var issues_close_conf = {
+                label: 'Issues closed',
+                decimal: 0,
+                icon: 'octicon octicon-issue-opened',
+                iconbackground: '#AA3998',
+                background: 'transparent'
+            };
+            new framework.widgets.CounterBox(issues_close_dom, issues_close_metrics, [timeCtx, userCtx], issues_close_conf);
+
+
 
 
             // USER COMMITS LINE CHART

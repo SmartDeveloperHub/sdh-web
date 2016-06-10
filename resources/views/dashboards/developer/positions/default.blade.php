@@ -56,10 +56,17 @@
     </div>
     <div class="row" id="devActivBox">
         <div class="row titleRow top-separator" id="devActivityTitle">
-            <span id="devActIco" class="titleIcon titleIcon octicon octicon-dashboard"></span>
+            <span id="devActIco" class="titleIcon octicon octicon-dashboard"></span>
             <span class="titleLabel">Activity</span>
         </div>
         <div class="row" id="commits-lines"></div>
+    </div>
+    <div class="row" id="devActivBox">
+        <div class="row titleRow top-separator">
+            <span id="devActIco" class="titleIcon fa fa-tasks" style="color: #ee8433"></span>
+            <span class="titleLabel">Workload</span>
+        </div>
+        <div class="row" id="workload-lines"></div>
     </div>
     <div class="row top-separator" id="UserSkillBox">
         <div class="row titleRow" id="userSkillTitle">
@@ -336,8 +343,48 @@
                 area: true,
                 _demo: true // Only for demo
             };
-            var skills_lines = new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
+            new framework.widgets.LinesChart(userCC_dom, userCC_metrics,
                     [timeCtx, userCtx], userCC_configuration);
+
+
+            // WORKLOAD LINES
+            var changeScalePostModifier = function toPercentagePostModifier(resourceData) {
+
+                // Data will be [0, 200] aprox, but we want 100 to be the y axis origin. Therefore, we change it to a
+                // [-100, 100] so that 100 will be 0 in our new scale, and then modify the yAxisTickFormat function of the
+                // widget to restore it to the [0,200] by adding 100
+                var scale = d3.scale.linear().domain([0, 200]).range([-100, 100]);
+
+                var values = resourceData['data']['values'];
+                for(var x = 0; x < values.length; x++) {
+                    values[x] = Math.random() * 200; //TODO: Remove: Just to generate random numbers until the metric is ready
+                    values[x] = scale(values[x]);
+                }
+                //debugger;
+                return resourceData;
+
+            };
+            var workload_dom = document.getElementById("workload-lines");
+            var workload_metrics = [
+                {
+                    id: 'member-commits', //TODO: change to the real workload metric
+                    max: 30,
+                    post_modifier: changeScalePostModifier
+                }
+            ];
+            var workload_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 200,
+                labelFormat: 'Workload',
+                colors: ["#2876B8"],
+                area: true,
+                yAxisTickFormat : function(d) {  return Math.round(d + 100); },
+            };
+            new framework.widgets.LinesChart(workload_dom, workload_metrics,
+                    [timeCtx, userCtx], workload_configuration);
+
 
             // SKILLS STAR CHART
             var skills_star_dom = document.getElementById("skills-star");

@@ -277,7 +277,7 @@ table.dataTable tbody tr .odd {
 .titleRow {
     margin-bottom: 4px;
     text-align: center;
-    margin-top: 34px;
+    padding-top: 30px;
 }
 
 .titleCol {

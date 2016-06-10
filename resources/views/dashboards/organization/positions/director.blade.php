@@ -692,7 +692,6 @@
                 }
                 currentCost = frameData.data["director-costs"][0].data.values[0];
                 loadProductsScatter();
-                //console.log("director-cost_4Scatter: " + frameData.data["director-costs"][0].data.values[0]);
 
             }, [currentUserCtx]);
             var loadProductsScatter = function() {

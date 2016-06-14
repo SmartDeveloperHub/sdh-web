@@ -61,6 +61,60 @@
             </div>
         </div>
     </div>
+
+
+    <div class="grid-stack">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="4" data-gs-x="0" data-gs-y="0">
+            <div style="color: #004C8B" class="grid-stack-item-content titleRow">
+                <span id="peopleTitIco" class="titleIcon octicon octicon-dashboard"></span>
+                <span id="peopleTitLabel" class="titleLabel">Analytics</span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="4">
+            <div style="color: #ee8433" class="grid-stack-item-content subtitleRow">
+                <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-tasks"></span>
+                <span id="pa-chart-stitle-label" class="subtitleLabel">Workload</span>
+                <span id="pa-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="0" data-gs-y="6">
+            <div id="workload-projects" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="6" data-gs-y="6">
+            <div id="workload-time" class="grid-stack-item-content"></div>
+        </div>
+
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="16">
+            <div style="color: #cc05b9" class="grid-stack-item-content subtitleRow">
+                <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-exclamation-circle"></span>
+                <span id="pa-chart-stitle-label" class="subtitleLabel">Issues</span>
+                <span id="pa-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="16" data-gs-x="0" data-gs-y="18">
+            <div id="pie-status" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="16" data-gs-x="3" data-gs-y="18">
+            <div id="pie-severity" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="8" data-gs-x="6" data-gs-y="18">
+            <div id="issues-1" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="8" data-gs-x="6" data-gs-y="26">
+            <div id="issues-2" class="grid-stack-item-content"></div>
+        </div>
+
+    </div>
+
+
     <div class="grid-stack">
 
         <div class="grid-stack-item" data-gs-width="12" data-gs-height="4" data-gs-x="0" data-gs-y="1">
@@ -253,6 +307,23 @@
             }
         }, [productCtx]);
 
+        // Load all the proejcts of this product
+        var product_projects_cntx = "product-projects-cntxt";
+        framework.data.observe(["view-product-projects"], function(frameData) {
+            if (frameData.event === 'data') {
+
+
+                var pList = frameData.data["view-product-projects"][0].data.values;
+
+                var pIdList = [];
+                for (var i = 0; i < pList.length; i++) {
+                    pIdList.push(pList[i].pjid);
+                }
+
+                framework.data.updateContext(product_projects_cntx, {pjid: pIdList});
+            }
+        }, [productCtx]);
+
 
         var rangeNv_dom = document.getElementById("fixed-chart");
         var rangeNv_metrics = [
@@ -302,6 +373,204 @@
             angular.element(".main-content").ready(function () {
                 angular.bootstrap(".main-content", ['Dashboard']);
             });
+
+
+            // -------------------------- WORKLOAD MULTIBAR ------------------------------------
+            var changeScalePostModifier = function toPercentagePostModifier(resourceData) {
+
+                // Data will be [0, 200] aprox, but we want 100 to be the y axis origin. Therefore, we change it to a
+                // [-100, 100] so that 100 will be 0 in our new scale, and then modify the yAxisTickFormat function of the
+                // widget to restore it to the [0,200] by adding 100
+                var scale = d3.scale.linear().domain([0, 200]).range([-100, 100]);
+
+                var values = resourceData['data']['values'];
+                for(var x = 0; x < values.length; x++) {
+                    values[x] = Math.random() * 200; //TODO: Remove: Just to generate random numbers until the metric is ready
+                    values[x] = scale(values[x]);
+                }
+                //debugger;
+                return resourceData;
+
+            };
+            var products_workload_dom = document.getElementById("workload-projects");
+            var products_workload_metrics = [
+                {
+                    id: 'project-quality', //TODO: project-workload
+                    max: 1,
+                    post_modifier: changeScalePostModifier
+                }
+            ];
+            var products_workload_conf = {
+                stacked: false,
+                labelFormat: "¬_D.data.info.pjid.name¬",
+                showControls: false,
+                height: 250,
+                showLegend: true,
+                showXAxis: false,
+                yAxisTickFormat : function(d) {  return Math.round(d + 100); },
+                x: function(metric, extra) {
+                    return "Workload";
+                },
+                sort: 'asc'
+            };
+            new framework.widgets.MultiBar(products_workload_dom, products_workload_metrics,
+                    [timeCtx, product_projects_cntx], products_workload_conf);
+
+
+            // -------------------------- WORKLOAD LINES  ------------------------------------
+            var workload_dom = document.getElementById("workload-time");
+            var workload_metrics = [
+                {
+                    id: 'product-commits', //TODO: product-workload
+                    max: 30,
+                    post_modifier: changeScalePostModifier
+                }
+            ];
+            var workload_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 200,
+                labelFormat: 'Workload',
+                colors: ["#2876B8"],
+                area: true,
+                yAxisTickFormat : function(d) {  return Math.round(d + 100); }
+            };
+            new framework.widgets.LinesChart(workload_dom, workload_metrics,
+                    [timeCtx, productCtx], workload_configuration);
+
+
+            // ------------------------------- ISSUES STATUS PIE -------------------------------------
+            var status_pie_dom = document.getElementById("pie-status");
+            var status_pie_metrics = [
+                {
+                    id: 'product-developers', //TODO: opened issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: in-progress issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: closed issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                }
+            ];
+            var status_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
+            };
+            new framework.widgets.PieChart(status_pie_dom, status_pie_metrics,
+                    [timeCtx, productCtx], status_pie_configuration);
+
+
+            // ------------------------------- ISSUES STATUS PIE -------------------------------------
+            var severity_pie_dom = document.getElementById("pie-severity");
+            var severity_pie_metrics = [
+                {
+                    id: 'product-developers', //TODO: trivial issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: normal issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: high issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: critical issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: blocker issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                }
+            ];
+            var severity_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
+            };
+            new framework.widgets.PieChart(severity_pie_dom, severity_pie_metrics,
+                    [timeCtx, productCtx], severity_pie_configuration);
+
+
+            // -------------------------- ISSUES STACK BAR ------------------------------------
+            var issues_multibar_dom = document.getElementById("issues-1");
+            var issues_multibar_metrics = [
+                {
+                    id: 'failed-product-executions', //TODO: Reopen issues
+                    max: 10
+                },
+                {
+                    id: 'passed-product-executions', //TODO: Open issues
+                    max: 10
+                }
+            ];
+            var roles = {
+                'pmanager-swdevelopers' : 'Software developer',
+                'pmanager-swarchitects': 'Software architect',
+                'pmanager-pjmanagers': 'Project manager',
+                'pmanager-stakeholders': 'Stakeholder'
+            };
+            var issues_multibar_conf = {
+                stacked: true,
+                labelFormat: "¬_D.data.info.title¬",
+                showControls: false,
+                height: 160,
+                showLegend: true
+            };
+            new framework.widgets.MultiBar(issues_multibar_dom, issues_multibar_metrics,
+                    [timeCtx, productCtx], issues_multibar_conf);
+
+
+            // -------------------------- ISSUES LINES  ------------------------------------
+            var issues_lines_dom = document.getElementById("issues-2");
+            var issues_lines_metrics = [
+                {
+                    id: 'failed-product-executions', //TODO: product-workload
+                    max: 10
+                }
+            ];
+            var issues_lines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'linear',
+                height: 160,
+                labelFormat: 'Active reopen',
+                colors: ["#2876B8"],
+                area: false
+            };
+            new framework.widgets.LinesChart(issues_lines_dom, issues_lines_metrics,
+                    [timeCtx, productCtx], issues_lines_configuration);
+
+
+
+
+
             //PRODUCT LIST
             framework.data.observe(['view-product-projects'], function (event) {
                 if (event.event === 'data') {

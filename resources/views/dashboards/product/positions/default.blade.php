@@ -64,14 +64,14 @@
 
 
     <div class="grid-stack">
-        <div class="grid-stack-item" data-gs-width="12" data-gs-height="4" data-gs-x="0" data-gs-y="0">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="4" data-gs-x="0" data-gs-y="1">
             <div style="color: #004C8B" class="grid-stack-item-content titleRow">
                 <span id="peopleTitIco" class="titleIcon octicon octicon-dashboard"></span>
                 <span id="peopleTitLabel" class="titleLabel">Analytics</span>
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="4">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="5">
             <div style="color: #ee8433" class="grid-stack-item-content subtitleRow">
                 <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-tasks"></span>
                 <span id="pa-chart-stitle-label" class="subtitleLabel">Workload</span>
@@ -79,16 +79,16 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="0" data-gs-y="6">
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="0" data-gs-y="7">
             <div id="workload-projects" class="grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="6" data-gs-y="6">
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="10" data-gs-x="6" data-gs-y="7">
             <div id="workload-time" class="grid-stack-item-content"></div>
         </div>
 
 
-        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="16">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="17">
             <div style="color: #cc05b9" class="grid-stack-item-content subtitleRow">
                 <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-exclamation-circle"></span>
                 <span id="pa-chart-stitle-label" class="subtitleLabel">Issues</span>
@@ -96,19 +96,19 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="16" data-gs-x="0" data-gs-y="18">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="16" data-gs-x="0" data-gs-y="19">
             <div id="pie-status" class="grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="16" data-gs-x="3" data-gs-y="18">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="16" data-gs-x="3" data-gs-y="19">
             <div id="pie-severity" class="grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="6" data-gs-height="8" data-gs-x="6" data-gs-y="18">
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="8" data-gs-x="6" data-gs-y="19">
             <div id="issues-1" class="grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="6" data-gs-height="8" data-gs-x="6" data-gs-y="26">
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="8" data-gs-x="6" data-gs-y="27">
             <div id="issues-2" class="grid-stack-item-content"></div>
         </div>
 
@@ -124,7 +124,7 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="2" data-gs-height="46" data-gs-x="0" data-gs-y="5">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="46" data-gs-x="0" data-gs-y="5">
             <div id="developers-table" class="grid-stack-item-content"></div>
         </div>
 
@@ -150,11 +150,11 @@
             </div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="10" data-gs-height="7" data-gs-x="2" data-gs-y="11">
+        <div class="grid-stack-item" data-gs-width="9" data-gs-height="7" data-gs-x="3" data-gs-y="11">
             <div id="developer-activity" class="grid-stack-item-content"></div>
         </div>
 
-        <div class="grid-stack-item" data-gs-width="10" data-gs-height="2" data-gs-x="2" data-gs-y="19">
+        <div class="grid-stack-item" data-gs-width="9" data-gs-height="2" data-gs-x="3" data-gs-y="19">
             <div style="color: #6e8b00" class="grid-stack-item-content subtitleRow">
                 <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-exclamation-circle"></span>
                 <span id="pa-chart-stitle-label" class="subtitleLabel">Issues breakdown</span>
@@ -162,95 +162,27 @@
             </div>
         </div>
 
-
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="4" data-gs-y="21">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="21">
             <div id="developer-counter-1" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="7" data-gs-y="21">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="21">
             <div id="developer-counter-2" class="grid-stack-item-content"></div>
         </div>
-
-        <div class="grid-stack-item text-center colored-row-item" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="27">
-            <div class="centered-element-container">
-                <div class="centered-element">
-                    <div id="row-section-1" class="grid-stack-item-content">
-                        <span class="row-section-icon octicon octicon-issue-opened"></span>
-                        <span class="row-title text-center">Assigned issues</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-stack-item colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="27">
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="21">
             <div id="developer-counter-3" class="grid-stack-item-content"></div>
         </div>
-        <div class="grid-stack-item colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="27">
-            <div id="developer-counter-4" class="grid-stack-item-content"></div>
-        </div>
-        <div class="grid-stack-item colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="27">
-            <div id="developer-counter-5" class="grid-stack-item-content"></div>
-        </div>
 
 
-        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="33">
-            <div class="centered-element-container">
-                <div class="centered-element">
-                    <div id="row-section-2" class="grid-stack-item-content">
-                        <span class="row-section-icon octicon octicon-issue-reopened"></span>
-                        <span class="row-title text-center">Reassigned issues</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="33">
-            <div id="developer-counter-6" class="grid-stack-item-content"></div>
-        </div>
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="33">
-            <div id="developer-counter-7" class="grid-stack-item-content"></div>
-        </div>
-        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="33">
-            <div id="developer-counter-8" class="grid-stack-item-content"></div>
+        <div class="grid-stack-item" data-gs-width="9" data-gs-height="10" data-gs-x="3" data-gs-y="27">
+            <div id="issues-multibar" class="grid-stack-item-content"></div>
         </div>
 
-
-        <div class="grid-stack-item text-center colored-row-item" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="39">
-            <div class="centered-element-container">
-                <div class="centered-element">
-                    <div id="row-section-3" class="grid-stack-item-content">
-                        <span class="row-section-icon fa fa-user"></span>
-                        <span class="row-title text-center">Member percentage</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-stack-item text-center colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="39">
-            <div id="liquid-chart-1" class="grid-stack-item-content"></div>
-        </div>
-        <div class="grid-stack-item text-center colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="39">
-            <div id="liquid-chart-2" class="grid-stack-item-content"></div>
-        </div>
-        <div class="grid-stack-item text-center colored-row-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="39">
-            <div id="liquid-chart-3" class="grid-stack-item-content"></div>
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="16" data-gs-x="3" data-gs-y="37">
+            <div id="developer-pie-status" class="grid-stack-item-content"></div>
         </div>
 
-
-        <div class="grid-stack-item text-center" data-gs-width="1" data-gs-height="6" data-gs-x="2" data-gs-y="45">
-            <div class="centered-element-container">
-                <div class="centered-element">
-                    <div id="row-section-4" class="grid-stack-item-content">
-                        <span class="row-section-icon fa fa-globe"></span>
-                        <span class="row-title text-center">Total percentage</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="45">
-            <div id="liquid-chart-4" class="grid-stack-item-content"></div>
-        </div>
-        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="45">
-            <div id="liquid-chart-5" class="grid-stack-item-content"></div>
-        </div>
-        <div class="grid-stack-item text-center" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="45">
-            <div id="liquid-chart-6" class="grid-stack-item-content"></div>
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="16" data-gs-x="8" data-gs-y="37">
+            <div id="developer-pie-severity" class="grid-stack-item-content"></div>
         </div>
 
 
@@ -530,18 +462,13 @@
                     max: 10
                 }
             ];
-            var roles = {
-                'pmanager-swdevelopers' : 'Software developer',
-                'pmanager-swarchitects': 'Software architect',
-                'pmanager-pjmanagers': 'Project manager',
-                'pmanager-stakeholders': 'Stakeholder'
-            };
             var issues_multibar_conf = {
                 stacked: true,
                 labelFormat: "¬_D.data.info.title¬",
                 showControls: false,
                 height: 160,
-                showLegend: true
+                showLegend: true,
+                showXMaxMin: true
             };
             new framework.widgets.MultiBar(issues_multibar_dom, issues_multibar_metrics,
                     [timeCtx, productCtx], issues_multibar_conf);
@@ -724,246 +651,155 @@
             // --------------------------------------- COMMITS COUNTER --------------------------------------------
             var counter_3_dom = document.getElementById("developer-counter-3");
             var counter_3_metrics = [{
-                id: 'repository-member-commits', //TODO: member-product-assigned-open-issues
-                max: 1,
-                rid: 62 //TODO: remove
+                id: 'product-timetofix', //TODO: member-product time to solve an issue
+                max: 1
             }];
             var counter_3_conf = {
                 label: 'Assigned open issues',
                 decimal: 0,
-                icon: 'octicon octicon-issue-opened',
+                icon: 'octicon octicon-issue-closed',
                 iconbackground: '#6895BA',
                 background: 'transparent'
             };
             new framework.widgets.CounterBox(counter_3_dom, counter_3_metrics, [timeCtx, productCtx, developersCtx], counter_3_conf);
 
-            // --------------------------------------- COMMITS COUNTER --------------------------------------------
-            var counter_4_dom = document.getElementById("developer-counter-4");
-            var counter_4_metrics = [{
-                id: 'repository-member-commits', //TODO: member-product-assigned-inProgress-issues
-                max: 1,
-                rid: 62 //TODO: remove
-            }];
-            var counter_4_conf = {
-                label: 'Assigned in-progress issues',
-                decimal: 0,
-                icon: 'octicon octicon-issue-opened',
-                iconbackground: '#019640',
-                background: 'transparent'
-            };
-            new framework.widgets.CounterBox(counter_4_dom, counter_4_metrics, [timeCtx, productCtx, developersCtx], counter_4_conf);
 
-            // --------------------------------------- COMMITS COUNTER --------------------------------------------
-            var counter_5_dom = document.getElementById("developer-counter-5");
-            var counter_5_metrics = [{
-                id: 'repository-member-commits', //TODO: member-product-assigned-closed-issues
-                max: 1,
-                rid: 62 //TODO: remove
-            }];
-            var counter_5_conf = {
-                label: 'Assigned closed issues',
-                decimal: 0,
-                icon: 'octicon octicon-issue-opened',
-                iconbackground: '#8A1978',
-                background: 'transparent'
-            };
-            new framework.widgets.CounterBox(counter_5_dom, counter_5_metrics, [timeCtx, productCtx, developersCtx], counter_5_conf);
-
-            // --------------------------------------- COMMITS COUNTER --------------------------------------------
-            var counter_6_dom = document.getElementById("developer-counter-6");
-            var counter_6_metrics = [{
-                id: 'repository-member-commits', //TODO: member-product-reassigned-open-issues
-                max: 1,
-                rid: 62 //TODO: remove
-            }];
-            var counter_6_conf = {
-                label: 'Reassigned open issues',
-                decimal: 0,
-                icon: 'octicon octicon-issue-reopened',
-                iconbackground: '#88B5DA',
-                background: 'transparent'
-            };
-            new framework.widgets.CounterBox(counter_6_dom, counter_6_metrics, [timeCtx, productCtx, developersCtx], counter_6_conf);
-
-            // --------------------------------------- COMMITS COUNTER --------------------------------------------
-            var counter_7_dom = document.getElementById("developer-counter-7");
-            var counter_7_metrics = [{
-                id: 'repository-member-commits', //TODO: member-product-reassigned-inProgress-issues
-                max: 1,
-                rid: 62 //TODO: remove
-            }];
-            var counter_7_conf = {
-                label: 'Reassigned in-progress issues',
-                decimal: 0,
-                icon: 'octicon octicon-issue-reopened',
-                iconbackground: '#21B660',
-                background: 'transparent'
-            };
-            new framework.widgets.CounterBox(counter_7_dom, counter_7_metrics, [timeCtx, productCtx, developersCtx], counter_7_conf);
-
-            // --------------------------------------- COMMITS COUNTER --------------------------------------------
-            var counter_8_dom = document.getElementById("developer-counter-8");
-            var counter_8_metrics = [{
-                id: 'repository-member-commits', //TODO: member-product-reassigned-closed-issues
-                max: 1,
-                rid: 62 //TODO: remove
-            }];
-            var counter_8_conf = {
-                label: 'Reassigned closed issues',
-                decimal: 0,
-                icon: 'octicon octicon-issue-reopened',
-                iconbackground: '#AA3998',
-                background: 'transparent'
-            };
-            new framework.widgets.CounterBox(counter_8_dom, counter_8_metrics, [timeCtx, productCtx, developersCtx], counter_8_conf);
-
-
-            //  ----------------------------------- LIQUID GAUGE 1 -----------------------------------------
-
-            var liquid_1_dom = document.getElementById("liquid-chart-1");
-            var liquid_1_metrics = [
+            // ------------------------------- ISSUES STATUS PIE -------------------------------------
+            var developer_status_pie_dom = document.getElementById("developer-pie-status");
+            var developer_status_pie_metrics = [
                 {
-                    id: 'product-health', //TODO
+                    id: 'product-developers', //TODO: member-product opened issues
                     max: 1,
                     aggr: "sum",
-                    post_modifier: toPercentagePostModifier
-                }
-            ];
-            var liquid_1_configuration = {
-                height: 110,
-                minValue: 0,
-                maxValue: 100,
-                waveColor: ['#E65538', '#8ACA17'],
-                textColor: ['#E65538', '#DBF1B4'],
-                circleColor: ['#8C1700', '#4BAD06'],
-                waveTextColor:'#DBF1B4',
-                radius: 45
-            };
-            new framework.widgets.LiquidGauge(liquid_1_dom, liquid_1_metrics,
-                    [timeCtx, productCtx, developersCtx], liquid_1_configuration);
-
-            //  ----------------------------------- LIQUID GAUGE 2 -----------------------------------------
-
-            var liquid_2_dom = document.getElementById("liquid-chart-2");
-            var liquid_2_metrics = [
+                    post_aggr: 'sum'
+                },
                 {
-                    id: 'product-health', //TODO
+                    id: 'product-developers', //TODO: member-product in-progress issues
                     max: 1,
                     aggr: "sum",
-                    post_modifier: toPercentagePostModifier
-                }
-            ];
-            var liquid_2_configuration = {
-                height: 110,
-                minValue: 0,
-                maxValue: 100,
-                waveColor: ['#E65538', '#8ACA17'],
-                textColor: ['#E65538', '#DBF1B4'],
-                circleColor: ['#8C1700', '#4BAD06'],
-                waveTextColor:'#DBF1B4',
-                radius: 45
-            };
-            new framework.widgets.LiquidGauge(liquid_2_dom, liquid_2_metrics,
-                    [timeCtx, productCtx, developersCtx], liquid_2_configuration);
-
-            //  ----------------------------------- LIQUID GAUGE 3 -----------------------------------------
-
-            var liquid_3_dom = document.getElementById("liquid-chart-3");
-            var liquid_3_metrics = [
+                    post_aggr: 'sum'
+                },
                 {
-                    id: 'product-health', //TODO
+                    id: 'product-developers', //TODO: member-product closed issues
                     max: 1,
                     aggr: "sum",
-                    post_modifier: toPercentagePostModifier
+                    post_aggr: 'sum'
                 }
             ];
-            var liquid_3_configuration = {
-                height: 110,
-                minValue: 0,
-                maxValue: 100,
-                waveColor: ['#E65538', '#8ACA17'],
-                textColor: ['#E65538', '#DBF1B4'],
-                circleColor: ['#8C1700', '#4BAD06'],
-                waveTextColor:'#DBF1B4',
-                radius: 45
+            var developer_status_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
             };
-            new framework.widgets.LiquidGauge(liquid_3_dom, liquid_3_metrics,
-                    [timeCtx, productCtx, developersCtx], liquid_3_configuration);
+            new framework.widgets.PieChart(developer_status_pie_dom, developer_status_pie_metrics,
+                    [timeCtx, productCtx, developersCtx], developer_status_pie_configuration);
 
-            //  ----------------------------------- LIQUID GAUGE 4 -----------------------------------------
 
-            var liquid_4_dom = document.getElementById("liquid-chart-4");
-            var liquid_4_metrics = [
+            // ------------------------------- ISSUES STATUS PIE -------------------------------------
+            var developer_severity_pie_dom = document.getElementById("developer-pie-severity");
+            var developer_severity_pie_metrics = [
                 {
-                    id: 'product-health', //TODO
+                    id: 'product-developers', //TODO: member-product trivial issues
                     max: 1,
                     aggr: "sum",
-                    post_modifier: toPercentagePostModifier
-                }
-            ];
-            var liquid_4_configuration = {
-                height: 110,
-                minValue: 0,
-                maxValue: 100,
-                waveColor: ['#E65538', '#8ACA17'],
-                textColor: ['#E65538', '#DBF1B4'],
-                circleColor: ['#8C1700', '#4BAD06'],
-                waveTextColor:'#DBF1B4',
-                radius: 45
-            };
-            new framework.widgets.LiquidGauge(liquid_4_dom, liquid_4_metrics,
-                    [timeCtx, productCtx, developersCtx], liquid_4_configuration);
-
-            //  ----------------------------------- LIQUID GAUGE 5 -----------------------------------------
-
-            var liquid_5_dom = document.getElementById("liquid-chart-5");
-            var liquid_5_metrics = [
+                    post_aggr: 'sum'
+                },
                 {
-                    id: 'product-health', //TODO
+                    id: 'product-developers', //TODO: member-product normal issues
                     max: 1,
                     aggr: "sum",
-                    post_modifier: toPercentagePostModifier
-                }
-            ];
-            var liquid_5_configuration = {
-                height: 110,
-                minValue: 0,
-                maxValue: 100,
-                waveColor: ['#E65538', '#8ACA17'],
-                textColor: ['#E65538', '#DBF1B4'],
-                circleColor: ['#8C1700', '#4BAD06'],
-                waveTextColor:'#DBF1B4',
-                radius: 45
-            };
-            new framework.widgets.LiquidGauge(liquid_5_dom, liquid_5_metrics,
-                    [timeCtx, productCtx, developersCtx], liquid_5_configuration);
-
-            //  ----------------------------------- LIQUID GAUGE 6 -----------------------------------------
-
-            var liquid_6_dom = document.getElementById("liquid-chart-6");
-            var liquid_6_metrics = [
+                    post_aggr: 'sum'
+                },
                 {
-                    id: 'product-health', //TODO
+                    id: 'product-developers', //TODO: member-product high issues
                     max: 1,
                     aggr: "sum",
-                    post_modifier: toPercentagePostModifier
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: member-product critical issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: member-product blocker issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
                 }
             ];
-            var liquid_6_configuration = {
-                height: 110,
-                minValue: 0,
-                maxValue: 100,
-                waveColor: ['#E65538', '#8ACA17'],
-                textColor: ['#E65538', '#DBF1B4'],
-                circleColor: ['#8C1700', '#4BAD06'],
-                waveTextColor:'#DBF1B4',
-                radius: 45
+            var developer_severity_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
             };
-            new framework.widgets.LiquidGauge(liquid_6_dom, liquid_6_metrics,
-                    [timeCtx, productCtx, developersCtx], liquid_6_configuration);
+            new framework.widgets.PieChart(developer_severity_pie_dom, developer_severity_pie_metrics,
+                    [timeCtx, productCtx, developersCtx], developer_severity_pie_configuration);
 
 
-
+            // -------------------------- ISSUES MULTIBAR ------------------------------------
+            var prod_member_issues_multibar_dom = document.getElementById("issues-multibar");
+            var prod_member_issues_multibar_metrics = [
+                {
+                    id: 'failed-product-executions',
+                    max: 1
+                },
+                {
+                    id: 'passed-product-executions',
+                    max: 1
+                },
+                {
+                    id: 'product-developers',
+                    max: 1
+                },
+                {
+                    id: 'product-activity',
+                    max: 1
+                },
+                {
+                    id: 'product-externals',
+                    max: 1
+                },
+                {
+                    id: 'product-executions',
+                    max: 1
+                }
+            ];
+            var category = {
+                'failed-product-executions' : 'Blocked',
+                'passed-product-executions': 'Critical',
+                'product-developers': 'Graves',
+                'product-activity': 'Normal',
+                'product-externals': 'Trivial',
+                'product-executions': 'Blocked'
+            };
+            var type = {
+                'failed-product-executions' : 'Open',
+                'passed-product-executions': 'Open',
+                'product-developers': 'Open',
+                'product-activity': 'Open',
+                'product-externals': 'Open',
+                'product-executions': 'In progress'
+            };
+            var prod_member_issues_multibar_conf = {
+                stacked: false,
+                labelFormat: function(metric, extra) {
+                    return type[extra.resource];
+                },
+                showControls: false,
+                height: 200,
+                showLegend: true,
+                x: function(metric, extra) {
+                    return category[extra.resource];
+                }
+            };
+            new framework.widgets.MultiBar(prod_member_issues_multibar_dom, prod_member_issues_multibar_metrics,
+                    [timeCtx, productCtx, developersCtx], prod_member_issues_multibar_conf);
 
 
         };

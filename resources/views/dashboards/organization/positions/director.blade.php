@@ -86,7 +86,7 @@
             <div id="scatter-plot-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
                 <span id="scatter-plot-stitle-label" class="subtitleLabel">Products workload</span>
-                <span id="scatter-plot-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                <span id="scatter-plot-stitle-help" class="subtitleHelp fa fa-tasks"></span>
             </div>
         </div>
 

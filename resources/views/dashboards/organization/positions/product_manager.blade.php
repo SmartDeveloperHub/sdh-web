@@ -80,7 +80,7 @@
 
         <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="26">
             <div id="scatter-plot-subtitle" class="grid-stack-item-content subtitleRow">
-                <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
+                <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-tasks"></span>
                 <span id="scatter-plot-stitle-label" class="subtitleLabel">Products workload</span>
                 <span id="scatter-plot-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>

@@ -49,9 +49,11 @@
             <div id="total-repositories" class="boxCounter col-sm-3"></div>
         </div>
         <div class="row">
-            <div id="issues-open" class="boxCounter col-sm-3 col-md-offset-2"></div>
-            <div id="issues-in-progress" class="boxCounter col-sm-3"></div>
-            <div id="issues-close" class="boxCounter col-sm-3"></div>
+            <div id="issues-open" class="boxCounter col-sm-2  col-md-offset-1"></div>
+            <div id="issues-in-progress" class="boxCounter col-sm-2"></div>
+            <div id="issues-close" class="boxCounter col-sm-2"></div>
+            <div id="issues-active" class="boxCounter col-sm-2"></div>
+            <div id="issues-reopened" class="boxCounter col-sm-2"></div>
         </div>
     </div>
     <div class="row" id="devActivBox">
@@ -64,9 +66,15 @@
     <div class="row" id="devActivBox">
         <div class="row titleRow top-separator">
             <span id="devActIco" class="titleIcon fa fa-tasks" style="color: #ee8433"></span>
-            <span class="titleLabel">Workload</span>
+            <span class="titleLabel">Issue Tracking</span>
         </div>
         <div class="row" id="workload-lines"></div>
+        <div class="row" id="issues-multibar"></div>
+        <div class="row">
+            <div id="developer-pie-status" class="col-sm-5 col-md-offset-1"></div>
+            <div id="developer-pie-severity" class="col-sm-5"></div>
+        </div>
+
     </div>
     <div class="row top-separator" id="UserSkillBox">
         <div class="row titleRow" id="userSkillTitle">
@@ -317,6 +325,36 @@
             };
             new framework.widgets.CounterBox(issues_close_dom, issues_close_metrics, [timeCtx, userCtx], issues_close_conf);
 
+            // --------------------------------------- COMMITS COUNTER --------------------------------------------
+            var counter_1_dom = document.getElementById("issues-active");
+            var counter_1_metrics = [{
+                id: 'member-commits', //TODO: ​member-product-active-issues
+                max: 1
+            }];
+            var counter_1_conf = {
+                label: 'Active issues',
+                decimal: 0,
+                icon: 'fa fa-refresh',
+                iconbackground: '#EE7529',
+                background: 'transparent'
+            };
+            new framework.widgets.CounterBox(counter_1_dom, counter_1_metrics, [timeCtx, userCtx], counter_1_conf);
+
+            // --------------------------------------- COMMITS COUNTER --------------------------------------------
+            var counter_2_dom = document.getElementById("issues-reopened");
+            var counter_2_metrics = [{
+                id: 'member-commits', //TODO: member-product-active-reopened-issues
+                max: 1
+            }];
+            var counter_2_conf = {
+                label: 'Active reopened issues',
+                decimal: 0,
+                icon: 'fa fa-retweet',
+                iconbackground: '#F75333',
+                background: 'transparent'
+            };
+            new framework.widgets.CounterBox(counter_2_dom, counter_2_metrics, [timeCtx, userCtx], counter_2_conf);
+
 
 
 
@@ -384,6 +422,150 @@
             };
             new framework.widgets.LinesChart(workload_dom, workload_metrics,
                     [timeCtx, userCtx], workload_configuration);
+
+
+            // -------------------------- ISSUES MULTIBAR ------------------------------------
+            var prod_member_issues_multibar_dom = document.getElementById("issues-multibar");
+            var prod_member_issues_multibar_metrics = [
+                {
+                    id: 'failed-product-executions', //TODO
+                    max: 1,
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'passed-product-executions', //TODO
+                    max: 1,
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-developers', //TODO
+                    max: 1,
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-activity', //TODO
+                    max: 1,
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-externals', //TODO
+                    max: 1,
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-executions', //TODO
+                    max: 1,
+                    prid: 'product-jenkins' //TODO: remove
+                }
+            ];
+            var category = {
+                'failed-product-executions' : 'Blocked',
+                'passed-product-executions': 'Critical',
+                'product-developers': 'Graves',
+                'product-activity': 'Normal',
+                'product-externals': 'Trivial',
+                'product-executions': 'Blocked'
+            };
+            var type = {
+                'failed-product-executions' : 'Open',
+                'passed-product-executions': 'Open',
+                'product-developers': 'Open',
+                'product-activity': 'Open',
+                'product-externals': 'Open',
+                'product-executions': 'In progress'
+            };
+            var prod_member_issues_multibar_conf = {
+                stacked: false,
+                labelFormat: function(metric, extra) {
+                    return type[extra.resource];
+                },
+                showControls: false,
+                height: 200,
+                showLegend: true,
+                x: function(metric, extra) {
+                    return category[extra.resource];
+                }
+            };
+            new framework.widgets.MultiBar(prod_member_issues_multibar_dom, prod_member_issues_multibar_metrics,
+                    [timeCtx, userCtx], prod_member_issues_multibar_conf);
+
+
+            // ------------------------------- ISSUES STATUS PIE -------------------------------------
+            var developer_status_pie_dom = document.getElementById("developer-pie-status");
+            var developer_status_pie_metrics = [
+                {
+                    id: 'product-developers', //TODO: member-product opened issues
+                    max: 1,
+                    aggr: "sum",
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-developers', //TODO: member-product in-progress issues
+                    max: 1,
+                    aggr: "sum",
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-developers', //TODO: member-product closed issues
+                    max: 1,
+                    aggr: "sum",
+                    prid: 'product-jenkins' //TODO: remove
+                }
+            ];
+            var developer_status_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
+            };
+            new framework.widgets.PieChart(developer_status_pie_dom, developer_status_pie_metrics,
+                    [timeCtx, userCtx], developer_status_pie_configuration);
+
+
+            // ------------------------------- ISSUES SEVERITY PIE -------------------------------------
+            var developer_severity_pie_dom = document.getElementById("developer-pie-severity");
+            var developer_severity_pie_metrics = [
+                {
+                    id: 'product-developers', //TODO: member-product trivial issues
+                    max: 1,
+                    aggr: "sum",
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-developers', //TODO: member-product normal issues
+                    max: 1,
+                    aggr: "sum",
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-developers', //TODO: member-product high issues
+                    max: 1,
+                    aggr: "sum",
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-developers', //TODO: member-product critical issues
+                    max: 1,
+                    aggr: "sum",
+                    prid: 'product-jenkins' //TODO: remove
+                },
+                {
+                    id: 'product-developers', //TODO: member-product blocker issues
+                    max: 1,
+                    aggr: "sum",
+                    prid: 'product-jenkins' //TODO: remove
+                }
+            ];
+            var developer_severity_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
+            };
+            new framework.widgets.PieChart(developer_severity_pie_dom, developer_severity_pie_metrics,
+                    [timeCtx, userCtx], developer_severity_pie_configuration);
 
 
             // SKILLS STAR CHART

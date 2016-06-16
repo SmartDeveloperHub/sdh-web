@@ -655,7 +655,7 @@
                 max: 1
             }];
             var counter_3_conf = {
-                label: 'Assigned open issues',
+                label: 'Time to solve',
                 decimal: 0,
                 icon: 'octicon octicon-issue-closed',
                 iconbackground: '#6895BA',
@@ -697,7 +697,7 @@
                     [timeCtx, productCtx, developersCtx], developer_status_pie_configuration);
 
 
-            // ------------------------------- ISSUES STATUS PIE -------------------------------------
+            // ------------------------------- ISSUES SEVERITY PIE -------------------------------------
             var developer_severity_pie_dom = document.getElementById("developer-pie-severity");
             var developer_severity_pie_metrics = [
                 {

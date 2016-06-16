@@ -405,3 +405,8 @@ div.dataTables_filter input{
 .skillsSection .skillLineDiv {
     height: 100%;
 }
+
+#issues-multibar {
+    margin-left: 24px;
+    margin-right: 24px;
+}

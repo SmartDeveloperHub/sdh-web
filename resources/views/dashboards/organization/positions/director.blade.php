@@ -84,9 +84,9 @@
 
         <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="26">
             <div id="scatter-plot-subtitle" class="grid-stack-item-content subtitleRow">
-                <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-balance-scale"></span>
+                <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-tasks"></span>
                 <span id="scatter-plot-stitle-label" class="subtitleLabel">Products workload</span>
-                <span id="scatter-plot-stitle-help" class="subtitleHelp fa fa-tasks"></span>
+                <span id="workload-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
 
@@ -113,7 +113,7 @@
             <div id="pa-chart-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-hourglass-half"></span>
                 <span id="pa-chart-stitle-label" class="subtitleLabel">History</span>
-                <span id="pa-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                <span id="history-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
 
@@ -371,6 +371,12 @@
         //Internal members
         var internalMembers = '<div><span class="toolTitle"><p>Internal developers</p></span></div><div><span class="toolRow">Number of internal developers per product</span></div>';
         addQTip($('#internal-members-stitle-help'), "internalMembers", internalMembers);
+        var workloadHelp = '<div><span class="toolTitle"><p>Products workload</p></span></div><div><span class="toolRow">Workload per product. The optimal value in 100%.</span></div>';
+        addQTip($('#workload-help'), "workloadHelp", workloadHelp);
+        var historyHelp = '<div><span class="toolTitle"><p>History</p></span></div><div><span class="toolRow">Activity of the selected product.</span></div>';
+        addQTip($('#history-help'), "historyHelp", historyHelp);
+
+
 
         var env = framework.dashboard.getEnv();
         //console.log(env);

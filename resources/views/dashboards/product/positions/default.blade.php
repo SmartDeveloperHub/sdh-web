@@ -7,7 +7,8 @@
     "sdh-framework/widgets/RangeNv/rangeNv",
     "sdh-framework/widgets/Table/table",
     "css!assets/css/info-box",
-    "css!assets/css/dashboards/product-dashboard"
+    "css!assets/css/dashboards/product-dashboard",
+    "css!vendor/qtip2/jquery.qtip.min.css",
     ]
 @stop
 
@@ -24,7 +25,7 @@
                             <span class="theicon fa fa-pencil-square-o" style="color: #019640"></span><span class="thelabel">Created:</span><span class="theVal blurado" id="product-created">------</span>
                         </div>
                         <div class="row static-info-line">
-                            <span class="theicon fa fa-user-secret"></span><span class="thelabel">Manager:</span><span class="theVal blurado" id="product-manager">-------</span>
+                            <span class="theicon fa fa-user"></span><span class="thelabel">Manager:</span><span class="theVal blurado" id="product-manager">-------</span>
                         </div>
                     </div>
                     <div class="col-sm-5">
@@ -32,7 +33,7 @@
                             <span class="theicon fa fa-cubes" style="color: #C0485E"></span><span class="thelabel">Number of projects:</span><span class="theVal blurado" id="product-projects-number">--------</span>
                         </div>
                         <div class="row static-info-line">
-                            <span class="theicon octicon octicon-git-branch" style="color: #8A1978"></span><span class="thelabel">Last commit:</span><span class="theVal blurado" id="product-last-commit">--------</span>
+                            <span class="theicon fa fa-user-secret" style="color: #8A1978"></span><span class="thelabel">Director:</span><span class="theVal blurado" id="product-director">--------</span>
                         </div>
                     </div>
                 </div>
@@ -75,7 +76,7 @@
             <div style="color: #ee8433" class="grid-stack-item-content subtitleRow">
                 <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-tasks"></span>
                 <span id="pa-chart-stitle-label" class="subtitleLabel">Workload</span>
-                <span id="pa-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                <span id="workload-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
 
@@ -92,7 +93,7 @@
             <div style="color: #cc05b9" class="grid-stack-item-content subtitleRow">
                 <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-exclamation-circle"></span>
                 <span id="pa-chart-stitle-label" class="subtitleLabel">Issues</span>
-                <span id="pa-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                <span id="issues-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
 
@@ -158,7 +159,7 @@
             <div style="color: #6e8b00" class="grid-stack-item-content subtitleRow">
                 <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-exclamation-circle"></span>
                 <span id="pa-chart-stitle-label" class="subtitleLabel">Issues breakdown</span>
-                <span id="pa-chart-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                <span id="issues-breakdown-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
 
@@ -223,12 +224,12 @@
                 var creation = document.getElementById('product-created');
                 var manager = document.getElementById('product-manager');
                 var projects_number = document.getElementById('product-projects-number');
-                var last_commit = document.getElementById('product-last-commit');
+                var product_director = document.getElementById('product-director');
 
                 $(creation).removeClass('blurado');
                 $(manager).removeClass('blurado');
                 $(projects_number).removeClass('blurado');
-                $(last_commit).removeClass('blurado');
+                $(product_director).removeClass('blurado');
 
                 if (productInfo['avatar'] != null && productInfo['avatar'] !== "" && productInfo['avatar'] !== "http://avatarURL") {
                     $("#avatar").css("background-image", "url(" + productInfo['avatar'] + ")");
@@ -255,6 +256,40 @@
                 framework.data.updateContext(product_projects_cntx, {pjid: pIdList});
             }
         }, [productCtx]);
+
+
+        // Subtitles info
+        var addQTip = function addQTip(element, id, htmlText) {
+            element.qtip({
+                content: function(){
+                    return '<div id="' + id + '" class=subtitleTooltip>' + htmlText + '</div>';
+                },
+                show: {
+                    event: 'mouseover'
+                },
+                hide: {
+                    event: 'mouseout'
+                },
+                position: {
+                    my: 'top center',
+                    at: 'bottom center'
+                },
+                style: {
+                    classes: 'DirectorQTip qtip-bootstrap',
+                    tip: {
+                        width: 16,
+                        height: 6
+                    }
+                }
+            });
+        };
+
+        var workloadHelp = '<div><span class="toolTitle"><p>Workload</p></span></div><div><span class="toolRow">The bar chart displays the workload for each of the projects in this product. The lines chart displays he workload during the life of this product.</span></div>';
+        addQTip($('#workload-help'), "workloadHelp", workloadHelp);
+        var issuesHelp = '<div><span class="toolTitle"><p>Issues</p></span></div><div><span class="toolRow">The two pie charts display the amount of the different issues by status and severity. The bars chart displays the amount of opened and reopened issues during the time.</span></div>';
+        addQTip($('#issues-help'), "issuesHelp", issuesHelp);
+        var issuesBreakdown = '<div><span class="toolTitle"><p>Issues breakdown</p></span></div><div><span class="toolRow">The two pie charts display the amount of the different issues by status and severity. The bars chart displays this information together by severity.</span></div>';
+        addQTip($('#issues-breakdown-help'), "issuesBreakdown", issuesBreakdown);
 
 
         var rangeNv_dom = document.getElementById("fixed-chart");

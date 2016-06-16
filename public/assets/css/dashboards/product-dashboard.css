@@ -66,6 +66,13 @@
     position: absolute;
 }
 
+.subtitleRow:hover .subtitleHelp {
+    opacity: 1;
+    -webkit-transition: all ease-in-out .20s;
+    -o-transition: all ease-in-out .20s;
+    transition: all ease-in-out .20s;
+}
+
 
 /* Dashboard specific */
 .avatar-rounded-icon {
@@ -106,4 +113,19 @@
 .com-widget {
     padding: 0 !important;
     margin: 0 !important;;
+}
+
+/* Overwrite card style */
+.card {
+    height: 70px !important;
+}
+.card-list {
+    max-height: 180px !important;
+}
+.card-avatar {
+    height: 50px !important;
+    width: 50px !important;
+}
+.search {
+    margin: -20px auto 5px !important;
 }

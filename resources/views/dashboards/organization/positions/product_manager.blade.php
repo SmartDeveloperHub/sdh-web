@@ -82,7 +82,7 @@
             <div id="scatter-plot-subtitle" class="grid-stack-item-content subtitleRow">
                 <span id="scatter-plot-stitle-ico" class="subtitleIcon fa fa-tasks"></span>
                 <span id="scatter-plot-stitle-label" class="subtitleLabel">Products workload</span>
-                <span id="scatter-plot-stitle-help" class="subtitleHelp fa fa-info-circle"></span>
+                <span id="workload-help" class="subtitleHelp fa fa-info-circle"></span>
             </div>
         </div>
 
@@ -366,6 +366,8 @@
         //Internal members
         var internalMembers = '<div><span class="toolTitle"><p>Internal developers</p></span></div><div><span class="toolRow">Number of internal developers per product</span></div>';
         addQTip($('#internal-members-stitle-help'), "internalMembers", internalMembers);
+        var workloadHelp = '<div><span class="toolTitle"><p>Products workload</p></span></div><div><span class="toolRow">Workload per product. The optimal value in 100%.</span></div>';
+        addQTip($('#workload-help'), "workloadHelp", workloadHelp);
 
 
         var env = framework.dashboard.getEnv();

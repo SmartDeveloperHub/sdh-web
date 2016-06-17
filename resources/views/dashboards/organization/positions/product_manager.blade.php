@@ -596,7 +596,19 @@
                     xAxisGradient: ['red', 'orange', 'yellow', 'green'],
                     yAxisGradient: ['green', 'yellow', 'orange', 'red'],
                     showLegend: false,
-                    showMaxMin: false
+                    showMaxMin: false,
+                    onclick: function(data) {
+                        //Extract prid
+                        var prid, name;
+                        for(var mid in data.data) {
+                            if(data.data[mid].info.prid) {
+                                prid = data.data[mid].info.prid.prid;
+                                name = data.data[mid].info.prid.name;
+                                break;
+                            }
+                        }
+                        framework.dashboard.changeTo('product', {prid: prid, name: name});
+                    }
                 };
 
                 var scatter = new framework.widgets.Scatter(scatter_dom, scatter_metrics, [orgCtx, timeCtx, pmanager_products_cntx], scatter_conf);

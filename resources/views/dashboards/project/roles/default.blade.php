@@ -6,7 +6,13 @@
     "css!assets/css/dashboards/organization-dashboard",
     "sdh-framework/widgets/RangeNv/rangeNv",
     "sdh-framework/widgets/Table/table",
-    "css!assets/css/info-box"
+    "sdh-framework/widgets/MultiBar/multibar",
+    "sdh-framework/widgets/LinesChart/linesChart",
+    "sdh-framework/widgets/PieChart/piechart",
+    "sdh-framework/widgets/CounterBox/counterbox",
+    "css!assets/css/info-box",
+    "css!assets/css/dashboards/product-dashboard",
+    "css!vendor/qtip2/jquery.qtip.min.css",
     ]
 @stop
 
@@ -23,7 +29,7 @@
                             <span id="createdIco" class="theicon fa fa-pencil-square-o" style="color: #019640"></span><span class="thelabel">Created:</span><span class="theVal blurado" id="project-created">------</span>
                         </div>
                         <div class="row static-info-line">
-                            <span id="firstIco" class="theicon fa fa-user-secret"></span><span class="thelabel">Manager:</span><span class="theVal blurado" id="project-manager">-------</span>
+                            <<span class="theicon fa fa-user"></span><span class="thelabel">Manager:</span><span class="theVal blurado" id="product-manager">-------</span>
                         </div>
                     </div>
                     <div class="col-sm-5">
@@ -31,7 +37,7 @@
                             <span id="lastIco" class="theicon fa fa-cubes" style="color: #C0485E"></span><span class="thelabel">Number of projects:</span><span class="theVal blurado" id="project-repositories-number">--------</span>
                         </div>
                         <div class="row static-info-line">
-                            <span id="lastIco" class="theicon octicon octicon-git-branch" style="color: #8A1978"></span><span class="thelabel">Last commit:</span><span class="theVal blurado" id="project-last-commit">--------</span>
+                            <span class="theicon fa fa-user-secret" style="color: #8A1978"></span><span class="thelabel">Director:</span><span class="theVal blurado" id="project-director">--------</span>
                         </div>
                     </div>
                 </div>
@@ -60,10 +66,126 @@
             </div>
         </div>
     </div>
-    <div class="row row-centered">
-        <div class="col-sm-4">
-            <div id="repositories-table" class="widget"></div>
-        <div>
+
+    <div class="grid-stack">
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="4" data-gs-x="0" data-gs-y="1">
+            <div style="color: #004C8B" class="grid-stack-item-content titleRow">
+                <span id="peopleTitIco" class="titleIcon octicon octicon-dashboard"></span>
+                <span id="peopleTitLabel" class="titleLabel">Analytics</span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="5">
+            <div style="color: #ee8433" class="grid-stack-item-content subtitleRow">
+                <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-tasks"></span>
+                <span id="pa-chart-stitle-label" class="subtitleLabel">Workload</span>
+                <span id="workload-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="10" data-gs-x="0" data-gs-y="7">
+            <div id="workload-time" class="grid-stack-item-content"></div>
+        </div>
+
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="2" data-gs-x="0" data-gs-y="17">
+            <div style="color: #cc05b9" class="grid-stack-item-content subtitleRow">
+                <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-exclamation-circle"></span>
+                <span id="pa-chart-stitle-label" class="subtitleLabel">Issues</span>
+                <span id="issues-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="16" data-gs-x="0" data-gs-y="19">
+            <div id="pie-status" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="16" data-gs-x="3" data-gs-y="19">
+            <div id="pie-severity" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="8" data-gs-x="6" data-gs-y="19">
+            <div id="issues-1" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="6" data-gs-height="8" data-gs-x="6" data-gs-y="27">
+            <div id="issues-2" class="grid-stack-item-content"></div>
+        </div>
+
+    </div>
+
+
+    <div class="grid-stack">
+
+        <div class="grid-stack-item" data-gs-width="12" data-gs-height="4" data-gs-x="0" data-gs-y="1">
+            <div style="color: #004C8B" class="grid-stack-item-content titleRow">
+                <span id="peopleTitIco" class="titleIcon fa fa-users"></span>
+                <span id="peopleTitLabel" class="titleLabel">Team Members</span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="46" data-gs-x="0" data-gs-y="5">
+            <div id="developers-table" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="7" data-gs-height="6" data-gs-x="4" data-gs-y="5">
+            <div id="developer-textinfo" class="grid-stack-item-content">
+                <div class="com-widget widget static-info-widget col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row static-info-line">
+                                <span class="theicon fa fa-user" style="color: #0376de"></span><span class="thelabel">Name:</span><span class="theVal blurado" id="member-name">------</span>
+                            </div>
+                            <div class="row static-info-line">
+                                <span class="theicon fa fa-pencil-square-o" style="color: #019640"></span><span class="thelabel">Contact:</span><span class="theVal blurado" id="member-contact">------</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row static-info-line">
+                                <span class="theicon fa fa-user-secret"></span><span class="thelabel">Role:</span><span class="theVal blurado" id="member-role">-------</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="9" data-gs-height="7" data-gs-x="3" data-gs-y="11">
+            <div id="developer-activity" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="9" data-gs-height="2" data-gs-x="3" data-gs-y="19">
+            <div style="color: #6e8b00" class="grid-stack-item-content subtitleRow">
+                <span id="pa-chart-stitle-ico" class="subtitleIcon fa fa-exclamation-circle"></span>
+                <span id="pa-chart-stitle-label" class="subtitleLabel">Issues breakdown</span>
+                <span id="issues-breakdown-help" class="subtitleHelp fa fa-info-circle"></span>
+            </div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="3" data-gs-y="21">
+            <div id="developer-counter-1" class="grid-stack-item-content"></div>
+        </div>
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="6" data-gs-y="21">
+            <div id="developer-counter-2" class="grid-stack-item-content"></div>
+        </div>
+        <div class="grid-stack-item" data-gs-width="3" data-gs-height="6" data-gs-x="9" data-gs-y="21">
+            <div id="developer-counter-3" class="grid-stack-item-content"></div>
+        </div>
+
+
+        <div class="grid-stack-item" data-gs-width="9" data-gs-height="10" data-gs-x="3" data-gs-y="27">
+            <div id="issues-multibar" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="16" data-gs-x="3" data-gs-y="37">
+            <div id="developer-pie-status" class="grid-stack-item-content"></div>
+        </div>
+
+        <div class="grid-stack-item" data-gs-width="4" data-gs-height="16" data-gs-x="8" data-gs-y="37">
+            <div id="developer-pie-severity" class="grid-stack-item-content"></div>
+        </div>
+
+
     </div>
 @stop
 
@@ -73,13 +195,14 @@
 
         var timeCtx = "time-context";
         var projectCtx = "project-context";
-        var repositoriesCtx = "repositories-context";
+        var developersCtx = "developers-context";
 
         //Show header chart and set titles
         setTitle("Project");
         setSubtitle(framework.dashboard.getEnv('name'));
         showHeaderChart();
         framework.data.updateContext(projectCtx, {pjid: framework.dashboard.getEnv()['pjid']});
+        framework.data.updateContext(projectCtx, {prid: "product-ldp4j"}); //TODO: remove, it's for temporal metrics
 
         framework.data.observe(['projectinfo'], function (event) {
 
@@ -89,12 +212,12 @@
                 var creation = document.getElementById('project-created');
                 var manager = document.getElementById('project-manager');
                 var repositories_number = document.getElementById('project-repositories-number');
-                var last_commit = document.getElementById('project-last-commit');
+                var project_director = document.getElementById('project-director');
 
                 $(creation).removeClass('blurado');
                 $(manager).removeClass('blurado');
                 $(repositories_number).removeClass('blurado');
-                $(last_commit).removeClass('blurado');
+                $(project_director).removeClass('blurado');
 
                 if (productInfo['avatar'] != null && productInfo['avatar'] !== "" && productInfo['avatar'] !== "http://avatarURL") {
                     $("#avatar").css("background-image", "url(" + productInfo['avatar'] + ")");
@@ -104,6 +227,41 @@
 
             }
         }, [projectCtx]);
+
+
+        // Subtitles info
+        var addQTip = function addQTip(element, id, htmlText) {
+            element.qtip({
+                content: function(){
+                    return '<div id="' + id + '" class=subtitleTooltip>' + htmlText + '</div>';
+                },
+                show: {
+                    event: 'mouseover'
+                },
+                hide: {
+                    event: 'mouseout'
+                },
+                position: {
+                    my: 'top center',
+                    at: 'bottom center'
+                },
+                style: {
+                    classes: 'DirectorQTip qtip-bootstrap',
+                    tip: {
+                        width: 16,
+                        height: 6
+                    }
+                }
+            });
+        };
+
+        var workloadHelp = '<div><span class="toolTitle"><p>Workload</p></span></div><div><span class="toolRow">The bar chart displays the workload for each of the projects in this product. The lines chart displays he workload during the life of this product.</span></div>';
+        addQTip($('#workload-help'), "workloadHelp", workloadHelp);
+        var issuesHelp = '<div><span class="toolTitle"><p>Issues</p></span></div><div><span class="toolRow">The two pie charts display the amount of the different issues by status and severity. The bars chart displays the amount of opened and reopened issues during the time.</span></div>';
+        addQTip($('#issues-help'), "issuesHelp", issuesHelp);
+        var issuesBreakdown = '<div><span class="toolTitle"><p>Issues breakdown</p></span></div><div><span class="toolRow">The two pie charts display the amount of the different issues by status and severity. The bars chart displays this information together by severity.</span></div>';
+        addQTip($('#issues-breakdown-help'), "issuesBreakdown", issuesBreakdown);
+
 
         var rangeNv_dom = document.getElementById("fixed-chart");
         var rangeNv_metrics = [
@@ -167,59 +325,476 @@
                 }
             },[projectCtx, timeCtx]);
 
-        };
 
-        //  ----------------------------------- REPOSITORIES TABLE ------------------------------------------
-        var table_dom = document.getElementById("repositories-table");
-        var table_metrics = ['view-project-repositories'];
-        var table_configuration = {
-            columns: [
+            // -------------------------- WORKLOAD LINES  ------------------------------------
+            var changeScalePostModifier = function toPercentagePostModifier(resourceData) {
+
+                // Data will be [0, 200] aprox, but we want 100 to be the y axis origin. Therefore, we change it to a
+                // [-100, 100] so that 100 will be 0 in our new scale, and then modify the yAxisTickFormat function of the
+                // widget to restore it to the [0,200] by adding 100
+                var scale = d3.scale.linear().domain([0, 200]).range([-100, 100]);
+
+                var values = resourceData['data']['values'];
+                for(var x = 0; x < values.length; x++) {
+                    values[x] = Math.random() * 200; //TODO: Remove: Just to generate random numbers until the metric is ready
+                    values[x] = scale(values[x]);
+                }
+                //debugger;
+                return resourceData;
+
+            };
+            var workload_dom = document.getElementById("workload-time");
+            var workload_metrics = [
                 {
-                    label: "",
-                    link: {
-                        img: "avatar", //or label
-                        href: "repository",
-                        env: [
-                            {
-                                property: "rid",
-                                as: "rid"
-                            },
-                            {
-                                property: "name",
-                                as: "name"
-                            }
-                        ]
-                    },
-                    width: "40px"
+                    id: 'product-commits', //TODO: product-workload
+                    max: 30,
+                    post_modifier: changeScalePostModifier
+                }
+            ];
+            var workload_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 200,
+                labelFormat: 'Workload',
+                colors: ["#2876B8"],
+                area: true,
+                yAxisTickFormat : function(d) {  return Math.round(d + 100); }
+            };
+            new framework.widgets.LinesChart(workload_dom, workload_metrics,
+                    [timeCtx, projectCtx], workload_configuration);
+
+
+            // ------------------------------- ISSUES STATUS PIE -------------------------------------
+            var status_pie_dom = document.getElementById("pie-status");
+            var status_pie_metrics = [
+                {
+                    id: 'product-developers', //TODO: opened issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
                 },
                 {
-                    label: "",
-                    property: "name"
-                }
-            ],
-            updateContexts: [
+                    id: 'product-developers', //TODO: in-progress issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
                 {
-                    id: repositoriesCtx,
-                    filter: [
-                        {
-                            property: "rid",
-                            as: "rid"
-                        }
-                    ]
+                    id: 'product-developers', //TODO: closed issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
                 }
-            ],
-            keepSelectedByProperty: "rid",
-            selectable: true,
-            minRowsSelected: 1,
-            maxRowsSelected: 1,
-            filterControl: true,
-            initialSelectedRows: 1,
-            showHeader: false,
-            alwaysOneSelected: true,
-            scrollButtons: true,
-            height: 568
+            ];
+            var status_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
+            };
+            new framework.widgets.PieChart(status_pie_dom, status_pie_metrics,
+                    [timeCtx, projectCtx], status_pie_configuration);
+
+
+            // ------------------------------- ISSUES STATUS PIE -------------------------------------
+            var severity_pie_dom = document.getElementById("pie-severity");
+            var severity_pie_metrics = [
+                {
+                    id: 'product-developers', //TODO: trivial issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: normal issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: high issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: critical issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: blocker issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                }
+            ];
+            var severity_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
+            };
+            new framework.widgets.PieChart(severity_pie_dom, severity_pie_metrics,
+                    [timeCtx, projectCtx], severity_pie_configuration);
+
+
+            // -------------------------- ISSUES STACK BAR ------------------------------------
+            var issues_multibar_dom = document.getElementById("issues-1");
+            var issues_multibar_metrics = [
+                {
+                    id: 'failed-product-executions', //TODO: Reopen issues
+                    max: 10
+                },
+                {
+                    id: 'passed-product-executions', //TODO: Open issues
+                    max: 10
+                }
+            ];
+            var issues_multibar_conf = {
+                stacked: true,
+                labelFormat: "¬_D.data.info.title¬",
+                showControls: false,
+                height: 160,
+                showLegend: true,
+                showXMaxMin: true
+            };
+            new framework.widgets.MultiBar(issues_multibar_dom, issues_multibar_metrics,
+                    [timeCtx, projectCtx], issues_multibar_conf);
+
+
+            // -------------------------- ISSUES LINES  ------------------------------------
+            var issues_lines_dom = document.getElementById("issues-2");
+            var issues_lines_metrics = [
+                {
+                    id: 'failed-product-executions', //TODO: product-workload
+                    max: 10
+                }
+            ];
+            var issues_lines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'linear',
+                height: 160,
+                labelFormat: 'Active reopen',
+                colors: ["#2876B8"],
+                area: false
+            };
+            new framework.widgets.LinesChart(issues_lines_dom, issues_lines_metrics,
+                    [timeCtx, projectCtx], issues_lines_configuration);
+
+
+
+
+
+            //PRODUCT LIST
+            framework.data.observe(['view-product-projects'], function (event) {
+                if (event.event === 'data') {
+                    var projects = event.data['view-product-projects'][Object.keys(event.data['view-product-projects'])[0]]['data']['values'];
+                    $scope = angular.element(".main-content").scope();
+
+                    $scope.$apply(function () {
+                        $scope.projects = projects;
+                    });
+
+                }
+            }, [projectCtx, timeCtx]);
+
+
+            //  ----------------------------------- PRODUCT DEVELOPERS TABLE ------------------------------------------
+            var table_dom = document.getElementById("developers-table");
+            var table_metrics = ['view-product-developers'];
+            var table_configuration = {
+                columns: [
+                    {
+                        label: "",
+                        link: {
+                            img: "avatar", //or label
+                            href: "developer",
+                            env: [
+                                {
+                                    property: "uid",
+                                    as: "uid"
+                                },
+                                {
+                                    property: "name",
+                                    as: "name"
+                                }
+                            ]
+                        },
+                        width: "40px"
+                    },
+                    {
+                        label: "",
+                        property: "name"
+                    }
+                ],
+                updateContexts: [
+                    {
+                        id: developersCtx,
+                        filter: [
+                            {
+                                property: "uid",
+                                as: "uid"
+                            }
+                        ]
+                    }
+                ],
+                keepSelectedByProperty: "uid",
+                selectable: true,
+                minRowsSelected: 1,
+                maxRowsSelected: 1,
+                filterControl: true,
+                initialSelectedRows: 1,
+                showHeader: false,
+                alwaysOneSelected: true,
+                scrollButtons: true,
+                height: 920
+            };
+            var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, projectCtx], table_configuration);
+
+
+            framework.data.observe(['userinfo'], function (event) { //TODO: userinfo for specific product
+
+                if (event.event === 'data') {
+                    var userinfo = event.data['userinfo'][Object.keys(event.data['userinfo'])[0]]['data'];
+
+                    //Set data
+                    var member_contact = document.getElementById('member-contact');
+                    var member_role = document.getElementById('member-role');
+                    var member_name = document.getElementById('member-name');
+
+                    member_contact.innerHTML = userinfo['email'];
+                    member_role.innerHTML = "role"; //TODO: member role in product
+                    member_name.innerHTML = userinfo['name'];
+
+                    $(member_contact).removeClass('blurado');
+                    $(member_role).removeClass('blurado');
+                    $(member_name).removeClass('blurado');
+
+                    if (userinfo['avatar'] !== null && userinfo['avatar'] !== "" && userinfo['avatar'] !== "http://avatarURL") {
+                        $("#row-section-1, #row-section-3").find(".avatar-rounded-icon")
+                                .css("background-image", "url(" + userinfo['avatar'] + ")")
+                                .css("background-size", "contain");
+                    }
+
+                }
+
+            }, [developersCtx]);
+
+
+            // ----------------------------------- PRODUCT MEMBER ACTIVITY WIDGET ----------------------------------------
+            var pa_lines_dom = document.getElementById("developer-activity");
+            var pa_lines_metrics = [
+                {
+                    id: 'repository-member-activity', //TODO: product-member-activity
+                    max: 60,
+                    rid: 62 //TODO: remove
+                }
+            ];
+            var pa_lines_configuration = {
+                xlabel: '',
+                ylabel: '',
+                interpolate: 'monotone',
+                height: 180,
+                labelFormat: 'Activity',
+                area: true,
+                showXAxis: false,
+                colors: ['#004C8B']
+            };
+            new framework.widgets.LinesChart(pa_lines_dom, pa_lines_metrics,
+                    [timeCtx, projectCtx, developersCtx], pa_lines_configuration);
+
+            // --------------------------------------- COMMITS COUNTER --------------------------------------------
+            var counter_1_dom = document.getElementById("developer-counter-1");
+            var counter_1_metrics = [{
+                id: 'repository-member-commits', //TODO: ​member-product-active-issues
+                max: 1,
+                rid: 62 //TODO: remove
+            }];
+            var counter_1_conf = {
+                label: 'Active issues',
+                decimal: 0,
+                icon: 'fa fa-refresh',
+                iconbackground: '#EE7529',
+                background: 'transparent'
+            };
+            new framework.widgets.CounterBox(counter_1_dom, counter_1_metrics, [timeCtx, projectCtx, developersCtx], counter_1_conf);
+
+            // --------------------------------------- COMMITS COUNTER --------------------------------------------
+            var counter_2_dom = document.getElementById("developer-counter-2");
+            var counter_2_metrics = [{
+                id: 'repository-member-commits', //TODO: member-product-active-reopened-issues
+                max: 1,
+                rid: 62 //TODO: remove
+            }];
+            var counter_2_conf = {
+                label: 'Active reopened issues',
+                decimal: 0,
+                icon: 'fa fa-retweet',
+                iconbackground: '#F75333',
+                background: 'transparent'
+            };
+            new framework.widgets.CounterBox(counter_2_dom, counter_2_metrics, [timeCtx, projectCtx, developersCtx], counter_2_conf);
+
+            // --------------------------------------- COMMITS COUNTER --------------------------------------------
+            var counter_3_dom = document.getElementById("developer-counter-3");
+            var counter_3_metrics = [{
+                id: 'product-timetofix', //TODO: member-product time to solve an issue
+                max: 1
+            }];
+            var counter_3_conf = {
+                label: 'Time to solve',
+                decimal: 0,
+                icon: 'octicon octicon-issue-closed',
+                iconbackground: '#6895BA',
+                background: 'transparent'
+            };
+            new framework.widgets.CounterBox(counter_3_dom, counter_3_metrics, [timeCtx, projectCtx, developersCtx], counter_3_conf);
+
+
+            // ------------------------------- ISSUES STATUS PIE -------------------------------------
+            var developer_status_pie_dom = document.getElementById("developer-pie-status");
+            var developer_status_pie_metrics = [
+                {
+                    id: 'product-developers', //TODO: member-product opened issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: member-product in-progress issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: member-product closed issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                }
+            ];
+            var developer_status_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
+            };
+            new framework.widgets.PieChart(developer_status_pie_dom, developer_status_pie_metrics,
+                    [timeCtx, projectCtx, developersCtx], developer_status_pie_configuration);
+
+
+            // ------------------------------- ISSUES SEVERITY PIE -------------------------------------
+            var developer_severity_pie_dom = document.getElementById("developer-pie-severity");
+            var developer_severity_pie_metrics = [
+                {
+                    id: 'product-developers', //TODO: member-product trivial issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: member-product normal issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: member-product high issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: member-product critical issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                },
+                {
+                    id: 'product-developers', //TODO: member-product blocker issues
+                    max: 1,
+                    aggr: "sum",
+                    post_aggr: 'sum'
+                }
+            ];
+            var developer_severity_pie_configuration = {
+                height: 320,
+                showLegend: true,
+                showLabels: false,
+                labelFormat: "¬_D.data.info.title¬",
+                maxDecimals: 0
+            };
+            new framework.widgets.PieChart(developer_severity_pie_dom, developer_severity_pie_metrics,
+                    [timeCtx, projectCtx, developersCtx], developer_severity_pie_configuration);
+
+
+            // -------------------------- ISSUES MULTIBAR ------------------------------------
+            var prod_member_issues_multibar_dom = document.getElementById("issues-multibar");
+            var prod_member_issues_multibar_metrics = [
+                {
+                    id: 'failed-product-executions',
+                    max: 1
+                },
+                {
+                    id: 'passed-product-executions',
+                    max: 1
+                },
+                {
+                    id: 'product-developers',
+                    max: 1
+                },
+                {
+                    id: 'product-activity',
+                    max: 1
+                },
+                {
+                    id: 'product-externals',
+                    max: 1
+                },
+                {
+                    id: 'product-executions',
+                    max: 1
+                }
+            ];
+            var category = {
+                'failed-product-executions' : 'Blocked',
+                'passed-product-executions': 'Critical',
+                'product-developers': 'Graves',
+                'product-activity': 'Normal',
+                'product-externals': 'Trivial',
+                'product-executions': 'Blocked'
+            };
+            var type = {
+                'failed-product-executions' : 'Open',
+                'passed-product-executions': 'Open',
+                'product-developers': 'Open',
+                'product-activity': 'Open',
+                'product-externals': 'Open',
+                'product-executions': 'In progress'
+            };
+            var prod_member_issues_multibar_conf = {
+                stacked: false,
+                labelFormat: function(metric, extra) {
+                    return type[extra.resource];
+                },
+                showControls: false,
+                height: 200,
+                showLegend: true,
+                x: function(metric, extra) {
+                    return category[extra.resource];
+                }
+            };
+            new framework.widgets.MultiBar(prod_member_issues_multibar_dom, prod_member_issues_multibar_metrics,
+                    [timeCtx, projectCtx, developersCtx], prod_member_issues_multibar_conf);
+
         };
-        var table = new framework.widgets.Table(table_dom, table_metrics, [timeCtx, projectCtx], table_configuration);
 
 
     }

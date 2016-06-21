@@ -57,7 +57,7 @@ require.config({
         'jquery': 'vendor/jquery/dist/jquery',
         'jquery-ui': 'vendor/jquery-ui/ui',
         'moment': "vendor/moment/moment",
-        'lodash': 'vendor/lodash/lodash.min',
+        'lodash': 'vendor/lodash/lodash',
         'gridstack': 'vendor/gridstack/dist/gridstack',
         'joint': 'vendor/joint/dist/joint.min',
         'cytoscape': 'vendor/cytoscape/dist/cytoscape',

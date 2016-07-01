@@ -15,7 +15,6 @@
 
 @section('css')
     @parent
-    <link rel="stylesheet" href="{{$PUBLIC_PATH}}vendor/nvd3/build/nv.d3.min.css">
     <link rel="stylesheet" href="{{$PUBLIC_PATH}}vendor/sdh-framework/style/components.css">
     <link rel="stylesheet" href="{{$PUBLIC_PATH}}vendor/sdh-framework/fonts/fontawesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{$PUBLIC_PATH}}vendor/sdh-framework/fonts/linecons/css/linecons.css">

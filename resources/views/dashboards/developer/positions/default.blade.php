@@ -11,6 +11,7 @@
     "sdh-framework/widgets/LinesChart/linesChart",
     "sdh-framework/widgets/RangeNv/rangeNv",
     "sdh-framework/widgets/RadarChart/radarchart",
+    "sdh-framework/widgets/MultiBar/multiBar",
     "css!assets/css/dashboards/developer-dashboard"
     ]
 @stop

@@ -474,7 +474,7 @@
             var proj_issues_multibar_dom = document.getElementById("issues-2");
             var proj_issues_multibar_metrics = [];
             var categories = ['Blocked', 'Critical', 'Grave', 'Normal', 'Trivial'];
-            var statuses = ['Other Open', 'Other In Progress', 'Task Open', 'Task In progress', 'Bug Open', 'Bug In progress' ];
+            var statuses = ['Other Open', 'Other In Progress', 'Improvement Open', 'Improvement In progress', 'Bug Open', 'Bug In progress' ];
             var colors = ['#ffbb78', '#ff7f0e', '#aec7e8', '#1f77b4', '#ff9896', '#d62728' ];
             var category_1 = {};
             var status_1 = {};
@@ -758,7 +758,7 @@
             var proj_member_issues_multibar_dom = document.getElementById("issues-multibar");
             var proj_member_issues_multibar_metrics = [];
             var categories = ['Blocked', 'Critical', 'Grave', 'Normal', 'Trivial'];
-            var statuses = ['Other Open', 'Other In Progress', 'Task Open', 'Task In progress', 'Bug Open', 'Bug In progress' ];
+            var statuses = ['Other Open', 'Other In Progress', 'Improvement Open', 'Improvement In progress', 'Bug Open', 'Bug In progress' ];
             var colors = ['#ffbb78', '#ff7f0e', '#aec7e8', '#1f77b4', '#ff9896', '#d62728' ];
             var category_2 = {};
             var status_2 = {};

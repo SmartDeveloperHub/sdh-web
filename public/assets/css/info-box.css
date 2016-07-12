@@ -24,6 +24,7 @@
 .static-info-widget .static-info-line {
     white-space: nowrap;
     margin-left: 6px;
+    margin-bottom: 15px;
 }
 
 .static-info-widget .theicon {
@@ -57,7 +58,7 @@
     font-family: Roboto;
     white-space: nowrap;
     margin-left: 10px;
-    font-size: 18px;
+    font-size: 19px;
     display: inline-block;
     overflow: hidden;
     max-width: 65%;
@@ -80,6 +81,31 @@
     border-radius: 1px;
     background-size: contain;
     margin-left: 31%;
-    margin-top: 23px;
     background-repeat: no-repeat;
+}
+
+/* product/project director/pmanager avatar an name*/
+.static-info-widget .theVal.completName {
+    font-family: Roboto;
+    font-size: 15px;
+}
+
+.pAvatar {
+    width: 30px;
+    height: 30px;
+    font-size: 73px;
+    color: #004C8B;
+    display: inline-block;
+    border-radius: 14px;
+    background-size: contain;
+    margin-left: 10px;
+    background-repeat: no-repeat;
+    vertical-align: sub;
+    box-shadow: 1px 1px 1px 1px #aac3d7;
+    background-color: #f1f1f1;
+}
+
+/* where is project-dashboard.css??*/
+.projectStaticInfoBox {
+    line-height: 90px;
 }

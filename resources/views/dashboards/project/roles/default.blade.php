@@ -24,21 +24,21 @@
                     <div class="col-sm-2 avatarBox">
                         <div id="avatar" class="avatar"></div>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-5 projectStaticInfoBox">
                         <div class="row static-info-line">
                             <span id="createdIco" class="theicon fa fa-pencil-square-o" style="color: #019640"></span><span class="thelabel">Created:</span><span class="theVal blurado" id="project-created">------</span>
                         </div>
-                        <div class="row static-info-line">
-                            <span class="theicon fa fa-user"></span><span class="thelabel">Manager:</span><span class="theVal blurado" id="product-manager">-------</span>
-                        </div>
+                        <!--div class="row static-info-line">
+                            <span class="theicon fa fa-user-secret" style="color: #8A1978"></span><span class="thelabel">Director:</span><span class="pAvatar" id="product-director-avatar"></span><span class="theVal blurado completName" id="product-director">--------</span>
+                        </div-->
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-5 projectStaticInfoBox">
                         <div class="row static-info-line">
                             <span id="lastIco" class="theicon fa fa-cubes" style="color: #C0485E"></span><span class="thelabel">Number of repositories:</span><span class="theVal blurado" id="project-repositories-number">--------</span>
                         </div>
-                        <div class="row static-info-line">
-                            <span class="theicon fa fa-user-secret" style="color: #8A1978"></span><span class="thelabel">Director:</span><span class="theVal blurado" id="project-director">--------</span>
-                        </div>
+                        <!--div class="row static-info-line">
+                            <span class="theicon fa fa-user"></span><span class="thelabel">Manager:</span><span class="pAvatar" id="product-manager-avatar"></span><span class="theVal blurado completName" id="product-manager">----</span>
+                        </div-->
                     </div>
                 </div>
             </div>
@@ -210,24 +210,26 @@
                 var projectInfo = event.data['projectinfo'][Object.keys(event.data['projectinfo'])[0]]['data'];
 
                 var creation = document.getElementById('project-created');
-                var manager = document.getElementById('project-manager');
 
-                var project_director = document.getElementById('project-director');
+                //var manager = document.getElementById('project-manager');
+                //var manager_avatar = document.getElementById('product-manager-avatar');
+
+                //var project_director = document.getElementById('project-director');
+                //var product_director_avatar = document.getElementById('product-director-avatar');
 
                 creation.innerHTML = moment(new Date(projectInfo['createdon'])).format('MMMM Do YYYY');
-                //manager.innerHTML = projectInfo['manager']; //TODO: uncomment
-                //project_director.innerHTML = projectInfo['director']; //TODO: uncomment
+                //manager.innerHTML = projectInfo['manager'].name;
+                //$(manager_avatar).css('background-image', 'url(' + productInfo['manager'].avatar + ')');
+
+                //project_director.innerHTML = projectInfo['director'].name;
+                //$(project_director_avatar).css('background-image', 'url(' + productInfo['director'].avatar + ')');
 
                 $(creation).removeClass('blurado');
-                $(manager).removeClass('blurado');
-                $(project_director).removeClass('blurado');
-
+                //$(manager).removeClass('blurado');
+                //$(project_director).removeClass('blurado');
                 if (projectInfo['avatar'] != null && projectInfo['avatar'] !== "" && projectInfo['avatar'] !== "http://avatarURL") {
                     $("#avatar").css("background-image", "url(" + projectInfo['avatar'] + ")");
                 }
-
-                //TODO: fill the data in the project info
-
             }
         }, [projectCtx]);
 

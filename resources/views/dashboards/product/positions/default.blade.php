@@ -29,7 +29,7 @@
                             <span class="theicon fa fa-pencil-square-o" style="color: #019640"></span><span class="thelabel">Created:</span><span class="theVal blurado" id="product-created">------</span>
                         </div>
                         <div class="row static-info-line">
-                            <span class="theicon fa fa-user"></span><span class="thelabel">Manager:</span><span class="theVal blurado" id="product-manager">-------</span>
+                            <span class="theicon fa fa-user-secret" style="color: #8A1978"></span><span class="thelabel">Director:</span><span class="pAvatar" id="product-director-avatar"></span><span class="theVal blurado completName" id="product-director">--------</span>
                         </div>
                     </div>
                     <div class="col-sm-5">
@@ -37,7 +37,7 @@
                             <span class="theicon fa fa-cubes" style="color: #C0485E"></span><span class="thelabel">Number of projects:</span><span class="theVal blurado" id="product-projects-number">--------</span>
                         </div>
                         <div class="row static-info-line">
-                            <span class="theicon fa fa-user-secret" style="color: #8A1978"></span><span class="thelabel">Director:</span><span class="theVal blurado" id="product-director">--------</span>
+                            <span class="theicon fa fa-user"></span><span class="thelabel">Manager:</span><span class="pAvatar" id="product-manager-avatar"></span><span class="theVal blurado completName" id="product-manager">----</span>
                         </div>
                     </div>
                 </div>
@@ -226,13 +226,19 @@
                 var productInfo = event.data['productinfo'][Object.keys(event.data['productinfo'])[0]]['data'];
 
                 var creation = document.getElementById('product-created');
+
                 var manager = document.getElementById('product-manager');
+                var manager_avatar = document.getElementById('product-manager-avatar');
 
                 var product_director = document.getElementById('product-director');
+                var product_director_avatar = document.getElementById('product-director-avatar');
 
                 creation.innerHTML = moment(new Date(productInfo['createdon'])).format('MMMM Do YYYY');
-                //manager.innerHTML = productInfo['manager']; //TODO: uncomment
-                //product_director.innerHTML = productInfo['director']; //TODO: uncomment
+                manager.innerHTML = productInfo['manager'].name;
+                $(manager_avatar).css('background-image', 'url(' + productInfo['manager'].avatar + ')');
+
+                product_director.innerHTML = productInfo['director'].name;
+                $(product_director_avatar).css('background-image', 'url(' + productInfo['director'].avatar + ')');
 
                 $(creation).removeClass('blurado');
                 $(manager).removeClass('blurado');
@@ -241,9 +247,6 @@
                 if (productInfo['avatar'] != null && productInfo['avatar'] !== "" && productInfo['avatar'] !== "http://avatarURL") {
                     $("#avatar").css("background-image", "url(" + productInfo['avatar'] + ")");
                 }
-
-                //TODO: fill the data in the product info
-
             }
         }, [productCtx]);
 

@@ -415,19 +415,19 @@
             var status_pie_dom = document.getElementById("pie-status");
             var status_pie_metrics = [
                 {
-                    id: 'product-developers', //TODO: opened issues
+                    id: 'product-opened-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: in-progress issues
+                    id: 'product-inprogress-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: closed issues
+                    id: 'product-closed-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
@@ -448,31 +448,31 @@
             var severity_pie_dom = document.getElementById("pie-severity");
             var severity_pie_metrics = [
                 {
-                    id: 'product-developers', //TODO: trivial issues
+                    id: 'product-trivial-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: normal issues
+                    id: 'product-normal-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: high issues
+                    id: 'product-high-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: critical issues
+                    id: 'product-critical-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: blocker issues
+                    id: 'product-blocker-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
@@ -493,11 +493,11 @@
             var issues_multibar_dom = document.getElementById("issues-1");
             var issues_multibar_metrics = [
                 {
-                    id: 'failed-product-executions', //TODO: Reopen issues
+                    id: 'product-reopen-issues',
                     max: 10
                 },
                 {
-                    id: 'passed-product-executions', //TODO: Open issues
+                    id: 'product-open-issues',
                     max: 10
                 }
             ];
@@ -517,7 +517,7 @@
             var issues_lines_dom = document.getElementById("issues-2");
             var issues_lines_metrics = [
                 {
-                    id: 'failed-product-executions', //TODO: product-workload
+                    id: 'product-reopen-intime', // TODO Remove this chart??
                     max: 10
                 }
             ];
@@ -657,7 +657,7 @@
             // --------------------------------------- COMMITS COUNTER --------------------------------------------
             var counter_1_dom = document.getElementById("developer-counter-1");
             var counter_1_metrics = [{
-                id: '​member-product-active-issues',
+                id: 'member-product-active-issues',
                 max: 1,
             }];
             var counter_1_conf = {

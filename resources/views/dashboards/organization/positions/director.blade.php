@@ -796,7 +796,6 @@
 
                 var values = resourceData['data']['values'];
                 for(var x = 0; x < values.length; x++) {
-                    values[x] = Math.random() * 200; //TODO: Remove: Just to generate random numbers until the metric is ready
                     values[x] = scale(values[x]);
                 }
                 //debugger;

@@ -203,7 +203,6 @@
         setSubtitle(framework.dashboard.getEnv('name'));
         showHeaderChart();
         framework.data.updateContext(projectCtx, {pjid: framework.dashboard.getEnv()['pjid']});
-        //framework.data.updateContext(projectCtx, {prid: "product-ldp4j"}); //TODO: remove, it's for temporal metrics
 
         framework.data.observe(['projectinfo'], function (event) {
 
@@ -337,7 +336,6 @@
 
                 var values = resourceData['data']['values'];
                 for(var x = 0; x < values.length; x++) {
-                    values[x] = Math.random() * 200; //TODO: Remove: Just to generate random numbers until the metric is ready
                     values[x] = scale(values[x]);
                 }
                 //debugger;

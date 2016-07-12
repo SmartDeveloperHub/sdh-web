@@ -203,7 +203,7 @@
         setSubtitle(framework.dashboard.getEnv('name'));
         showHeaderChart();
         framework.data.updateContext(projectCtx, {pjid: framework.dashboard.getEnv()['pjid']});
-        framework.data.updateContext(projectCtx, {prid: "product-ldp4j"}); //TODO: remove, it's for temporal metrics
+        //framework.data.updateContext(projectCtx, {prid: "product-ldp4j"}); //TODO: remove, it's for temporal metrics
 
         framework.data.observe(['projectinfo'], function (event) {
 
@@ -347,7 +347,7 @@
             var workload_dom = document.getElementById("workload-time");
             var workload_metrics = [
                 {
-                    id: 'product-commits', //TODO: product-workload
+                    id: 'project-workload',
                     max: 30,
                     post_modifier: changeScalePostModifier
                 }
@@ -370,19 +370,19 @@
             var status_pie_dom = document.getElementById("pie-status");
             var status_pie_metrics = [
                 {
-                    id: 'product-developers', //TODO: opened issues
+                    id: 'project-opened-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: in-progress issues
+                    id: 'project-inprogress-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: closed issues
+                    id: 'project-closed-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
@@ -403,31 +403,31 @@
             var severity_pie_dom = document.getElementById("pie-severity");
             var severity_pie_metrics = [
                 {
-                    id: 'product-developers', //TODO: trivial issues
+                    id: 'project-trivial-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: normal issues
+                    id: 'project-normal-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: high issues
+                    id: 'project-high-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: critical issues
+                    id: 'project-critical-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: blocker issues
+                    id: 'project-blocker-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
@@ -447,12 +447,12 @@
             // -------------------------- ISSUES STACK BAR ------------------------------------
             var issues_multibar_dom = document.getElementById("issues-1");
             var issues_multibar_metrics = [
-                {
-                    id: 'failed-product-executions', //TODO: Reopen issues
+               {
+                    id: 'project-reopen-issues',
                     max: 10
                 },
                 {
-                    id: 'passed-product-executions', //TODO: Open issues
+                    id: 'project-open-issues',
                     max: 10
                 }
             ];
@@ -524,9 +524,9 @@
             }, [projectCtx, timeCtx]);
 
 
-            //  ----------------------------------- PRODUCT DEVELOPERS TABLE ------------------------------------------
+            //  ----------------------------------- PROJECT DEVELOPERS TABLE ------------------------------------------
             var table_dom = document.getElementById("developers-table");
-            var table_metrics = ['view-product-developers'];
+            var table_metrics = ['view-project-developers'];
             var table_configuration = {
                 columns: [
                     {
@@ -610,9 +610,8 @@
             var pa_lines_dom = document.getElementById("developer-activity");
             var pa_lines_metrics = [
                 {
-                    id: 'repository-member-activity', //TODO: product-member-activity
+                    id: 'member-project-activity',
                     max: 60,
-                    rid: 62 //TODO: remove
                 }
             ];
             var pa_lines_configuration = {
@@ -631,9 +630,8 @@
             // --------------------------------------- COMMITS COUNTER --------------------------------------------
             var counter_1_dom = document.getElementById("developer-counter-1");
             var counter_1_metrics = [{
-                id: 'repository-member-commits', //TODO: ​member-product-active-issues
+                id: 'member-project-active-issues',
                 max: 1,
-                rid: 62 //TODO: remove
             }];
             var counter_1_conf = {
                 label: 'Active issues',
@@ -647,9 +645,8 @@
             // --------------------------------------- COMMITS COUNTER --------------------------------------------
             var counter_2_dom = document.getElementById("developer-counter-2");
             var counter_2_metrics = [{
-                id: 'repository-member-commits', //TODO: member-product-active-reopened-issues
+                id: 'member-project-active-reopened-issues',
                 max: 1,
-                rid: 62 //TODO: remove
             }];
             var counter_2_conf = {
                 label: 'Active reopened issues',
@@ -663,8 +660,9 @@
             // --------------------------------------- COMMITS COUNTER --------------------------------------------
             var counter_3_dom = document.getElementById("developer-counter-3");
             var counter_3_metrics = [{
-                id: 'product-timetofix', //TODO: member-product time to solve an issue
-                max: 1
+                id: 'member-project-timetofix',
+                max: 1,
+                aggr: 'avg'
             }];
             var counter_3_conf = {
                 label: 'Time to solve',
@@ -680,19 +678,19 @@
             var developer_status_pie_dom = document.getElementById("developer-pie-status");
             var developer_status_pie_metrics = [
                 {
-                    id: 'product-developers', //TODO: member-product opened issues
+                    id: 'member-project-opened-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product in-progress issues
+                    id: 'member-project-inprogress-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product closed issues
+                    id: 'member-project-closed-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
@@ -713,31 +711,31 @@
             var developer_severity_pie_dom = document.getElementById("developer-pie-severity");
             var developer_severity_pie_metrics = [
                 {
-                    id: 'product-developers', //TODO: member-product trivial issues
+                    id: 'member-project-trivial-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product normal issues
+                    id: 'member-project-normal-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product high issues
+                    id: 'member-project-high-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product critical issues
+                    id: 'member-project-critical-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product blocker issues
+                    id: 'member-project-blocker-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'

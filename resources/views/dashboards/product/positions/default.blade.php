@@ -691,7 +691,8 @@
             var counter_3_dom = document.getElementById("developer-counter-3");
             var counter_3_metrics = [{
                 id: 'product-timetofix', //TODO: member-product time to solve an issue
-                max: 1
+                max: 1,
+                aggr: 'avg'
             }];
             var counter_3_conf = {
                 label: 'Time to solve',

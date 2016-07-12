@@ -284,10 +284,10 @@
             };
             var total_projects = new framework.widgets.CounterBox(total_projects_dom, total_projects_metrics, [timeCtx, userCtx], total_projects_conf);
 
-            // ISSUES OPEN
+            // ISSUES OPENED
             var issues_open_dom = document.getElementById("issues-open");
             var issues_open_metrics = [{
-                id: 'member-longest-streak' //TODO: fill with real metric
+                id: 'member-opened-issues'
             }];
             var issues_open_conf = {
                 label: 'Issues opened',
@@ -298,10 +298,10 @@
             };
             new framework.widgets.CounterBox(issues_open_dom, issues_open_metrics, [timeCtx, userCtx], issues_open_conf);
 
-            // ISSUES OPEN
+            // ISSUES IN PROGRESS
             var issues_in_progress_dom = document.getElementById("issues-in-progress");
             var issues_in_progress_metrics = [{
-                id: 'member-longest-streak' //TODO: fill with real metric
+                id: 'member-inprogress-issues'
             }];
             var issues_in_progress_conf = {
                 label: 'Issues in progress',
@@ -312,10 +312,10 @@
             };
             new framework.widgets.CounterBox(issues_in_progress_dom, issues_in_progress_metrics, [timeCtx, userCtx], issues_in_progress_conf);
 
-            // ISSUES OPEN
+                // ISSUES CLOSED
             var issues_close_dom = document.getElementById("issues-close");
             var issues_close_metrics = [{
-                id: 'member-longest-streak' //TODO: fill with real metric
+                id: 'member-closed-issues'
             }];
             var issues_close_conf = {
                 label: 'Issues closed',
@@ -326,10 +326,10 @@
             };
             new framework.widgets.CounterBox(issues_close_dom, issues_close_metrics, [timeCtx, userCtx], issues_close_conf);
 
-            // --------------------------------------- COMMITS COUNTER --------------------------------------------
+            // --------------------------------------- ACTIVE ISSUES COUNTER --------------------------------------------
             var counter_1_dom = document.getElementById("issues-active");
             var counter_1_metrics = [{
-                id: 'member-commits', //TODO: ​member-product-active-issues
+                id: 'member-active-issues',
                 max: 1
             }];
             var counter_1_conf = {
@@ -341,10 +341,10 @@
             };
             new framework.widgets.CounterBox(counter_1_dom, counter_1_metrics, [timeCtx, userCtx], counter_1_conf);
 
-            // --------------------------------------- COMMITS COUNTER --------------------------------------------
+            // --------------------------------------- ACTIVE REOPENED ISSUES COUNTER --------------------------------------------
             var counter_2_dom = document.getElementById("issues-reopened");
             var counter_2_metrics = [{
-                id: 'member-commits', //TODO: member-product-active-reopened-issues
+                id: 'member-active-reopened-issues',
                 max: 1
             }];
             var counter_2_conf = {
@@ -396,7 +396,6 @@
 
                 var values = resourceData['data']['values'];
                 for(var x = 0; x < values.length; x++) {
-                    values[x] = Math.random() * 200; //TODO: Remove: Just to generate random numbers until the metric is ready
                     values[x] = scale(values[x]);
                 }
                 //debugger;
@@ -406,7 +405,7 @@
             var workload_dom = document.getElementById("workload-lines");
             var workload_metrics = [
                 {
-                    id: 'member-commits', //TODO: change to the real workload metric
+                    id: 'member-workload',
                     max: 30,
                     post_modifier: changeScalePostModifier
                 }
@@ -466,22 +465,19 @@
             var developer_status_pie_dom = document.getElementById("developer-pie-status");
             var developer_status_pie_metrics = [
                 {
-                    id: 'product-developers', //TODO: member-product opened issues
+                    id: 'member-opened-issues',
                     max: 1,
-                    aggr: "sum",
-                    prid: 'product-jenkins' //TODO: remove
+                    aggr: "sum"
                 },
                 {
-                    id: 'product-developers', //TODO: member-product in-progress issues
+                    id: 'member-inprogress-issues',
                     max: 1,
-                    aggr: "sum",
-                    prid: 'product-jenkins' //TODO: remove
+                    aggr: "sum"
                 },
                 {
-                    id: 'product-developers', //TODO: member-product closed issues
+                    id: 'member-closed-issues',
                     max: 1,
-                    aggr: "sum",
-                    prid: 'product-jenkins' //TODO: remove
+                    aggr: "sum"
                 }
             ];
             var developer_status_pie_configuration = {
@@ -498,35 +494,30 @@
             // ------------------------------- ISSUES SEVERITY PIE -------------------------------------
             var developer_severity_pie_dom = document.getElementById("developer-pie-severity");
             var developer_severity_pie_metrics = [
-                {
-                    id: 'product-developers', //TODO: member-product trivial issues
+               {
+                    id: 'member-trivial-issues',
                     max: 1,
-                    aggr: "sum",
-                    prid: 'product-jenkins' //TODO: remove
+                    aggr: "sum"
                 },
                 {
-                    id: 'product-developers', //TODO: member-product normal issues
+                    id: 'member-normal-issues',
                     max: 1,
-                    aggr: "sum",
-                    prid: 'product-jenkins' //TODO: remove
+                    aggr: "sum"
                 },
                 {
-                    id: 'product-developers', //TODO: member-product high issues
+                    id: 'member-high-issues',
                     max: 1,
-                    aggr: "sum",
-                    prid: 'product-jenkins' //TODO: remove
+                    aggr: "sum"
                 },
                 {
-                    id: 'product-developers', //TODO: member-product critical issues
+                    id: 'member-critical-issues',
                     max: 1,
-                    aggr: "sum",
-                    prid: 'product-jenkins' //TODO: remove
+                    aggr: "sum"
                 },
                 {
-                    id: 'product-developers', //TODO: member-product blocker issues
+                    id: 'member-blocker-issues',
                     max: 1,
-                    aggr: "sum",
-                    prid: 'product-jenkins' //TODO: remove
+                    aggr: "sum"
                 }
             ];
             var developer_severity_pie_configuration = {

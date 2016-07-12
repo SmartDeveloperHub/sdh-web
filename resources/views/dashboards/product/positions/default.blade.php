@@ -637,9 +637,8 @@
             var pa_lines_dom = document.getElementById("developer-activity");
             var pa_lines_metrics = [
                 {
-                    id: 'repository-member-activity', //TODO: product-member-activity
+                    id: 'member-product-activity',
                     max: 60,
-                    rid: 62 //TODO: remove
                 }
             ];
             var pa_lines_configuration = {
@@ -658,9 +657,8 @@
             // --------------------------------------- COMMITS COUNTER --------------------------------------------
             var counter_1_dom = document.getElementById("developer-counter-1");
             var counter_1_metrics = [{
-                id: 'repository-member-commits', //TODO: ​member-product-active-issues
+                id: '​member-product-active-issues',
                 max: 1,
-                rid: 62 //TODO: remove
             }];
             var counter_1_conf = {
                 label: 'Active issues',
@@ -674,9 +672,8 @@
             // --------------------------------------- COMMITS COUNTER --------------------------------------------
             var counter_2_dom = document.getElementById("developer-counter-2");
             var counter_2_metrics = [{
-                id: 'repository-member-commits', //TODO: member-product-active-reopened-issues
+                id: 'member-product-active-reopened-issues',
                 max: 1,
-                rid: 62 //TODO: remove
             }];
             var counter_2_conf = {
                 label: 'Active reopened issues',
@@ -690,7 +687,7 @@
             // --------------------------------------- COMMITS COUNTER --------------------------------------------
             var counter_3_dom = document.getElementById("developer-counter-3");
             var counter_3_metrics = [{
-                id: 'product-timetofix', //TODO: member-product time to solve an issue
+                id: 'member-product-timetofix',
                 max: 1,
                 aggr: 'avg'
             }];
@@ -708,19 +705,19 @@
             var developer_status_pie_dom = document.getElementById("developer-pie-status");
             var developer_status_pie_metrics = [
                 {
-                    id: 'product-developers', //TODO: member-product opened issues
+                    id: 'member-product-opened-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product in-progress issues
+                    id: 'member-product-inprogress-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product closed issues
+                    id: 'member-product-closed-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
@@ -741,31 +738,31 @@
             var developer_severity_pie_dom = document.getElementById("developer-pie-severity");
             var developer_severity_pie_metrics = [
                 {
-                    id: 'product-developers', //TODO: member-product trivial issues
+                    id: 'member-product-trivial-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product normal issues
+                    id: 'member-product-normal-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product high issues
+                    id: 'member-product-high-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product critical issues
+                    id: 'member-product-critical-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'
                 },
                 {
-                    id: 'product-developers', //TODO: member-product blocker issues
+                    id: 'member-product-blocker-issues',
                     max: 1,
                     aggr: "sum",
                     post_aggr: 'sum'

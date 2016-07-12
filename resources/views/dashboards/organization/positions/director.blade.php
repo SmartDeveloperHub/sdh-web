@@ -806,7 +806,7 @@
             var products_workload_dom = document.getElementById("products-workload");
             var products_workload_metrics = [
                 {
-                    id: 'product-quality', //TODO: product-workload
+                    id: 'product-workload',
                     max: 1,
                     post_modifier: changeScalePostModifier
                 }

@@ -387,8 +387,7 @@
         var rangeNv_dom = document.getElementById("fixed-chart");
         var rangeNv_metrics = [
             {
-                id: 'director-activity', //TODO: director activity metric
-                max: 101
+                id: 'director-activity',
             }
         ];
         var rangeNv_configuration = {
@@ -435,7 +434,7 @@
             // ------------------------------------ TEAM MEMBERS -------------------------------------------
             var team_members_dom = document.getElementById("team-members-ctr");
             var team_members_metrics = [{
-                id: 'director-members', //TODO member-members? :O
+                id: 'director-members',
                 max: 1
             }];
             var team_members_conf = {
@@ -450,7 +449,7 @@
             // ---------------------------------------- RELEASES -------------------------------------------
             var some1_dom = document.getElementById("releases-ctr");
             var some1_metrics = [{
-                id: 'passed-builds',  //TODO: Nº Releases: total builds passed in master branch. userReleases o userPassedBuilds o algo así
+                id: 'passed-builds',
                 max: 1
             }];
             var some1_conf = {
@@ -465,7 +464,7 @@
             // ------------------------------------------ PERSONEL COST ----------------------------------------
             var some2_dom = document.getElementById("personnel-cost-ctr");
             var some2_metrics = [{
-                id: 'director-costs',  //TODO: Ad hoc? o userTeamCost?. Total de coste por team member 25*nºmembers * (dias del rango seleccionado)
+                id: 'director-costs',
                 max: 1
             }];
             var some2_conf = {
@@ -511,7 +510,7 @@
             // ------------------------------- AVG TEAM MEMBERS PER PRODUCT-------------------------------------
             var avgteam_dom = document.getElementById("avg-team-ctr");
             var avgteam_metrics = [{
-                id: 'director-productmembers',  //TODO: userProductsMembers AVG
+                id: 'director-productmembers',
                 max: 1,
                 aggr: 'avg'
             }];
@@ -703,7 +702,7 @@
             var loadProductsScatter = function() {
 
                 var scatter_dom = document.getElementById("scatter-plot");
-                var scatter_metrics = [ //TODO: required metrics
+                var scatter_metrics = [
                     {
                         id: 'product-cost',
                         max: 1
@@ -754,7 +753,6 @@
                     yDomain: [0,1],
                     pointDomain: [0,1],
                     clipEdge: true,
-                    // TODO try to add blur somewhere
                     tooltip: "<div class='scatterTooltip' style='text-align: center;'>" +
                     "<img class='img-responsive center-block' height='60' width='60' src=\"¬_D.data['product-cost'].info.prid.avatar¬\" />" +
                     "<h3>¬_D.data['product-cost'].info.prid.name¬</h3>" +
@@ -832,7 +830,7 @@
 
             //  ----------------------------------- PRODUCTS TABLE ------------------------------------------
             var table_dom = document.getElementById("products-table");
-            var table_metrics = ['view-director-products']; //TODO: choose resource
+            var table_metrics = ['view-director-products'];
             var table_configuration = {
                 columns: [
                     {
@@ -863,7 +861,7 @@
                         id: productsCtx,
                         filter: [
                             {
-                                property: "prid", //TODO
+                                property: "prid",
                                 as: "prid"
                             }
                         ]
@@ -1208,7 +1206,7 @@
 
             //  ------------------------------ PRODUCT MANAGERS TABLE --------------------------------------
             var team_members_table_dom = document.getElementById("team-members-table");
-            var team_members_table_metrics = ['view-director-productmanagers']; //TODO: choose resource
+            var team_members_table_metrics = ['view-director-productmanagers'];
             var team_members_table_configuration = {
                 columns: [
                     {
@@ -1226,7 +1224,7 @@
                         id: teamMembersCtx,
                         filter: [
                             {
-                                property: "uid", //TODO
+                                property: "uid",
                                 as: "uid"
                             }
                         ]

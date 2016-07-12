@@ -112,6 +112,7 @@
             <div id="issues-2" class="grid-stack-item-content"></div>
         </div>
 
+
     </div>
 
 
@@ -467,25 +468,43 @@
                     [timeCtx, projectCtx], issues_multibar_conf);
 
 
-            // -------------------------- ISSUES LINES  ------------------------------------
-            var issues_lines_dom = document.getElementById("issues-2");
-            var issues_lines_metrics = [
-                {
-                    id: 'failed-product-executions', //TODO: product-workload
-                    max: 10
+
+             // -------------------------- ISSUES MULTIBAR ------------------------------------
+
+            var proj_issues_multibar_dom = document.getElementById("issues-2");
+            var proj_issues_multibar_metrics = [];
+            var categories = ['Blocked', 'Critical', 'Grave', 'Normal', 'Trivial'];
+            var statuses = ['Other Open', 'Other In Progress', 'Improvement Open', 'Improvement In progress', 'Bug Open', 'Bug In progress' ];
+            var colors = ['#ffbb78', '#ff7f0e', '#aec7e8', '#1f77b4', '#ff9896', '#d62728' ];
+            var category_1 = {};
+            var status_1 = {};
+            var color_1 = {};
+            for(var f = 0; f < 30; f++) {
+                var metricName = 'project-issues-breakdown-' + f;
+                proj_issues_multibar_metrics.push({
+                    id: metricName, //product-member-...
+                    max: 1
+                });
+                category_1[metricName] = categories[f % categories.length];
+                status_1[metricName] = statuses[Math.floor(f / categories.length) % statuses.length];
+                color_1[metricName] = colors[f % colors.length];
+            }
+
+            var proj_issues_multibar_conf = {
+                stacked: true,
+                color: color_1,
+                labelFormat: function(metric, extra) {
+                    return status_1[extra.resource];
+                },
+                showControls: false,
+                height: 200,
+                showLegend: true,
+                x: function(metric, extra) {
+                    return category_1[extra.resource];
                 }
-            ];
-            var issues_lines_configuration = {
-                xlabel: '',
-                ylabel: '',
-                interpolate: 'linear',
-                height: 160,
-                labelFormat: 'Active reopen',
-                colors: ["#2876B8"],
-                area: false
             };
-            new framework.widgets.LinesChart(issues_lines_dom, issues_lines_metrics,
-                    [timeCtx, projectCtx], issues_lines_configuration);
+            new framework.widgets.MultiBar(proj_issues_multibar_dom, proj_issues_multibar_metrics,
+                    [timeCtx, projectCtx], proj_issues_multibar_conf);
 
 
 
@@ -736,63 +755,40 @@
 
 
             // -------------------------- ISSUES MULTIBAR ------------------------------------
-            var prod_member_issues_multibar_dom = document.getElementById("issues-multibar");
-            var prod_member_issues_multibar_metrics = [
-                {
-                    id: 'failed-product-executions',
+            var proj_member_issues_multibar_dom = document.getElementById("issues-multibar");
+            var proj_member_issues_multibar_metrics = [];
+            var categories = ['Blocked', 'Critical', 'Grave', 'Normal', 'Trivial'];
+            var statuses = ['Other Open', 'Other In Progress', 'Improvement Open', 'Improvement In progress', 'Bug Open', 'Bug In progress' ];
+            var colors = ['#ffbb78', '#ff7f0e', '#aec7e8', '#1f77b4', '#ff9896', '#d62728' ];
+            var category_2 = {};
+            var status_2 = {};
+            var color_2 = {};
+            for(var f = 0; f < 30; f++) {
+                var metricName = 'project-member-issues-breakdown-' + f;
+                proj_member_issues_multibar_metrics.push({
+                    id: metricName, //product-member-...
                     max: 1
-                },
-                {
-                    id: 'passed-product-executions',
-                    max: 1
-                },
-                {
-                    id: 'product-developers',
-                    max: 1
-                },
-                {
-                    id: 'product-activity',
-                    max: 1
-                },
-                {
-                    id: 'product-externals',
-                    max: 1
-                },
-                {
-                    id: 'product-executions',
-                    max: 1
-                }
-            ];
-            var category = {
-                'failed-product-executions' : 'Blocked',
-                'passed-product-executions': 'Critical',
-                'product-developers': 'Graves',
-                'product-activity': 'Normal',
-                'product-externals': 'Trivial',
-                'product-executions': 'Blocked'
-            };
-            var type = {
-                'failed-product-executions' : 'Open',
-                'passed-product-executions': 'Open',
-                'product-developers': 'Open',
-                'product-activity': 'Open',
-                'product-externals': 'Open',
-                'product-executions': 'In progress'
-            };
-            var prod_member_issues_multibar_conf = {
-                stacked: false,
+                });
+                category_2[metricName] = categories[f % categories.length];
+                status_2[metricName] = statuses[Math.floor(f / categories.length) % statuses.length];
+                color_2[metricName] = colors[f % colors.length];
+            }
+
+            var proj_member_issues_multibar_conf = {
+                stacked: true,
+                color: color_2,
                 labelFormat: function(metric, extra) {
-                    return type[extra.resource];
+                    return status_2[extra.resource];
                 },
                 showControls: false,
                 height: 200,
                 showLegend: true,
                 x: function(metric, extra) {
-                    return category[extra.resource];
+                    return category_2[extra.resource];
                 }
             };
-            new framework.widgets.MultiBar(prod_member_issues_multibar_dom, prod_member_issues_multibar_metrics,
-                    [timeCtx, projectCtx, developersCtx], prod_member_issues_multibar_conf);
+            new framework.widgets.MultiBar(proj_member_issues_multibar_dom, proj_member_issues_multibar_metrics,
+                    [timeCtx, projectCtx, developersCtx], proj_member_issues_multibar_conf);
 
         };
 

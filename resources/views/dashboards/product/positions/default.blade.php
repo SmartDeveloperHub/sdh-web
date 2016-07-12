@@ -366,7 +366,7 @@
             var products_workload_dom = document.getElementById("workload-projects");
             var products_workload_metrics = [
                 {
-                    id: 'project-quality', //TODO: project-workload
+                    id: 'project-workload',
                     max: 1,
                     post_modifier: changeScalePostModifier
                 }
@@ -392,7 +392,7 @@
             var workload_dom = document.getElementById("workload-time");
             var workload_metrics = [
                 {
-                    id: 'product-commits', //TODO: product-workload
+                    id: 'product-workload',
                     max: 30,
                     post_modifier: changeScalePostModifier
                 }

@@ -227,12 +227,15 @@
 
                 var creation = document.getElementById('product-created');
                 var manager = document.getElementById('product-manager');
-                var projects_number = document.getElementById('product-projects-number');
+
                 var product_director = document.getElementById('product-director');
+
+                creation.innerHTML = moment(new Date(productInfo['createdon'])).format('MMMM Do YYYY');
+                //manager.innerHTML = productInfo['manager']; //TODO: uncomment
+                //product_director.innerHTML = productInfo['director']; //TODO: uncomment
 
                 $(creation).removeClass('blurado');
                 $(manager).removeClass('blurado');
-                $(projects_number).removeClass('blurado');
                 $(product_director).removeClass('blurado');
 
                 if (productInfo['avatar'] != null && productInfo['avatar'] !== "" && productInfo['avatar'] !== "http://avatarURL") {
@@ -249,8 +252,11 @@
         framework.data.observe(["view-product-projects"], function(frameData) {
             if (frameData.event === 'data') {
 
-
                 var pList = frameData.data["view-product-projects"][0].data.values;
+
+                var projects_number = document.getElementById('product-projects-number');
+                projects_number.innerHTML = pList.length;
+                $(projects_number).removeClass('blurado');
 
                 var pIdList = [];
                 for (var i = 0; i < pList.length; i++) {
@@ -521,7 +527,6 @@
             var colors = ['#ffbb78', '#ff7f0e', '#aec7e8', '#1f77b4', '#ff9896', '#d62728' ];
             var category_1 = {};
             var status_1 = {};
-            var color_1 = {};
             for(var f = 0; f < 30; f++) {
                 var metricName = 'product-issues-breakdown-' + f;
                 prod_issues_multibar_metrics.push({
@@ -530,12 +535,13 @@
                 });
                 category_1[metricName] = categories[f % categories.length];
                 status_1[metricName] = statuses[Math.floor(f / categories.length) % statuses.length];
-                color_1[metricName] = colors[f % colors.length];
             }
 
             var prod_issues_multibar_conf = {
                 stacked: true,
-                color: color_1,
+                color: function (d, i) {
+                    return colors[statuses.indexOf(d.key)];
+                },
                 labelFormat: function(metric, extra) {
                     return status_1[extra.resource];
                 },
@@ -802,7 +808,6 @@
             var colors = ['#ffbb78', '#ff7f0e', '#aec7e8', '#1f77b4', '#ff9896', '#d62728' ];
             var category_2 = {};
             var status_2 = {};
-            var color_2 = {};
             for(var f = 0; f < 30; f++) {
                 var metricName = 'product-member-issues-breakdown-' + f;
                 prod_member_issues_multibar_metrics.push({
@@ -811,12 +816,13 @@
                 });
                 category_2[metricName] = categories[f % categories.length];
                 status_2[metricName] = statuses[Math.floor(f / categories.length) % statuses.length];
-                color_2[metricName] = colors[f % colors.length];
             }
 
             var prod_member_issues_multibar_conf = {
                 stacked: true,
-                color: color_2,
+                color: function (d, i) {
+                    return colors[statuses.indexOf(d.key)];
+                },
                 labelFormat: function(metric, extra) {
                     return status_2[extra.resource];
                 },

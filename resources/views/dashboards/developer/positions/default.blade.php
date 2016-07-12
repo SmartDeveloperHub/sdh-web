@@ -11,7 +11,7 @@
     "sdh-framework/widgets/LinesChart/linesChart",
     "sdh-framework/widgets/RangeNv/rangeNv",
     "sdh-framework/widgets/RadarChart/radarchart",
-    "sdh-framework/widgets/MultiBar/multiBar",
+    "sdh-framework/widgets/MultiBar/multibar",
     "css!assets/css/dashboards/developer-dashboard"
     ]
 @stop
@@ -432,7 +432,6 @@
             var colors = ['#ffbb78', '#ff7f0e', '#aec7e8', '#1f77b4', '#ff9896', '#d62728' ];
             var category_1 = {};
             var status_1 = {};
-            var color_1 = {};
             for(var f = 0; f < 30; f++) {
                 var metricName = 'member-issues-breakdown-' + f;
                 prod_member_issues_multibar_metrics.push({
@@ -441,12 +440,13 @@
                 });
                 category_1[metricName] = categories[f % categories.length];
                 status_1[metricName] = statuses[Math.floor(f / categories.length) % statuses.length];
-                color_1[metricName] = colors[f % colors.length];
             }
 
             var prod_member_issues_multibar_conf = {
                 stacked: true,
-                color: color_1,
+                color: function (d, i) {
+                    return colors[statuses.indexOf(d.key)];
+                },
                 labelFormat: function(metric, extra) {
                     return status_1[extra.resource];
                 },

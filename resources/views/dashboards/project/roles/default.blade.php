@@ -29,12 +29,12 @@
                             <span id="createdIco" class="theicon fa fa-pencil-square-o" style="color: #019640"></span><span class="thelabel">Created:</span><span class="theVal blurado" id="project-created">------</span>
                         </div>
                         <div class="row static-info-line">
-                            <<span class="theicon fa fa-user"></span><span class="thelabel">Manager:</span><span class="theVal blurado" id="product-manager">-------</span>
+                            <span class="theicon fa fa-user"></span><span class="thelabel">Manager:</span><span class="theVal blurado" id="product-manager">-------</span>
                         </div>
                     </div>
                     <div class="col-sm-5">
                         <div class="row static-info-line">
-                            <span id="lastIco" class="theicon fa fa-cubes" style="color: #C0485E"></span><span class="thelabel">Number of projects:</span><span class="theVal blurado" id="project-repositories-number">--------</span>
+                            <span id="lastIco" class="theicon fa fa-cubes" style="color: #C0485E"></span><span class="thelabel">Number of repositories:</span><span class="theVal blurado" id="project-repositories-number">--------</span>
                         </div>
                         <div class="row static-info-line">
                             <span class="theicon fa fa-user-secret" style="color: #8A1978"></span><span class="thelabel">Director:</span><span class="theVal blurado" id="project-director">--------</span>
@@ -207,20 +207,23 @@
         framework.data.observe(['projectinfo'], function (event) {
 
             if (event.event === 'data') {
-                var productInfo = event.data['projectinfo'][Object.keys(event.data['projectinfo'])[0]]['data'];
+                var projectInfo = event.data['projectinfo'][Object.keys(event.data['projectinfo'])[0]]['data'];
 
                 var creation = document.getElementById('project-created');
                 var manager = document.getElementById('project-manager');
-                var repositories_number = document.getElementById('project-repositories-number');
+
                 var project_director = document.getElementById('project-director');
+
+                creation.innerHTML = moment(new Date(projectInfo['createdon'])).format('MMMM Do YYYY');
+                //manager.innerHTML = projectInfo['manager']; //TODO: uncomment
+                //project_director.innerHTML = projectInfo['director']; //TODO: uncomment
 
                 $(creation).removeClass('blurado');
                 $(manager).removeClass('blurado');
-                $(repositories_number).removeClass('blurado');
                 $(project_director).removeClass('blurado');
 
-                if (productInfo['avatar'] != null && productInfo['avatar'] !== "" && productInfo['avatar'] !== "http://avatarURL") {
-                    $("#avatar").css("background-image", "url(" + productInfo['avatar'] + ")");
+                if (projectInfo['avatar'] != null && projectInfo['avatar'] !== "" && projectInfo['avatar'] !== "http://avatarURL") {
+                    $("#avatar").css("background-image", "url(" + projectInfo['avatar'] + ")");
                 }
 
                 //TODO: fill the data in the project info
@@ -315,7 +318,13 @@
             framework.data.observe(['view-project-repositories'], function (event) {
 
                 if (event.event === 'data') {
+
                     var repos = event.data['view-project-repositories'][Object.keys(event.data['view-project-repositories'])[0]]['data']['values'];
+
+                    var repositories_number = document.getElementById('project-repositories-number');
+                    repositories_number.innerHTML = repos.length;
+                    $(repositories_number).removeClass('blurado');
+
                     $scope = angular.element(".main-content").scope();
 
                     $scope.$apply(function () {
@@ -476,7 +485,6 @@
             var colors = ['#ffbb78', '#ff7f0e', '#aec7e8', '#1f77b4', '#ff9896', '#d62728' ];
             var category_1 = {};
             var status_1 = {};
-            var color_1 = {};
             for(var f = 0; f < 30; f++) {
                 var metricName = 'project-issues-breakdown-' + f;
                 proj_issues_multibar_metrics.push({
@@ -485,12 +493,13 @@
                 });
                 category_1[metricName] = categories[f % categories.length];
                 status_1[metricName] = statuses[Math.floor(f / categories.length) % statuses.length];
-                color_1[metricName] = colors[f % colors.length];
             }
 
             var proj_issues_multibar_conf = {
                 stacked: true,
-                color: color_1,
+                color: function (d, i) {
+                    return colors[statuses.indexOf(d.key)];
+                },
                 labelFormat: function(metric, extra) {
                     return status_1[extra.resource];
                 },
@@ -758,7 +767,6 @@
             var colors = ['#ffbb78', '#ff7f0e', '#aec7e8', '#1f77b4', '#ff9896', '#d62728' ];
             var category_2 = {};
             var status_2 = {};
-            var color_2 = {};
             for(var f = 0; f < 30; f++) {
                 var metricName = 'project-member-issues-breakdown-' + f;
                 proj_member_issues_multibar_metrics.push({
@@ -767,12 +775,13 @@
                 });
                 category_2[metricName] = categories[f % categories.length];
                 status_2[metricName] = statuses[Math.floor(f / categories.length) % statuses.length];
-                color_2[metricName] = colors[f % colors.length];
             }
 
             var proj_member_issues_multibar_conf = {
                 stacked: true,
-                color: color_2,
+                color: function (d, i) {
+                    return colors[statuses.indexOf(d.key)];
+                },
                 labelFormat: function(metric, extra) {
                     return status_2[extra.resource];
                 },

@@ -5,7 +5,8 @@
     "bootstrap": "3.3.4",
     "requirejs": "2.x.x",
     "require-css": "0.1.8",
-    "sdh-framework": "master"
+    "sdh-framework": "master",
+    "jquery-ui": "1.11.4"
   },
   "resolutions": {
     "jquery": "2.1.x"
